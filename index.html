@@ -147,6 +147,12 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 .prow.ghead{font-weight:600;color:var(--ink);border-bottom:1px solid var(--ink);padding-top:16px}
 .gsub{font-weight:600}
 .pie li.subli{padding-left:14px;color:var(--muted)}
+.dmtrack{position:relative;display:flex;height:40px;background:var(--surface)}
+.dmtrack i{display:block;height:100%}
+.dmcap{position:absolute;top:-6px;bottom:-6px;border-left:2px dashed var(--ink)}
+.dmcap em{position:absolute;top:-20px;right:6px;font-style:normal;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap}
+.pcbar{margin-bottom:22px}
+.pchd{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 12px;font-size:13px;margin-bottom:26px;color:var(--ink)}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -320,6 +326,10 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
   </div>
   <div class="rfun" id="dmFunnel"></div>
   <p class="small muted mt" id="dmNote"></p>
+
+  <h3 class="mt3">Where the pipeline comes from</h3>
+  <p class="small muted" id="pcLede" style="margin-bottom:16px"></p>
+  <div id="pcBody"></div>
 </div></section>
 
 <!-- INPUTS -->
@@ -938,6 +948,53 @@ function renderDealMix(){
   const cap=g.aes*g.aeCap*4;
   document.getElementById('dmNote').innerHTML=`Big number: midpoint rates. Range: best case (50%, 25%) to conservative (30%, 15%), spread over 12 months. Today's engine brings ${g.baseLeads} qualified leads a month, so the midpoint needs about ${n1(leads[1]/12/g.baseLeads)}x that. AE capacity is ${fmt(cap)} logos a year (${g.aes} AEs × ${g.aeCap}), ${won>cap?fmt(won-cap)+' short of '+fmt(won):'enough for '+fmt(won)}.`;
 }
+function dealGoal(){
+  const g=S.global,arr=g.targetArr*1e6;
+  const entArr=arr*num(g.entShare)/100,entN=Math.max(1,num(g.entClients));
+  const won=entN+(arr-entArr)/(Math.max(1,num(g.smallAvg))*1000);
+  const opps=won/(BRIEF.o2w[1]/100),leads=opps/(BRIEF.l2o[1]/100);
+  return {won,opps,leads};
+}
+function pipeRows(r){
+  const g=S.global,rows=[];
+  const bl=g.baseLeads*12,bo=bl*g.baseL2O/100;
+  rows.push({name:"Today's engine",color:cssv('--base'),budget:null,leads:bl,opps:bo,wins:bo*g.baseO2W/100});
+  S.channels.forEach(c=>{const x=r.ch[c.id];if(!x||x.abm||!(x.spend>0))return;
+    rows.push({name:c.name,color:chColor(c),budget:x.spend+x.comm,leads:x.leads,opps:x.opps,wins:x.wins});});
+  return rows;
+}
+function renderPipeByChannel(R){
+  const G=dealGoal(),fmt=x=>Math.round(x).toLocaleString('en-US');
+  const list=view==='compare'?SC.filter(s=>R[s].has):[view];
+  document.getElementById('pcLede').textContent=view==='compare'
+    ?'Full-year 2027 leads, opportunities and wins by scenario, against the goal above. Wins are before AE capacity and timing.'
+    :`Scenario ${view}${view==='A'?' (my plan)':''}: full-year leads, opportunities and wins by source, against the goal above. Wins are before AE capacity and timing. Switch scenarios with the tabs.`;
+  const el=document.getElementById('pcBody');
+  if(!list.length||!R[list[0]].has){el.innerHTML='<div class="card"><p>Build your own split to see where A\'s pipeline comes from.</p><div style="display:flex;gap:8px;margin-top:12px"><button class="btn sm" data-act="copy" data-from="B">Start from B</button><button class="btn sm ghost" data-act="copy" data-from="C">Start from C</button></div></div>';return;}
+  const tot=rows=>rows.reduce((a,x)=>({leads:a.leads+x.leads,opps:a.opps+x.opps,wins:a.wins+x.wins,budget:a.budget+(x.budget||0)}),{leads:0,opps:0,wins:0,budget:0});
+  const gapCell=(have,need)=>have>=need?'<span style="color:var(--green-deep);font-weight:600">Covered</span>':`<span style="color:var(--red);font-weight:600">${fmt(need-have)}</span>`;
+  if(view==='compare'){
+    let h=`<div class="tw"><table><thead><tr><th>Scenario</th><th class="num">Budget</th><th class="num">Leads</th><th class="num">Opps</th><th class="num">Wins</th><th class="num">Lead gap</th><th class="num">Win gap</th><th class="num">Closed in 2027</th></tr></thead><tbody>`;
+    list.forEach(s=>{const t=tot(pipeRows(R[s]));h+=`<tr><td><span class="dot" style="background:var(${SCVAR[s]})"></span>${s==='A'?'A · My plan':'Scenario '+s}</td><td class="num">${k$(t.budget+((R[s].ch.abm&&R[s].ch.abm.spend)||0))}</td><td class="num">${fmt(t.leads)}</td><td class="num">${fmt(t.opps)}</td><td class="num">${fmt(t.wins)}</td><td class="num">${gapCell(t.leads,G.leads)}</td><td class="num">${gapCell(t.wins,G.won)}</td><td class="num">${fmt(R[s].wins2027)}</td></tr>`;});
+    h+=`<tr class="total"><td>Goal</td><td></td><td class="num">${fmt(G.leads)}</td><td class="num">${fmt(G.opps)}</td><td class="num">${fmt(G.won)}</td><td></td><td></td><td class="num">${fmt(G.won)}</td></tr></tbody></table></div>`;
+    el.innerHTML=h;return;
+  }
+  const r=R[view],rows=pipeRows(r),t=tot(rows);
+  const bar=(key,goal,label)=>{const mx=Math.max(t[key],goal)*1.03;
+    return `<div class="pcbar"><div class="pchd"><b>${label}</b><span>${fmt(t[key])} of ${fmt(goal)} needed${t[key]<goal?` · <span style="color:var(--red);font-weight:600">${fmt(goal-t[key])} short</span>`:' · covered'}</span></div>
+    <div class="dmtrack">${rows.map(x=>`<i title="${esc(x.name)}: ${fmt(x[key])}" style="width:${x[key]/mx*100}%;background:${x.color}"></i>`).join('')}<span class="dmcap" style="left:${goal/mx*100}%"><em>Goal ${fmt(goal)}</em></span></div></div>`;};
+  let h=bar('leads',G.leads,'Qualified leads')+bar('wins',G.won,'Wins');
+  h+=`<div class="legend" style="margin-bottom:16px">${rows.map(x=>`<span><span class="dot" style="background:${x.color}"></span>${esc(x.name)}</span>`).join('')}</div>`;
+  h+=`<div class="tw"><table><thead><tr><th>Source</th><th class="num">Spend</th><th class="num">Leads</th><th class="num">Opps</th><th class="num">Wins</th><th class="num">Lead → win</th><th class="num">Share of wins</th></tr></thead><tbody>`;
+  rows.forEach(x=>{h+=`<tr><td><span class="dot" style="background:${x.color}"></span>${esc(x.name)}</td><td class="num">${x.budget==null?'—':k$(x.budget)}</td><td class="num">${fmt(x.leads)}</td><td class="num">${fmt(x.opps)}</td><td class="num">${x.wins.toFixed(1)}</td><td class="num">${x.leads?pct(x.wins/x.leads):'—'}</td><td class="num">${pct(x.wins/t.wins)}</td></tr>`;});
+  const abm=r.ch.abm;
+  if(abm&&abm.spend>0)h+=`<tr><td><span class="dot" style="background:${cssv('--ink')}"></span>ABM tools</td><td class="num">${k$(abm.spend)}</td><td class="num muted" colspan="5" style="text-align:right">${r.abmOn?`No leads of its own · +${S.global.abmUplift} pts lead → opp on LinkedIn, Google and events`:'Below threshold · no uplift'}</td></tr>`;
+  h+=`<tr class="total"><td>Total</td><td class="num">${k$(t.budget+(abm?abm.spend:0))}</td><td class="num">${fmt(t.leads)}</td><td class="num">${fmt(t.opps)}</td><td class="num">${t.wins.toFixed(1)}</td><td class="num">${pct(t.wins/t.leads)}</td><td class="num">100%</td></tr>`;
+  h+=`<tr><td>Goal (midpoint rates)</td><td></td><td class="num">${fmt(G.leads)}</td><td class="num">${fmt(G.opps)}</td><td class="num">${fmt(G.won)}</td><td class="num">${pct(G.won/G.leads)}</td><td></td></tr>`;
+  h+=`<tr><td style="font-weight:600;color:var(--ink)">Gap vs goal</td><td></td><td class="num">${gapCell(t.leads,G.leads)}</td><td class="num">${gapCell(t.opps,G.opps)}</td><td class="num">${t.wins>=G.won?gapCell(1,0):`<span style="color:var(--red);font-weight:600">${(G.won-t.wins).toFixed(1)}</span>`}</td><td></td><td></td></tr></tbody></table></div>`;
+  h+=`<p class="small muted mt">Of these ${fmt(t.wins)} wins, ${fmt(r.wins2027)} close in 2027 once the sales cycle and AE capacity are applied. The rest wait for an AE or close in 2028.</p>`;
+  el.innerHTML=h;
+}
 function renderPipe(){
   const g=S.global,lead=S.channels.filter(c=>c.kind==='lead');
   const rng=(f)=>{const v=lead.map(f);const lo=Math.min(...v),hi=Math.max(...v);return lo===hi?lo+'%':lo+'–'+hi+'%';};
@@ -952,7 +1009,7 @@ function renderPipe(){
 }
 function update(){
   const R={};SC.forEach(s=>R[s]=run(s));
-  renderHero(R);renderPipe();renderDealMix();renderPies(R);renderBudgetTotals();renderDiagnosis(R);renderCallouts(R);renderTiles(R);
+  renderHero(R);renderPipe();renderDealMix();renderPipeByChannel(R);renderPies(R);renderBudgetTotals();renderDiagnosis(R);renderCallouts(R);renderTiles(R);
   document.getElementById('tgtQ').textContent=n1(S.global.targetLogos/4);
   renderWins(R);renderCompare(R);renderFunnel(R);renderCpo(R);renderKnown();
   window.__fermat=R;
