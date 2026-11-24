@@ -578,8 +578,7 @@ const GMETA=[
   {k:'abmThreshold',label:'ABM budget needed for uplift',unit:'$k',min:0,max:100,step:5,badge:'Assumed',note:'',grid:false},
   {k:'abmUplift',label:'ABM uplift on lead → opp (LinkedIn, Google, events)',unit:'pts',min:0,max:30,step:1,badge:'Assumed',note:'',grid:false},
   {k:'entShare',label:'Enterprise share of new ARR',unit:'%',min:0,max:60,step:1,badge:'Given',note:'Fermat: 20% of clients are enterprise. Applied here to ARR.',grid:false},
-  {k:'entClients',label:'Enterprise clients in 2027',unit:'logos',min:1,max:30,step:1,badge:'Assumed',note:'Sets the enterprise deal size: enterprise ARR ÷ clients.',grid:false},
-  {k:'smallAvg',label:'Average smaller deal',unit:'$k',min:15,max:50,step:1,badge:'Assumed',note:'Smaller deals run $15–50k; midpoint rounded down.',grid:false}
+  {k:'entClients',label:'Enterprise clients in 2027',unit:'logos',min:1,max:30,step:1,badge:'Assumed',note:'Sets the enterprise deal size: enterprise ARR ÷ clients. Smaller deals take the rest of the ARR and logos.',grid:false}
 ];
 
 const clone=o=>JSON.parse(JSON.stringify(o));
@@ -924,19 +923,24 @@ function renderDealMixInputs(){
   const g=S.global;
   const f=(p,v,min,max,pre,suf)=>`<span class="gi">${pre||''}<input type="number" data-p="${p}" min="${min}" max="${max}" value="${v}">${suf||''}</span>`;
   document.getElementById('dmIn').innerHTML=
+    `<label>New logos in 2027 <span class="pill given">Given</span>${f('global.targetLogos',g.targetLogos,20,120)}</label>`+
     `<label>Enterprise share of ARR <span class="pill given">Given</span>${f('global.entShare',g.entShare,0,60,'','%')}</label>`+
-    `<label>Enterprise clients <span class="pill assumed">Assumed</span>${f('global.entClients',g.entClients,1,30)}</label>`+
-    `<label>Average smaller deal <span class="pill assumed">Assumed</span>${f('global.smallAvg',g.smallAvg,15,50,'$','k')}</label>`;
+    `<label>Enterprise clients <span class="pill assumed">Assumed</span>${f('global.entClients',g.entClients,1,30)}</label>`;
 }
 const BRIEF={l2o:[30,40,50],o2w:[15,20,25]};
+function goalMix(){
+  const g=S.global,arr=g.targetArr*1e6,won=Math.max(1,num(g.targetLogos));
+  const entArr=arr*num(g.entShare)/100,entN=Math.min(Math.max(1,num(g.entClients)),won-1),entAcv=entArr/entN;
+  const smN=won-entN,smAvg=(arr-entArr)/smN;
+  return {arr,won,entArr,entN,entAcv,smN,smAvg,avg:arr/won};
+}
 function renderDealMix(){
-  const g=S.global,arr=g.targetArr*1e6;
-  const entArr=arr*num(g.entShare)/100,entN=Math.max(1,num(g.entClients)),entAcv=entArr/entN;
-  const smAvg=Math.max(1,num(g.smallAvg))*1000,smN=(arr-entArr)/smAvg,won=entN+smN;
+  const g=S.global,m=goalMix(),won=m.won;
   const fmt=x=>Math.round(x).toLocaleString('en-US');
   const opps=BRIEF.o2w.map(r=>won/(r/100));          // [cons, mid, best]
   const leads=opps.map((o,i)=>o/(BRIEF.l2o[i]/100));
-  document.getElementById('dmGoal').innerHTML=`Goal: <b>${fmt(won)} logos</b> for <b>${M$(arr,1)}</b>. ${fmt(entN)} enterprise at ${k$(entAcv)} + ${fmt(smN)} smaller deals at ${k$(smAvg)}.`;
+  const out=m.smAvg>50000||m.smAvg<15000;
+  document.getElementById('dmGoal').innerHTML=`Goal: <b>${fmt(won)} logos</b> for <b>${M$(m.arr,1)}</b>, a ${k$(m.avg)} average. ${fmt(m.entN)} enterprise at ${k$(m.entAcv)} + ${fmt(m.smN)} smaller deals at ${k$(m.smAvg)}${out?' <span class="warn" style="font-size:14px">outside the $15–50k range</span>':''}.`;
   const row=(cls,label,mid,lo,hi,sub)=>`<div class="rrow ${cls}"><span class="rl">${label}</span><b>${fmt(mid)}</b><span class="rr">${lo!=null?`Range ${fmt(lo)}–${fmt(hi)}<br>`:''}${sub}</span></div>`;
   const rate=(label,r)=>`<div class="rrate"><span class="rarr"></span><span class="rpill"><span class="pk">${label}</span><b>${r[0]}–${r[2]}%</b><span>midpoint ${r[1]}%</span></span></div>`;
   document.getElementById('dmFunnel').innerHTML=
@@ -944,14 +948,12 @@ function renderDealMix(){
     rate('Lead → opp',BRIEF.l2o)+
     row('r2','Opportunities',opps[1],opps[2],opps[0],`${fmt(opps[1]/12)} a month at midpoint`)+
     rate('Opp → won',BRIEF.o2w)+
-    row('r3','Won',won,null,null,`${fmt(entN)} enterprise + ${fmt(smN)} smaller`);
-  const cap=g.aes*g.aeCap*4;
-  document.getElementById('dmNote').innerHTML=`Big number: midpoint rates. Range: best case (50%, 25%) to conservative (30%, 15%), spread over 12 months. Today's engine brings ${g.baseLeads} qualified leads a month, so the midpoint needs about ${n1(leads[1]/12/g.baseLeads)}x that. AE capacity is ${fmt(cap)} logos a year (${g.aes} AEs × ${g.aeCap}), ${won>cap?fmt(won-cap)+' short of '+fmt(won):'enough for '+fmt(won)}.`;
+    row('r3','Won',won,null,null,`${fmt(m.entN)} enterprise + ${fmt(m.smN)} smaller`);
+  const cap=g.aes*g.aeCap*4,need=won/g.aes/4;
+  document.getElementById('dmNote').innerHTML=`Big number: midpoint rates. Range: best case (50%, 25%) to conservative (30%, 15%), spread over 12 months. Today's engine brings ${g.baseLeads} qualified leads a month, so the midpoint needs about ${fmt(Math.max(0,leads[1]/12-g.baseLeads))} more a month. ${g.aes} AEs at ${g.aeCap} a quarter close ${fmt(cap)} logos a year, ${won>cap?fmt(won-cap)+' short':'enough'}: the goal needs ${n1(need)} per AE per quarter.`;
 }
 function dealGoal(){
-  const g=S.global,arr=g.targetArr*1e6;
-  const entArr=arr*num(g.entShare)/100,entN=Math.max(1,num(g.entClients));
-  const won=entN+(arr-entArr)/(Math.max(1,num(g.smallAvg))*1000);
+  const won=goalMix().won;
   const opps=won/(BRIEF.o2w[1]/100),leads=opps/(BRIEF.l2o[1]/100);
   return {won,opps,leads};
 }
