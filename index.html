@@ -586,7 +586,7 @@ const GMETA=[
   {k:'abmThreshold',label:'ABM budget needed for uplift',unit:'$k',min:0,max:100,step:5,badge:'Assumed',note:'',grid:false},
   {k:'abmUplift',label:'ABM uplift on lead → opp (LinkedIn, Google, events)',unit:'pts',min:0,max:30,step:1,badge:'Assumed',note:'',grid:false},
   {k:'entLogoShare',label:'Enterprise share of new logos',unit:'%',min:0,max:60,step:1,badge:'Given',note:'Fermat: 20% of clients are enterprise.',grid:false},
-  {k:'entAcv',label:'Enterprise deal size (ABM)',unit:'$k',min:50,max:250,step:5,badge:'Assumed',note:'Named $100M–$5B brands worked through ABM. Smaller deals take the rest of the ARR.',grid:false},
+  {k:'entAcv',label:'Enterprise deal size (ABM)',unit:'$k',min:50,max:250,step:5,badge:'Assumed',note:'Named $100M–$5B brands worked through ABM. Mid-market deals take the rest of the ARR.',grid:false},
   {k:'abmAccounts',label:'Named accounts on the ABM list',unit:'accounts',min:100,max:2000,step:50,badge:'Assumed',note:'Same list LinkedIn targets.',grid:false}
 ];
 
@@ -953,7 +953,7 @@ function renderDealMix(){
   const back=w=>{const o=BRIEF.o2w.map(r=>w/(r/100));return {o,l:o.map((x,i)=>x/(BRIEF.l2o[i]/100))};};
   const E=back(m.entN),Sm=back(m.smN);
   const bad=m.smAvg>50000||m.smAvg<15000;
-  document.getElementById('dmGoal').innerHTML=`Goal: <b>${fmt(m.won)} logos</b> for <b>${M$(m.arr,1)}</b>. ${fmt(m.entN)} enterprise via ABM at ${k$(m.entAcv)} + ${fmt(m.smN)} smaller deals at ${k$(m.smAvg)}${bad?' <span class="warn" style="font-size:14px">outside the $15–50k range</span>':''}.`;
+  document.getElementById('dmGoal').innerHTML=`Goal: <b>${fmt(m.won)} logos</b> for <b>${M$(m.arr,1)}</b>. ${fmt(m.entN)} enterprise via ABM at ${k$(m.entAcv)} + ${fmt(m.smN)} mid-market deals at ${k$(m.smAvg)}${bad?' <span class="warn" style="font-size:14px">outside the $15–50k range</span>':''}.`;
   const row=(cls,label,mid,lo,hi,sub)=>`<div class="rrow ${cls}"><span class="rl">${label}</span><b>${fmt(mid)}</b><span class="rr">${lo!=null?`Range ${fmt(lo)}–${fmt(hi)}<br>`:''}${sub}</span></div>`;
   const rate=(label,r)=>`<div class="rrate"><span class="rarr"></span><span class="rpill"><span class="pk">${label}</span><b>${r[0]}–${r[2]}%</b><span>mid ${r[1]}%</span></span></div>`;
   const funnel=(P,top,topSub,won,wonSub)=>`<div class="rfun">${row('r1',top,P.l[1],P.l[2],P.l[0],topSub)}${rate('Lead → opp',BRIEF.l2o)}${row('r2','Opportunities',P.o[1],P.o[2],P.o[0],`${fmt(P.o[1]/12)} a month`)}${rate('Opp → won',BRIEF.o2w)}${row('r3','Won',won,null,null,wonSub)}</div>`;
@@ -961,11 +961,11 @@ function renderDealMix(){
   document.getElementById('dmFunnel').innerHTML=`<div class="rfun2">
     <div><div class="rhead"><span class="dot" style="background:var(--ink)"></span><b>Enterprise · ABM</b><span>${fmt(m.entN)} × ${k$(m.entAcv)} = ${M$(m.entArr,1)}</span></div>
       ${funnel(E,'Qualified accounts',`${pct(listPct)} of ${fmt(g.abmAccounts)} named accounts`,m.entN,`${pct(m.entArr/m.arr)} of new ARR`)}</div>
-    <div><div class="rhead"><span class="dot" style="background:var(--magenta)"></span><b>Smaller deals</b><span>${fmt(m.smN)} × ${k$(m.smAvg)} = ${M$(m.smArr,1)}</span></div>
+    <div><div class="rhead"><span class="dot" style="background:var(--magenta)"></span><b>Mid-market</b><span>${fmt(m.smN)} × ${k$(m.smAvg)} = ${M$(m.smArr,1)}</span></div>
       ${funnel(Sm,'Qualified leads',`${fmt(Sm.l[1]/12)} a month`,m.smN,`${pct(m.smArr/m.arr)} of new ARR`)}</div>
   </div>`;
   const cap=g.aes*g.aeCap*4,need=m.won/g.aes/4,totL=E.l[1]+Sm.l[1];
-  document.getElementById('dmNote').innerHTML=`Big numbers: midpoint rates. Range: best case (50%, 25%) to conservative (30%, 15%). Together: ${fmt(totL)} qualified leads and accounts, ${fmt(E.o[1]+Sm.o[1])} opportunities. Today's engine brings ${g.baseLeads} leads a month, so smaller deals alone need about ${fmt(Math.max(0,Sm.l[1]/12-g.baseLeads))} more a month, and ABM has to qualify about ${fmt(E.l[1]/12)} named accounts a month. ${g.aes} AEs at ${g.aeCap} a quarter close ${fmt(cap)} logos a year, ${m.won>cap?fmt(m.won-cap)+' short':'enough'}: the goal needs ${n1(need)} per AE per quarter.`;
+  document.getElementById('dmNote').innerHTML=`Big numbers: midpoint rates. Range: best case (50%, 25%) to conservative (30%, 15%). Together: ${fmt(totL)} qualified leads and accounts, ${fmt(E.o[1]+Sm.o[1])} opportunities. Today's engine brings ${g.baseLeads} leads a month, so mid-market alone needs about ${fmt(Math.max(0,Sm.l[1]/12-g.baseLeads))} more a month, and ABM has to qualify about ${fmt(E.l[1]/12)} named accounts a month. ${g.aes} AEs at ${g.aeCap} a quarter close ${fmt(cap)} logos a year, ${m.won>cap?fmt(m.won-cap)+' short':'enough'}: the goal needs ${n1(need)} per AE per quarter.`;
 }
 function dealGoal(){
   const won=goalMix().won;
