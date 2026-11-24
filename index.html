@@ -147,6 +147,15 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 .prow.ghead{font-weight:600;color:var(--ink);border-bottom:1px solid var(--ink);padding-top:16px}
 .gsub{font-weight:600}
 .pie li.subli{padding-left:14px;color:var(--muted)}
+/* deal mix */
+.dmix{display:grid;grid-template-columns:300px 1fr;gap:12px}
+.dmin{display:grid;gap:12px;align-content:start}
+.dmout .tiles{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.dmtrack{position:relative;display:flex;height:44px;background:var(--surface)}
+.dmtrack i{display:block;height:100%}
+.dmcap{position:absolute;top:-6px;bottom:-6px;border-left:2px solid var(--ink)}
+.dmcap em{position:absolute;top:-20px;left:6px;font-style:normal;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap}
+@media (max-width:900px){.dmix{grid-template-columns:1fr}.dmcap em{left:auto;right:6px}}
 /* pipeline */
 .pipe{display:grid;grid-template-columns:1fr 150px 1fr 170px 1fr 48px 1.1fr;align-items:center;row-gap:10px}
 .pipe a{text-decoration:none;color:var(--ink)}
@@ -286,6 +295,21 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
         <li>Run 3 win and 2 loss interviews.</li>
         <li>Agree the definition of a qualified lead and the handoff with the AEs.</li>
       </ul>
+    </div>
+  </div>
+
+  <h3 class="mt3">What $3M actually takes: the deal mix</h3>
+  <p class="small muted" style="margin-bottom:16px">Fermat says 20% of clients are enterprise. Here that share is applied to ARR, with smaller deals at $15–50k.</p>
+  <div class="dmix">
+    <div class="dmin">
+      <div class="ginput"><div class="top"><div class="lab">Enterprise share of new ARR <span class="muted" style="font-weight:400">(%)</span></div><span class="pill given">Given</span></div><div id="dmEntShare"></div><div class="note">Fermat: 20% of clients are enterprise.</div></div>
+      <div class="ginput"><div class="top"><div class="lab">Enterprise clients</div><span class="pill assumed">Assumed</span></div><div id="dmEntClients"></div></div>
+      <div class="ginput"><div class="top"><div class="lab">Average smaller deal <span class="muted" style="font-weight:400">($k)</span></div><span class="pill assumed">Assumed</span></div><div id="dmSmallAvg"></div><div class="note">Midpoint of the $15–50k range, rounded down to be safe.</div></div>
+    </div>
+    <div class="dmout">
+      <div class="tiles" id="dmTiles"></div>
+      <div class="dmbar mt2" id="dmBar"></div>
+      <div class="callout mt" id="dmCallout"></div>
     </div>
   </div>
 </div></section>
@@ -504,7 +528,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{baseLeads:35,baseL2O:45,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10},
+  global:{baseLeads:35,baseL2O:45,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:50,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -534,12 +558,16 @@ const GMETA=[
   {k:'targetLogos',label:'2027 logo target',unit:'logos',min:20,max:120,step:1,badge:'Given',note:''},
   {k:'targetArr',label:'2027 new ARR target',unit:'$M',min:1,max:6,step:0.1,badge:'Given',note:''},
   {k:'abmThreshold',label:'ABM budget needed for uplift',unit:'$k',min:0,max:100,step:5,badge:'Assumed',note:'',grid:false},
-  {k:'abmUplift',label:'ABM uplift on lead → opp (LinkedIn, Google, events)',unit:'pts',min:0,max:30,step:1,badge:'Assumed',note:'',grid:false}
+  {k:'abmUplift',label:'ABM uplift on lead → opp (LinkedIn, Google, events)',unit:'pts',min:0,max:30,step:1,badge:'Assumed',note:'',grid:false},
+  {k:'entShare',label:'Enterprise share of new ARR',unit:'%',min:0,max:60,step:1,badge:'Given',note:'Fermat: 20% of clients are enterprise. Applied here to ARR.',grid:false},
+  {k:'entClients',label:'Enterprise clients in 2027',unit:'logos',min:1,max:30,step:1,badge:'Assumed',note:'Sets the enterprise deal size: enterprise ARR ÷ clients.',grid:false},
+  {k:'smallAvg',label:'Average smaller deal',unit:'$k',min:15,max:50,step:1,badge:'Assumed',note:'Smaller deals run $15–50k; midpoint rounded down.',grid:false}
 ];
 
 const clone=o=>JSON.parse(JSON.stringify(o));
 const PAID_SPLIT={linkedin:130,google:30,chatgpt:10,reddit:10};
 function migrate(o){
+  o.global={...DEFAULTS.global,...o.global};
   const i=o.channels.findIndex(c=>c.id==='paid');if(i<0)return o;
   o.channels.splice(i,1,...clone(DEFAULTS.channels.filter(c=>c.group==='paid')));
   ['events','partners'].forEach(id=>{const c=o.channels.find(x=>x.id===id);if(c)c.diag=true;});
@@ -694,7 +722,7 @@ function renderGlobals(){
 function renderTabs(){
   document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===view?'true':'false'));
 }
-function renderInputs(){renderBudgetTable();renderChanTable();renderGlobals();renderTabs();}
+function renderInputs(){renderDealMixInputs();renderBudgetTable();renderChanTable();renderGlobals();renderTabs();}
 
 /* ---------- charts ---------- */
 Chart.defaults.font.family='Inter, system-ui, sans-serif';
@@ -874,6 +902,33 @@ function renderKnown(){
   rows.push(['4th AE ramp','Half capacity in the first quarter','Assumed','']);
   document.getElementById('knownTable').innerHTML=`<thead><tr><th>Input</th><th>Value</th><th>Badge</th><th>Note</th></tr></thead><tbody>${rows.map(([a,b,c,d])=>`<tr><td>${esc(a)}</td><td style="font-weight:600;color:var(--ink)">${esc(b)}</td><td><span class="pill ${c.toLowerCase()}">${c}</span></td><td class="small muted">${esc(d)}</td></tr>`).join('')}</tbody>`;
 }
+function renderDealMixInputs(){
+  const g=S.global;
+  document.getElementById('dmEntShare').innerHTML=ctl('global.entShare',g.entShare,0,60,1);
+  document.getElementById('dmEntClients').innerHTML=ctl('global.entClients',g.entClients,1,30,1);
+  document.getElementById('dmSmallAvg').innerHTML=ctl('global.smallAvg',g.smallAvg,15,50,1);
+}
+function renderDealMix(){
+  const g=S.global,arr=g.targetArr*1e6;
+  const entArr=arr*num(g.entShare)/100,entN=Math.max(1,num(g.entClients)),entAcv=entArr/entN;
+  const smArr=arr-entArr,smAvg=Math.max(1,num(g.smallAvg))*1000,smN=smArr/smAvg,total=entN+smN;
+  const cap=g.aes*g.aeCap*4,perAE=total/g.aes/4;
+  const fitAvg=cap>entN?smArr/(cap-entN):null;
+  const t=(k,v,s)=>`<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${s}</div></div>`;
+  document.getElementById('dmTiles').innerHTML=
+    t('Enterprise',`${n0(entN)}`,`logos · ${M$(entArr,1)} at ${k$(entAcv)} each`)+
+    t('Smaller deals',`${n0(smN)}`,`logos · ${M$(smArr,1)} at ${k$(smAvg)} each`)+
+    t('Total logos',`${n0(total)}`,`vs ${g.targetLogos} target · ${M$(arr,1)} ARR`)+
+    t('Per AE, per quarter',`<span class="${perAE>g.aeCap?'bad':''}" style="${perAE>g.aeCap?'color:var(--red)':''}">${n1(perAE)}</span>`,`vs ${g.aeCap} capacity with ${g.aes} AEs`);
+  const mx=Math.max(total,cap)*1.04;
+  document.getElementById('dmBar').innerHTML=`<div class="small" style="font-weight:600;color:var(--ink);margin-bottom:8px">Logos needed vs. what ${g.aes} AEs can close in 2027</div>
+    <div class="dmtrack"><i style="width:${entN/mx*100}%;background:var(--ink)"></i><i style="width:${smN/mx*100}%;background:var(--magenta)"></i><span class="dmcap" style="left:${cap/mx*100}%"><em>AE capacity ${n0(cap)}</em></span></div>
+    <div class="legend"><span><span class="dot" style="background:var(--ink)"></span>Enterprise ${n0(entN)}</span><span><span class="dot" style="background:var(--magenta)"></span>Smaller deals ${n0(smN)}</span><span><span class="dot" style="background:transparent;border-left:2px solid var(--ink);width:2px"></span>AE capacity ${n0(cap)}</span></div>`;
+  const gap=total-cap;
+  document.getElementById('dmCallout').innerHTML=gap>0.5
+    ?`<b>${n0(total)} logos is ${n0(gap)} more than ${g.aes} AEs can close (${n0(cap)}).</b> Smaller deals need a lighter sales motion (partners closing, inside sales, a faster product-led sale), or they have to average ${fin(fitAvg)?k$(fitAvg):'more'} to fit capacity${fin(fitAvg)&&fitAvg>50000?', above the $15–50k range':''}.`
+    :`<b>${n0(total)} logos fits inside AE capacity (${n0(cap)}).</b> The plan can run on the current sales motion.`;
+}
 function renderPipe(){
   const g=S.global,lead=S.channels.filter(c=>c.kind==='lead');
   const rng=(f)=>{const v=lead.map(f);const lo=Math.min(...v),hi=Math.max(...v);return lo===hi?lo+'%':lo+'–'+hi+'%';};
@@ -888,7 +943,7 @@ function renderPipe(){
 }
 function update(){
   const R={};SC.forEach(s=>R[s]=run(s));
-  renderHero(R);renderPipe();renderPies(R);renderBudgetTotals();renderDiagnosis(R);renderCallouts(R);renderTiles(R);
+  renderHero(R);renderPipe();renderDealMix();renderPies(R);renderBudgetTotals();renderDiagnosis(R);renderCallouts(R);renderTiles(R);
   document.getElementById('tgtQ').textContent=n1(S.global.targetLogos/4);
   renderWins(R);renderCompare(R);renderFunnel(R);renderCpo(R);renderKnown();
   window.__fermat=R;
