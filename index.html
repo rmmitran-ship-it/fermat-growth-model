@@ -123,6 +123,26 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 .prow{display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
 .prow.ptotal{font-weight:600;color:var(--ink);border-bottom:2px solid var(--ink);font-size:16px}
 @media (max-width:640px){.planed{padding:20px}.prow{grid-template-columns:1fr}.pgrid{grid-template-columns:1fr}}
+.paidsplit{display:flex;gap:2px;margin-top:8px;margin-bottom:8px;min-height:72px}
+.paidsplit div{padding:12px;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;min-width:64px;color:var(--ink);font-size:12.5px}
+.paidsplit b{font-weight:600}
+.pjob{background:var(--surface);padding:32px;display:flex;flex-direction:column;gap:14px}
+.pjob .eyebrow{margin-bottom:6px}
+.pjhead{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start}
+.pn{font-family:'Inter Tight';font-size:44px;font-weight:600;color:var(--ink);line-height:.85}
+.pshare{text-align:right;background:var(--blue-light);padding:8px 12px;color:var(--ink)}
+.pshare b{display:block;font-family:'Inter Tight';font-size:22px;letter-spacing:-0.02em}
+.pshare span{font-size:11.5px;white-space:nowrap}
+.pjob dl{display:grid;grid-template-columns:72px 1fr;gap:8px 12px;font-size:14px}
+.pjob dt{font-weight:600;color:var(--ink)}
+.keep{margin-top:auto;background:var(--white);padding:14px 16px;color:var(--ink);font-size:14px}
+.keep b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+.flow{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:28px;counter-reset:f;margin-top:16px}
+.flow li{position:relative;padding:20px;color:var(--ink);font-weight:500;counter-increment:f}
+.flow li::before{content:counter(f);display:block;font-family:'Inter Tight';font-size:28px;font-weight:600;margin-bottom:8px}
+.flow li:not(:last-child)::after{content:'→';position:absolute;right:-22px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--ink)}
+@media (max-width:820px){.flow{grid-template-columns:1fr;gap:24px}.flow li:not(:last-child)::after{content:'↓';right:auto;left:20px;top:auto;bottom:-24px;transform:none}}
+@media (max-width:640px){.pjob{padding:22px}.pjhead{grid-template-columns:auto 1fr}.pshare{grid-column:1/-1;text-align:left}.pjob dl{grid-template-columns:1fr}.paidsplit div{min-width:0;padding:8px;font-size:11px}}
 /* pies */
 .pies{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
 .pie{background:var(--surface);padding:24px}
@@ -191,7 +211,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
     <button class="tab tC" role="tab" data-act="view" data-v="C">C · $550k</button>
     <button class="tab tX" role="tab" data-act="view" data-v="compare">Compare all three</button>
     <div class="jump">
-      <a href="#diagnosis">Diagnosis</a><a href="#inputs">Inputs</a><a href="#outputs">Outputs</a><a href="#channels">Channels</a><a href="#measure">Measurement</a><a href="#ninety">90 days</a><a href="#known">Known vs. assumed</a>
+      <a href="#diagnosis">Diagnosis</a><a href="#inputs">Inputs</a><a href="#outputs">Outputs</a><a href="#channels">Channels</a><a href="#paid">Paid</a><a href="#measure">Measurement</a><a href="#ninety">90 days</a><a href="#known">Known vs. assumed</a>
     </div>
   </div>
 </nav>
@@ -308,9 +328,68 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
   </div>
 </div></section>
 
+<!-- PAID ENTERPRISE -->
+<section id="paid"><div class="wrap">
+  <div class="eyebrow">05 · Paid enterprise</div>
+  <h2>Paid enterprise: four channels, <span class="hl hl-b">four jobs</span>.</h2>
+  <p class="lede">Paid isn't brand awareness here. Each channel has one job in the pipeline, and one number that decides whether it keeps its budget.</p>
+
+  <div class="paidsplit" aria-label="Scenario B paid split">
+    <div style="flex:130;background:var(--blue)"><b>LinkedIn</b><span>~$130k</span></div>
+    <div style="flex:30;background:var(--blue-light)"><b>Google</b><span>~$30k</span></div>
+    <div style="flex:10;background:var(--surface-2)"><b>ChatGPT</b><span>~$10k</span></div>
+    <div style="flex:8;background:var(--surface)"><b>Reddit</b><span>$5–10k</span></div>
+  </div>
+  <p class="small muted">How scenario B's ~$180k paid enterprise budget splits.</p>
+
+  <div class="grid g2 mt2">
+    <article class="pjob">
+      <div class="pjhead"><span class="pn">1</span><div><div class="eyebrow">LinkedIn</div><h3>Warm the whole buying group</h3></div><div class="pshare"><b>~70%</b><span>~$130k of B</span></div></div>
+      <p><b>Why spend:</b> Fermat's ICP is a list we can name: fashion brands with $100M–$5B revenue. LinkedIn is the only paid channel that targets them by account and by role, so the Head of Design, Product, Digital and IT all see Fermat before sales calls.</p>
+      <p><b>Audience:</b> ~800 named accounts, 4–5 buyers each (~3,500 people)</p>
+      <dl><dt>Leading</dt><dd>% of target accounts reached, accounts with 2+ contacts engaged, buying-group coverage (decision maker / champion / gatekeeper)</dd><dt>Lagging</dt><dd>Opportunities from target accounts; engaged vs non-engaged conversion</dd></dl>
+      <div class="keep"><b>Keep or cut</b>Keep if engaged accounts convert to opportunities at 2x the rate of non-engaged ones.</div>
+    </article>
+    <article class="pjob">
+      <div class="pjhead"><span class="pn">2</span><div><div class="eyebrow">Google search</div><h3>Capture buyers already looking</h3></div><div class="pshare"><b>~15%</b><span>~$30k of B</span></div></div>
+      <p><b>Why spend:</b> some brands are already comparing AI design tools. Search catches them at the moment of intent, on category terms ("AI fashion design software", "AI tech pack") and competitor names.</p>
+      <dl><dt>Leading</dt><dd>Impression share on category and competitor terms, click-through rate, branded search volume for "Fermat" (our awareness score: it rises when every other channel works)</dd><dt>Lagging</dt><dd>Demo requests and qualified leads from search, cost per qualified lead</dd></dl>
+      <div class="keep"><b>Keep or cut</b>Cut competitor terms if their cost per qualified lead is 2x category terms.</div>
+    </article>
+    <article class="pjob">
+      <div class="pjhead"><span class="pn">3</span><div><div class="eyebrow">Paid ChatGPT</div><h3>Create champions inside ICP accounts</h3></div><div class="pshare"><b>~5%</b><span>~$10k test</span></div></div>
+      <p><b>Why spend:</b> designers ask AI which tools to use. Ads there put Fermat in front of the people who use it daily, and a designer who's already using it is the warmest way into the buying group.</p>
+      <dl><dt>Leading</dt><dd>Sign-ups and trials, <b>matched to company domain</b></dd><dt>Lagging</dt><dd>Sign-ups from ICP accounts → handed to sales and added to LinkedIn targeting; opportunities where a champion was already active</dd></dl>
+      <div class="keep"><b>Keep or cut</b>Keep if 10%+ of sign-ups come from ICP accounts after one quarter.</div>
+    </article>
+    <article class="pjob">
+      <div class="pjhead"><span class="pn">4</span><div><div class="eyebrow">Reddit</div><h3>Earn trust in designer communities</h3></div><div class="pshare"><b>~3–5%</b><span>$5–10k, mostly time</span></div></div>
+      <p><b>Why spend:</b> designers trust peers over vendors. Being useful in fashion and design communities builds the reputation that makes champions recommend Fermat inside their company.</p>
+      <dl><dt>Leading</dt><dd>Mentions, upvoted answers, referral traffic from Reddit</dd><dt>Lagging</dt><dd>Free sign-ups from ICP companies</dd></dl>
+      <div class="keep"><b>Keep or cut</b>Pause if there are no ICP sign-ups after one quarter.</div>
+    </article>
+  </div>
+
+  <div class="card ink mt">
+    <div class="eyebrow" style="color:#9a9a9a">Organic, no media budget</div>
+    <h3>AI search visibility</h3>
+    <p style="color:#ddd"><b style="color:#fff">Why:</b> buyers now research in AI before they talk to sales. Being recommended in AI answers is free reach, and paid only works if the brand shows up when people check.</p>
+    <p style="color:#ddd;margin-top:8px"><b style="color:#fff">Measure:</b> share of AI answers across 20–30 tracked prompts, quarter on quarter.</p>
+  </div>
+
+  <h3 class="mt3">The link between them</h3>
+  <ol class="flow">
+    <li style="background:var(--magenta-light)">Designer channels (ChatGPT, Reddit) find champions</li>
+    <li style="background:var(--blue-light)">Their company gets added to LinkedIn ABM</li>
+    <li style="background:var(--blue)">The buying group warms up</li>
+    <li style="background:var(--green)">Sales starts the conversation with a champion already inside</li>
+  </ol>
+  <p class="mt2"><b style="color:var(--ink)">Rule for moving budget:</b> review monthly. Once a channel has 10+ qualified leads, move 10–20% of budget from the highest cost per opportunity to the lowest.</p>
+</div></section>
+
 <!-- MEASUREMENT -->
 <section id="measure"><div class="wrap">
-  <div class="eyebrow">05 · Measurement</div>
+  <div class="eyebrow">06 · Measurement</div>
   <h2>Track it monthly. <span class="hl hl-b">Move money</span> fast.</h2>
   <div class="tw mt2"><table>
     <thead><tr><th>Channel</th><th>Primary metric</th><th>Leading indicators</th><th>Watch for</th></tr></thead>
@@ -330,7 +409,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 
 <!-- 90 DAYS -->
 <section id="ninety"><div class="wrap">
-  <div class="eyebrow">06 · First 90 days</div>
+  <div class="eyebrow">07 · First 90 days</div>
   <h2>Run it myself. <span class="hl hl-m">Buy</span> the rest.</h2>
   <div class="grid g2 mt2">
     <div class="card m"><h3>Run myself</h3><ul class="clean">
@@ -342,7 +421,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 
 <!-- KNOWN VS ASSUMED -->
 <section id="known"><div class="wrap">
-  <div class="eyebrow">07 · Known vs. assumed</div>
+  <div class="eyebrow">08 · Known vs. assumed</div>
   <h2>Every input, <span class="hl hl-g">labeled</span>.</h2>
   <p class="lede">Values update as you edit them above.</p>
   <div class="tw"><table id="knownTable"></table></div>
@@ -350,7 +429,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 
 <!-- HOW -->
 <section id="how"><div class="wrap">
-  <div class="eyebrow">08 · How I built it</div>
+  <div class="eyebrow">09 · How I built it</div>
   <h2>How I built it.</h2>
   <p class="lede mt">Built with Claude Code. The reasoning and assumptions are mine, from running ABM and events at Foundever. All Fermat figures come from the case brief.</p>
   <p class="small muted">The model turns spend into leads, opportunities and wins per channel and quarter, lands wins after the sales cycle, caps closes at AE capacity and carries the overflow forward. Single HTML file, no backend. Your edits stay in this browser.</p>
