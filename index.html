@@ -147,6 +147,46 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 .prow.ghead{font-weight:600;color:var(--ink);border-bottom:1px solid var(--ink);padding-top:16px}
 .gsub{font-weight:600}
 .pie li.subli{padding-left:14px;color:var(--muted)}
+/* pipeline */
+.pipe{display:grid;grid-template-columns:1fr 150px 1fr 170px 1fr 48px 1.1fr;align-items:center;row-gap:10px}
+.pipe a{text-decoration:none;color:var(--ink)}
+.pipe .pk{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:6px}
+.pipe .pm{display:block;font-size:12px;color:var(--muted);margin-top:6px}
+.pst{display:flex;flex-direction:column;justify-content:center;padding:22px}
+.pst>b{font-family:'Inter Tight';font-size:clamp(22px,2.2vw,30px);font-weight:600;letter-spacing:-0.02em;line-height:1}
+.pst .pd{font-size:13px;margin-top:8px;color:var(--text)}
+.pst.p1{background:var(--surface);min-height:230px}
+.pst.p2{background:var(--blue-light);min-height:180px}
+.pst.p3{background:var(--green);min-height:140px}
+.pst.p3 .pk{color:var(--green-deep)} .pst.p2 .pk{color:var(--blue-deep)}
+.pst.p4{background:var(--ink);color:#fff;min-height:230px}
+.pst.p4 .pk,.pst.p4 .pm{color:#a8a8a8}
+.pline{display:flex;flex-direction:column;gap:2px;margin-top:14px;font-size:13px;border-top:1px solid #444;padding-top:10px}
+.pline b{font-family:'Inter Tight';font-size:24px;letter-spacing:-0.02em;white-space:nowrap}
+.pcon{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:0 14px;position:relative;align-self:stretch}
+.parrow{display:block;position:absolute;left:0;right:0;top:50%;height:2px;background:var(--ink);z-index:0}
+.parrow::after{content:'';position:absolute;right:-1px;top:-5px;border:6px solid transparent;border-left:8px solid var(--ink);border-right:0}
+.prate,.pgate{position:relative;z-index:1}
+.prate{background:var(--magenta-light);padding:10px 12px;text-align:center;width:100%}
+.prate b{font-family:'Inter Tight';font-size:24px;letter-spacing:-0.02em;display:block;line-height:1}
+.prate .pk{color:var(--magenta-deep);margin-bottom:4px}
+.pgate{background:var(--white);border:1px solid var(--ink);padding:10px 12px;font-size:12px;text-align:center;width:100%}
+.pgate b{font-family:'Inter Tight';font-size:18px}
+.pgate .pk{margin-bottom:2px}
+.pcycle{grid-column:1/6;border-top:2px dashed var(--ink);padding:10px 0 0;font-size:13px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+.pcycle .pk{margin:0}
+.pcycle b{font-family:'Inter Tight';font-size:18px}
+.pcycle .pm{margin:0}
+.pipe a:hover{outline:2px solid var(--ink);outline-offset:-2px}
+@media (max-width:900px){
+  .pipe{grid-template-columns:1fr;row-gap:0}
+  .pst{min-height:0!important}
+  .pcon{flex-direction:column;align-items:stretch;padding:14px 0 14px 40px;min-height:52px}
+  .parrow{left:18px;right:auto;top:0;bottom:0;width:2px;height:auto}
+  .parrow::after{right:-5px;top:auto;bottom:-1px;border:6px solid transparent;border-top:8px solid var(--ink);border-bottom:0}
+  .prate,.pgate{width:auto;flex:1;text-align:left}
+  .pcycle{grid-column:1;margin-top:14px}
+}
 /* pies */
 .pies{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
 .pie{background:var(--surface);padding:24px}
@@ -256,7 +296,20 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
   <h2>Move the <span class="hl hl-b">budget</span>. Watch the logos.</h2>
   <p class="lede">Every number is editable. Figures marked <span class="pill given">Given</span> come from the case brief, <span class="pill assumed">Assumed</span> are mine. <button class="btn sm ghost" data-act="reset" style="margin-left:6px">Reset to defaults</button></p>
 
-  <h3>Budget mix</h3>
+  <h3>Assumptions you can change</h3>
+  <p class="small muted" style="margin-bottom:16px">Ranges from the brief. "Model" shows what the calculator uses now; edit any of them further down.</p>
+  <div class="pipe" id="pipe">
+    <a class="pst p1" href="#chanTable"><span class="pk">Stage 1</span><b>Qualified lead</b><span class="pd">Leads from today's engine and the new channels</span></a>
+    <div class="pcon"><span class="parrow"></span><a class="prate" href="#chanTable"><span class="pk">Lead → opp</span><b>30–50%</b><span class="pm" id="pmL2o"></span></a></div>
+    <a class="pst p2" href="#chanTable"><span class="pk">Stage 2</span><b>Opportunity</b><span class="pd">Worked by the AEs</span></a>
+    <div class="pcon"><span class="parrow"></span><a class="prate" href="#chanTable"><span class="pk">Opp → won</span><b>15–25%</b><span class="pm" id="pmO2w"></span></a><a class="pgate" href="#globals"><span class="pk">AE capacity</span><b>4–5</b> new logos per quarter each<span class="pm" id="pmCap"></span></a></div>
+    <a class="pst p3" href="#outputs"><span class="pk">Stage 3</span><b>Won</b><span class="pd">New logo, new ARR</span></a>
+    <div class="pcon"><span class="parrow"></span></div>
+    <a class="pst p4" href="#globals"><span class="pk">Economics</span><b>Payback</b><span class="pline"><span>Gross margin</span><b>60–70%</b></span><span class="pm" id="pmGm"></span><span class="pline"><span>Target CAC payback</span><b>&lt; 18 mo</b></span><span class="pm" id="pmPay"></span></a>
+    <a class="pcycle" href="#globals"><span class="pk">Sales cycle</span><b>3–6 months</b> from qualified lead to won<span class="pm" id="pmCycle"></span></a>
+  </div>
+
+  <h3 class="mt3">Budget mix</h3>
   <div class="pies" id="pies"></div>
 
   <h3 class="mt3">Budget by channel and quarter <span class="small muted" style="font-family:Inter;letter-spacing:0;font-weight:400">($k)</span></h3>
@@ -821,9 +874,21 @@ function renderKnown(){
   rows.push(['4th AE ramp','Half capacity in the first quarter','Assumed','']);
   document.getElementById('knownTable').innerHTML=`<thead><tr><th>Input</th><th>Value</th><th>Badge</th><th>Note</th></tr></thead><tbody>${rows.map(([a,b,c,d])=>`<tr><td>${esc(a)}</td><td style="font-weight:600;color:var(--ink)">${esc(b)}</td><td><span class="pill ${c.toLowerCase()}">${c}</span></td><td class="small muted">${esc(d)}</td></tr>`).join('')}</tbody>`;
 }
+function renderPipe(){
+  const g=S.global,lead=S.channels.filter(c=>c.kind==='lead');
+  const rng=(f)=>{const v=lead.map(f);const lo=Math.min(...v),hi=Math.max(...v);return lo===hi?lo+'%':lo+'–'+hi+'%';};
+  const set=(id,t)=>{const e=document.getElementById(id);if(e)e.textContent=t;};
+  set('pmL2o',`Model: ${g.baseL2O}% today, ${rng(c=>num(c.l2o))} by channel`);
+  set('pmO2w',`Model: ${g.baseO2W}% today, ${rng(c=>num(c.o2w))} by channel`);
+  set('pmCap',`Model: ${g.aes} AEs × ${g.aeCap} = ${n1(g.aes*g.aeCap)} a quarter`);
+  set('pmGm',`Model: ${g.gm}%`);
+  set('pmPay',`Model: ${g.paybackTarget} months`);
+  const [f1]=lagSplit();
+  set('pmCycle',`· Model: ${g.cycle} months, so wins land ${f1>=1?'the next quarter':f1<=0?'two quarters later':pct(f1)+' next quarter, '+pct(1-f1)+' the one after'}`);
+}
 function update(){
   const R={};SC.forEach(s=>R[s]=run(s));
-  renderHero(R);renderPies(R);renderBudgetTotals();renderDiagnosis(R);renderCallouts(R);renderTiles(R);
+  renderHero(R);renderPipe();renderPies(R);renderBudgetTotals();renderDiagnosis(R);renderCallouts(R);renderTiles(R);
   document.getElementById('tgtQ').textContent=n1(S.global.targetLogos/4);
   renderWins(R);renderCompare(R);renderFunnel(R);renderCpo(R);renderKnown();
   window.__fermat=R;
