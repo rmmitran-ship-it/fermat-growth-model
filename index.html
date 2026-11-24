@@ -153,6 +153,14 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 .dmcap em{position:absolute;top:-20px;right:6px;font-style:normal;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap}
 .pcbar{margin-bottom:22px}
 .pchd{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 12px;font-size:13px;margin-bottom:26px;color:var(--ink)}
+.rfun2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.rhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin-bottom:10px;color:var(--ink);font-size:13px}
+.rhead b{font-family:'Inter Tight';font-size:20px;letter-spacing:-0.02em}
+.rfun2 .rrow{padding:14px 16px;gap:10px}
+.rfun2 .rrow b{font-size:clamp(30px,3.2vw,44px)}
+.rfun2 .rpill{padding:6px 10px;gap:8px}
+.rfun2 .rpill b{font-size:17px}
+@media (max-width:900px){.rfun2{grid-template-columns:1fr;gap:40px}}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -324,7 +332,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
     <p class="goalline" id="dmGoal"></p>
     <div class="goalin" id="dmIn"></div>
   </div>
-  <div class="rfun" id="dmFunnel"></div>
+  <div id="dmFunnel"></div>
   <p class="small muted mt" id="dmNote"></p>
 
   <h3 class="mt3">Where the pipeline comes from</h3>
@@ -546,7 +554,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{baseLeads:35,baseL2O:45,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32},
+  global:{baseLeads:35,baseL2O:45,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:50,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -577,8 +585,9 @@ const GMETA=[
   {k:'targetArr',label:'2027 new ARR target',unit:'$M',min:1,max:6,step:0.1,badge:'Given',note:''},
   {k:'abmThreshold',label:'ABM budget needed for uplift',unit:'$k',min:0,max:100,step:5,badge:'Assumed',note:'',grid:false},
   {k:'abmUplift',label:'ABM uplift on lead → opp (LinkedIn, Google, events)',unit:'pts',min:0,max:30,step:1,badge:'Assumed',note:'',grid:false},
-  {k:'entShare',label:'Enterprise share of new ARR',unit:'%',min:0,max:60,step:1,badge:'Given',note:'Fermat: 20% of clients are enterprise. Applied here to ARR.',grid:false},
-  {k:'entClients',label:'Enterprise clients in 2027',unit:'logos',min:1,max:30,step:1,badge:'Assumed',note:'Sets the enterprise deal size: enterprise ARR ÷ clients. Smaller deals take the rest of the ARR and logos.',grid:false}
+  {k:'entLogoShare',label:'Enterprise share of new logos',unit:'%',min:0,max:60,step:1,badge:'Given',note:'Fermat: 20% of clients are enterprise.',grid:false},
+  {k:'entAcv',label:'Enterprise deal size (ABM)',unit:'$k',min:50,max:250,step:5,badge:'Assumed',note:'Named $100M–$5B brands worked through ABM. Smaller deals take the rest of the ARR.',grid:false},
+  {k:'abmAccounts',label:'Named accounts on the ABM list',unit:'accounts',min:100,max:2000,step:50,badge:'Assumed',note:'Same list LinkedIn targets.',grid:false}
 ];
 
 const clone=o=>JSON.parse(JSON.stringify(o));
@@ -921,36 +930,38 @@ function renderKnown(){
 }
 function renderDealMixInputs(){
   const g=S.global;
-  const f=(p,v,min,max,pre,suf)=>`<span class="gi">${pre||''}<input type="number" data-p="${p}" min="${min}" max="${max}" value="${v}">${suf||''}</span>`;
+  const f=(p,v,min,max,pre,suf,w)=>`<span class="gi">${pre||''}<input type="number" data-p="${p}" min="${min}" max="${max}" value="${v}"${w?` style="width:${w}px"`:''}>${suf||''}</span>`;
   document.getElementById('dmIn').innerHTML=
     `<label>New logos in 2027 <span class="pill given">Given</span>${f('global.targetLogos',g.targetLogos,20,120)}</label>`+
-    `<label>Enterprise share of ARR <span class="pill given">Given</span>${f('global.entShare',g.entShare,0,60,'','%')}</label>`+
-    `<label>Enterprise clients <span class="pill assumed">Assumed</span>${f('global.entClients',g.entClients,1,30)}</label>`;
+    `<label>Enterprise share of logos <span class="pill given">Given</span>${f('global.entLogoShare',g.entLogoShare,0,60,'','%')}</label>`+
+    `<label>Enterprise deal size <span class="pill assumed">Assumed</span>${f('global.entAcv',g.entAcv,50,250,'$','k')}</label>`+
+    `<label>Named ABM accounts <span class="pill assumed">Assumed</span>${f('global.abmAccounts',g.abmAccounts,100,2000,'','',72)}</label>`;
 }
 const BRIEF={l2o:[30,40,50],o2w:[15,20,25]};
 function goalMix(){
   const g=S.global,arr=g.targetArr*1e6,won=Math.max(1,num(g.targetLogos));
-  const entArr=arr*num(g.entShare)/100,entN=Math.min(Math.max(1,num(g.entClients)),won-1),entAcv=entArr/entN;
-  const smN=won-entN,smAvg=(arr-entArr)/smN;
-  return {arr,won,entArr,entN,entAcv,smN,smAvg,avg:arr/won};
+  const entN=won*num(g.entLogoShare)/100,entAcv=num(g.entAcv)*1000,entArr=entN*entAcv;
+  const smN=won-entN,smArr=arr-entArr,smAvg=smN>0?smArr/smN:0;
+  return {arr,won,entN,entAcv,entArr,smN,smArr,smAvg,avg:arr/won};
 }
 function renderDealMix(){
-  const g=S.global,m=goalMix(),won=m.won;
-  const fmt=x=>Math.round(x).toLocaleString('en-US');
-  const opps=BRIEF.o2w.map(r=>won/(r/100));          // [cons, mid, best]
-  const leads=opps.map((o,i)=>o/(BRIEF.l2o[i]/100));
-  const out=m.smAvg>50000||m.smAvg<15000;
-  document.getElementById('dmGoal').innerHTML=`Goal: <b>${fmt(won)} logos</b> for <b>${M$(m.arr,1)}</b>, a ${k$(m.avg)} average. ${fmt(m.entN)} enterprise at ${k$(m.entAcv)} + ${fmt(m.smN)} smaller deals at ${k$(m.smAvg)}${out?' <span class="warn" style="font-size:14px">outside the $15–50k range</span>':''}.`;
+  const g=S.global,m=goalMix(),fmt=x=>Math.round(x).toLocaleString('en-US');
+  const back=w=>{const o=BRIEF.o2w.map(r=>w/(r/100));return {o,l:o.map((x,i)=>x/(BRIEF.l2o[i]/100))};};
+  const E=back(m.entN),Sm=back(m.smN);
+  const bad=m.smAvg>50000||m.smAvg<15000;
+  document.getElementById('dmGoal').innerHTML=`Goal: <b>${fmt(m.won)} logos</b> for <b>${M$(m.arr,1)}</b>. ${fmt(m.entN)} enterprise via ABM at ${k$(m.entAcv)} + ${fmt(m.smN)} smaller deals at ${k$(m.smAvg)}${bad?' <span class="warn" style="font-size:14px">outside the $15–50k range</span>':''}.`;
   const row=(cls,label,mid,lo,hi,sub)=>`<div class="rrow ${cls}"><span class="rl">${label}</span><b>${fmt(mid)}</b><span class="rr">${lo!=null?`Range ${fmt(lo)}–${fmt(hi)}<br>`:''}${sub}</span></div>`;
-  const rate=(label,r)=>`<div class="rrate"><span class="rarr"></span><span class="rpill"><span class="pk">${label}</span><b>${r[0]}–${r[2]}%</b><span>midpoint ${r[1]}%</span></span></div>`;
-  document.getElementById('dmFunnel').innerHTML=
-    row('r1','Qualified leads',leads[1],leads[2],leads[0],`${fmt(leads[1]/12)} a month at midpoint`)+
-    rate('Lead → opp',BRIEF.l2o)+
-    row('r2','Opportunities',opps[1],opps[2],opps[0],`${fmt(opps[1]/12)} a month at midpoint`)+
-    rate('Opp → won',BRIEF.o2w)+
-    row('r3','Won',won,null,null,`${fmt(m.entN)} enterprise + ${fmt(m.smN)} smaller`);
-  const cap=g.aes*g.aeCap*4,need=won/g.aes/4;
-  document.getElementById('dmNote').innerHTML=`Big number: midpoint rates. Range: best case (50%, 25%) to conservative (30%, 15%), spread over 12 months. Today's engine brings ${g.baseLeads} qualified leads a month, so the midpoint needs about ${fmt(Math.max(0,leads[1]/12-g.baseLeads))} more a month. ${g.aes} AEs at ${g.aeCap} a quarter close ${fmt(cap)} logos a year, ${won>cap?fmt(won-cap)+' short':'enough'}: the goal needs ${n1(need)} per AE per quarter.`;
+  const rate=(label,r)=>`<div class="rrate"><span class="rarr"></span><span class="rpill"><span class="pk">${label}</span><b>${r[0]}–${r[2]}%</b><span>mid ${r[1]}%</span></span></div>`;
+  const funnel=(P,top,topSub,won,wonSub)=>`<div class="rfun">${row('r1',top,P.l[1],P.l[2],P.l[0],topSub)}${rate('Lead → opp',BRIEF.l2o)}${row('r2','Opportunities',P.o[1],P.o[2],P.o[0],`${fmt(P.o[1]/12)} a month`)}${rate('Opp → won',BRIEF.o2w)}${row('r3','Won',won,null,null,wonSub)}</div>`;
+  const listPct=E.l[1]/Math.max(1,num(g.abmAccounts));
+  document.getElementById('dmFunnel').innerHTML=`<div class="rfun2">
+    <div><div class="rhead"><span class="dot" style="background:var(--ink)"></span><b>Enterprise · ABM</b><span>${fmt(m.entN)} × ${k$(m.entAcv)} = ${M$(m.entArr,1)}</span></div>
+      ${funnel(E,'Qualified accounts',`${pct(listPct)} of ${fmt(g.abmAccounts)} named accounts`,m.entN,`${pct(m.entArr/m.arr)} of new ARR`)}</div>
+    <div><div class="rhead"><span class="dot" style="background:var(--magenta)"></span><b>Smaller deals</b><span>${fmt(m.smN)} × ${k$(m.smAvg)} = ${M$(m.smArr,1)}</span></div>
+      ${funnel(Sm,'Qualified leads',`${fmt(Sm.l[1]/12)} a month`,m.smN,`${pct(m.smArr/m.arr)} of new ARR`)}</div>
+  </div>`;
+  const cap=g.aes*g.aeCap*4,need=m.won/g.aes/4,totL=E.l[1]+Sm.l[1];
+  document.getElementById('dmNote').innerHTML=`Big numbers: midpoint rates. Range: best case (50%, 25%) to conservative (30%, 15%). Together: ${fmt(totL)} qualified leads and accounts, ${fmt(E.o[1]+Sm.o[1])} opportunities. Today's engine brings ${g.baseLeads} leads a month, so smaller deals alone need about ${fmt(Math.max(0,Sm.l[1]/12-g.baseLeads))} more a month, and ABM has to qualify about ${fmt(E.l[1]/12)} named accounts a month. ${g.aes} AEs at ${g.aeCap} a quarter close ${fmt(cap)} logos a year, ${m.won>cap?fmt(m.won-cap)+' short':'enough'}: the goal needs ${n1(need)} per AE per quarter.`;
 }
 function dealGoal(){
   const won=goalMix().won;
