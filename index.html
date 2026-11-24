@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fermat 2027 growth model</title>
+<meta name="description" content="Interactive 2027 new-logo plan for Fermat: budget split, funnel, sales capacity, CAC and payback by scenario. Illustrative figures.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+<style>
+:root{
+  --ink:#141414; --text:#333; --white:#fff; --surface:#efefef; --surface-2:#e8e8e8; --dark:#2c2c2c;
+  --magenta:#ff95f4; --magenta-light:#ffc7f9; --magenta-deep:#5c1a54;
+  --blue:#7b9eff;    --blue-light:#bdcfff;    --blue-deep:#1a2f6b;
+  --green:#bfffc6;   --green-bright:#66ff78;  --green-deep:#0a3d14;
+  --muted:#6b6b6b; --line:#dcdcdc; --red:#d0242f; --base:#cfcfcf;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.4;color:var(--text);background:var(--white);-webkit-font-smoothing:antialiased}
+h1,h2,h3,.display{font-family:'Inter Tight',Inter,sans-serif;letter-spacing:-0.024em;line-height:.95;color:var(--ink);font-weight:600}
+h2{font-size:clamp(34px,5vw,56px);margin-bottom:12px}
+h3{font-size:22px;margin-bottom:10px;line-height:1.05}
+p{max-width:68ch}
+a{color:var(--ink)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+section{padding:80px 0}
+section+section{border-top:1px solid var(--surface-2)}
+.eyebrow{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px}
+.lede{font-size:17px;color:var(--text);margin-bottom:32px}
+.hl{padding:0 .1em;display:inline-block;line-height:1.02}
+.hl-m{background:var(--magenta)} .hl-b{background:var(--blue)} .hl-g{background:var(--green)}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+
+/* hero */
+.hero{padding:56px 0 64px}
+.topbar{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:72px}
+.topbar b{color:var(--ink);font-family:'Inter Tight';font-size:18px;letter-spacing:-0.02em}
+.hero h1{font-size:clamp(52px,9vw,124px);font-weight:700;margin-bottom:22px}
+.hero .sub{font-family:'Inter Tight';font-size:clamp(24px,3vw,36px);font-weight:500;color:var(--ink);letter-spacing:-0.02em;margin-bottom:36px}
+.liveline{font-size:clamp(17px,2vw,21px);color:var(--ink);max-width:none}
+.liveline b{font-weight:600}
+
+/* tabs */
+.tabbar{position:sticky;top:0;z-index:20;background:var(--white);border-bottom:1px solid var(--surface-2)}
+.tabbar .wrap{display:flex;gap:6px;padding-top:10px;padding-bottom:10px;overflow-x:auto;align-items:center}
+.tab{font:600 14px Inter;border:0;background:var(--surface);color:var(--ink);padding:10px 16px;border-radius:2px;cursor:pointer;white-space:nowrap}
+.tab[aria-selected="true"].tA{background:var(--magenta)}
+.tab[aria-selected="true"].tB{background:var(--blue)}
+.tab[aria-selected="true"].tC{background:var(--green)}
+.tab[aria-selected="true"].tX{background:var(--ink);color:var(--white)}
+.tabbar .jump{margin-left:auto;display:flex;gap:14px;font-size:13px}
+.tabbar .jump a{text-decoration:none;color:var(--muted);white-space:nowrap}
+.tabbar .jump a:hover{color:var(--ink)}
+
+/* blocks */
+.card{background:var(--surface);padding:32px}
+.card.m{background:var(--magenta-light)} .card.b{background:var(--blue-light)} .card.g{background:var(--green)}
+.card.ink{background:var(--ink);color:#e9e9e9} .card.ink h3{color:var(--white)}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.mt{margin-top:12px} .mt2{margin-top:32px} .mt3{margin-top:56px}
+
+.pill{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;letter-spacing:.02em;white-space:nowrap;vertical-align:middle}
+.pill.given{background:var(--green);color:var(--green-deep)}
+.pill.assumed{background:var(--magenta-light);color:var(--magenta-deep)}
+.pill.mine{background:var(--blue-light);color:var(--blue-deep)}
+.dot{display:inline-block;width:10px;height:10px;margin-right:8px;vertical-align:-1px}
+
+/* stat tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.tile{background:var(--surface);padding:24px 22px;min-height:164px;display:flex;flex-direction:column}
+.tile .k{font-size:13px;font-weight:600;color:var(--ink)}
+.tile .v{font-family:'Inter Tight';font-weight:600;font-size:clamp(40px,4.4vw,56px);letter-spacing:-0.03em;color:var(--ink);line-height:1;margin:14px 0 10px}
+.tile .v.bad{color:var(--red)}
+.tile .s{font-size:12.5px;color:var(--muted);margin-top:auto}
+.meter{height:6px;background:var(--white);margin-top:8px}
+.meter i{display:block;height:100%;background:var(--ink)}
+.tile.sA{background:var(--magenta-light)} .tile.sB{background:var(--blue-light)} .tile.sC{background:var(--green)}
+
+/* tables */
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+td.num,th.num{text-align:right}
+tr.total td{font-weight:600;color:var(--ink);border-bottom:2px solid var(--ink)}
+.colA{background:rgba(255,149,244,.14)} .colB{background:rgba(123,158,255,.14)} .colC{background:rgba(191,255,198,.35)}
+.colA.on{background:rgba(255,149,244,.32)} .colB.on{background:rgba(123,158,255,.3)} .colC.on{background:rgba(191,255,198,.75)}
+
+/* controls */
+.ctl{display:flex;align-items:center;gap:10px;min-width:170px}
+.ctl input[type=range]{flex:1;min-width:70px;accent-color:var(--ink);height:18px}
+input[type=number],input[type=text],select{font:500 14px Inter;color:var(--ink);background:var(--white);border:1px solid var(--line);border-radius:2px;padding:6px 8px;width:84px}
+input[type=text]{width:150px}
+input::placeholder{color:#a3a3a3;font-weight:400}
+input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
+.btn{font:600 13px Inter;border:0;background:var(--ink);color:var(--white);padding:9px 14px;border-radius:2px;cursor:pointer;white-space:nowrap}
+.btn.ghost{background:var(--white);color:var(--ink);border:1px solid var(--ink)}
+.btn.sm{padding:5px 9px;font-size:12px}
+.btn.x{background:transparent;color:var(--muted);padding:2px 6px;font-size:16px}
+.ginput{background:var(--surface);padding:20px}
+.ginput .top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;margin-bottom:8px}
+.ginput .lab{font-weight:600;color:var(--ink);font-size:14px}
+.ginput .note{font-size:12px;color:var(--muted);margin-top:6px}
+
+.callouts{display:grid;gap:8px;margin-bottom:20px}
+.callout{background:var(--magenta-light);color:var(--ink);padding:16px 20px;font-weight:500}
+.callout.b{background:var(--blue-light)}
+.callout b{font-weight:700}
+
+/* pies */
+.pies{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.pie{background:var(--surface);padding:24px}
+.pie .hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.pie .hd b{font-family:'Inter Tight';font-size:22px;color:var(--ink);letter-spacing:-0.02em}
+.pie canvas{max-width:230px;margin:0 auto;display:block}
+.pie ul{list-style:none;margin-top:16px;font-size:13px}
+.pie li{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--line)}
+.pie .line{margin-top:14px;font-weight:600;color:var(--ink)}
+.pie.empty{display:flex;flex-direction:column;justify-content:center;gap:14px;min-height:300px;background:var(--white);border:1px dashed #b8b8b8}
+
+/* charts */
+.chartbox{background:var(--surface);padding:24px}
+.chartbox h3{font-size:19px}
+.chartwrap{position:relative;height:300px}
+.minis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.minis .chartwrap{height:190px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;margin-top:12px}
+
+.hbar{display:grid;grid-template-columns:130px 1fr 70px;gap:10px;align-items:center;font-size:13px;margin:8px 0}
+.hbar .t{height:22px;background:var(--white)}
+.hbar .t i{display:block;height:100%}
+.hbar .val{text-align:right;font-weight:600;color:var(--ink)}
+.funnel .row{display:grid;grid-template-columns:130px 1fr;gap:10px;align-items:center;margin:8px 0;font-size:13px}
+.funnel .bar{height:34px;display:flex;align-items:center;padding:0 10px;font-weight:600;color:var(--ink);white-space:nowrap;min-width:max-content}
+
+.rank{display:grid;grid-template-columns:56px 1fr;gap:16px;padding:22px 0;border-bottom:1px solid var(--line)}
+.rank .n{font-family:'Inter Tight';font-size:44px;font-weight:600;color:var(--ink);line-height:.9}
+.wont li{margin:8px 0 8px 18px}
+ul.clean{list-style:none}
+ul.clean li{padding:9px 0;border-bottom:1px solid rgba(0,0,0,.08)}
+ul.clean li:last-child{border-bottom:0}
+.rule{font-size:clamp(20px,2.4vw,28px);font-family:'Inter Tight';letter-spacing:-0.02em;color:var(--ink);line-height:1.15;font-weight:500}
+.warn{color:var(--red);font-size:12px;font-weight:600}
+.addrow{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;background:var(--surface);padding:20px;margin-top:12px}
+.addrow label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);font-weight:600}
+footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
+.hide{display:none!important}
+
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  section{padding:56px 0}
+  .card{padding:24px}
+  .topbar{margin-bottom:44px}
+  .tabbar .jump{display:none}
+  .hbar,.funnel .row{grid-template-columns:96px 1fr 60px}
+  .funnel .row{grid-template-columns:96px 1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="topbar"><b>fermat</b><span>2027 growth model · for Martí and Pol · illustrative figures</span></div>
+    <h1>Where <span class="hl hl-m">pipeline</span><br>happens.</h1>
+    <p class="sub">Fermat 2027 new-logo plan.</p>
+    <p class="liveline" id="liveline"></p>
+  </div>
+</header>
+
+<nav class="tabbar" aria-label="Scenario">
+  <div class="wrap" role="tablist">
+    <button class="tab tA" role="tab" data-act="view" data-v="A">A · My plan</button>
+    <button class="tab tB" role="tab" data-act="view" data-v="B">B · $310k</button>
+    <button class="tab tC" role="tab" data-act="view" data-v="C">C · $550k</button>
+    <button class="tab tX" role="tab" data-act="view" data-v="compare">Compare all three</button>
+    <div class="jump">
+      <a href="#diagnosis">Diagnosis</a><a href="#inputs">Inputs</a><a href="#outputs">Outputs</a><a href="#channels">Channels</a><a href="#measure">Measurement</a><a href="#ninety">90 days</a><a href="#known">Known vs. assumed</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+<!-- DIAGNOSIS -->
+<section id="diagnosis"><div class="wrap">
+  <div class="eyebrow">01 · Diagnosis</div>
+  <h2>Three things stand between<br>today and <span class="hl hl-g">60 logos</span>.</h2>
+  <p class="lede">Today's engine closes about <b id="dToday"></b> new logos a year. The gap is leads, sales capacity and timing.</p>
+  <div class="grid g3">
+    <div class="card m"><div class="eyebrow" style="color:var(--magenta-deep)">Lead gap</div><h3 id="dLead"></h3><p class="small" id="dLeadNote"></p></div>
+    <div class="card b"><div class="eyebrow" style="color:var(--blue-deep)">Capacity ceiling</div><h3 id="dCap"></h3><p class="small" id="dCapNote"></p></div>
+    <div class="card g"><div class="eyebrow" style="color:var(--green-deep)">Timing</div><h3 id="dTime"></h3><p class="small" id="dTimeNote"></p></div>
+  </div>
+  <div class="grid g2 mt">
+    <div class="card">
+      <h3>Today's funnel vs. what 60 logos needs</h3>
+      <div class="tw"><table id="dFunnel"></table></div>
+      <p class="small muted mt">"Needs" holds today's conversion rates and assumes steady volume all year. The lead gap tile adds two frictions: new-channel leads convert lower and only leads in by month <span id="dMonths"></span> close in 2027.</p>
+    </div>
+    <div class="card">
+      <h3>How I'd confirm it in 30 days</h3>
+      <ul class="clean">
+        <li>Pull conversion by source from the CRM: lead to opp, opp to won.</li>
+        <li>Measure cycle length by source and deal size.</li>
+        <li>Check AE workload: open opps per AE and time spent per deal.</li>
+        <li>Run 3 win and 2 loss interviews.</li>
+        <li>Agree the definition of a qualified lead and the handoff with the AEs.</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- INPUTS -->
+<section id="inputs"><div class="wrap">
+  <div class="eyebrow">02 · Inputs</div>
+  <h2>Move the <span class="hl hl-b">budget</span>. Watch the logos.</h2>
+  <p class="lede">Every number is editable. Figures marked <span class="pill given">Given</span> come from the case brief, <span class="pill assumed">Assumed</span> are mine. <button class="btn sm ghost" data-act="reset" style="margin-left:6px">Reset to defaults</button></p>
+
+  <h3>Budget mix</h3>
+  <div class="pies" id="pies"></div>
+
+  <h3 class="mt3">Budget by channel and quarter <span class="small muted" style="font-family:Inter;letter-spacing:0;font-weight:400">($k)</span></h3>
+  <div class="tw"><table id="budgetTable"></table></div>
+  <div class="addrow" id="addRow">
+    <label>Custom channel<input type="text" id="nName" placeholder="e.g. Customer referrals"></label>
+    <label>Cost per lead ($)<input type="number" id="nCpl" value="1500" min="1"></label>
+    <label>Lead → opp (%)<input type="number" id="nL2o" value="35" min="0" max="100"></label>
+    <label>Opp → won (%)<input type="number" id="nO2w" value="20" min="0" max="100"></label>
+    <label>ACV ($k)<input type="number" id="nAcv" value="50" min="1"></label>
+    <button class="btn" data-act="addch">Add channel</button>
+  </div>
+
+  <h3 class="mt3">Conversion assumptions by channel</h3>
+  <div class="tw"><table id="chanTable"></table></div>
+
+  <h3 class="mt3">Global inputs and sales capacity</h3>
+  <div class="grid g4" id="globals"></div>
+</div></section>
+
+<!-- OUTPUTS -->
+<section id="outputs"><div class="wrap">
+  <div class="eyebrow">03 · Outputs</div>
+  <h2>What the plan <span class="hl hl-m">delivers</span>.</h2>
+  <p class="lede" id="outLede"></p>
+  <div class="callouts" id="callouts"></div>
+  <div id="tiles"></div>
+
+  <div class="chartbox mt2">
+    <h3>Wins per quarter, by channel</h3>
+    <p class="small muted">Closed wins after the sales cycle lag and AE capacity. Dashed line: <span id="tgtQ"></span>/quarter target. Solid line: AE capacity.</p>
+    <div id="winsCharts"></div>
+  </div>
+
+  <div class="chartbox mt">
+    <h3>Compare A / B / C</h3>
+    <p class="small muted">A appears once it has a budget.</p>
+    <div class="minis mt">
+      <div><div class="small" style="font-weight:600;color:var(--ink)">2027 logos</div><div class="chartwrap"><canvas id="cmpLogos"></canvas></div></div>
+      <div><div class="small" style="font-weight:600;color:var(--ink)">2027 new ARR ($M)</div><div class="chartwrap"><canvas id="cmpArr"></canvas></div></div>
+      <div><div class="small" style="font-weight:600;color:var(--ink)">CAC ($k)</div><div class="chartwrap"><canvas id="cmpCac"></canvas></div></div>
+      <div><div class="small" style="font-weight:600;color:var(--ink)">Payback (months)</div><div class="chartwrap"><canvas id="cmpPay"></canvas></div></div>
+    </div>
+  </div>
+
+  <div class="grid g2 mt">
+    <div class="chartbox"><h3>Full-year funnel</h3><p class="small muted">Baseline plus new channels, 2027 leads.</p><div id="funnel"></div></div>
+    <div class="chartbox"><h3>Cost per opportunity by channel</h3><p class="small muted">Spend plus partner commission, divided by opportunities.</p><div id="cpo"></div></div>
+  </div>
+</div></section>
+
+<!-- CHANNELS -->
+<section id="channels"><div class="wrap">
+  <div class="eyebrow">04 · Channels</div>
+  <h2>Where I'd <span class="hl hl-g">put the money</span>.</h2>
+  <p class="lede">Ranked by how fast each one turns into opportunities the AEs want to work.</p>
+  <div class="grid g2">
+    <div>
+      <div class="rank"><div class="n">1</div><div><h3>Partners and referrals</h3><p>Highest win rate and larger deals. Agencies and platforms already sit inside the brands we want. Pay on wins, not on promises.</p></div></div>
+      <div class="rank"><div class="n">2</div><div><h3>ABM on named accounts</h3><p>The ICP of $100M–$5B brands is a list you can name. Build it, score it, and point every other channel at it.</p></div></div>
+      <div class="rank"><div class="n">3</div><div><h3>Events: attend and host, no booths</h3><p>Go where the buyers are, book meetings before the trip, and host small dinners for named accounts.</p></div></div>
+      <div class="rank"><div class="n">4</div><div><h3>Paid enterprise, as an ABM layer only</h3><p>Target the named list, retarget engaged accounts, and judge it on cost per opportunity, not clicks.</p></div></div>
+    </div>
+    <div class="card ink">
+      <h3>What I won't do</h3>
+      <ul class="clean" style="color:#ddd">
+        <li><b style="color:#fff">Broad awareness paid.</b> Reach without a named account behind it doesn't turn into pipeline in 2027.</li>
+        <li><b style="color:#fff">Booth sponsorships.</b> High cost, badge scans, few buyers.</li>
+        <li><b style="color:#fff">Mass cold outbound.</b> It burns the list we need for ABM and the brand with it.</li>
+        <li><b style="color:#fff">SEO as a 2027 pipeline channel.</b> Worth starting, too slow to count on this year.</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- MEASUREMENT -->
+<section id="measure"><div class="wrap">
+  <div class="eyebrow">05 · Measurement</div>
+  <h2>Track it monthly. <span class="hl hl-b">Move money</span> fast.</h2>
+  <div class="tw mt2"><table>
+    <thead><tr><th>Channel</th><th>Primary metric</th><th>Leading indicators</th><th>Watch for</th></tr></thead>
+    <tbody>
+      <tr><td><span class="dot" style="background:var(--green)"></span>Partners</td><td>Partner-sourced opportunities and win rate</td><td>Active partners, intros per month, co-sell meetings</td><td>Commission cost per win</td></tr>
+      <tr><td><span class="dot" style="background:var(--ink)"></span>ABM</td><td>Opportunities from named accounts</td><td>Account engagement, meetings booked, coverage of buying group</td><td>Share of pipeline from the list</td></tr>
+      <tr><td><span class="dot" style="background:var(--magenta)"></span>Events</td><td>Opportunities within 60 days of the event</td><td>Meetings booked before and at the event</td><td>Cost per opportunity per event</td></tr>
+      <tr><td><span class="dot" style="background:var(--blue)"></span>Paid enterprise</td><td>Cost per opportunity</td><td>Cost per qualified lead, share of spend on named accounts</td><td>Leads outside the ICP</td></tr>
+      <tr><td><span class="dot" style="background:var(--base)"></span>All</td><td>Wins and new ARR vs. plan</td><td>AE open opps vs. capacity, cycle length by source</td><td>Opps waiting for an AE</td></tr>
+    </tbody>
+  </table></div>
+  <div class="card m mt2">
+    <div class="eyebrow" style="color:var(--magenta-deep)">The rule for moving budget</div>
+    <p class="rule">Review monthly. Once a channel has 10+ qualified leads, move 10–20% of budget from the highest cost per opportunity to the lowest. Cut any channel with no opportunities after 2 quarters.</p>
+  </div>
+</div></section>
+
+<!-- 90 DAYS -->
+<section id="ninety"><div class="wrap">
+  <div class="eyebrow">06 · First 90 days</div>
+  <h2>Run it myself. <span class="hl hl-m">Buy</span> the rest.</h2>
+  <div class="grid g2 mt2">
+    <div class="card m"><h3>Run myself</h3><ul class="clean">
+      <li>Strategy and the 2027 plan</li><li>Messaging and positioning by buyer</li><li>The ABM list: build, score, assign</li><li>Partner program: terms, first partners, co-sell</li><li>Event selection and hosted dinners</li><li>Reporting and the monthly budget review</li></ul></div>
+    <div class="card b"><h3>Buy</h3><ul class="clean">
+      <li>Paid media execution</li><li>Creative production</li><li>Enrichment and intent tools</li></ul></div>
+  </div>
+</div></section>
+
+<!-- KNOWN VS ASSUMED -->
+<section id="known"><div class="wrap">
+  <div class="eyebrow">07 · Known vs. assumed</div>
+  <h2>Every input, <span class="hl hl-g">labeled</span>.</h2>
+  <p class="lede">Values update as you edit them above.</p>
+  <div class="tw"><table id="knownTable"></table></div>
+</div></section>
+
+<!-- HOW -->
+<section id="how"><div class="wrap">
+  <div class="eyebrow">08 · How I built it</div>
+  <h2>How I built it.</h2>
+  <p class="lede mt">Built with Claude Code. The reasoning and assumptions are mine, from running ABM and events at Foundever. All Fermat figures come from the case brief.</p>
+  <p class="small muted">The model turns spend into leads, opportunities and wins per channel and quarter, lands wins after the sales cycle, caps closes at AE capacity and carries the overflow forward. Single HTML file, no backend. Your edits stay in this browser.</p>
+</div></section>
+</main>
+<footer><div class="wrap">Fermat 2027 growth model · illustrative figures from the case brief and my assumptions.</div></footer>
+
+<script>
+(function(){
+'use strict';
+const SC=['A','B','C'];
+const SCVAR={A:'--magenta',B:'--blue',C:'--green'};
+const cssv=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
+const STORE='fermat-growth-model-v1';
+
+const DEFAULTS={
+  global:{baseLeads:35,baseL2O:45,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10},
+  channels:[
+    {id:'paid',name:'Paid enterprise',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:50,abmBoost:true,color:'--blue'},
+    {id:'events',name:'Events',kind:'lead',cpl:1000,l2o:40,o2w:20,acv:50,abmBoost:true,color:'--magenta'},
+    {id:'partners',name:'Partner program',kind:'lead',cpl:2500,l2o:50,o2w:25,acv:60,commission:true,color:'--green'},
+    {id:'abm',name:'ABM tools',kind:'abm',color:'--ink'}
+  ],
+  scenarios:{
+    A:{budget:{},phasing:[null,null,null,null],ae4:false,ae4Start:1},
+    B:{budget:{paid:180,events:60,partners:45,abm:25},phasing:[25,25,25,25],ae4:false,ae4Start:1},
+    C:{budget:{paid:300,events:150,partners:60,abm:40},phasing:[25,25,25,25],ae4:false,ae4Start:1}
+  }
+};
+const GMETA=[
+  {k:'baseLeads',label:'Baseline qualified leads / month',unit:'',min:10,max:80,step:1,badge:'Given',note:'Today\'s engine. Brief: 30–40.'},
+  {k:'baseL2O',label:'Baseline lead → opp',unit:'%',min:10,max:80,step:1,badge:'Assumed',note:'Calibrated so baseline ≈ 11 wins/quarter (brief: 10–12).'},
+  {k:'baseO2W',label:'Baseline opp → won',unit:'%',min:5,max:50,step:1,badge:'Assumed',note:'Calibrated with lead → opp.'},
+  {k:'acv',label:'Blended ACV',unit:'$k',min:20,max:120,step:1,badge:'Given',note:'Used for baseline wins.'},
+  {k:'cycle',label:'Sales cycle',unit:'months',min:1,max:9,step:0.5,badge:'Given',note:'Brief: 3–6. 3 → wins land next quarter, 6 → two quarters out.'},
+  {k:'gm',label:'Gross margin',unit:'%',min:40,max:90,step:1,badge:'Given',note:'Brief: 60–70%.'},
+  {k:'aes',label:'AEs',unit:'',min:1,max:8,step:1,badge:'Given',note:'Toggle a 4th AE per scenario in the budget table.'},
+  {k:'aeCap',label:'AE capacity / quarter',unit:'logos',min:2,max:8,step:0.5,badge:'Given',note:'Brief: 4–5 per AE.'},
+  {k:'paybackTarget',label:'Target CAC payback',unit:'months',min:6,max:36,step:1,badge:'Given',note:'Payback turns red above this.'},
+  {k:'commission',label:'Partner commission',unit:'% of first-year ACV',min:0,max:40,step:1,badge:'Assumed',note:'Added to partner spend on each win.'},
+  {k:'targetLogos',label:'2027 logo target',unit:'logos',min:20,max:120,step:1,badge:'Given',note:''},
+  {k:'targetArr',label:'2027 new ARR target',unit:'$M',min:1,max:6,step:0.1,badge:'Given',note:''},
+  {k:'abmThreshold',label:'ABM budget needed for uplift',unit:'$k',min:0,max:100,step:5,badge:'Assumed',note:'',grid:false},
+  {k:'abmUplift',label:'ABM uplift on lead → opp (paid, events)',unit:'pts',min:0,max:30,step:1,badge:'Assumed',note:'',grid:false}
+];
+
+const clone=o=>JSON.parse(JSON.stringify(o));
+function load(){try{const s=localStorage.getItem(STORE);if(!s)return null;const o=JSON.parse(s);if(!o||!o.global||!o.channels||!o.scenarios)return null;return o;}catch(e){return null}}
+function save(){try{localStorage.setItem(STORE,JSON.stringify({...S,view}))}catch(e){}}
+let S=load()||clone(DEFAULTS);
+let view=(S.view&&(SC.includes(S.view)||S.view==='compare'))?S.view:'B';
+delete S.view;
+
+/* ---------- helpers ---------- */
+const num=v=>(v==null||v===''||isNaN(v))?0:+v;
+const fin=v=>v!=null&&isFinite(v);
+const k$=v=>!fin(v)?'—':'$'+(Math.abs(v)>=99500?Math.round(v/1000):(v/1000).toFixed(1).replace(/\.0$/,''))+'k';
+const M$=(v,d=2)=>!fin(v)?'—':'$'+(v/1e6).toFixed(d)+'M';
+const n0=v=>!fin(v)?'—':String(Math.round(v));
+const n1=v=>!fin(v)?'—':(Math.round(v*10)/10).toString();
+const pct=v=>Math.round(v*100)+'%';
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function chColor(c){
+  if(c.color)return cssv(c.color);
+  const customs=S.channels.filter(x=>x.custom);
+  return CUSTOM_GREYS[customs.indexOf(c)%CUSTOM_GREYS.length];
+}
+function inkOn(hex){return ['#141414','#575757','#7d7d7d'].includes(hex)?'#fff':'#141414'}
+const budget=(sc,id)=>num(S.scenarios[sc].budget[id]);
+const totalBudget=sc=>S.channels.reduce((a,c)=>a+budget(sc,c.id),0);
+const hasBudget=sc=>totalBudget(sc)>0;
+
+/* ---------- model ---------- */
+function lagSplit(){const c=S.global.cycle;const f1=Math.min(1,Math.max(0,(6-c)/3));return [f1,1-f1];}
+function phasing(sc){
+  let p=S.scenarios[sc].phasing.map(v=>(v==null||v===''||isNaN(v))?null:+v);
+  if(p.every(v=>v==null))p=[25,25,25,25];
+  p=p.map(v=>v||0);const s=p.reduce((a,b)=>a+b,0);
+  return {w:s>0?p.map(v=>v/s):[.25,.25,.25,.25],sum:s};
+}
+function capacity(sc){
+  const g=S.global,s=S.scenarios[sc];
+  return [0,1,2,3].map(q=>{let c=g.aes*g.aeCap;if(s.ae4){const st=(+s.ae4Start||1)-1;if(q===st)c+=g.aeCap/2;else if(q>st)c+=g.aeCap;}return c;});
+}
+function simulate(lines,cap){
+  const ids=Object.keys(lines),carry={};ids.forEach(i=>carry[i]=0);
+  const closed=[],demand=[];let capHit=false;
+  for(let q=0;q<4;q++){
+    const d={};let tot=0;ids.forEach(i=>{d[i]=carry[i]+lines[i][q];tot+=d[i];});
+    demand.push(tot);
+    const r=tot>cap[q]?cap[q]/tot:1;if(tot>cap[q]+0.05)capHit=true;
+    const c={};ids.forEach(i=>{c[i]=d[i]*r;carry[i]=d[i]-c[i];});closed.push(c);
+  }
+  const spillBy={};ids.forEach(i=>spillBy[i]=carry[i]+lines[i][4]+lines[i][5]);
+  const wins=closed.reduce((a,c)=>a+Object.values(c).reduce((x,y)=>x+y,0),0);
+  return {closed,demand,spillBy,wins,capHit};
+}
+function run(sc){
+  const g=S.global,has=hasBudget(sc);
+  const {w}=phasing(sc);const [f1,f2]=lagSplit();
+  const abmB=budget(sc,'abm');const abmOn=abmB>0&&abmB>=g.abmThreshold;
+  const baseQ=g.baseLeads*3*(g.baseL2O/100)*(g.baseO2W/100);
+  const lines={base:[baseQ,baseQ,baseQ,baseQ,0,0]};
+  const acvOf={base:g.acv*1000};
+  const ch={};let spend=0,wins=0,arr=0,leads=0,opps=0,comm=0;
+  for(const c of S.channels){
+    const sp=budget(sc,c.id)*1000;
+    if(c.kind==='abm'){spend+=sp;ch[c.id]={spend:sp,abm:true,active:abmOn};continue;}
+    const l2o=Math.min(1,(num(c.l2o)+(abmOn&&c.abmBoost?g.abmUplift:0))/100),o2w=num(c.o2w)/100;
+    const a=[0,0,0,0,0,0];let L=0,O=0,W=0;
+    w.forEach((wq,q)=>{const s=sp*wq;const l=c.cpl>0?s/c.cpl:0;const o=l*l2o;const x=o*o2w;L+=l;O+=o;W+=x;a[q+1]+=x*f1;a[q+2]+=x*f2;});
+    const cm=c.commission?W*c.acv*1000*g.commission/100:0;
+    lines[c.id]=a;acvOf[c.id]=num(c.acv)*1000;
+    ch[c.id]={spend:sp,leads:L,opps:O,wins:W,arr:W*num(c.acv)*1000,comm:cm,l2o,o2w,cpo:O>0?(sp+cm)/O:null,cpw:W>0?(sp+cm)/W:null};
+    spend+=sp+cm;wins+=W;arr+=W*num(c.acv)*1000;leads+=L;opps+=O;comm+=cm;
+  }
+  const cap=capacity(sc);
+  const sim=simulate(lines,cap);
+  const baseOnly=simulate({base:lines.base},cap);
+  const arr2027=sim.closed.reduce((a,c)=>a+Object.entries(c).reduce((x,[i,v])=>x+v*acvOf[i],0),0);
+  const spill=Object.values(sim.spillBy).reduce((a,b)=>a+b,0)-0; // base has no Q5/Q6 arrivals
+  const incr=sim.wins-baseOnly.wins;
+  const wAcv=wins>0?arr/wins:g.acv*1000;
+  const cac=wins>0.01?spend/wins:null;
+  const cac27=incr>0.01?spend/incr:null;
+  const payback=fin(cac)?cac/(wAcv*(g.gm/100)/12):null;
+  return {sc,has,ch,lines,cap,sim,baseQ,abmOn,spend,newWins:wins,newArr:arr,comm,leads,opps,
+    wins2027:sim.wins,arr2027,spill,incr,cac,cac27,payback,cpo:opps>0?spend/opps:null,
+    yearLeads:g.baseLeads*12+leads,yearOpps:g.baseLeads*12*g.baseL2O/100+opps,yearWins:4*baseQ+wins,capHit:sim.capHit};
+}
+
+/* ---------- static input rendering ---------- */
+function ctl(path,val,min,max,step,ph){
+  const v=(val==null||val==='')?'':val;
+  return `<div class="ctl"><input type="range" aria-label="${path}" data-p="${path}" min="${min}" max="${max}" step="${step}" value="${v===''?min:v}"><input type="number" aria-label="${path}" data-p="${path}" min="${min}" step="${step}" value="${v}" placeholder="${ph||''}"></div>`;
+}
+function renderBudgetTable(){
+  const t=document.getElementById('budgetTable');
+  const colCls=s=>`col${s}${(view===s)?' on':''}`;
+  const aEmpty=!hasBudget('A');
+  let h=`<thead><tr><th>Channel</th>`+SC.map(s=>`<th class="${colCls(s)}">${s==='A'?'A · My plan':s+' · brief'}</th>`).join('')+`</tr></thead><tbody>`;
+  h+=`<tr><td class="small muted">Copy into A</td><td class="${colCls('A')}"><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm" data-act="copy" data-from="B">Start from B</button><button class="btn sm" data-act="copy" data-from="C">Start from C</button>${aEmpty?'':'<button class="btn sm ghost" data-act="clearA">Clear A</button>'}</div></td><td class="${colCls('B')}"></td><td class="${colCls('C')}"></td></tr>`;
+  for(const c of S.channels){
+    h+=`<tr><td><span class="dot" style="background:${chColor(c)}"></span>${esc(c.name)}${c.custom?` <button class="btn x" title="Remove channel" data-act="rmch" data-id="${c.id}">×</button>`:''}</td>`;
+    h+=SC.map(s=>`<td class="${colCls(s)}">${ctl(`scenarios.${s}.budget.${c.id}`,S.scenarios[s].budget[c.id],0,600,5,s==='A'?'Build your own split.':'0')}</td>`).join('')+`</tr>`;
+  }
+  h+=`<tr class="total"><td>Total</td>`+SC.map(s=>`<td class="${colCls(s)}" id="tot${s}"></td>`).join('')+`</tr>`;
+  for(let q=0;q<4;q++){
+    h+=`<tr><td>Phasing Q${q+1} (%)</td>`+SC.map(s=>`<td class="${colCls(s)}">${ctl(`scenarios.${s}.phasing.${q}`,S.scenarios[s].phasing[q],0,100,5,s==='A'?'25':'')}</td>`).join('')+`</tr>`;
+  }
+  h+=`<tr><td></td>`+SC.map(s=>`<td class="${colCls(s)}" id="phw${s}"></td>`).join('')+`</tr>`;
+  h+=`<tr><td>4th AE</td>`+SC.map(s=>{const o=S.scenarios[s];return `<td class="${colCls(s)}"><label style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input type="checkbox" data-p="scenarios.${s}.ae4" ${o.ae4?'checked':''}> hire, starts <select data-p="scenarios.${s}.ae4Start" style="width:64px">${[1,2,3,4].map(q=>`<option value="${q}" ${+o.ae4Start===q?'selected':''}>Q${q}</option>`).join('')}</select></label></td>`}).join('')+`</tr>`;
+  t.innerHTML=h+'</tbody>';
+}
+function renderChanTable(){
+  const g=S.global;
+  let h=`<thead><tr><th>Channel</th><th>Cost per qualified lead ($)</th><th>Lead → opp (%)</th><th>Opp → won (%)</th><th>ACV ($k)</th><th>Badge</th></tr></thead><tbody>`;
+  for(const c of S.channels){
+    if(c.kind==='abm'){
+      h+=`<tr><td><span class="dot" style="background:${chColor(c)}"></span>${esc(c.name)}</td><td colspan="4">No leads of its own. Adds ${ctl('global.abmUplift',g.abmUplift,0,30,1)} pts lead → opp to paid and events when ABM budget ≥ $k ${ctl('global.abmThreshold',g.abmThreshold,0,100,5)}</td><td><span class="pill assumed">Assumed</span></td></tr>`;
+      continue;
+    }
+    const name=c.custom?`<input type="text" data-p="chan.${c.id}.name" value="${esc(c.name)}">`:esc(c.name)+(c.commission?`<div class="small muted">+ ${g.commission}% commission on wins</div>`:'');
+    h+=`<tr><td><span class="dot" style="background:${chColor(c)}"></span>${name}${c.custom?`<label class="small muted" style="display:block;margin-top:4px"><input type="checkbox" data-p="chan.${c.id}.abmBoost" ${c.abmBoost?'checked':''}> gets ABM uplift</label>`:''}</td>
+      <td>${ctl(`chan.${c.id}.cpl`,c.cpl,100,6000,50)}</td><td>${ctl(`chan.${c.id}.l2o`,c.l2o,0,100,1)}</td><td>${ctl(`chan.${c.id}.o2w`,c.o2w,0,100,1)}</td><td>${ctl(`chan.${c.id}.acv`,c.acv,10,150,1)}</td>
+      <td><span class="pill ${c.custom?'mine':'assumed'}">${c.custom?'Custom':'Assumed'}</span></td></tr>`;
+  }
+  document.getElementById('chanTable').innerHTML=h+'</tbody>';
+}
+function renderGlobals(){
+  document.getElementById('globals').innerHTML=GMETA.filter(m=>m.grid!==false).map(m=>`<div class="ginput"><div class="top"><div class="lab">${m.label}${m.unit?` <span class="muted" style="font-weight:400">(${m.unit})</span>`:''}</div><span class="pill ${m.badge.toLowerCase()}">${m.badge}</span></div>${ctl('global.'+m.k,S.global[m.k],m.min,m.max,m.step)}${m.note?`<div class="note">${m.note}</div>`:''}</div>`).join('');
+}
+function renderTabs(){
+  document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===view?'true':'false'));
+}
+function renderInputs(){renderBudgetTable();renderChanTable();renderGlobals();renderTabs();}
+
+/* ---------- charts ---------- */
+Chart.defaults.font.family='Inter, system-ui, sans-serif';
+Chart.defaults.font.size=12;
+Chart.defaults.color='#555';
+Chart.defaults.animation=false;
+const charts={};
+function mk(id,cfg){const el=document.getElementById(id);if(!el)return;if(charts[id])charts[id].destroy();charts[id]=new Chart(el,cfg);}
+const sliceLabels={id:'sliceLabels',afterDatasetsDraw(chart){
+  const ds=chart.data.datasets[0],meta=chart.getDatasetMeta(0),tot=ds.data.reduce((a,b)=>a+b,0),ctx=chart.ctx;if(!tot)return;
+  meta.data.forEach((arc,i)=>{const v=ds.data[i];if(!v||v/tot<0.06)return;const p=arc.tooltipPosition();ctx.save();ctx.fillStyle=inkOn(ds.backgroundColor[i]);ctx.font='600 12px Inter';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(Math.round(v/tot*100)+'%',p.x,p.y);ctx.restore();});
+}};
+
+/* ---------- outputs ---------- */
+function renderPies(R){
+  const el=document.getElementById('pies');
+  const order=hasBudget('A')?['A','B','C']:['B','C','A'];
+  el.innerHTML=order.map(s=>{
+    if(!R[s].has)return `<div class="pie empty"><div class="hd"><b>A · My plan</b></div><p class="muted">Build your own split.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" data-act="copy" data-from="B">Start from B</button><button class="btn sm ghost" data-act="copy" data-from="C">Start from C</button></div></div>`;
+    const tot=totalBudget(s);
+    const rows=S.channels.filter(c=>budget(s,c.id)>0);
+    const top=rows.slice().sort((a,b)=>budget(s,b.id)-budget(s,a.id))[0];
+    return `<div class="pie" style="border-top:6px solid var(${SCVAR[s]})"><div class="hd"><b>${s==='A'?'A · My plan':'Scenario '+s}</b><span class="small muted">$${Math.round(tot)}k total</span></div>
+      <canvas id="pie${s}" width="230" height="230"></canvas>
+      <ul>${rows.map(c=>`<li><span><span class="dot" style="background:${chColor(c)}"></span>${esc(c.name)}</span><span>$${budget(s,c.id)}k · ${pct(budget(s,c.id)/tot)}</span></li>`).join('')}</ul>
+      <p class="line">${s} puts ${pct(budget(s,top.id)/tot)} into ${esc(top.name.toLowerCase())}.</p></div>`;
+  }).join('');
+  order.forEach(s=>{if(!R[s].has)return;const rows=S.channels.filter(c=>budget(s,c.id)>0);
+    mk('pie'+s,{type:'doughnut',data:{labels:rows.map(c=>c.name),datasets:[{data:rows.map(c=>budget(s,c.id)),backgroundColor:rows.map(chColor),borderColor:'#efefef',borderWidth:2}]},
+      options:{responsive:false,cutout:'52%',plugins:{legend:{display:false},tooltip:{callbacks:{label:x=>` ${x.label}: $${x.raw}k`}}}},plugins:[sliceLabels]});});
+}
+function focusList(R){return view==='compare'?SC.filter(s=>R[s].has):[view];}
+function tileHTML(r,s,tint){
+  const g=S.global;
+  if(!r.has)return `<div class="tiles">${['2027 new logos','New ARR','CAC','Payback','Cost per opportunity','Wins spilling into 2028'].map(k=>`<div class="tile"><div class="k">${k}</div><div class="v">—</div><div class="s">Build your own split.</div></div>`).join('')}</div>`;
+  const cls=tint?` s${s}`:'';
+  const pl=Math.min(100,r.wins2027/g.targetLogos*100),pa=Math.min(100,r.arr2027/(g.targetArr*1e6)*100);
+  return `<div class="tiles">
+    <div class="tile${cls}"><div class="k">2027 new logos</div><div class="v">${n0(r.wins2027)}</div><div class="s">vs ${g.targetLogos} target<div class="meter"><i style="width:${pl}%"></i></div></div></div>
+    <div class="tile${cls}"><div class="k">New ARR</div><div class="v">${M$(r.arr2027,1)}</div><div class="s">vs $${g.targetArr}M target<div class="meter"><i style="width:${pa}%"></i></div></div></div>
+    <div class="tile${cls}"><div class="k">CAC</div><div class="v">${k$(r.cac)}</div><div class="s">All new-channel wins, incl. 2028. ${k$(r.cac27)} on extra logos closed in 2027.</div></div>
+    <div class="tile${cls}"><div class="k">Payback</div><div class="v ${fin(r.payback)&&r.payback>g.paybackTarget?'bad':''}">${n1(r.payback)}<span style="font-size:.45em"> mo</span></div><div class="s">Target ≤ ${g.paybackTarget} months at ${g.gm}% margin</div></div>
+    <div class="tile${cls}"><div class="k">Cost per opportunity</div><div class="v">${k$(r.cpo)}</div><div class="s">Blended across new channels, incl. ABM and commission</div></div>
+    <div class="tile${cls}"><div class="k">Wins spilling into 2028</div><div class="v">${n0(r.spill)}</div><div class="s">${M$(r.spill*(r.newWins>0?r.newArr/r.newWins:g.acv*1000),1)} of ARR that lands next year</div></div>
+  </div>`;
+}
+function renderTiles(R){
+  const el=document.getElementById('tiles');
+  if(view!=='compare'){el.innerHTML=tileHTML(R[view],view,false);return;}
+  const list=SC.filter(s=>R[s].has),g=S.global;
+  const rows=[['2027 new logos',r=>n0(r.wins2027)+` / ${g.targetLogos}`],['New ARR',r=>M$(r.arr2027)],['Total budget',r=>'$'+Math.round(totalBudget(r.sc))+'k'],['CAC (all wins)',r=>k$(r.cac)],['CAC (extra 2027 logos)',r=>k$(r.cac27)],['Payback',r=>`<span style="${fin(r.payback)&&r.payback>g.paybackTarget?'color:var(--red)':''}">${n1(r.payback)} mo</span>`],['Cost per opportunity',r=>k$(r.cpo)],['Wins spilling into 2028',r=>n0(r.spill)],['AE capacity hit',r=>r.capHit?'Yes':'No']];
+  el.innerHTML=`<div class="tw"><table><thead><tr><th>Metric</th>${list.map(s=>`<th class="col${s} on num">${s==='A'?'A · My plan':'Scenario '+s}</th>`).join('')}</tr></thead><tbody>${rows.map(([k,f])=>`<tr><td>${k}</td>${list.map(s=>`<td class="num col${s}" style="font-weight:600;color:var(--ink)">${f(R[s])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${hasBudget('A')?'':'<p class="small muted mt">A is hidden until it has a budget.</p>'}`;
+}
+function renderCallouts(R){
+  const g=S.global,out=[];
+  const list=focusList(R).filter(s=>R[s].has);
+  const capS=list.filter(s=>R[s].capHit),spillS=list.filter(s=>R[s].spill>3);
+  const lbl=a=>a.length===1&&view!=='compare'?'':`<b>${a.join(' and ')}:</b> `;
+  if(capS.length)out.push(`<div class="callout">${lbl(capS)}Sales capacity is the limit here. More budget won't add logos without another AE.</div>`);
+  spillS.forEach(s=>out.push(`<div class="callout b">${view==='compare'?`<b>${s}:</b> `:''}${n0(R[s].spill)} wins land in 2028. Front-load spend to close them in 2027.</div>`));
+  document.getElementById('callouts').innerHTML=out.join('');
+}
+function winsDatasets(r){
+  const ids=Object.keys(r.lines);const ds=[];
+  ids.forEach(id=>{
+    const c=S.channels.find(x=>x.id===id);const color=id==='base'?cssv('--base'):chColor(c);
+    const data=[0,1,2,3].map(q=>+r.sim.closed[q][id].toFixed(2)).concat(+r.sim.spillBy[id].toFixed(2));
+    if(data.every(v=>v<0.005))return;
+    ds.push({type:'bar',label:id==='base'?'Baseline (today\'s engine)':c.name,data,backgroundColor:color,stack:'w',order:2,barPercentage:.72});
+  });
+  const tq=S.global.targetLogos/4;
+  ds.push({type:'line',label:'Target',data:[tq,tq,tq,tq,null],borderColor:cssv('--ink'),borderDash:[6,5],borderWidth:2,pointRadius:0,order:0,stack:'tgt'});
+  ds.push({type:'line',label:'AE capacity',data:r.cap.concat(null),borderColor:cssv('--ink'),borderWidth:2,pointRadius:0,stepped:'middle',order:0,stack:'cap'});
+  return ds;
+}
+function renderWins(R){
+  const list=focusList(R);
+  const el=document.getElementById('winsCharts');
+  el.className='mt';
+  el.innerHTML=`<div class="${list.length>1?'minis':''}">`+list.map(s=>`<div>${list.length>1?`<div class="small" style="font-weight:600;color:var(--ink);border-top:4px solid var(${SCVAR[s]});padding-top:6px">Scenario ${s}</div>`:''}<div class="chartwrap" style="${list.length>1?'height:260px':''}">${R[s].has?`<canvas id="wins${s}"></canvas>`:'<p class="muted" style="padding-top:40px">Build your own split to see A.</p>'}</div></div>`).join('')+'</div>';
+  const leg=new Map();
+  list.forEach(s=>{if(!R[s].has)return;const ds=winsDatasets(R[s]);ds.forEach(d=>{if(d.type==='bar')leg.set(d.label,d.backgroundColor)});
+    const yMax=Math.max(...SC.filter(x=>R[x].has).map(x=>Math.max(...R[x].cap,...[0,1,2,3].map(q=>Object.values(R[x].sim.closed[q]).reduce((a,b)=>a+b,0)),Object.values(R[x].sim.spillBy).reduce((a,b)=>a+b,0),S.global.targetLogos/4)));
+    mk('wins'+s,{data:{labels:['Q1','Q2','Q3','Q4','2028'],datasets:ds},options:{maintainAspectRatio:false,scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,beginAtZero:true,suggestedMax:Math.ceil(yMax*1.1),grid:{color:'#dedede'},title:{display:true,text:'wins'}}},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:x=>` ${x.dataset.label}: ${(Math.round(x.raw*10)/10)}`}}}}});});
+  el.insertAdjacentHTML('beforeend',`<div class="legend">${[...leg].map(([l,c])=>`<span><span class="dot" style="background:${c}"></span>${esc(l)}</span>`).join('')}<span><span class="dot" style="background:transparent;border-top:2px dashed var(--ink);height:0;width:18px"></span>Target</span><span><span class="dot" style="background:var(--ink);height:2px;width:18px"></span>AE capacity</span></div>`);
+}
+function renderCompare(R){
+  const list=SC.filter(s=>R[s].has);
+  const cols=list.map(s=>cssv(SCVAR[s]));
+  const bar=(id,vals,fmt,ref)=>{const ds=[{type:'bar',data:vals,backgroundColor:cols,barPercentage:.7}];
+    if(ref!=null)ds.push({type:'line',data:list.map(()=>ref),borderColor:cssv('--ink'),borderDash:[5,4],borderWidth:1.5,pointRadius:0});
+    mk(id,{data:{labels:list,datasets:ds},options:{maintainAspectRatio:false,scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:'#dedede'}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:x=>' '+fmt(x.raw)}}}}});};
+  const g=S.global;
+  bar('cmpLogos',list.map(s=>+R[s].wins2027.toFixed(1)),v=>v+' logos',g.targetLogos);
+  bar('cmpArr',list.map(s=>+(R[s].arr2027/1e6).toFixed(2)),v=>'$'+v+'M',g.targetArr);
+  bar('cmpCac',list.map(s=>fin(R[s].cac)?+(R[s].cac/1000).toFixed(1):0),v=>'$'+v+'k',null);
+  bar('cmpPay',list.map(s=>fin(R[s].payback)?+R[s].payback.toFixed(1):0),v=>v+' months',g.paybackTarget);
+}
+function renderFunnel(R){
+  const list=focusList(R).filter(s=>R[s].has);
+  const el=document.getElementById('funnel');
+  if(!list.length){el.innerHTML='<p class="muted mt">Build your own split to see A.</p>';return;}
+  const maxL=Math.max(...list.map(s=>R[s].yearLeads));
+  el.innerHTML=list.map(s=>{const r=R[s];const col=`var(${SCVAR[s]})`;
+    const row=(k,v,txt,bg)=>`<div class="row"><span>${k}</span><div class="bar" style="width:${Math.max(4,v/maxL*100)}%;background:${bg}">${txt}</div></div>`;
+    return `<div class="funnel mt">${list.length>1?`<div class="small" style="font-weight:600;color:var(--ink)">Scenario ${s}</div>`:''}
+      ${row('Qualified leads',r.yearLeads,n0(r.yearLeads),col)}
+      ${row('Opportunities',r.yearOpps,n0(r.yearOpps),col)}
+      ${row('Wins (all)',r.yearWins,n0(r.yearWins),col)}
+      ${row('Closed in 2027',r.wins2027,n0(r.wins2027),'var(--ink);color:#fff')}
+      <p class="small muted">${n0(S.global.baseLeads*12)} leads from today's engine, ${n0(r.leads)} from new channels. ${n0(r.yearWins-r.wins2027)} wins wait for AE time or close in 2028.</p></div>`;}).join('');
+}
+function renderCpo(R){
+  const list=focusList(R).filter(s=>R[s].has);
+  const el=document.getElementById('cpo');
+  if(!list.length){el.innerHTML='<p class="muted mt">Build your own split to see A.</p>';return;}
+  const all=[];list.forEach(s=>S.channels.forEach(c=>{const x=R[s].ch[c.id];if(x&&!x.abm&&fin(x.cpo))all.push(x.cpo)}));
+  const mx=Math.max(1,...all);
+  el.innerHTML=list.map(s=>{const r=R[s];
+    const rows=S.channels.filter(c=>c.kind!=='abm'&&fin(r.ch[c.id].cpo)).sort((a,b)=>r.ch[a.id].cpo-r.ch[b.id].cpo);
+    return `<div class="mt">${list.length>1?`<div class="small" style="font-weight:600;color:var(--ink)">Scenario ${s}</div>`:''}${rows.map(c=>`<div class="hbar"><span>${esc(c.name)}</span><div class="t"><i style="width:${r.ch[c.id].cpo/mx*100}%;background:${chColor(c)}"></i></div><span class="val">${k$(r.ch[c.id].cpo)}</span></div>`).join('')||'<p class="muted small">No lead-generating spend.</p>'}
+    <p class="small muted">Cost per lead: ${rows.map(c=>`${esc(c.name)} ${k$(c.cpl)}`).join(' · ')}. ABM ${r.abmOn?`on: +${S.global.abmUplift} pts lead → opp for paid and events.`:'below threshold: no uplift.'}</p></div>`;}).join('');
+}
+function renderHero(R){
+  const el=document.getElementById('liveline');
+  const one=s=>R[s].has?`Scenario ${s} reaches <b>${n0(R[s].wins2027)}</b> new logos and <b>${M$(R[s].arr2027,1)}</b> new ARR in 2027.`:`Scenario A has no budget yet. Build your own split.`;
+  el.innerHTML=view==='compare'?SC.filter(s=>R[s].has).map(s=>`${s}: <b>${n0(R[s].wins2027)}</b> logos, <b>${M$(R[s].arr2027,1)}</b>`).join(' · ')+' in 2027.':one(view);
+  document.getElementById('outLede').textContent=view==='compare'?'All scenarios with a budget, side by side.':`Scenario ${view}${view==='A'?' (my plan)':''}, with today's engine included in every number.`;
+}
+function renderBudgetTotals(){
+  SC.forEach(s=>{const t=totalBudget(s);document.getElementById('tot'+s).textContent=t>0?'$'+Math.round(t)+'k':'—';
+    const p=phasing(s);const raw=S.scenarios[s].phasing.every(v=>v==null||v==='');
+    document.getElementById('phw'+s).innerHTML=raw?'<span class="small muted">Even phasing: 25% a quarter</span>':(Math.abs(p.sum-100)>0.5?`<span class="warn">Sums to ${Math.round(p.sum)}%. Scaled to 100%.</span>`:'<span class="small muted">Sums to 100%</span>');});
+}
+function renderDiagnosis(R){
+  const g=S.global,baseQ=g.baseLeads*3*g.baseL2O/100*g.baseO2W/100,baseYear=baseQ*4;
+  const conv=g.baseL2O/100*g.baseO2W/100;
+  const gap=Math.max(0,g.targetLogos-baseYear);
+  const lead=S.channels.filter(c=>c.kind==='lead');
+  const newConv=lead.length?lead.reduce((a,c)=>a+Math.min(1,(num(c.l2o)+(c.abmBoost?g.abmUplift:0))/100)*num(c.o2w)/100,0)/lead.length:conv;
+  const months=Math.max(1,12-g.cycle);
+  const extra=gap/(newConv*months);
+  const ex5=Math.max(5,Math.round(extra/5)*5);
+  document.getElementById('dToday').textContent=n0(baseYear);
+  document.getElementById('dLead').textContent=`~${ex5} more qualified leads a month needed`;
+  document.getElementById('dLeadNote').textContent=`Today: ${g.baseLeads} a month, about ${n1(baseQ)} wins a quarter. ${n0(gap)} more logos at ~${pct(newConv)} lead-to-win from new channels, generated in the ${n1(months)} months that still close in 2027.`;
+  const lo=g.aes*4*4,hi=g.aes*5*4,now=g.aes*g.aeCap*4;
+  document.getElementById('dCap').textContent=`${g.aes} AEs × 4–5 = ${lo}–${hi} logos max`;
+  document.getElementById('dCapNote').textContent=`At ${g.aeCap} a quarter each, the team closes ${n0(now)} a year. Today's engine alone fills ${pct(baseYear/now)} of that.`;
+  document.getElementById('dTime').textContent=`A 3–6 month cycle means Q4 leads close in 2028`;
+  document.getElementById('dTimeNote').textContent=`At ${g.cycle} months, a lead from ${g.cycle>=3?'October':'late November'} closes in ${g.cycle>=3?'2028':'early 2028'}. Spend after Q3 builds next year's pipeline.`;
+  document.getElementById('dMonths').textContent=n1(months);
+  const needQ=g.targetLogos/4,needLeads=needQ/3/conv;
+  const r=(k,a,b)=>`<tr><td>${k}</td><td class="num">${a}</td><td class="num" style="font-weight:600;color:var(--ink)">${b}</td></tr>`;
+  document.getElementById('dFunnel').innerHTML=`<thead><tr><th></th><th class="num">Today</th><th class="num">${g.targetLogos} logos needs</th></tr></thead><tbody>
+    ${r('Qualified leads / month',n0(g.baseLeads),n0(needLeads))}${r('Opportunities / month',n0(g.baseLeads*g.baseL2O/100),n0(needLeads*g.baseL2O/100))}
+    ${r('Wins / quarter',n1(baseQ),n1(needQ))}${r('Logos / year',n0(baseYear),n0(g.targetLogos))}${r('AE capacity / year',n0(g.aes*g.aeCap*4),n0(g.aes*g.aeCap*4))}</tbody>`;
+}
+function renderKnown(){
+  const g=S.global;const rows=[];
+  GMETA.forEach(m=>rows.push([m.label,`${g[m.k]}${m.unit?' '+m.unit:''}`,m.badge,m.note||'']));
+  S.channels.filter(c=>c.kind==='lead').forEach(c=>{const b=c.custom?'Mine':'Assumed';
+    rows.push([`${c.name}: cost per qualified lead`,'$'+c.cpl,b,c.commission?'Program cost; commission on wins is added on top.':'']);
+    rows.push([`${c.name}: lead → opp / opp → won`,`${c.l2o}% / ${c.o2w}%`,b,c.abmBoost?`+${g.abmUplift} pts lead → opp with ABM.`:'']);
+    rows.push([`${c.name}: ACV`,'$'+c.acv+'k',b,'']);});
+  ['B','C'].forEach(s=>rows.push([`Scenario ${s} budget`,S.channels.filter(c=>budget(s,c.id)>0).map(c=>`${c.name} $${budget(s,c.id)}k`).join(' · ')||'—','Given','From the case brief. Phasing 25% a quarter is my default.']));
+  rows.push(['Scenario A budget',hasBudget('A')?S.channels.filter(c=>budget('A',c.id)>0).map(c=>`${c.name} $${budget('A',c.id)}k`).join(' · '):'Empty: build your own split.','Mine','']);
+  rows.push(['Sales cycle lag','Wins land in the next 1–2 quarters','Assumed',`At ${g.cycle} months: ${pct(lagSplit()[0])} next quarter, ${pct(lagSplit()[1])} the one after.`]);
+  rows.push(['4th AE ramp','Half capacity in the first quarter','Assumed','']);
+  document.getElementById('knownTable').innerHTML=`<thead><tr><th>Input</th><th>Value</th><th>Badge</th><th>Note</th></tr></thead><tbody>${rows.map(([a,b,c,d])=>`<tr><td>${esc(a)}</td><td style="font-weight:600;color:var(--ink)">${esc(b)}</td><td><span class="pill ${c.toLowerCase()}">${c}</span></td><td class="small muted">${esc(d)}</td></tr>`).join('')}</tbody>`;
+}
+function update(){
+  const R={};SC.forEach(s=>R[s]=run(s));
+  renderHero(R);renderPies(R);renderBudgetTotals();renderDiagnosis(R);renderCallouts(R);renderTiles(R);
+  document.getElementById('tgtQ').textContent=n1(S.global.targetLogos/4);
+  renderWins(R);renderCompare(R);renderFunnel(R);renderCpo(R);renderKnown();
+  window.__fermat=R;
+}
+
+/* ---------- events ---------- */
+function resolve(path){const parts=path.split('.');let o=S;for(let i=0;i<parts.length-1;i++){const p=parts[i];if(p==='chan'){o=S.channels.find(c=>c.id===parts[++i]);}else o=o[p];if(!o)return [null];}return [o,parts[parts.length-1]];}
+function onInput(e){
+  const t=e.target,p=t.dataset&&t.dataset.p;if(!p)return;
+  const [o,k]=resolve(p);if(!o)return;
+  let v;
+  if(t.type==='checkbox')v=t.checked;else if(t.type==='text')v=t.value;else if(t.tagName==='SELECT')v=+t.value;else v=t.value===''?null:+t.value;
+  o[k]=v;
+  document.querySelectorAll(`[data-p="${p}"]`).forEach(x=>{if(x!==t&&x.type!=='checkbox'&&x.tagName!=='SELECT'){x.value=(v==null?(x.type==='range'?x.min:''):v);}});
+  if(t.type==='text'&&e.type==='input'){save();update();return;}
+  save();update();
+  if(p.startsWith('global.commission')&&e.type==='change')renderChanTable();
+}
+document.addEventListener('input',onInput);
+document.addEventListener('change',e=>{if(e.target.type==='checkbox'||e.target.tagName==='SELECT'||e.target.type==='text')onInput(e);});
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act;
+  if(a==='view'){view=b.dataset.v;renderTabs();renderBudgetTable();save();update();}
+  else if(a==='copy'){const f=S.scenarios[b.dataset.from];S.scenarios.A=clone(f);view='A';renderInputs();save();update();}
+  else if(a==='clearA'){S.scenarios.A=clone(DEFAULTS.scenarios.A);renderInputs();save();update();}
+  else if(a==='reset'){if(!confirm('Reset every input to the defaults?'))return;S=clone(DEFAULTS);view='B';renderInputs();save();update();}
+  else if(a==='rmch'){const id=b.dataset.id;S.channels=S.channels.filter(c=>c.id!==id);SC.forEach(s=>delete S.scenarios[s].budget[id]);renderInputs();save();update();}
+  else if(a==='addch'){
+    const name=document.getElementById('nName').value.trim()||'Custom channel';
+    S.channels.push({id:'c'+Date.now().toString(36),name,kind:'lead',custom:true,abmBoost:false,
+      cpl:+document.getElementById('nCpl').value||1500,l2o:+document.getElementById('nL2o').value||0,o2w:+document.getElementById('nO2w').value||0,acv:+document.getElementById('nAcv').value||50});
+    document.getElementById('nName').value='';renderInputs();save();update();
+  }
+});
+renderInputs();update();
+})();
+</script>
+</body>
+</html>
