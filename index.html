@@ -556,7 +556,7 @@ const STORE='fermat-growth-model-v1';
 const DEFAULTS={
   global:{baseLeads:35,baseL2O:45,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800},
   channels:[
-    {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:50,abmBoost:true,diag:true,color:'--blue'},
+    {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
     {id:'chatgpt',name:'Paid ChatGPT',group:'paid',kind:'lead',cpl:2000,l2o:25,o2w:15,acv:50,abmBoost:false,color:'--blue-mid'},
     {id:'reddit',name:'Reddit',group:'paid',kind:'lead',cpl:2500,l2o:25,o2w:15,acv:50,abmBoost:false,color:'--blue-deep'},
@@ -594,11 +594,14 @@ const clone=o=>JSON.parse(JSON.stringify(o));
 const PAID_SPLIT={linkedin:130,google:30,chatgpt:10,reddit:10};
 function migrate(o){
   o.global={...DEFAULTS.global,...o.global};
-  const i=o.channels.findIndex(c=>c.id==='paid');if(i<0)return o;
+  const i=o.channels.findIndex(c=>c.id==='paid');
+  if(i>=0){
   o.channels.splice(i,1,...clone(DEFAULTS.channels.filter(c=>c.group==='paid')));
   ['events','partners'].forEach(id=>{const c=o.channels.find(x=>x.id===id);if(c)c.diag=true;});
   Object.values(o.scenarios).forEach(sc=>{const v=sc.budget.paid;sc.budget=Object.fromEntries(Object.entries(sc.budget).filter(([k])=>k!=='paid'));if(v==null||v==='')return;
     let left=+v;const ks=Object.keys(PAID_SPLIT);ks.forEach((k,j)=>{const x=j<ks.length-1?Math.round(v*PAID_SPLIT[k]/180/5)*5:left;sc.budget[k]=x;left-=x;});});
+  }
+  const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
   return o;
 }
 function load(){try{const s=localStorage.getItem(STORE);if(!s)return null;const o=JSON.parse(s);if(!o||!o.global||!o.channels||!o.scenarios)return null;return migrate(o);}catch(e){return null}}
@@ -625,6 +628,7 @@ function inkOn(hex){const h=hex.replace('#','');const r=parseInt(h.slice(0,2),16
 const GROUPNAME={paid:'Paid enterprise'};
 function groups(){const out=[];S.channels.forEach(c=>{const k=c.group||c.id;let g=out.find(x=>x.key===k);if(!g){g={key:k,name:GROUPNAME[k]||c.name,channels:[]};out.push(g);}g.channels.push(c);});return out;}
 const groupBudget=(s,g)=>g.channels.reduce((a,c)=>a+budget(s,c.id),0);
+const acvK=c=>c.entDeal?num(S.global.entAcv):num(c.acv);
 const budget=(sc,id)=>num(S.scenarios[sc].budget[id]);
 const totalBudget=sc=>S.channels.reduce((a,c)=>a+budget(sc,c.id),0);
 const hasBudget=sc=>totalBudget(sc)>0;
@@ -668,10 +672,10 @@ function run(sc){
     const l2o=Math.min(1,(num(c.l2o)+(abmOn&&c.abmBoost?g.abmUplift:0))/100),o2w=num(c.o2w)/100;
     const a=[0,0,0,0,0,0];let L=0,O=0,W=0;
     w.forEach((wq,q)=>{const s=sp*wq;const l=c.cpl>0?s/c.cpl:0;const o=l*l2o;const x=o*o2w;L+=l;O+=o;W+=x;a[q+1]+=x*f1;a[q+2]+=x*f2;});
-    const cm=c.commission?W*c.acv*1000*g.commission/100:0;
-    lines[c.id]=a;acvOf[c.id]=num(c.acv)*1000;
-    ch[c.id]={spend:sp,leads:L,opps:O,wins:W,arr:W*num(c.acv)*1000,comm:cm,l2o,o2w,cpo:O>0?(sp+cm)/O:null,cpw:W>0?(sp+cm)/W:null};
-    spend+=sp+cm;wins+=W;arr+=W*num(c.acv)*1000;leads+=L;opps+=O;comm+=cm;
+    const cm=c.commission?W*acvK(c)*1000*g.commission/100:0;
+    lines[c.id]=a;acvOf[c.id]=acvK(c)*1000;
+    ch[c.id]={spend:sp,leads:L,opps:O,wins:W,arr:W*acvK(c)*1000,comm:cm,l2o,o2w,cpo:O>0?(sp+cm)/O:null,cpw:W>0?(sp+cm)/W:null};
+    spend+=sp+cm;wins+=W;arr+=W*acvK(c)*1000;leads+=L;opps+=O;comm+=cm;
   }
   const cap=capacity(sc);
   const sim=simulate(lines,cap);
@@ -735,9 +739,9 @@ function renderChanTable(){
       h+=`<tr><td><span class="dot" style="background:${chColor(c)}"></span>${esc(c.name)}</td><td colspan="4">No leads of its own. Adds ${ctl('global.abmUplift',g.abmUplift,0,30,1)} pts lead → opp to LinkedIn, Google search and events when ABM budget ≥ $k ${ctl('global.abmThreshold',g.abmThreshold,0,100,5)}</td><td><span class="pill assumed">Assumed</span></td></tr>`;
       continue;
     }
-    const name=c.custom?`<input type="text" data-p="chan.${c.id}.name" value="${esc(c.name)}">`:esc(c.name)+(c.commission?`<div class="small muted">+ ${g.commission}% commission on wins</div>`:'');
+    const name=c.custom?`<input type="text" data-p="chan.${c.id}.name" value="${esc(c.name)}">`:esc(c.name)+(c.entDeal?`<div class="small muted">Enterprise deals via ABM</div>`:'')+(c.commission?`<div class="small muted">+ ${g.commission}% commission on wins</div>`:'');
     h+=`<tr><td><span class="dot" style="background:${chColor(c)}"></span>${name}${c.custom?`<label class="small muted" style="display:block;margin-top:4px"><input type="checkbox" data-p="chan.${c.id}.abmBoost" ${c.abmBoost?'checked':''}> gets ABM uplift</label>`:''}</td>
-      <td>${ctl(`chan.${c.id}.cpl`,c.cpl,100,6000,50)}</td><td>${ctl(`chan.${c.id}.l2o`,c.l2o,0,100,1)}</td><td>${ctl(`chan.${c.id}.o2w`,c.o2w,0,100,1)}</td><td>${ctl(`chan.${c.id}.acv`,c.acv,10,150,1)}</td>
+      <td>${ctl(`chan.${c.id}.cpl`,c.cpl,100,6000,50)}</td><td>${ctl(`chan.${c.id}.l2o`,c.l2o,0,100,1)}</td><td>${ctl(`chan.${c.id}.o2w`,c.o2w,0,100,1)}</td><td>${c.entDeal?ctl('global.entAcv',S.global.entAcv,50,250,5)+'<div class="small muted">Enterprise deal size, shared with the goal</div>':ctl(`chan.${c.id}.acv`,c.acv,10,150,1)}</td>
       <td><span class="pill ${c.custom?'mine':'assumed'}">${c.custom?'Custom':'Assumed'}</span></td></tr>`;
   }
   document.getElementById('chanTable').innerHTML=h+'</tbody>';
@@ -921,7 +925,7 @@ function renderKnown(){
   S.channels.filter(c=>c.kind==='lead').forEach(c=>{const b=c.custom?'Mine':'Assumed';
     rows.push([`${c.name}: cost per qualified lead`,'$'+c.cpl,b,c.commission?'Program cost; commission on wins is added on top.':'']);
     rows.push([`${c.name}: lead → opp / opp → won`,`${c.l2o}% / ${c.o2w}%`,b,c.abmBoost?`+${g.abmUplift} pts lead → opp with ABM.`:'']);
-    rows.push([`${c.name}: ACV`,'$'+c.acv+'k',b,'']);});
+    rows.push([`${c.name}: ACV`,'$'+acvK(c)+'k',b,c.entDeal?'Enterprise deals via ABM on named accounts. Same input as the goal\'s enterprise deal size.':'']);});
   ['B','C'].forEach(s=>rows.push([`Scenario ${s} budget`,S.channels.filter(c=>budget(s,c.id)>0).map(c=>`${c.name} $${budget(s,c.id)}k`).join(' · ')||'—','Given','From the case brief. Phasing 25% a quarter is my default.']));
   rows.push(['Scenario A budget',hasBudget('A')?S.channels.filter(c=>budget('A',c.id)>0).map(c=>`${c.name} $${budget('A',c.id)}k`).join(' · '):'Empty: build your own split.','Mine','']);
   rows.push(['Sales cycle lag','Wins land in the next 1–2 quarters','Assumed',`At ${g.cycle} months: ${pct(lagSplit()[0])} next quarter, ${pct(lagSplit()[1])} the one after.`]);
