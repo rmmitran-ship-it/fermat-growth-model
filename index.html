@@ -960,12 +960,12 @@ function renderDealMix(){
   const listPct=E.l[1]/Math.max(1,num(g.abmAccounts));
   document.getElementById('dmFunnel').innerHTML=`<div class="rfun2">
     <div><div class="rhead"><span class="dot" style="background:var(--ink)"></span><b>Enterprise · ABM</b><span>${fmt(m.entN)} × ${k$(m.entAcv)} = ${M$(m.entArr,1)}</span></div>
-      ${funnel(E,'Qualified accounts',`${pct(listPct)} of ${fmt(g.abmAccounts)} named accounts`,m.entN,`${pct(m.entArr/m.arr)} of new ARR`)}</div>
+      ${funnel(E,'Qualified leads',`${fmt(E.l[1]/12)} a month, from ${fmt(g.abmAccounts)} named accounts`,m.entN,`${pct(m.entArr/m.arr)} of new ARR`)}</div>
     <div><div class="rhead"><span class="dot" style="background:var(--magenta)"></span><b>Mid-market</b><span>${fmt(m.smN)} × ${k$(m.smAvg)} = ${M$(m.smArr,1)}</span></div>
       ${funnel(Sm,'Qualified leads',`${fmt(Sm.l[1]/12)} a month`,m.smN,`${pct(m.smArr/m.arr)} of new ARR`)}</div>
   </div>`;
   const cap=g.aes*g.aeCap*4,need=m.won/g.aes/4,totL=E.l[1]+Sm.l[1];
-  document.getElementById('dmNote').innerHTML=`Big numbers: midpoint rates. Range: best case (50%, 25%) to conservative (30%, 15%). Together: ${fmt(totL)} qualified leads and accounts, ${fmt(E.o[1]+Sm.o[1])} opportunities. Today's engine brings ${g.baseLeads} leads a month, so mid-market alone needs about ${fmt(Math.max(0,Sm.l[1]/12-g.baseLeads))} more a month, and ABM has to qualify about ${fmt(E.l[1]/12)} named accounts a month. ${g.aes} AEs at ${g.aeCap} a quarter close ${fmt(cap)} logos a year, ${m.won>cap?fmt(m.won-cap)+' short':'enough'}: the goal needs ${n1(need)} per AE per quarter.`;
+  document.getElementById('dmNote').innerHTML=`Big numbers: midpoint rates. Range: best case (50%, 25%) to conservative (30%, 15%). Together: ${fmt(totL)} qualified leads, ${fmt(E.o[1]+Sm.o[1])} opportunities. Today's engine brings ${g.baseLeads} leads a month, so mid-market alone needs about ${fmt(Math.max(0,Sm.l[1]/12-g.baseLeads))} more a month, and ABM has to bring about ${fmt(E.l[1]/12)} qualified leads a month from named accounts. ${g.aes} AEs at ${g.aeCap} a quarter close ${fmt(cap)} logos a year, ${m.won>cap?fmt(m.won-cap)+' short':'enough'}: the goal needs ${n1(need)} per AE per quarter.`;
 }
 function dealGoal(){
   const won=goalMix().won;
