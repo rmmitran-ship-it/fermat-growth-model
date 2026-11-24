@@ -148,14 +148,29 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 .gsub{font-weight:600}
 .pie li.subli{padding-left:14px;color:var(--muted)}
 /* deal mix */
-.dmix{display:grid;grid-template-columns:300px 1fr;gap:12px}
-.dmin{display:grid;gap:12px;align-content:start}
-.dmout .tiles{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
-.dmtrack{position:relative;display:flex;height:44px;background:var(--surface)}
-.dmtrack i{display:block;height:100%}
-.dmcap{position:absolute;top:-6px;bottom:-6px;border-left:2px solid var(--ink)}
-.dmcap em{position:absolute;top:-20px;left:6px;font-style:normal;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap}
-@media (max-width:900px){.dmix{grid-template-columns:1fr}.dmcap em{left:auto;right:6px}}
+.goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
+.goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
+.goalline b{font-weight:600;background:var(--green);padding:0 .12em}
+.goalin{display:flex;flex-wrap:wrap;gap:10px}
+.goalin label{display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600;color:var(--ink);background:var(--surface);padding:12px 14px}
+.goalin .pill{align-self:flex-start}
+.gi{display:flex;align-items:center;gap:4px;font-size:14px}
+.gi input{width:64px}
+.rfun{display:flex;flex-direction:column;align-items:center}
+.rrow{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;padding:18px 24px;color:var(--ink)}
+.rrow b{font-family:'Inter Tight';font-size:clamp(36px,4.4vw,54px);font-weight:600;letter-spacing:-0.03em;line-height:1}
+.rrow .rl{font-weight:600;font-size:14px}
+.rrow .rr{text-align:right;font-size:12.5px;color:var(--text)}
+.rrow.r1{width:100%;background:var(--surface)}
+.rrow.r2{width:76%;background:var(--blue-light)}
+.rrow.r3{width:52%;background:var(--green)}
+.rrate{position:relative;display:flex;justify-content:center;padding:10px 0;width:100%}
+.rarr{position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--ink)}
+.rarr::after{content:'';position:absolute;left:-5px;bottom:-1px;border:6px solid transparent;border-top:8px solid var(--ink);border-bottom:0}
+.rpill{position:relative;z-index:1;background:var(--magenta-light);padding:8px 14px;display:flex;align-items:baseline;gap:10px;font-size:12px;color:var(--ink)}
+.rpill .pk{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--magenta-deep)}
+.rpill b{font-family:'Inter Tight';font-size:20px;letter-spacing:-0.02em}
+@media (max-width:700px){.rrow{width:100%!important;grid-template-columns:1fr auto;padding:16px}.rrow .rr{grid-column:1/-1;text-align:left}.goalin label{flex:1 1 140px}}
 /* pipeline */
 .pipe{display:grid;grid-template-columns:1fr 150px 1fr 170px 1fr 48px 1.1fr;align-items:center;row-gap:10px}
 .pipe a{text-decoration:none;color:var(--ink)}
@@ -298,20 +313,13 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
     </div>
   </div>
 
-  <h3 class="mt3">What $3M actually takes: the deal mix</h3>
-  <p class="small muted" style="margin-bottom:16px">Fermat says 20% of clients are enterprise. Here that share is applied to ARR, with smaller deals at $15–50k.</p>
-  <div class="dmix">
-    <div class="dmin">
-      <div class="ginput"><div class="top"><div class="lab">Enterprise share of new ARR <span class="muted" style="font-weight:400">(%)</span></div><span class="pill given">Given</span></div><div id="dmEntShare"></div><div class="note">Fermat: 20% of clients are enterprise.</div></div>
-      <div class="ginput"><div class="top"><div class="lab">Enterprise clients</div><span class="pill assumed">Assumed</span></div><div id="dmEntClients"></div></div>
-      <div class="ginput"><div class="top"><div class="lab">Average smaller deal <span class="muted" style="font-weight:400">($k)</span></div><span class="pill assumed">Assumed</span></div><div id="dmSmallAvg"></div><div class="note">Midpoint of the $15–50k range, rounded down to be safe.</div></div>
-    </div>
-    <div class="dmout">
-      <div class="tiles" id="dmTiles"></div>
-      <div class="dmbar mt2" id="dmBar"></div>
-      <div class="callout mt" id="dmCallout"></div>
-    </div>
+  <h3 class="mt3">What $3M actually takes</h3>
+  <div class="goal">
+    <p class="goalline" id="dmGoal"></p>
+    <div class="goalin" id="dmIn"></div>
   </div>
+  <div class="rfun" id="dmFunnel"></div>
+  <p class="small muted mt" id="dmNote"></p>
 </div></section>
 
 <!-- INPUTS -->
@@ -904,30 +912,31 @@ function renderKnown(){
 }
 function renderDealMixInputs(){
   const g=S.global;
-  document.getElementById('dmEntShare').innerHTML=ctl('global.entShare',g.entShare,0,60,1);
-  document.getElementById('dmEntClients').innerHTML=ctl('global.entClients',g.entClients,1,30,1);
-  document.getElementById('dmSmallAvg').innerHTML=ctl('global.smallAvg',g.smallAvg,15,50,1);
+  const f=(p,v,min,max,pre,suf)=>`<span class="gi">${pre||''}<input type="number" data-p="${p}" min="${min}" max="${max}" value="${v}">${suf||''}</span>`;
+  document.getElementById('dmIn').innerHTML=
+    `<label>Enterprise share of ARR <span class="pill given">Given</span>${f('global.entShare',g.entShare,0,60,'','%')}</label>`+
+    `<label>Enterprise clients <span class="pill assumed">Assumed</span>${f('global.entClients',g.entClients,1,30)}</label>`+
+    `<label>Average smaller deal <span class="pill assumed">Assumed</span>${f('global.smallAvg',g.smallAvg,15,50,'$','k')}</label>`;
 }
+const BRIEF={l2o:[30,40,50],o2w:[15,20,25]};
 function renderDealMix(){
   const g=S.global,arr=g.targetArr*1e6;
   const entArr=arr*num(g.entShare)/100,entN=Math.max(1,num(g.entClients)),entAcv=entArr/entN;
-  const smArr=arr-entArr,smAvg=Math.max(1,num(g.smallAvg))*1000,smN=smArr/smAvg,total=entN+smN;
-  const cap=g.aes*g.aeCap*4,perAE=total/g.aes/4;
-  const fitAvg=cap>entN?smArr/(cap-entN):null;
-  const t=(k,v,s)=>`<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${s}</div></div>`;
-  document.getElementById('dmTiles').innerHTML=
-    t('Enterprise',`${n0(entN)}`,`logos · ${M$(entArr,1)} at ${k$(entAcv)} each`)+
-    t('Smaller deals',`${n0(smN)}`,`logos · ${M$(smArr,1)} at ${k$(smAvg)} each`)+
-    t('Total logos',`${n0(total)}`,`vs ${g.targetLogos} target · ${M$(arr,1)} ARR`)+
-    t('Per AE, per quarter',`<span class="${perAE>g.aeCap?'bad':''}" style="${perAE>g.aeCap?'color:var(--red)':''}">${n1(perAE)}</span>`,`vs ${g.aeCap} capacity with ${g.aes} AEs`);
-  const mx=Math.max(total,cap)*1.04;
-  document.getElementById('dmBar').innerHTML=`<div class="small" style="font-weight:600;color:var(--ink);margin-bottom:8px">Logos needed vs. what ${g.aes} AEs can close in 2027</div>
-    <div class="dmtrack"><i style="width:${entN/mx*100}%;background:var(--ink)"></i><i style="width:${smN/mx*100}%;background:var(--magenta)"></i><span class="dmcap" style="left:${cap/mx*100}%"><em>AE capacity ${n0(cap)}</em></span></div>
-    <div class="legend"><span><span class="dot" style="background:var(--ink)"></span>Enterprise ${n0(entN)}</span><span><span class="dot" style="background:var(--magenta)"></span>Smaller deals ${n0(smN)}</span><span><span class="dot" style="background:transparent;border-left:2px solid var(--ink);width:2px"></span>AE capacity ${n0(cap)}</span></div>`;
-  const gap=total-cap;
-  document.getElementById('dmCallout').innerHTML=gap>0.5
-    ?`<b>${n0(total)} logos is ${n0(gap)} more than ${g.aes} AEs can close (${n0(cap)}).</b> Smaller deals need a lighter sales motion (partners closing, inside sales, a faster product-led sale), or they have to average ${fin(fitAvg)?k$(fitAvg):'more'} to fit capacity${fin(fitAvg)&&fitAvg>50000?', above the $15–50k range':''}.`
-    :`<b>${n0(total)} logos fits inside AE capacity (${n0(cap)}).</b> The plan can run on the current sales motion.`;
+  const smAvg=Math.max(1,num(g.smallAvg))*1000,smN=(arr-entArr)/smAvg,won=entN+smN;
+  const fmt=x=>Math.round(x).toLocaleString('en-US');
+  const opps=BRIEF.o2w.map(r=>won/(r/100));          // [cons, mid, best]
+  const leads=opps.map((o,i)=>o/(BRIEF.l2o[i]/100));
+  document.getElementById('dmGoal').innerHTML=`Goal: <b>${fmt(won)} logos</b> for <b>${M$(arr,1)}</b>. ${fmt(entN)} enterprise at ${k$(entAcv)} + ${fmt(smN)} smaller deals at ${k$(smAvg)}.`;
+  const row=(cls,label,mid,lo,hi,sub)=>`<div class="rrow ${cls}"><span class="rl">${label}</span><b>${fmt(mid)}</b><span class="rr">${lo!=null?`Range ${fmt(lo)}–${fmt(hi)}<br>`:''}${sub}</span></div>`;
+  const rate=(label,r)=>`<div class="rrate"><span class="rarr"></span><span class="rpill"><span class="pk">${label}</span><b>${r[0]}–${r[2]}%</b><span>midpoint ${r[1]}%</span></span></div>`;
+  document.getElementById('dmFunnel').innerHTML=
+    row('r1','Qualified leads',leads[1],leads[2],leads[0],`${fmt(leads[1]/12)} a month at midpoint`)+
+    rate('Lead → opp',BRIEF.l2o)+
+    row('r2','Opportunities',opps[1],opps[2],opps[0],`${fmt(opps[1]/12)} a month at midpoint`)+
+    rate('Opp → won',BRIEF.o2w)+
+    row('r3','Won',won,null,null,`${fmt(entN)} enterprise + ${fmt(smN)} smaller`);
+  const cap=g.aes*g.aeCap*4;
+  document.getElementById('dmNote').innerHTML=`Big number: midpoint rates. Range: best case (50%, 25%) to conservative (30%, 15%), spread over 12 months. Today's engine brings ${g.baseLeads} qualified leads a month, so the midpoint needs about ${n1(leads[1]/12/g.baseLeads)}x that. AE capacity is ${fmt(cap)} logos a year (${g.aes} AEs × ${g.aeCap}), ${won>cap?fmt(won-cap)+' short of '+fmt(won):'enough for '+fmt(won)}.`;
 }
 function renderPipe(){
   const g=S.global,lead=S.channels.filter(c=>c.kind==='lead');
