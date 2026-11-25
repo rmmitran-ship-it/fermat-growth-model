@@ -677,7 +677,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{baseLeads:35,baseL2O:45,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,aeCost:100,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10},
+  global:{baseLeads:40,baseL2O:45,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,aeCost:100,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -740,6 +740,7 @@ function migrate(o){
     let left=+v;const ks=Object.keys(PAID_SPLIT);ks.forEach((k,j)=>{const x=j<ks.length-1?Math.round(v*PAID_SPLIT[k]/180/5)*5:left;sc.budget[k]=x;left-=x;});});
   }
   if(o.global.aeCost===110)o.global.aeCost=100;
+  if(o.global.baseLeads===35&&!o.global.base40){o.global.baseLeads=40;}o.global.base40=true;
   const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
   return o;
 }
