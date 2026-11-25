@@ -219,6 +219,15 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 .wbt .v .of{font-size:.5em;color:var(--muted)}
 .wbt .v.short{color:var(--red)}
 @media (max-width:800px){.rdleg{grid-template-columns:1fr 1fr}.road{padding:20px}}
+.goalwarn{display:block;margin-top:10px;font-family:Inter;font-size:14px;letter-spacing:0;line-height:1.45;color:var(--text);max-width:60ch}
+.rfun2>div{display:flex;flex-direction:column}
+.icp{flex:1;background:var(--white);border:1px solid var(--line);padding:12px 14px;margin-bottom:14px;font-size:13px;color:var(--ink)}
+.icprule{line-height:1.5}
+.icprule .k{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-right:6px}
+.icpt{width:100%;margin-top:8px;border-collapse:collapse}
+.icpt td{padding:6px 0;border-top:1px solid var(--surface-2);font-size:13px;vertical-align:baseline}
+.icpt td span{display:block;font-size:12px;color:var(--muted)}
+.icpt td.num{text-align:right;padding-left:12px;white-space:nowrap}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -351,15 +360,28 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
     <button class="tab tC" role="tab" data-act="view" data-v="C">C · $550k</button>
     <button class="tab tX" role="tab" data-act="view" data-v="compare">Compare all three</button>
     <div class="jump">
-      <a href="#plan">Plan</a><a href="#diagnosis">Diagnosis</a><a href="#inputs">Inputs</a><a href="#outputs">Outputs</a><a href="#channels">Channels</a><a href="#paid">Paid</a><a href="#measure">Measurement</a><a href="#ninety">90 days</a><a href="#known">Known vs. assumed</a>
+      <a href="#target">Target</a><a href="#plan">Plan</a><a href="#diagnosis">Diagnosis</a><a href="#inputs">Inputs</a><a href="#outputs">Outputs</a><a href="#channels">Channels</a><a href="#paid">Paid</a><a href="#measure">Measurement</a><a href="#ninety">90 days</a><a href="#known">Known vs. assumed</a>
     </div>
   </div>
 </nav>
 
 <main>
+<!-- TARGET -->
+<section id="target"><div class="wrap">
+  <div class="eyebrow">00 · The target</div>
+  <h2>What <span class="hl hl-g">$3M</span> actually takes.</h2>
+  <p class="lede">Start from the brief's target and its two customer types. These are the audience numbers the plan has to work towards.</p>
+  <div class="goal">
+    <p class="goalline" id="dmGoal"></p>
+    <div class="goalin" id="dmIn"></div>
+  </div>
+  <div id="dmFunnel"></div>
+  <p class="small muted mt" id="dmNote"></p>
+</div></section>
+
 <!-- WORK-BACK -->
 <section id="plan"><div class="wrap">
-  <div class="eyebrow">00 · Budget vs. pipeline</div>
+  <div class="eyebrow">00 · The budget</div>
   <h2>Protect the inbound. <span class="hl hl-m">Buy the gap</span>.</h2>
   <p class="lede">The plan doesn't need to buy $3M from scratch. Today's inbound already brings most of the logos. The budget has to buy the gap: mostly the enterprise deals, plus a few mid-market ones.</p>
   <div class="wbpanel" id="wbPanel">
@@ -410,14 +432,6 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
       </ul>
     </div>
   </div>
-
-  <h3 class="mt3">What $3M actually takes</h3>
-  <div class="goal">
-    <p class="goalline" id="dmGoal"></p>
-    <div class="goalin" id="dmIn"></div>
-  </div>
-  <div id="dmFunnel"></div>
-  <p class="small muted mt" id="dmNote"></p>
 
   <h3 class="mt3">Your 2027 pipeline</h3>
   <p class="small muted" id="pcLede" style="margin-bottom:16px"></p>
@@ -638,7 +652,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{baseLeads:35,baseL2O:45,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,aeCost:100,sdrMin:500},
+  global:{baseLeads:35,baseL2O:45,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,aeCost:100,sdrMin:500,midAcv:35},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -676,7 +690,8 @@ const GMETA=[
   {k:'abmThreshold',label:'ABM budget needed for uplift',unit:'$k',min:0,max:100,step:5,badge:'Assumed',note:'',grid:false},
   {k:'abmUplift',label:'ABM uplift on lead → opp (LinkedIn, Google, events)',unit:'pts',min:0,max:30,step:1,badge:'Assumed',note:'',grid:false},
   {k:'entLogoShare',label:'Enterprise share of new logos',unit:'%',min:0,max:60,step:1,badge:'Assumed',note:'From the intro call with Fermat: about 20% of clients are enterprise. To confirm with CRM data.',grid:false},
-  {k:'entAcv',label:'Enterprise deal size (ABM)',unit:'$k',min:50,max:250,step:5,badge:'Assumed',note:'Named $100M–$5B brands worked through ABM. Mid-market deals take the rest of the ARR.',grid:false},
+  {k:'entAcv',label:'Enterprise deal size (ABM)',unit:'$k',min:50,max:250,step:5,badge:'Given',note:'Brief: enterprise averages about $100k (Calle Brava, ~$900M revenue, $120k).',grid:false},
+  {k:'midAcv',label:'Mid-market deal size',unit:'$k',min:10,max:80,step:1,badge:'Given',note:'Brief: mid-market averages about $35k (Harlow & Pine $50k, Nordvik Studio $40k, Maison Ferrand $15k).',grid:false},
   {k:'abmAccounts',label:'Named accounts on the ABM list',unit:'accounts',min:100,max:2000,step:50,badge:'Assumed',note:'Same list LinkedIn targets.',grid:false},
   {k:'cpaMid',label:'Contacts per mid-market account',unit:'contacts',min:1,max:20,step:1,badge:'Assumed',note:'Rule of thumb: 5–7 people in the buying group.',grid:false},
   {k:'cpaEnt',label:'Contacts per enterprise account',unit:'contacts',min:5,max:40,step:1,badge:'Assumed',note:'Rule of thumb: about 15 across brand, creative, growth and procurement.',grid:false},
@@ -1046,37 +1061,42 @@ function renderDealMixInputs(){
   document.getElementById('dmIn').innerHTML=
     `<label>New logos in 2027 <span class="pill given">Given</span>${f('global.targetLogos',g.targetLogos,20,120)}</label>`+
     `<label>Enterprise share of logos <span class="pill assumed" title="From the intro call, to confirm">Assumed</span>${f('global.entLogoShare',g.entLogoShare,0,60,'','%')}</label>`+
-    `<label>Enterprise deal size <span class="pill assumed">Assumed</span>${f('global.entAcv',g.entAcv,50,250,'$','k')}</label>`+
+    `<label>Enterprise deal size <span class="pill given">Given</span>${f('global.entAcv',g.entAcv,50,250,'$','k')}</label>`+
+    `<label>Mid-market deal size <span class="pill given">Given</span>${f('global.midAcv',g.midAcv,10,80,'$','k')}</label>`+
     `<label>Named ABM accounts <span class="pill assumed">Assumed</span>${f('global.abmAccounts',g.abmAccounts,100,2000,'','',72)}</label>`;
 }
 const BRIEF={l2o:[30,40,50],o2w:[15,20,25]};
 function goalMix(){
   const g=S.global,arr=g.targetArr*1e6,won=Math.max(1,num(g.targetLogos));
   const entN=won*num(g.entLogoShare)/100,entAcv=num(g.entAcv)*1000,entArr=entN*entAcv;
-  const smN=won-entN,smArr=arr-entArr,smAvg=smN>0?smArr/smN:0;
-  return {arr,won,entN,entAcv,entArr,smN,smArr,smAvg,avg:arr/won};
+  const smAvg=Math.max(1,num(g.midAcv))*1000,smArr=Math.max(0,arr-entArr),smN=smArr/smAvg,need=entN+smN;
+  return {arr,won,entN,entAcv,entArr,smN,smArr,smAvg,need,avg:arr/need};
 }
 function renderDealMix(){
   const g=S.global,m=goalMix(),fmt=x=>Math.round(x).toLocaleString('en-US');
   const back=w=>{const o=BRIEF.o2w.map(r=>w/(r/100));return {o,l:o.map((x,i)=>x/(BRIEF.l2o[i]/100))};};
   const E=back(m.entN),Sm=back(m.smN);
-  const bad=m.smAvg>50000||m.smAvg<15000;
-  document.getElementById('dmGoal').innerHTML=`Goal: <b>${fmt(m.won)} logos</b> for <b>${M$(m.arr,1)}</b>. ${fmt(m.entN)} enterprise via ABM at ${k$(m.entAcv)} + ${fmt(m.smN)} mid-market deals at ${k$(m.smAvg)}${bad?' <span class="warn" style="font-size:14px">outside the $15–50k range</span>':''}.`;
+  const at60=m.entN*m.entAcv+(m.won-m.entN)*m.smAvg;
+  document.getElementById('dmGoal').innerHTML=`Goal: <b>${M$(m.arr,1)}</b> of new ARR. ${fmt(m.entN)} enterprise at ${k$(m.entAcv)} + ${fmt(m.smN)} mid-market at ${k$(m.smAvg)} = <b>${fmt(m.need)} logos</b>.`+
+    (Math.abs(m.need-m.won)>=0.5?`<span class="goalwarn">The brief says about ${fmt(m.won)} logos. At its deal sizes, ${fmt(m.won)} logos land ${M$(at60,2)}, so ${M$(m.arr,0)} takes ${fmt(m.need-m.won)} more mid-market deals.</span>`:'');
+  const icp=(rule,rows)=>`<div class="icp"><div class="icprule">${rule}</div><table class="icpt"><tbody>${rows.map(r=>`<tr><td><b>${r[0]}</b><span>${r[1]}</span></td><td class="num">${r[2]}</td><td class="num">${r[3]}</td></tr>`).join('')}</tbody></table></div>`;
+  const entIcp=icp('<span class="k">ICP</span> Revenue above $500M · international retail, many locations · many collections a year <span class="pill assumed" title="To confirm with Fermat">To confirm</span>',[['Calle Brava','Spanish value fashion','~$900M revenue','$120k']]);
+  const midIcp=icp('<span class="k">ICP</span> Revenue about $150–500M · brands from the brief',[['Harlow &amp; Pine','US premium denim','~$400M revenue','$50k'],['Nordvik Studio','Scandinavian womenswear','~$250M revenue','$40k'],['Maison Ferrand','French accessories','~$150M revenue','$15k']]);
   const row=(cls,label,mid,lo,hi,sub)=>`<div class="rrow ${cls}"><span class="rl">${label}</span><b>${fmt(mid)}</b><span class="rr">${lo!=null?`Range ${fmt(lo)}–${fmt(hi)}<br>`:''}${sub}</span></div>`;
   const rate=(label,r)=>`<div class="rrate"><span class="rarr"></span><span class="rpill"><span class="pk">${label}</span><b>${r[0]}–${r[2]}%</b><span>mid ${r[1]}%</span></span></div>`;
   const funnel=(P,top,topSub,won,wonSub)=>`<div class="rfun">${row('r1',top,P.l[1],P.l[2],P.l[0],topSub)}${rate('Lead → opp',BRIEF.l2o)}${row('r2','Opportunities',P.o[1],P.o[2],P.o[0],`${fmt(P.o[1]/12)} a month`)}${rate('Opp → won',BRIEF.o2w)}${row('r3','Won',won,null,null,wonSub)}</div>`;
   const listPct=E.l[1]/Math.max(1,num(g.abmAccounts));
   document.getElementById('dmFunnel').innerHTML=`<div class="rfun2">
-    <div><div class="rhead"><span class="dot" style="background:var(--ink)"></span><b>Enterprise · ABM</b><span>${fmt(m.entN)} × ${k$(m.entAcv)} = ${M$(m.entArr,1)}</span></div>
-      ${funnel(E,'Qualified leads',`${fmt(E.l[1]/12)} a month, from ${fmt(g.abmAccounts)} named accounts`,m.entN,`${pct(m.entArr/m.arr)} of new ARR`)}</div>
-    <div><div class="rhead"><span class="dot" style="background:var(--magenta)"></span><b>Mid-market</b><span>${fmt(m.smN)} × ${k$(m.smAvg)} = ${M$(m.smArr,1)}</span></div>
-      ${funnel(Sm,'Qualified leads',`${fmt(Sm.l[1]/12)} a month`,m.smN,`${pct(m.smArr/m.arr)} of new ARR`)}</div>
+    <div><div class="rhead"><span class="dot" style="background:var(--ink)"></span><b>Enterprise · ABM</b><span>${fmt(m.entN)} × ${k$(m.entAcv)} avg = ${M$(m.entArr,1)}</span></div>
+      ${entIcp}${funnel(E,'Qualified leads',`${fmt(E.l[1]/12)} a month, from ${fmt(g.abmAccounts)} named accounts`,m.entN,`${pct(m.entArr/m.arr)} of new ARR`)}</div>
+    <div><div class="rhead"><span class="dot" style="background:var(--magenta)"></span><b>Mid-market</b><span>${fmt(m.smN)} × ${k$(m.smAvg)} avg = ${M$(m.smArr,1)}</span></div>
+      ${midIcp}${funnel(Sm,'Qualified leads',`${fmt(Sm.l[1]/12)} a month`,m.smN,`${pct(m.smArr/m.arr)} of new ARR`)}</div>
   </div>`;
-  const cap=g.aes*g.aeCap*4,need=m.won/g.aes/4,totL=E.l[1]+Sm.l[1];
-  document.getElementById('dmNote').innerHTML=`Big numbers: midpoint rates. Range: best case (50%, 25%) to conservative (30%, 15%). Together: ${fmt(totL)} qualified leads, ${fmt(E.o[1]+Sm.o[1])} opportunities. Today's engine brings ${g.baseLeads} leads a month, so mid-market alone needs about ${fmt(Math.max(0,Sm.l[1]/12-g.baseLeads))} more a month, and ABM has to bring about ${fmt(E.l[1]/12)} qualified leads a month from named accounts. ${g.aes} AEs at ${g.aeCap} a quarter close ${fmt(cap)} logos a year, ${m.won>cap?fmt(m.won-cap)+' short':'enough'}: the goal needs ${n1(need)} per AE per quarter.`;
+  const cap=g.aes*g.aeCap*4,need=m.need/g.aes/4,totL=E.l[1]+Sm.l[1];
+  document.getElementById('dmNote').innerHTML=`Big numbers: midpoint rates. Range: best case (50%, 25%) to conservative (30%, 15%). Together: ${fmt(totL)} qualified leads, ${fmt(E.o[1]+Sm.o[1])} opportunities. Today's engine brings ${g.baseLeads} leads a month, so mid-market alone needs about ${fmt(Math.max(0,Sm.l[1]/12-g.baseLeads))} more a month, and ABM has to bring about ${fmt(E.l[1]/12)} qualified leads a month from named accounts. ${g.aes} AEs at ${g.aeCap} a quarter close ${fmt(cap)} logos a year, ${m.need>cap?fmt(m.need-cap)+' short':'enough'}: the goal needs ${n1(need)} per AE per quarter.`;
 }
 function dealGoal(){
-  const won=goalMix().won;
+  const won=goalMix().need;
   const opps=won/(BRIEF.o2w[1]/100),leads=opps/(BRIEF.l2o[1]/100);
   return {won,opps,leads};
 }
