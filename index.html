@@ -1076,9 +1076,7 @@ function renderDealMix(){
   const g=S.global,m=goalMix(),fmt=x=>Math.round(x).toLocaleString('en-US');
   const back=w=>{const o=BRIEF.o2w.map(r=>w/(r/100));return {o,l:o.map((x,i)=>x/(BRIEF.l2o[i]/100))};};
   const E=back(m.entN),Sm=back(m.smN);
-  const at60=m.entN*m.entAcv+(m.won-m.entN)*m.smAvg;
-  document.getElementById('dmGoal').innerHTML=`Goal: <b>${M$(m.arr,1)}</b> of new ARR. ${fmt(m.entN)} enterprise at ${k$(m.entAcv)} + ${fmt(m.smN)} mid-market at ${k$(m.smAvg)} = <b>${fmt(m.need)} logos</b>.`+
-    (Math.abs(m.need-m.won)>=0.5?`<span class="goalwarn">The brief says about ${fmt(m.won)} logos. At its deal sizes, ${fmt(m.won)} logos land ${M$(at60,2)}, so ${M$(m.arr,0)} takes ${fmt(m.need-m.won)} more mid-market deals.</span>`:'');
+  document.getElementById('dmGoal').innerHTML=`Goal: <b>${M$(m.arr,1)}</b> of new ARR. ${fmt(m.entN)} enterprise at ${k$(m.entAcv)} + ${fmt(m.smN)} mid-market at ${k$(m.smAvg)} = <b>${fmt(m.need)} logos</b>.`;
   const icp=(rule,rows)=>`<div class="icp"><div class="icprule">${rule}</div><table class="icpt"><tbody>${rows.map(r=>`<tr><td><b>${r[0]}</b><span>${r[1]}</span></td><td class="num">${r[2]}</td><td class="num">${r[3]}</td></tr>`).join('')}</tbody></table></div>`;
   const entIcp=icp('<span class="k">ICP</span> Revenue above $500M · international retail, many locations · many collections a year <span class="pill assumed" title="To confirm with Fermat">To confirm</span>',[['Calle Brava','Spanish value fashion','~$900M revenue','$120k']]);
   const midIcp=icp('<span class="k">ICP</span> Revenue about $150–500M · brands from the brief',[['Harlow &amp; Pine','US premium denim','~$400M revenue','$50k'],['Nordvik Studio','Scandinavian womenswear','~$250M revenue','$40k'],['Maison Ferrand','French accessories','~$150M revenue','$15k']]);
