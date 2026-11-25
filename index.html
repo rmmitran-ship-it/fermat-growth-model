@@ -257,6 +257,11 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 .wbjoin span{background:var(--surface-2);border:1px dashed var(--ink);padding:6px 12px;font-size:12px;font-weight:600;color:var(--ink)}
 .okt{color:var(--green-deep);font-weight:600}
 .shortt{color:var(--red);font-weight:600}
+.card.opt{background:var(--white);border:1px solid var(--line)}
+.card.opt p{margin-bottom:10px}
+.optm{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:13px}
+.card.phase{background:var(--surface)}
+.card.phase .pk{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:14px 0 4px}
 .tacgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .tac{padding:18px 18px 16px;font-size:13px;color:var(--text);line-height:1.45}
 .tac.t1{background:var(--surface)} .tac.t2{background:var(--magenta-light)} .tac.t3{background:var(--blue-light)} .tac.t4{background:var(--green)}
@@ -592,7 +597,19 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
       <div class="rank"><div class="n">3</div><div><h3>Events: attend and host, no booths</h3><p>Go where the buyers are, book meetings before the trip, and host small dinners for named accounts.</p></div></div>
       <div class="rank"><div class="n">4</div><div><h3>Paid enterprise, as an ABM layer only</h3><p>Target the named list, retarget engaged accounts, and judge it on cost per opportunity, not clicks.</p></div></div>
     </div>
-    <div class="card ink">
+    <div>
+    <div class="card g">
+      <h3>Partnerships: how I'd approach them</h3>
+      <p>Partners refer when they gain something: their client looks good, and they earn from the introduction. I'd start from the partners that already send deals, not from a new list.</p>
+      <ul class="clean">
+        <li><b>Learn first.</b> Who refers today, why, and how those deals convert compared with other sources.</li>
+        <li><b>Pick partner types that sell to the same buyer.</b> Agencies and consultancies that design or develop collections for brands. PLM and fashion-tech implementers. Sourcing agents and manufacturers, who benefit from cleaner tech packs. Design schools for tomorrow's champions.</li>
+        <li><b>Pilot small.</b> 3–5 partners, a simple kit (deck, demo account, case studies), referrals tracked in Attio, and a commission on first-year ACV paid only on won deals.</li>
+        <li><b>Decide in Q2.</b> Scale the partner types that bring opportunities, drop the rest.</li>
+      </ul>
+      <p class="small" style="color:var(--green-deep);margin-top:10px">Open question for Fermat: is partner commission paid from the growth budget or from revenue?</p>
+    </div>
+    <div class="card ink mt">
       <h3>What I won't do</h3>
       <ul class="clean" style="color:#ddd">
         <li><b style="color:#fff">Broad awareness paid.</b> Reach without a named account behind it doesn't turn into pipeline in 2027.</li>
@@ -600,6 +617,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
         <li><b style="color:#fff">Mass cold outbound.</b> It burns the list we need for ABM and the brand with it.</li>
         <li><b style="color:#fff">SEO as a 2027 pipeline channel.</b> Worth starting, too slow to count on this year.</li>
       </ul>
+    </div>
     </div>
   </div>
 </div></section>
@@ -687,11 +705,71 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 <section id="ninety"><div class="wrap">
   <div class="eyebrow">07 · First 90 days</div>
   <h2>Run it myself. <span class="hl hl-m">Buy</span> the rest.</h2>
+
   <div class="grid g2 mt2">
-    <div class="card m"><h3>Run myself</h3><ul class="clean">
-      <li>Strategy and the 2027 plan</li><li>Messaging and positioning by buyer</li><li>The ABM list: build, score, assign</li><li>Partner program: terms, first partners, co-sell</li><li>Event selection and hosted dinners</li><li>Reporting and the monthly budget review</li></ul></div>
-    <div class="card b"><h3>Buy</h3><ul class="clean">
-      <li>Paid media execution</li><li>Creative production</li><li>Enrichment and intent tools</li></ul></div>
+    <div class="card b"><div class="eyebrow" style="color:var(--blue-deep)">Milestone by month 3</div><h3>The ABM strategy</h3>
+      <ul class="clean">
+        <li>How do we define the handoff between marketing and sales?</li>
+        <li>How do we build a pitch for each type of account?</li>
+        <li>Which tools do we need, and which ones do we skip?</li>
+        <li>Do we need an in-house SDR, or can the AEs cover it?</li>
+      </ul></div>
+    <div class="card m"><div class="eyebrow" style="color:var(--magenta-deep)">Milestone by month 6</div><h3>The narrative</h3>
+      <p>Neither founder-led nor product-led growth is switched on yet. I'd test both lightly in Q1, read the results, and commit to one story by month 6. Built with brand and comms.</p></div>
+  </div>
+
+  <div class="grid g2 mt">
+    <div class="card opt"><div class="eyebrow">Option 1</div><h3>Founder-led media kit</h3>
+      <p>Build an ecosystem around Pol, so buyers know the person behind Fermat before sales calls.</p>
+      <ul class="clean">
+        <li>Video series: how Pol started Fermat, and why idea to delivery should take weeks, not months</li>
+        <li>LinkedIn plan for Pol: announcements, customer stories, point of view on AI in fashion</li>
+        <li>Speaking slots and dinners at the big fashion moments</li>
+      </ul>
+      <p class="optm"><b>Measure:</b> engagement from ICP accounts, inbound that mentions Pol, meetings Pol's content opens</p></div>
+    <div class="card opt"><div class="eyebrow">Option 2</div><h3>Product-led community</h3>
+      <p>Build a community around designers, so champions bring Fermat into their companies.</p>
+      <ul class="clean">
+        <li>Restart the podcast, with designers and heads of design as guests</li>
+        <li>Find 3–5 fashion creators who make their own clothes to design with Fermat in public</li>
+        <li>Designer community: challenges, showcases, templates</li>
+      </ul>
+      <p class="optm"><b>Measure:</b> sign-ups from ICP companies, champions who reach a buyer, content shared by designers</p></div>
+  </div>
+
+  <h3 class="mt3">The first 90 days</h3>
+  <div class="grid g3 mt">
+    <div class="card phase"><div class="eyebrow">Days 1–30</div><h3>Listen and set up</h3>
+      <div class="pk">Questions to answer</div><ul class="clean"><li>What's our pitch?</li><li>Who is sales targeting?</li></ul>
+      <div class="pk">Strategy</div><ul class="clean">
+        <li>Analyse the best 20 deals and find 2–3 narratives to test in ads</li>
+        <li>Review the inbound motion and scoring: what can be qualified today, and what needs more engagement</li>
+        <li>Review the events already committed to</li>
+        <li>Set up basic scoring in Attio</li></ul>
+      <div class="pk">Tactics</div><ul class="clean">
+        <li>A simple email workflow with a cohort of 20 companies, for 2 months</li>
+        <li>Account-based targeting on LinkedIn, for 2 months</li></ul>
+      <div class="pk">What I won't do</div><ul class="clean">
+        <li>Switch on 5 channels at the same time</li>
+        <li>Put money into paid before inbound has a proper handoff</li></ul></div>
+    <div class="card phase"><div class="eyebrow">Days 31–60</div><h3>Test the story</h3>
+      <div class="pk">Strategy</div><ul class="clean">
+        <li>Explore founder-led sales: build a universe around Pol, with brand and comms (LinkedIn plan, videos, features)</li>
+        <li>Kick off ABM with sales: define the obsession logos</li></ul>
+      <div class="pk">Tactics</div><ul class="clean">
+        <li>Narrative tests: two Pol videos and one designer creator pilot, with brand and comms</li>
+        <li>First case study from the best 20 deals</li></ul></div>
+    <div class="card phase"><div class="eyebrow">Days 61–90</div><h3>Decide</h3>
+      <div class="pk">Milestone</div><ul class="clean">
+        <li>ABM strategy signed off: handoff, pitches per account type, tools, SDR decision</li></ul></div>
+  </div>
+
+  <h3 class="mt3">What I run, what I buy</h3>
+  <div class="grid g2 mt">
+    <div class="card m"><h3>I run myself</h3><ul class="clean">
+      <li>Strategy, messaging and narratives</li><li>Paid media execution and small one-off ads</li><li>Case studies, from interview to finished story</li><li>ABM list and cohort campaigns</li><li>Attio scoring and handoff with AEs</li><li>Partner program and event selection</li><li>Reporting and budget moves</li></ul></div>
+    <div class="card b"><h3>I buy or borrow</h3><ul class="clean">
+      <li>Video shoots and editing for Pol and creator content</li><li>Enrichment and intent tools (Clay or similar)</li><li>Event production and media kits, with brand and comms</li></ul></div>
   </div>
 </div></section>
 
