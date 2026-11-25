@@ -955,6 +955,7 @@ function ctl(path,val,min,max,step,ph,rdef){
   return `<div class="ctl"><input type="range" aria-label="${path}" data-p="${path}" min="${min}" max="${max}" step="${step}" value="${v===''?(rdef??min):v}"><input type="number" aria-label="${path}" data-p="${path}" min="${min}" step="${step}" value="${v}" placeholder="${ph||''}"></div>`;
 }
 const PLABEL={A:'A · My plan',B:'B · Brief, $310k',C:'C · Brief, $550k'};
+function salesBoxHTML(s){const o=S.scenarios[s];return `<div class="prow"><span>4th AE</span><label style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input type="checkbox" data-p="scenarios.${s}.ae4" ${o.ae4?'checked':''}> Hire, starts <select data-p="scenarios.${s}.ae4Start" style="width:64px">${[1,2,3,4].map(q=>`<option value="${q}" ${+o.ae4Start===q?'selected':''}>Q${q}</option>`).join('')}</select></label></div><p class="small muted">Half capacity in the first quarter while ramping.</p><div class="prow"><span>SDR support</span>${sdrOk(s)?'':`<span class="small muted">From a $${sdrMin()}k budget</span>`}<label style="display:${sdrOk(s)?'flex':'none'};gap:8px;align-items:center;flex-wrap:wrap"><select data-p="scenarios.${s}.sdr" style="width:auto">${SDRNAME.map((n,i)=>`<option value="${i}" ${sdrMode(s)===i?'selected':''}>${n}</option>`).join('')}</select> from <select data-p="scenarios.${s}.sdrStart" style="width:64px">${[1,2,3,4].map(q=>`<option value="${q}" ${sdrStartQ(s)===q?'selected':''}>Q${q}</option>`).join('')}</select></label></div><p class="small muted">Paid from this budget: ${sdrK(s)?'$'+Math.round(sdrK(s))+'k':'nothing'}. 4th AE: ${aeK(s)?'+$'+Math.round(aeK(s))+'k in the sales budget':'not hired'}.</p>`;}
 function renderBudgetTable(){
   const el=document.getElementById('budgetTable');
   const sw=`<div class="planswitch" role="tablist">`+SC.map(s=>`<button class="tab t${s}" role="tab" data-act="view" data-v="${s}" aria-selected="${view===s}">${PLABEL[s]}</button>`).join('')+`<button class="tab tX" role="tab" data-act="view" data-v="compare" aria-selected="${view==='compare'}">All three, side by side</button></div>`;
@@ -987,7 +988,7 @@ function renderBudgetTable(){
   let right=`<div class="ptitle">Spend phasing <span class="muted">(% of budget)</span></div>`;
   for(let q=0;q<4;q++)right+=`<div class="prow"><span>Q${q+1}</span>${isA?ctl(`scenarios.${s}.phasing.${q}`,o.phasing[q],0,100,5,'25',25):`<b class="ro">${Math.round(phasing(s).w[q]*100)}%</b>`}</div>`;
   right+=`<div class="prow" style="border-bottom:0"><span></span><span id="phw${s}"></span></div>`;
-  right+=`<div class="ptitle mt2">Sales capacity</div><div class="prow"><span>4th AE</span><label style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input type="checkbox" data-p="scenarios.${s}.ae4" ${o.ae4?'checked':''}> Hire, starts <select data-p="scenarios.${s}.ae4Start" style="width:64px">${[1,2,3,4].map(q=>`<option value="${q}" ${+o.ae4Start===q?'selected':''}>Q${q}</option>`).join('')}</select></label></div><p class="small muted">Half capacity in the first quarter while ramping.</p><div class="prow"><span>SDR support</span>${sdrOk(s)?'':`<span class="small muted">From a $${sdrMin()}k budget</span>`}<label style="display:${sdrOk(s)?'flex':'none'};gap:8px;align-items:center;flex-wrap:wrap"><select data-p="scenarios.${s}.sdr" style="width:auto">${SDRNAME.map((n,i)=>`<option value="${i}" ${sdrMode(s)===i?'selected':''}>${n}</option>`).join('')}</select> from <select data-p="scenarios.${s}.sdrStart" style="width:64px">${[1,2,3,4].map(q=>`<option value="${q}" ${sdrStartQ(s)===q?'selected':''}>Q${q}</option>`).join('')}</select></label></div><p class="small muted">Paid from this budget: ${sdrK(s)?'$'+Math.round(sdrK(s))+'k':'nothing'}. 4th AE: ${aeK(s)?'+$'+Math.round(aeK(s))+'k in the sales budget':'not hired'}.</p>`;
+  right+=`<div class="ptitle mt2">Sales capacity</div><div id="salesBox">${salesBoxHTML(s)}</div>`;
   el.innerHTML=sw+`<div class="planed" style="border-top-color:var(${SCVAR[s]})"><h3>${PLABEL[s]}</h3>${isA?intro:introBC}<div class="pgrid"><div>${left}</div><div>${right}</div></div></div>`;
 }
 function renderChanTable(){
@@ -1324,6 +1325,7 @@ function renderPipe(){
 }
 function update(){
   const R={};SC.forEach(s=>R[s]=run(s));
+  {const sb=document.getElementById('salesBox');if(sb&&SC.includes(view))sb.innerHTML=salesBoxHTML(view);}
   renderHero(R);renderWorkBack(R);renderPipe();renderDealMix();renderPipeByChannel(R);renderPies(R);renderBudgetTotals();renderDiagnosis(R);renderCallouts(R);renderTiles(R);
   document.getElementById('tgtQ').textContent=n1(S.global.targetLogos/4);
   renderWins(R);renderCompare(R);renderFunnel(R);renderCpo(R);renderKnown();
