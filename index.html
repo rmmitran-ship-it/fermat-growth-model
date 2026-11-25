@@ -161,6 +161,36 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 .rfun2 .rpill{padding:6px 10px;gap:8px}
 .rfun2 .rpill b{font-size:17px}
 @media (max-width:900px){.rfun2{grid-template-columns:1fr;gap:40px}}
+/* work-back */
+.wbpanel{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px 40px;background:var(--surface);border-left:6px solid var(--blue);padding:28px 32px}
+.wbk{display:block;font-weight:600;font-size:14px;color:var(--ink);margin-bottom:12px}
+.wbfield{display:flex;align-items:center;gap:10px;font-family:'Inter Tight';font-size:28px;color:var(--muted)}
+.wbfield input{font-family:'Inter Tight';font-size:clamp(40px,5vw,60px);font-weight:600;width:min(260px,60vw);padding:8px 16px;border:2px solid var(--ink);border-radius:0;letter-spacing:-0.03em}
+.wbin p{margin-top:10px;max-width:46ch}
+.wbbtns{display:flex;flex-wrap:wrap;gap:10px}
+.wbbtn{font:600 15px Inter;padding:14px 20px;border:1px solid var(--ink);background:var(--white);color:var(--ink);cursor:pointer;border-radius:0;text-align:left}
+.wbbtn small{display:block;font-weight:400;font-size:12px;color:var(--muted);margin-top:2px}
+.wbbtn[aria-pressed="true"].A{background:var(--magenta)}
+.wbbtn[aria-pressed="true"].B{background:var(--blue)}
+.wbbtn[aria-pressed="true"].C{background:var(--green)}
+.wbbtn[aria-pressed="true"] small{color:var(--ink)}
+.wbtiles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:24px}
+.wbt{background:var(--white);padding:18px}
+.wbt .k{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.wbt .v{font-family:'Inter Tight';font-size:clamp(28px,3vw,40px);font-weight:600;color:var(--ink);letter-spacing:-0.03em;line-height:1;margin:10px 0 8px}
+.wbt .v.bad{color:var(--red)}
+.wbt .s{font-size:12px;color:var(--text)}
+.wbgrid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:32px;align-items:start}
+.wbside .goalin{flex-direction:column}
+.wbside .goalin label{flex-direction:row;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.wbf .rrow{padding:14px 20px}
+.wbf .rrow b{font-size:clamp(28px,3.4vw,44px)}
+.wbf .rrate{padding:8px 0}
+.wbf .rpill{padding:6px 12px}
+.wbf .rpill b{font-size:17px}
+.wbempty{background:var(--surface);padding:32px;color:var(--muted)}
+@media (max-width:1000px){.wbtiles{grid-template-columns:repeat(3,minmax(0,1fr))}.wbgrid{grid-template-columns:1fr}}
+@media (max-width:600px){.wbtiles{grid-template-columns:repeat(2,minmax(0,1fr))}.wbpanel{padding:20px}}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -293,12 +323,36 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
     <button class="tab tC" role="tab" data-act="view" data-v="C">C · $550k</button>
     <button class="tab tX" role="tab" data-act="view" data-v="compare">Compare all three</button>
     <div class="jump">
-      <a href="#diagnosis">Diagnosis</a><a href="#inputs">Inputs</a><a href="#outputs">Outputs</a><a href="#channels">Channels</a><a href="#paid">Paid</a><a href="#measure">Measurement</a><a href="#ninety">90 days</a><a href="#known">Known vs. assumed</a>
+      <a href="#plan">Plan</a><a href="#diagnosis">Diagnosis</a><a href="#inputs">Inputs</a><a href="#outputs">Outputs</a><a href="#channels">Channels</a><a href="#paid">Paid</a><a href="#measure">Measurement</a><a href="#ninety">90 days</a><a href="#known">Known vs. assumed</a>
     </div>
   </div>
 </nav>
 
 <main>
+<!-- WORK-BACK -->
+<section id="plan"><div class="wrap">
+  <div class="eyebrow">00 · Budget vs. pipeline</div>
+  <h2>Put in a budget. See the <span class="hl hl-m">pipeline</span> it buys.</h2>
+  <p class="lede">Start from the brief's two budgets, or type your own. Then work it back to the accounts and contacts marketing has to reach.</p>
+  <div class="wbpanel" id="wbPanel">
+    <div class="wbin">
+      <label for="wbBudget" class="wbk">2027 marketing budget</label>
+      <div class="wbfield"><span>$</span><input id="wbBudget" type="number" min="0" step="10" placeholder="Your budget" aria-label="2027 marketing budget in thousands of dollars"><span>k</span></div>
+      <p class="small muted" id="wbMix"></p>
+    </div>
+    <div class="wbpre"><div class="wbk">Plans</div><div class="wbbtns" id="wbBtns"></div></div>
+  </div>
+  <div class="wbtiles" id="wbTiles"></div>
+  <p class="small muted mt" id="wbNote"></p>
+
+  <h3 class="mt3">How the budget gets there</h3>
+  <p class="small muted" id="wbLede" style="margin-bottom:16px"></p>
+  <div class="wbgrid">
+    <div id="wbFunnel"></div>
+    <div class="wbside"><div class="wbk">Assumptions</div><div class="goalin" id="wbIn"></div><p class="small muted mt">Pink means assumed. Swap in CRM numbers when you have them.</p></div>
+  </div>
+</div></section>
+
 <!-- DIAGNOSIS -->
 <section id="diagnosis"><div class="wrap">
   <div class="eyebrow">01 · Diagnosis</div>
@@ -554,7 +608,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{baseLeads:35,baseL2O:45,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800},
+  global:{baseLeads:35,baseL2O:45,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -587,7 +641,13 @@ const GMETA=[
   {k:'abmUplift',label:'ABM uplift on lead → opp (LinkedIn, Google, events)',unit:'pts',min:0,max:30,step:1,badge:'Assumed',note:'',grid:false},
   {k:'entLogoShare',label:'Enterprise share of new logos',unit:'%',min:0,max:60,step:1,badge:'Assumed',note:'From the intro call with Fermat: about 20% of clients are enterprise. To confirm with CRM data.',grid:false},
   {k:'entAcv',label:'Enterprise deal size (ABM)',unit:'$k',min:50,max:250,step:5,badge:'Assumed',note:'Named $100M–$5B brands worked through ABM. Mid-market deals take the rest of the ARR.',grid:false},
-  {k:'abmAccounts',label:'Named accounts on the ABM list',unit:'accounts',min:100,max:2000,step:50,badge:'Assumed',note:'Same list LinkedIn targets.',grid:false}
+  {k:'abmAccounts',label:'Named accounts on the ABM list',unit:'accounts',min:100,max:2000,step:50,badge:'Assumed',note:'Same list LinkedIn targets.',grid:false},
+  {k:'cpaMid',label:'Contacts per mid-market account',unit:'contacts',min:1,max:20,step:1,badge:'Assumed',note:'Rule of thumb: 5–7 people in the buying group.',grid:false},
+  {k:'cpaEnt',label:'Contacts per enterprise account',unit:'contacts',min:5,max:40,step:1,badge:'Assumed',note:'Rule of thumb: about 15 across brand, creative, growth and procurement.',grid:false},
+  {k:'contact2lead',label:'Contact → new lead',unit:'%',min:1,max:50,step:1,badge:'Assumed',note:'Share of targeted contacts who raise a hand or engage enough to become a lead.',grid:false},
+  {k:'lead2mql',label:'New lead → MQL',unit:'%',min:5,max:100,step:1,badge:'Assumed',note:'Leads that hit the engagement score.',grid:false},
+  {k:'mql2sql',label:'MQL → SQL',unit:'%',min:5,max:100,step:1,badge:'Assumed',note:'Qualified by SDR or marketing against the agreed definition.',grid:false},
+  {k:'sql2assign',label:'SQL → assigned to an AE',unit:'%',min:10,max:100,step:1,badge:'Assumed',note:'Accepted by an AE within the SLA.',grid:false}
 ];
 
 const clone=o=>JSON.parse(JSON.stringify(o));
@@ -752,7 +812,7 @@ function renderGlobals(){
 function renderTabs(){
   document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===view?'true':'false'));
 }
-function renderInputs(){renderDealMixInputs();renderBudgetTable();renderChanTable();renderGlobals();renderTabs();}
+function renderInputs(){renderWbInputs();renderDealMixInputs();renderBudgetTable();renderChanTable();renderGlobals();renderTabs();}
 
 /* ---------- charts ---------- */
 Chart.defaults.font.family='Inter, system-ui, sans-serif';
@@ -1026,11 +1086,98 @@ function renderPipe(){
 }
 function update(){
   const R={};SC.forEach(s=>R[s]=run(s));
-  renderHero(R);renderPipe();renderDealMix();renderPipeByChannel(R);renderPies(R);renderBudgetTotals();renderDiagnosis(R);renderCallouts(R);renderTiles(R);
+  renderHero(R);renderWorkBack(R);renderPipe();renderDealMix();renderPipeByChannel(R);renderPies(R);renderBudgetTotals();renderDiagnosis(R);renderCallouts(R);renderTiles(R);
   document.getElementById('tgtQ').textContent=n1(S.global.targetLogos/4);
   renderWins(R);renderCompare(R);renderFunnel(R);renderCpo(R);renderKnown();
   window.__fermat=R;
 }
+
+/* ---------- work-back ---------- */
+const wbSel=()=>SC.includes(view)?view:'B';
+function renderWbInputs(){
+  const g=S.global;
+  const f=(k,min,max,suf,label,hint)=>`<label>${label} <span class="pill assumed"${hint?` title="${hint}"`:''}>Assumed</span><span class="gi"><input type="number" data-p="global.${k}" min="${min}" max="${max}" value="${g[k]}">${suf}</span></label>`;
+  document.getElementById('wbIn').innerHTML=
+    f('cpaMid',1,20,'','Contacts per mid-market account','Rule of thumb: 5–7')+
+    f('cpaEnt',5,40,'','Contacts per enterprise account','Rule of thumb: about 15')+
+    f('contact2lead',1,50,'%','Contact → new lead')+
+    f('lead2mql',5,100,'%','New lead → MQL')+
+    f('mql2sql',5,100,'%','MQL → SQL')+
+    f('sql2assign',10,100,'%','SQL → assigned');
+}
+function wbFunnel(r){
+  const g=S.global,q=v=>Math.max(0.01,num(v)/100);
+  const sql=r.leads,mql=sql/q(g.mql2sql),nl=mql/q(g.lead2mql),con=nl/q(g.contact2lead);
+  const es=num(g.entLogoShare)/100,entCon=con*es,midCon=con-entCon;
+  const entAcc=entCon/Math.max(1,num(g.cpaEnt)),midAcc=midCon/Math.max(1,num(g.cpaMid));
+  const asg=sql*q(g.sql2assign),opp=r.opps,won=r.newWins;
+  return {sql,mql,nl,con,entCon,midCon,entAcc,midAcc,acc:entAcc+midAcc,asg,opp,won};
+}
+function renderWorkBack(R){
+  const g=S.global,sel=wbSel(),r=R[sel],fmt=x=>fin(x)?Math.round(x).toLocaleString('en-US'):'—';
+  document.getElementById('wbPanel').style.borderLeftColor=`var(${SCVAR[sel]})`;
+  const inp=document.getElementById('wbBudget');
+  if(document.activeElement!==inp)inp.value=r.has?Math.round(totalBudget(sel)):'';
+  const A=S.scenarios.A;
+  document.getElementById('wbMix').innerHTML=sel==='A'
+    ?(r.has?`Your plan, spread like ${A.wbFrom?'plan '+A.wbFrom:'your own split'}. Change the split under <a href="#inputs">Inputs</a>.`:'Type a budget to start your own plan from the B mix.')
+    :`The brief's plan ${sel}. Type a different number to start your own plan from this mix.`;
+  const lab={A:'A · Your budget',B:'B · Brief',C:'C · Brief'};
+  document.getElementById('wbBtns').innerHTML=SC.map(s=>`<button class="wbbtn ${s}" data-act="view" data-v="${s}" aria-pressed="${s===sel}">${lab[s]}<small>${hasBudget(s)?'$'+Math.round(totalBudget(s))+'k':'Empty'}</small></button>`).join('');
+  const F=wbFunnel(r),pb=fin(r.payback)&&r.payback>g.paybackTarget;
+  const t=(k,v,sub,cls)=>`<div class="wbt"><div class="k">${k}</div><div class="v ${cls||''}">${r.has?v:'—'}</div><div class="s">${r.has?sub:'&nbsp;'}</div></div>`;
+  document.getElementById('wbTiles').innerHTML=
+    t('Marketing leads (MQL)',fmt(F.mql),`${fmt(F.mql/12)} a month`)+
+    t('Opportunities',fmt(r.opps),`${fmt(r.opps/12)} a month`)+
+    t('New logos',fmt(r.newWins),`${fmt(r.incr)} close in 2027, the rest in 2028`)+
+    t('New ARR',M$(r.newArr,1),`${M$(r.arr2027,1)} in 2027 with today's engine`)+
+    t('CAC',k$(r.cac),'Spend and commission ÷ new logos')+
+    t('Payback',`${n1(r.payback)}<span style="font-size:.45em"> mo</span>`,`Target ≤ ${g.paybackTarget} months`,pb?'bad':'');
+  document.getElementById('wbNote').textContent=r.has?`Pipeline this budget creates on top of today's engine (${g.baseLeads} qualified leads a month). New logos count every win the budget buys; AE capacity decides how many close in 2027.`:'';
+  const fe=document.getElementById('wbFunnel');
+  if(!r.has){fe.innerHTML='<div class="wbempty">Plan A is empty. Type a budget above or pick B or C.</div>';document.getElementById('wbLede').textContent='';return;}
+  document.getElementById('wbLede').innerHTML=`Read it bottom up: to land ${fmt(F.won)} new logos, marketing has to reach ${fmt(F.con)} contacts across ${fmt(F.acc)} accounts. Enterprise is ${pct(num(g.entLogoShare)/100)} of the contacts, matching its share of logos.`;
+  const row=(cls,label,v,sub)=>`<div class="rrow ${cls}"><span class="rl">${label}</span><b>${fmt(v)}</b><span class="rr">${sub}</span></div>`;
+  const rate=(k,v,sub)=>`<div class="rrate"><span class="rarr"></span><span class="rpill"><span class="pk">${k}</span><b>${v}</b>${sub?`<span>${sub}</span>`:''}</span></div>`;
+  const W=[100,93,86,79,72,65,58,51],bg=['var(--surface)','var(--surface)','var(--magenta-light)','var(--magenta-light)','var(--blue-light)','var(--blue-light)','var(--blue)','var(--green)'];
+  const st=i=>`style="width:${W[i]}%;background:${bg[i]}"`;
+  const R2=(i,label,v,sub)=>row('',label,v,sub).replace('class="rrow "',`class="rrow" ${st(i)}`);
+  const pr=(a,b)=>a>0?pct(b/a):'—';
+  fe.innerHTML=`<div class="rfun wbf">${
+    R2(0,'Accounts to target',F.acc,`${fmt(F.entAcc)} enterprise · ${fmt(F.midAcc)} mid-market`)+
+    rate('Contacts per account',`${g.cpaEnt} / ${g.cpaMid}`,'enterprise / mid-market')+
+    R2(1,'Contacts',F.con,`${fmt(F.entCon)} enterprise · ${fmt(F.midCon)} mid-market`)+
+    rate('Contact → lead',g.contact2lead+'%')+
+    R2(2,'New leads',F.nl,`${fmt(F.nl/12)} a month`)+
+    rate('Lead → MQL',g.lead2mql+'%')+
+    R2(3,'Engaged leads (MQL)',F.mql,`${fmt(F.mql/12)} a month`)+
+    rate('MQL → SQL',g.mql2sql+'%')+
+    R2(4,'Qualified (SQL)',F.sql,`${fmt(F.sql/12)} a month · from cost per lead`)+
+    rate('SQL → assigned',g.sql2assign+'%')+
+    R2(5,'Assigned to an AE',F.asg,`${fmt(F.asg/g.aes/12)} a month per AE`)+
+    rate('Assigned → opp',pr(F.asg,F.opp),'channel model')+
+    R2(6,'Opportunities',F.opp,`${fmt(F.opp/12)} a month`)+
+    rate('Opp → won',pr(F.opp,F.won),'channel model')+
+    R2(7,'New logos',F.won,`${M$(r.newArr,1)} new ARR`)
+  }</div>`;
+}
+function setBudgetA(v){
+  const A0=S.scenarios.A;
+  if(v==null||!(v>0)){S.scenarios.A=clone(DEFAULTS.scenarios.A);return;}
+  let mix=A0.wbMix,from=A0.wbFrom;
+  if(!mix){
+    const src=hasBudget('A')?'A':(SC.includes(view)&&view!=='A'?view:'B');
+    if(src!=='A'){S.scenarios.A=clone(S.scenarios[src]);from=src;}else from=null;
+    const t=totalBudget(src);mix={};S.channels.forEach(c=>{const b=budget(src,c.id);if(b)mix[c.id]=b/t;});
+  }
+  const A=S.scenarios.A;A.budget={};
+  Object.entries(mix).forEach(([id,sh])=>{A.budget[id]=Math.round(v*sh*10)/10;});
+  A.wbMix=mix;A.wbFrom=from;
+}
+document.getElementById('wbBudget').addEventListener('input',e=>{
+  const v=e.target.value===''?null:+e.target.value;
+  setBudgetA(v);view='A';renderTabs();renderBudgetTable();save();update();
+});
 
 /* ---------- events ---------- */
 function resolve(path){const parts=path.split('.');let o=S;for(let i=0;i<parts.length-1;i++){const p=parts[i];if(p==='chan'){o=S.channels.find(c=>c.id===parts[++i]);}else o=o[p];if(!o)return [null];}return [o,parts[parts.length-1]];}
@@ -1040,6 +1187,7 @@ function onInput(e){
   let v;
   if(t.type==='checkbox')v=t.checked;else if(t.type==='text')v=t.value;else if(t.tagName==='SELECT')v=+t.value;else v=t.value===''?null:+t.value;
   o[k]=v;
+  if(p.startsWith('scenarios.A.budget.'))delete S.scenarios.A.wbMix;
   document.querySelectorAll(`[data-p="${p}"]`).forEach(x=>{if(x!==t&&x.type!=='checkbox'&&x.tagName!=='SELECT'){x.value=(v==null?(x.type==='range'?x.min:''):v);}});
   if(t.type==='text'&&e.type==='input'){save();update();return;}
   save();update();
