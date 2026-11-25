@@ -391,7 +391,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 <section id="target"><div class="wrap">
   <div class="eyebrow">00 · The target</div>
   <h2>What <span class="hl hl-g">$3M</span> actually takes.</h2>
-  <p class="lede">Start from the brief's target and its two customer types. These are the audience numbers the plan has to work towards.</p>
+  <p class="lede">Start from the brief's target: about 60 new logos and $3M of new ARR from fashion brands with $100M–$5B revenue, sold to Heads of Design, Product and Digital. Splitting them into enterprise and mid-market is my assumption from the intro call. These are the audience numbers the plan has to work towards.</p>
   <div class="iocall top" id="dmNote"></div>
   <div class="goal">
     <p class="goalline" id="dmGoal"></p>
@@ -661,7 +661,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 <section id="how"><div class="wrap">
   <div class="eyebrow">09 · How I built it</div>
   <h2>How I built it.</h2>
-  <p class="lede mt">Built with Claude Code. The reasoning and assumptions are mine, from running ABM and events at Foundever. All Fermat figures come from the case brief.</p>
+  <p class="lede mt">Built with Claude Code. The reasoning and assumptions are mine, from running ABM and events at Foundever. Fermat figures come from the case brief, plus the enterprise split from the intro call. Everything else is marked Assumed.</p>
   <p class="small muted">The model turns spend into leads, opportunities and wins per channel and quarter, lands wins after the sales cycle, caps closes at AE capacity and carries the overflow forward. Single HTML file, no backend. Your edits stay in this browser.</p>
 </div></section>
 </main>
@@ -677,7 +677,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{baseLeads:40,baseL2O:45,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,aeCost:100,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10},
+  global:{baseLeads:40,baseL2O:40,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,aeCost:100,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -694,9 +694,9 @@ const DEFAULTS={
   }
 };
 const GMETA=[
-  {k:'baseLeads',label:'Baseline qualified leads / month',unit:'',min:10,max:80,step:1,badge:'Given',note:'Today\'s engine. Brief: 30–40.'},
-  {k:'baseL2O',label:'Baseline lead → opp',unit:'%',min:10,max:80,step:1,badge:'Assumed',note:'Calibrated so baseline ≈ 11 wins/quarter (brief: 10–12).'},
-  {k:'baseO2W',label:'Baseline opp → won',unit:'%',min:5,max:50,step:1,badge:'Assumed',note:'Calibrated with lead → opp.'},
+  {k:'baseLeads',label:'Baseline qualified leads / month',unit:'',min:10,max:80,step:1,badge:'Given',note:'Brief: 30–40, mostly from events, partners and brand. Set at the top of the range.'},
+  {k:'baseL2O',label:'Baseline lead → opp',unit:'%',min:10,max:80,step:1,badge:'Assumed',note:'Not in the brief. Set so 40 leads a month give about 11 logos a quarter, matching the brief: three AEs close 10–12 a quarter.'},
+  {k:'baseO2W',label:'Baseline opp → won',unit:'%',min:5,max:50,step:1,badge:'Assumed',note:'Not in the brief. Calibrated with lead → opp to match 10–12 logos a quarter.'},
   {k:'acv',label:'Blended ACV',unit:'$k',min:20,max:120,step:1,badge:'Given',note:'Used for baseline wins.'},
   {k:'cycle',label:'Sales cycle',unit:'months',min:1,max:9,step:0.5,badge:'Given',note:'Brief: 3–6. 3 → wins land next quarter, 6 → two quarters out.'},
   {k:'gm',label:'Gross margin',unit:'%',min:40,max:90,step:1,badge:'Given',note:'Brief: 60–70%.'},
@@ -717,8 +717,8 @@ const GMETA=[
   {k:'abmThreshold',label:'ABM budget needed for uplift',unit:'$k',min:0,max:100,step:5,badge:'Assumed',note:'',grid:false},
   {k:'abmUplift',label:'ABM uplift on lead → opp (LinkedIn, Google, events)',unit:'pts',min:0,max:30,step:1,badge:'Assumed',note:'',grid:false},
   {k:'entLogoShare',label:'Enterprise share of new logos',unit:'%',min:0,max:60,step:1,badge:'Assumed',note:'From the intro call with Fermat: about 20% of clients are enterprise. To confirm with CRM data.',grid:false},
-  {k:'entAcv',label:'Enterprise deal size (ABM)',unit:'$k',min:50,max:250,step:5,badge:'Given',note:'Brief: enterprise averages about $100k (Calle Brava, ~$900M revenue, $120k).',grid:false},
-  {k:'midAcv',label:'Mid-market deal size',unit:'$k',min:10,max:80,step:1,badge:'Given',note:'Brief: mid-market averages about $35k (Harlow & Pine $50k, Nordvik Studio $40k, Maison Ferrand $15k).',grid:false},
+  {k:'entAcv',label:'Enterprise deal size (ABM)',unit:'$k',min:50,max:250,step:5,badge:'Assumed',note:'Not in the brief, which gives ACV $15k–$120k, blended about $50k, and Calle Brava at $120k. $100k is my working average for enterprise.',grid:false},
+  {k:'midAcv',label:'Mid-market deal size',unit:'$k',min:10,max:80,step:1,badge:'Assumed',note:'Average of the brief\'s three smaller sample customers: Harlow & Pine $50k, Nordvik Studio $40k, Maison Ferrand $15k.',grid:false},
   {k:'abmAccounts',label:'Named accounts on the ABM list',unit:'accounts',min:100,max:2000,step:50,badge:'Assumed',note:'Same list LinkedIn targets.',grid:false},
   {k:'cpaMid',label:'Contacts per mid-market account',unit:'contacts',min:1,max:20,step:1,badge:'Assumed',note:'Rule of thumb: 5–7 people in the buying group.',grid:false},
   {k:'cpaEnt',label:'Contacts per enterprise account',unit:'contacts',min:5,max:40,step:1,badge:'Assumed',note:'Rule of thumb: about 15 across brand, creative, growth and procurement.',grid:false},
@@ -741,6 +741,7 @@ function migrate(o){
   }
   if(o.global.aeCost===110)o.global.aeCost=100;
   if(o.global.baseLeads===35&&!o.global.base40){o.global.baseLeads=40;}o.global.base40=true;
+  if(o.global.baseL2O===45&&!o.global.cal40){o.global.baseL2O=40;}o.global.cal40=true;
   const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
   return o;
 }
@@ -1090,8 +1091,8 @@ function renderDealMixInputs(){
     `<label>New logos in 2027 <span class="pill given">Given</span>${f('global.targetLogos',g.targetLogos,20,120)}</label>`+
     `<label>Inbound qualified leads a month <span class="pill given" title="Brief: 30–40">Given</span>${f('global.baseLeads',g.baseLeads,10,80)}</label>`+
     `<label>Enterprise share of logos <span class="pill assumed" title="From the intro call, to confirm">Assumed</span>${f('global.entLogoShare',g.entLogoShare,0,60,'','%')}</label>`+
-    `<label>Enterprise deal size <span class="pill given">Given</span>${f('global.entAcv',g.entAcv,50,250,'$','k')}</label>`+
-    `<label>Mid-market deal size <span class="pill given">Given</span>${f('global.midAcv',g.midAcv,10,80,'$','k')}</label>`+
+    `<label>Enterprise deal size <span class="pill assumed" title="Brief: ACV $15k–$120k, Calle Brava $120k">Assumed</span>${f('global.entAcv',g.entAcv,50,250,'$','k')}</label>`+
+    `<label>Mid-market deal size <span class="pill assumed" title="Average of the brief's three smaller samples">Assumed</span>${f('global.midAcv',g.midAcv,10,80,'$','k')}</label>`+
     `<label>Named ABM accounts <span class="pill assumed">Assumed</span>${f('global.abmAccounts',g.abmAccounts,100,2000,'','',72)}</label>`;
   document.getElementById('dmIOIn').innerHTML=
     `<label>Mid-market gap from outbound <span class="pill assumed">Assumed</span>${f('global.midOutShare',g.midOutShare,0,100,'','%')}</label>`+
@@ -1114,8 +1115,8 @@ function renderDealMix(){
   const smWon=inW+gapW;
   document.getElementById('dmGoal').innerHTML=`Goal: <b>${M$(m.arr,1)}</b> of new ARR. ${fmt(m.entN)} enterprise at ${k$(m.entAcv)} + ${fmt(m.smN)} mid-market at ${k$(m.smAvg)} = <b>${fmt(m.need)} logos</b>.`;
   const icp=(rule,rows)=>`<div class="icp"><div class="icprule">${rule}</div><table class="icpt"><tbody>${rows.map(r=>`<tr><td><b>${r[0]}</b><span>${r[1]}</span></td><td class="num">${r[2]}</td><td class="num">${r[3]}</td></tr>`).join('')}</tbody></table></div>`;
-  const entIcp=icp('<span class="k">ICP</span> Revenue above $500M · international retail, many locations · many collections a year <span class="pill assumed" title="To confirm with Fermat">To confirm</span>',[['Calle Brava','Spanish value fashion','~$900M revenue','$120k']]);
-  const midIcp=icp('<span class="k">ICP</span> Revenue about $150–500M · brands from the brief',[['Harlow &amp; Pine','US premium denim','~$400M revenue','$50k'],['Nordvik Studio','Scandinavian womenswear','~$250M revenue','$40k'],['Maison Ferrand','French accessories','~$150M revenue','$15k']]);
+  const entIcp=icp('<span class="k">ICP</span> Revenue above $500M · international retail, many locations · many collections a year <span class="pill assumed" title="Split from the intro call. The brief ICP is $100M–$5B.">To confirm</span>',[['Calle Brava','Spanish value fashion','~$900M revenue','$120k']]);
+  const midIcp=icp('<span class="k">ICP</span> Revenue about $100–500M · sample customers from the brief',[['Harlow &amp; Pine','US premium denim','~$400M revenue','$50k'],['Nordvik Studio','Scandinavian womenswear','~$250M revenue','$40k'],['Maison Ferrand','French accessories','~$150M revenue','$15k']]);
   const row=(cls,label,mid,lo,hi,sub)=>`<div class="rrow ${cls}"><span class="rl">${label}</span><b>${fmt(mid)}</b><span class="rr">${lo!=null?`Range ${fmt(lo)}–${fmt(hi)}<br>`:''}${sub}</span></div>`;
   const rate=(label,r,mid)=>`<div class="rrate"><span class="rarr"></span><span class="rpill"><span class="pk">${label}</span><b>${r[0]}–${r[2]}%</b><span>${mid||'mid '+r[1]+'%'}</span></span></div>`;
   const funnel=(P,top,topSub,won,wonSub,m1,m2)=>`<div class="rfun">${row('r1',top,P.l[1],P.l[2],P.l[0],topSub)}${rate('Lead → opp',BRIEF.l2o,m1)}${row('r2','Opportunities',P.o[1],P.o[2],P.o[0],`${fmt(P.o[1]/12)} a month`)}${rate('Opp → won',BRIEF.o2w,m2)}${row('r3','Won',won,null,null,wonSub)}</div>`;
@@ -1132,10 +1133,10 @@ function renderDealMix(){
   const seg=(v,cls,label)=>v>0.5?`<i class="${cls}" style="width:${v/totL*100}%" title="${label}: ${fmt(v)}">${v/totL>0.08?`${fmt(v)}`:''}</i>`:'';
   const card=(cls,k,v,sub,body)=>`<div class="iocard ${cls}"><span class="k">${k}</span><b>${fmt(v)}<span> a year · ${fmt(v/12)} a month</span></b><div class="iosub">${sub}</div><p>${body}</p></div>`;
   document.getElementById('dmIO').innerHTML=`
-    <p class="iolede">Today's inbound already brings about <b>${fmt(inW)} logos</b> a year (brief: 10–12 a quarter). The gap is <b>${fmt(m.entN+gapW)} logos</b>: ${fmt(m.entN)} enterprise and ${fmt(gapW)} mid-market. That takes <b>${fmt(totL-inT)} new qualified leads</b> on top of today's ${fmt(inT)}, <b>+${pct((totL-inT)/inT)}</b>. Everything enterprise is outbound: nobody at a $500M+ retailer fills in a demo form first.</p>
+    <p class="iolede">Today's inbound already brings about <b>${fmt(inW)} logos</b> a year, ${fmt(inW/4)} a quarter (brief: three AEs close 10–12 a quarter). The gap is <b>${fmt(m.entN+gapW)} logos</b>: ${fmt(m.entN)} enterprise and ${fmt(gapW)} mid-market. That takes <b>${fmt(totL-inT)} new qualified leads</b> on top of today's ${fmt(inT)}, <b>+${pct((totL-inT)/inT)}</b>. Everything enterprise is outbound: nobody at a $500M+ retailer fills in a demo form first.</p>
     <div class="iobar">${seg(inT,'in0','Inbound today')}${seg(midIn,'in1','New inbound')}${seg(midOut,'out1','Outbound, mid-market')}${seg(entOut,'out0','Outbound, enterprise')}</div>
     <div class="iogrid">
-      ${card('in0','Inbound today',inT,`Mid-market · ${fmt(inW)} logos at today's rates`,'Events, partners and brand. Already there: protect it and measure it by source.')}
+      ${card('in0','Inbound today',inT,`Mid-market · about ${fmt(inW)} logos a year`,'Events, partners and brand. Already there: protect it and measure it by source.')}
       ${card('in1','New inbound',midIn,`Mid-market · ${pct(1-num(g.midOutShare)/100)} of the mid-market gap`,'Comes to us: Google search, AI search, partner referrals, content and comparison pages.')}
       ${card('out1','Outbound, mid-market',midOut,`${pct(num(g.midOutShare)/100)} of the mid-market gap`,'We go to them: brands like Harlow &amp; Pine and Nordvik Studio, sequenced by SDRs with LinkedIn on the same list.')}
       ${card('out0','Outbound, enterprise',entOut,`ABM · ${fmt(g.abmAccounts)} named accounts`,'Brands like Calle Brava: ABM, LinkedIn on the buying group, dinners and events, SDR follow-up.')}
@@ -1148,7 +1149,7 @@ function renderDealMix(){
     <li><b>Inbound has to grow ${pct(inM/b0-1)}:</b> from ${fmt(b0)} to about ${fmt(inM)} a month on average. Starting at ${fmt(b0)} in Q1, that's roughly <b>${path} a month</b> by Q4.</li>
     <li><b>Outbound adds ${fmt(outM)} a month on top:</b> <b>+${pct(outM/b0)}</b> more leads than today, ${pct(outAll/totL)} of the total. That's about ${n1(sdrs)} SDRs at ${g.sdrMeetings} meetings each${sdrFit}, built from zero.</li>
     <li><b>Sales:</b> ${fmt(totL)} leads become ${fmt(E.o[1]+Sm.o[1])} opportunities and ${fmt(m.entN+smWon)} logos. ${g.aes} AEs close ${fmt(cap)} a year${m.need>cap?`, ${fmt(m.need-cap)} short: each AE needs ${n1(need)} a quarter instead of ${g.aeCap}, or SDR help or a 4th AE`:', enough'}.</li>
-  </ul><p>Today's inbound converts at today's rates (${g.baseL2O}% and ${g.baseO2W}%, about ${fmt(inW/4)} logos a quarter). New leads use the brief's midpoints: 40% and 20% (range 30–50% and 15–25%).</p>`;
+  </ul><p>Today's inbound converts at ${g.baseL2O}% and ${g.baseO2W}%, my calibration so it closes about ${fmt(inW/4)} logos a quarter, as the brief says (10–12). New leads use the brief's midpoints: 40% and 20% (range 30–50% and 15–25%).</p>`;
 }
 function dealGoal(){
   const won=goalMix().need;
