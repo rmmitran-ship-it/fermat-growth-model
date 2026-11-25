@@ -257,6 +257,16 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 .wbjoin span{background:var(--surface-2);border:1px dashed var(--ink);padding:6px 12px;font-size:12px;font-weight:600;color:var(--ink)}
 .okt{color:var(--green-deep);font-weight:600}
 .shortt{color:var(--red);font-weight:600}
+.tacgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.tac{padding:18px 18px 16px;font-size:13px;color:var(--text);line-height:1.45}
+.tac.t1{background:var(--surface)} .tac.t2{background:var(--magenta-light)} .tac.t3{background:var(--blue-light)} .tac.t4{background:var(--green)}
+.tac .k{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--ink)}
+.tac b{display:block;font-family:'Inter Tight';font-size:19px;font-weight:600;color:var(--ink);letter-spacing:-0.02em;margin:4px 0 10px}
+.tac ul{margin:0;padding-left:16px}
+.tac li{margin:5px 0}
+.tacm{margin-top:12px;padding-top:10px;border-top:1px solid rgba(0,0,0,.12);font-weight:600;color:var(--ink)}
+@media (max-width:1000px){.tacgrid{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.tacgrid{grid-template-columns:1fr}}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -435,6 +445,34 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
   <div class="wbgrid">
     <div id="wbFunnel"></div>
     <div class="wbside"><div class="wbk">Assumptions</div><div class="goalin" id="wbIn"></div><p class="small muted mt">Pink means assumed. Swap in CRM numbers when you have them.</p></div>
+  </div>
+
+  <h3 class="mt3">What runs at each stage</h3>
+  <p class="small muted" style="margin-bottom:16px">The colours match the funnel above. Each band has its own job, its own tactics and its own number to watch.</p>
+  <div class="tacgrid">
+    <div class="tac t1"><span class="k">Prospecting</span><b>Accounts and contacts</b>
+      <ul><li>Build the list: fashion brands with $100M–$5B revenue, enterprise first.</li>
+      <li>Map the buying group: Heads of Design, Product and Digital. About 15 people per enterprise account, 6 per mid-market.</li>
+      <li>Rank titles: green to target, yellow when easier to reach, red to skip.</li></ul>
+      <p class="tacm">Watch: share of the list with a full buying group.</p></div>
+    <div class="tac t2"><span class="k">Intent</span><b>New leads and MQLs</b>
+      <ul><li>ABM on LinkedIn to the named list, plus person-based ads to the same people.</li>
+      <li>Intent data to spot brands in market now.</li>
+      <li>Email to engaged contacts.</li>
+      <li>Organic: pick the podcast back up, with Heads of Design from target brands as guests.</li>
+      <li>Events and partner intros.</li>
+      <li>Small tests: Reddit and paid ChatGPT.</li></ul>
+      <p class="tacm">Watch: engaged accounts and cost per MQL.</p></div>
+    <div class="tac t3"><span class="k">Always on</span><b>SQLs and opportunities</b>
+      <ul><li>One evergreen ad journey on Influ2: warm-up, then a theme that changes each quarter.</li>
+      <li>One site visit or two clicks moves a person to a "talk to us now" ad, and an SDR calls. Clicks trigger a call, not a score.</li>
+      <li>Once a deal opens, the ads follow it: the AE's face and a short video, then customer proof at the demo stage.</li></ul>
+      <p class="tacm">Watch: how much faster engaged accounts convert than cold ones.</p></div>
+    <div class="tac t4"><span class="k">Client marketing</span><b>New logos and beyond</b>
+      <ul><li>Person-based ads to each new customer's team, timed with customer success onboarding.</li>
+      <li>Upsell and cross-sell campaigns: more teams, more seats, more brands in the group.</li>
+      <li>Turn wins into case studies and referrals that feed the top of the funnel.</li></ul>
+      <p class="tacm">Watch: expansion pipeline and referrals.</p></div>
   </div>
 </div></section>
 
