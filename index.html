@@ -326,6 +326,7 @@ details.more.big>summary{font-size:15px;padding:12px 18px;background:var(--surfa
 .chip.ok{background:var(--white);color:var(--green-deep)}
 .chip.no{background:var(--white);color:var(--red)}
 .wbdiv{width:82%;font-size:12px;font-weight:600;color:var(--ink);border-top:1px dashed var(--ink);padding-top:6px;margin:4px 0 0;text-align:center}
+.wbf .why{display:block;margin-top:4px;font-weight:600;font-size:11.5px;color:var(--magenta-deep)}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -1412,7 +1413,7 @@ function renderWorkBack(R){
   const so=S.scenarios[sel];
   const g2=S.global,inK=Math.round(num(g2.sdrInCost)*(5-sdrStartQ(sel))/4),agK=Math.round(num(g2.sdrAgCost)*Math.min(1,(5-sdrStartQ(sel))/3));
   const ok=sdrOk(sel);
-  document.getElementById('wbTeam').innerHTML=`<span class="wbk">Sales support</span>${!ok?`<span class="small muted">SDR support from a $${sdrMin()}k budget</span>`:''}<label${ok?'':' style="display:none"'}>SDR <select data-p="scenarios.${sel}.sdr" style="width:auto"><option value="0" ${sdrMode(sel)===0?'selected':''}>None</option><option value="1" ${sdrMode(sel)===1?'selected':''}>1 in-house SDR · $${inK}k</option><option value="2" ${sdrMode(sel)===2?'selected':''}>Agency, 3 SDRs · $${agK}k</option></select></label><label><input type="checkbox" data-p="scenarios.${sel}.ae4" ${so.ae4?'checked':''}> 4th AE <span class="muted">+$${Math.round(num(g2.aeCost)*(5-(+so.ae4Start||1))/4)}k sales budget</span></label>`;
+  document.getElementById('wbTeam').innerHTML=`<span class="wbk">Sales support</span>${!ok?`<span class="small muted">SDR support from a $${sdrMin()}k budget</span>`:''}<label${ok?'':' style="display:none"'}>SDR <select data-p="scenarios.${sel}.sdr" style="width:auto"><option value="0" ${sdrMode(sel)===0?'selected':''}>None</option><option value="1" ${sdrMode(sel)===1?'selected':''}>1 in-house SDR · $${inK}k</option><option value="2" ${sdrMode(sel)===2?'selected':''}>Agency, 3 SDRs · $${agK}k</option></select></label><label><input type="checkbox" data-p="scenarios.${sel}.ae4" ${so.ae4?'checked':''}> 4th AE <span class="muted">optional · +$${Math.round(num(g2.aeCost)*(5-(+so.ae4Start||1))/4)}k sales budget</span></label>`;
   document.getElementById('wbCost').innerHTML=r.has?`Channels <b>$${Math.round(chanBudget(sel))}k</b>${sdrK(sel)?` + ${SDRNAME[sdrMode(sel)]} from Q${sdrStartQ(sel)} <b>$${Math.round(sdrK(sel))}k</b>`:''} = <b>$${Math.round(totalBudget(sel))}k</b> marketing budget.${aeK(sel)?` Plus <b>$${Math.round(aeK(sel))}k</b> more in the sales budget for the 4th AE.`:''}`:'';
   const D=renderRoad(r,sel);
   document.getElementById('wbBtns').innerHTML=SC.map(s=>`<button class="wbbtn ${s}" data-act="view" data-v="${s}" aria-pressed="${s===sel}">${lab[s]}<small>${hasBudget(s)?'$'+Math.round(totalBudget(s))+'k':'Empty'}</small></button>`).join('');
@@ -1434,7 +1435,20 @@ function renderWorkBack(R){
   document.getElementById('wbLede').innerHTML=`The budget fills the top four rows. Inbound joins at SQL.`;
   const W=[100,95,90,85,82,78,74,70,66],bg=['var(--surface)','var(--surface)','var(--magenta-light)','var(--magenta-light)','var(--blue-light)','var(--blue-light)','var(--blue)','var(--green)','var(--green-bright)'];
   const arrChip=r.arr2027>=num(g.targetArr)*1e6-50000?`<span class="chip ok">✓ ${M$(r.arr2027,1)} of $${g.targetArr}M</span>`:`<span class="chip no">${M$(r.arr2027,1)} of $${g.targetArr}M</span>`;
-  const row=(i,label,how,v,sub)=>`<div class="rrow" style="width:${W[i]}%;background:${bg[i]}"><span class="rl">${label}${how?`<span class="rs">${how}</span>`:''}</span><b>${fmt(v)}</b><span class="rr">${sub}</span></div>`;
+  const wsc=wbSel(),wso=S.scenarios[wsc],abmB=budget(wsc,'abm'),contact=abmB>=num(g.abmContactMin),lift=contact?num(g.abmContactUplift):num(g.abmUplift);
+  const sdrOn=sdrMode(wsc)>0,act=budget(wsc,'activations')>0,ev=budget(wsc,'events')>0,par=budget(wsc,'partners')>0;
+  const WHY=[
+    '',
+    contact?'Contact-level ABM reaches the whole buying group':r.abmOn?'ABM points every channel at named accounts':'',
+    '',
+    (act||ev)?`${act?'Activations and events':'Events'} turn engaged contacts into meetings`:'',
+    sdrOn?`SDRs qualify and keep leads warm: +${g.sdrLift} pts to opportunity`:'',
+    '',
+    r.abmOn?`ABM lifts lead → opp by ${lift} pts${contact?' (contact-level)':''}`:'',
+    (par||act)?`${par&&act?'Partner and activation':par?'Partner':'Activation'} deals win 1 in 4`:'',
+    wso.ae4?`4th AE adds ${g.aeCap} closes a quarter${sdrOn?', SDRs free AE time':''}`:sdrOn?`SDRs free AE time: +${g.sdrCapLift} closes per AE a quarter`:'More closes need SDRs or a 4th AE'
+  ];
+  const row=(i,label,how,v,sub)=>`<div class="rrow" style="width:${W[i]}%;background:${bg[i]}"><span class="rl">${label}${how?`<span class="rs">${how}</span>`:''}${WHY[i]?`<span class="why">↑ ${WHY[i]}</span>`:''}</span><b>${fmt(v)}</b><span class="rr">${sub}</span></div>`;
   const pr=(a,b)=>a>0?pct(b/a):'—';
   fe.innerHTML=`<div class="rfun wbf">${
     row(0,'Accounts','',F.acc,`${fmt(F.entAcc)} enterprise · ${fmt(F.midAcc)} mid-market`)+
