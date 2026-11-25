@@ -719,8 +719,8 @@ const GMETA=[
   {k:'abmThreshold',label:'ABM budget needed for uplift',unit:'$k',min:0,max:100,step:5,badge:'Assumed',note:'',grid:false},
   {k:'abmUplift',label:'ABM uplift on lead → opp (LinkedIn, Google, events)',unit:'pts',min:0,max:30,step:1,badge:'Assumed',note:'',grid:false},
   {k:'entLogoShare',label:'Enterprise share of new logos',unit:'%',min:0,max:60,step:1,badge:'Assumed',note:'From the intro call with Fermat: about 20% of clients are enterprise. To confirm with CRM data.',grid:false},
-  {k:'entAcv',label:'Enterprise deal size (ABM)',unit:'$k',min:50,max:250,step:5,badge:'Assumed',note:'Not in the brief, which gives ACV $15k–$120k, blended about $50k, and Calle Brava at $120k. $100k is my working average for enterprise.',grid:false},
-  {k:'midAcv',label:'Mid-market deal size',unit:'$k',min:10,max:80,step:1,badge:'Assumed',note:'Average of the brief\'s three smaller sample customers: Harlow & Pine $50k, Nordvik Studio $40k, Maison Ferrand $15k.',grid:false},
+  {k:'entAcv',label:'Enterprise average deal size (ABM)',unit:'$k',min:50,max:250,step:5,badge:'Assumed',note:'Not in the brief, which gives ACV $15k–$120k, blended about $50k, and Calle Brava at $120k. $100k is my working average for enterprise.',grid:false},
+  {k:'midAcv',label:'Mid-market average deal size',unit:'$k',min:10,max:80,step:1,badge:'Assumed',note:'Average of the brief\'s three smaller sample customers: Harlow & Pine $50k, Nordvik Studio $40k, Maison Ferrand $15k.',grid:false},
   {k:'abmAccounts',label:'Named accounts on the ABM list',unit:'accounts',min:100,max:2000,step:50,badge:'Assumed',note:'Same list LinkedIn targets.',grid:false},
   {k:'cpaMid',label:'Contacts per mid-market account',unit:'contacts',min:1,max:20,step:1,badge:'Assumed',note:'Rule of thumb: 5–7 people in the buying group.',grid:false},
   {k:'cpaEnt',label:'Contacts per enterprise account',unit:'contacts',min:5,max:40,step:1,badge:'Assumed',note:'Rule of thumb: about 15 across brand, creative, growth and procurement.',grid:false},
@@ -1093,8 +1093,8 @@ function renderDealMixInputs(){
     `<label>New logos in 2027 <span class="pill given">Given</span>${f('global.targetLogos',g.targetLogos,20,120)}</label>`+
     `<label>Inbound qualified leads a month <span class="pill given" title="Brief: 30–40">Given</span>${f('global.baseLeads',g.baseLeads,10,80)}</label>`+
     `<label>Enterprise share of logos <span class="pill assumed" title="From the intro call, to confirm">Assumed</span>${f('global.entLogoShare',g.entLogoShare,0,60,'','%')}</label>`+
-    `<label>Enterprise deal size <span class="pill assumed" title="Brief: ACV $15k–$120k, Calle Brava $120k">Assumed</span>${f('global.entAcv',g.entAcv,50,250,'$','k')}</label>`+
-    `<label>Mid-market deal size <span class="pill assumed" title="Average of the brief's three smaller samples">Assumed</span>${f('global.midAcv',g.midAcv,10,80,'$','k')}</label>`+
+    `<label>Enterprise avg deal size <span class="pill assumed" title="Brief: ACV $15k–$120k, Calle Brava $120k">Assumed</span>${f('global.entAcv',g.entAcv,50,250,'$','k')}</label>`+
+    `<label>Mid-market avg deal size <span class="pill assumed" title="Average of the brief's three smaller samples">Assumed</span>${f('global.midAcv',g.midAcv,10,80,'$','k')}</label>`+
     `<label>Named ABM accounts <span class="pill assumed">Assumed</span>${f('global.abmAccounts',g.abmAccounts,100,2000,'','',72)}</label>`;
   document.getElementById('dmIOIn').innerHTML=
     `<label>Mid-market gap from outbound <span class="pill assumed">Assumed</span>${f('global.midOutShare',g.midOutShare,0,100,'','%')}</label>`+
