@@ -1228,7 +1228,7 @@ function renderDealMix(){
   document.getElementById('dmNote').innerHTML=`<div class="k">In short</div><ul>
     <li><b>Leads:</b> today ${fmt(b0)} qualified leads a month. ${M$(m.arr,0)} needs <b>${fmt(totL/12)} a month</b> (${fmt(totL)} a year).</li>
     <li><b>Inbound has to grow ${pct(inM/b0-1)}:</b> from ${fmt(b0)} to about ${fmt(inM)} a month on average. Starting at ${fmt(b0)} in Q1, that's roughly <b>${path} a month</b> by Q4.</li>
-    <li><b>Outbound adds ${fmt(outM)} a month on top:</b> <b>+${pct(outM/b0)}</b> more leads than today, ${pct(outAll/totL)} of the total. That's about ${n1(sdrs)} SDRs at ${g.sdrMeetings} meetings each${sdrFit}, built from zero.</li>
+    <li><b>Outbound adds ${fmt(outM)} a month on top:</b> <b>+${pct(outM/b0)}</b> more leads than today, ${pct(outAll/totL)} of the total.</li>
     <li><b>Sales:</b> ${fmt(totL)} leads become ${fmt(E.o[1]+Sm.o[1])} opportunities and ${fmt(m.entN+smWon)} logos. ${g.aes} AEs close ${fmt(cap)} a year${m.need>cap?`, ${fmt(m.need-cap)} short: each AE needs ${n1(need)} a quarter instead of ${g.aeCap}, or SDR help or a 4th AE`:', enough'}.</li>
   </ul><p>Today's inbound converts at ${g.baseL2O}% and ${g.baseO2W}%, my calibration so it closes about ${fmt(inW/4)} logos a quarter, as the brief says (10–12). New leads use the brief's midpoints: 40% and 20% (range 30–50% and 15–25%).</p>`;
 }
