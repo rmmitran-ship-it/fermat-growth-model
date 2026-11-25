@@ -1424,7 +1424,8 @@ function renderWorkBack(R){
   const sqlT=inL+F.sql,asgT=sqlT*num(g.sql2assign)/100,oppT=inO+F.opp,wonT=inW+F.won;
   const chip=(v,t)=>v>=t-0.5?`<span class="chip ok">✓ target ${fmt(t)}</span>`:`<span class="chip no">${fmt(t-v)} short of ${fmt(t)}</span>`;
   document.getElementById('wbLede').innerHTML=`The budget fills the top four rows. Inbound joins at SQL.`;
-  const W=[100,95,90,85,82,78,74,70],bg=['var(--surface)','var(--surface)','var(--magenta-light)','var(--magenta-light)','var(--blue-light)','var(--blue-light)','var(--blue)','var(--green)'];
+  const W=[100,95,90,85,82,78,74,70,66],bg=['var(--surface)','var(--surface)','var(--magenta-light)','var(--magenta-light)','var(--blue-light)','var(--blue-light)','var(--blue)','var(--green)','var(--green-bright)'];
+  const arrChip=r.arr2027>=num(g.targetArr)*1e6-50000?`<span class="chip ok">✓ ${M$(r.arr2027,1)} of $${g.targetArr}M</span>`:`<span class="chip no">${M$(r.arr2027,1)} of $${g.targetArr}M</span>`;
   const row=(i,label,how,v,sub)=>`<div class="rrow" style="width:${W[i]}%;background:${bg[i]}"><span class="rl">${label}${how?`<span class="rs">${how}</span>`:''}</span><b>${fmt(v)}</b><span class="rr">${sub}</span></div>`;
   const pr=(a,b)=>a>0?pct(b/a):'—';
   fe.innerHTML=`<div class="rfun wbf">${
@@ -1436,7 +1437,9 @@ function renderWorkBack(R){
     row(4,'SQLs',`${g.mql2sql}% of MQLs + inbound`,sqlT,`${fmt(sqlT/12)} a month<br>${chip(sqlT,T.sql)}`)+
     row(5,'Assigned to an AE',`${g.sql2assign}% of SQLs`,asgT,`${fmt(asgT/g.aes/12)} a month per AE`)+
     row(6,'Opportunities',`${pr(asgT,oppT)} of assigned`,oppT,chip(oppT,T.opp))+
-    row(7,'New logos',`${pr(oppT,wonT)} of opportunities`,wonT,`${fmt(r.wins2027)} close in 2027<br>${chip(wonT,T.won)}`)
+    row(7,'Logos won',`${pr(oppT,wonT)} of opportunities`,wonT,`Pipeline ${wonT>=T.won-0.5?'covers':'misses'} the target`)+
+    `<div class="wbdiv">− ${fmt(wonT-r.wins2027)} wait for an AE or close in 2028</div>`+
+    row(8,'Closed in 2027',`limited by ${S.scenarios[wbSel()].ae4?'4':g.aes} AEs and timing`,r.wins2027,`${chip(r.wins2027,T.won)}<br>${arrChip}`)
   }</div>`;
 }
 function setBudgetA(v){
