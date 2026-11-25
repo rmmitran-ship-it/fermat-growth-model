@@ -299,6 +299,14 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 .chnote{margin-top:14px;font-size:13px;color:var(--muted)}
 @media (max-width:800px){.chpick{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:800px){.tl{grid-template-columns:repeat(2,minmax(0,1fr))}.tlopts{grid-template-columns:1fr}.tlpanel{padding:18px}}
+details.more{margin-top:16px}
+details.more>summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:8px;font:600 13px Inter;color:var(--ink);padding:8px 14px;border:1px solid var(--ink)}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary::before{content:'+';font-size:16px;line-height:1}
+details.more[open]>summary::before{content:'–'}
+details.more.big>summary{font-size:15px;padding:12px 18px;background:var(--surface);border-color:var(--surface)}
+.wbtiles{margin-bottom:0}
+.wbtiles+.road{margin-top:16px}
 .tacgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .tac{padding:18px 18px 16px;font-size:13px;color:var(--text);line-height:1.45}
 .tac.t1{background:var(--surface)} .tac.t2{background:var(--magenta-light)} .tac.t3{background:var(--blue-light)} .tac.t4{background:var(--green)}
@@ -478,11 +486,12 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
     </div>
     <div class="wbpre"><div class="wbk">Plans</div><div class="wbbtns" id="wbBtns"></div><div class="wbteam" id="wbTeam"></div></div>
   </div>
-  <div class="road" id="wbRoad"></div>
   <div class="wbtiles" id="wbTiles"></div>
-  <p class="small muted mt" id="wbNote"></p>
+  <div class="road" id="wbRoad"></div>
+  <p class="small muted mt" id="wbNote" hidden></p>
 
-  <h3 class="mt3">How the budget gets there</h3>
+  <details class="more big mt2"><summary>How the budget gets there: funnel, assumptions and tactics</summary>
+  <h3 class="mt2">How the budget gets there</h3>
   <p class="small muted" id="wbLede" style="margin-bottom:16px"></p>
   <div class="wbgrid">
     <div id="wbFunnel"></div>
@@ -516,6 +525,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
       <li>Turn wins into case studies and referrals that feed the top of the funnel.</li></ul>
       <p class="tacm">Watch: expansion pipeline and referrals.</p></div>
   </div>
+  </details>
 </div></section>
 
 <!-- DIAGNOSIS -->
@@ -755,18 +765,19 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{baseLeads:40,baseL2O:40,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,aeCost:100,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10},
+  global:{baseLeads:40,baseL2O:40,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,aeCost:100,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
     {id:'chatgpt',name:'Paid ChatGPT',group:'paid',kind:'lead',cpl:2000,l2o:25,o2w:15,acv:50,abmBoost:false,color:'--blue-mid'},
     {id:'reddit',name:'Reddit',group:'paid',kind:'lead',cpl:2500,l2o:25,o2w:15,acv:50,abmBoost:false,color:'--blue-deep'},
     {id:'events',name:'Additional events',kind:'lead',cpl:1000,l2o:40,o2w:20,acv:50,abmBoost:true,diag:true,color:'--magenta'},
+    {id:'activations',name:'ABM activations',kind:'lead',cpl:2000,l2o:50,o2w:25,acv:100,entDeal:true,abmBoost:true,color:'--green-bright'},
     {id:'partners',name:'Partner program',kind:'lead',cpl:2500,l2o:50,o2w:25,acv:60,commission:true,diag:true,color:'--green'},
     {id:'abm',name:'ABM tools',kind:'abm',color:'--ink'}
   ],
   scenarios:{
-    A:{budget:{},phasing:[null,null,null,null],ae4:false,ae4Start:1,sdr:0,sdrStart:2},
+    A:{budget:{linkedin:70,google:30,chatgpt:5,reddit:5,events:60,activations:35,partners:45,abm:60},phasing:[null,null,null,null],ae4:false,ae4Start:1,sdr:0,sdrStart:2},
     B:{budget:{linkedin:130,google:30,chatgpt:10,reddit:10,events:60,partners:45,abm:25},phasing:[25,25,25,25],ae4:false,ae4Start:1,sdr:0,sdrStart:2},
     C:{budget:{linkedin:215,google:50,chatgpt:20,reddit:15,events:150,partners:60,abm:40},phasing:[25,25,25,25],ae4:false,ae4Start:1,sdr:0,sdrStart:2}
   }
@@ -794,6 +805,8 @@ const GMETA=[
   {k:'targetArr',label:'2027 new ARR target',unit:'$M',min:1,max:6,step:0.1,badge:'Given',note:''},
   {k:'abmThreshold',label:'ABM budget needed for uplift',unit:'$k',min:0,max:100,step:5,badge:'Assumed',note:'',grid:false},
   {k:'abmUplift',label:'ABM uplift on lead → opp (LinkedIn, Google, events)',unit:'pts',min:0,max:30,step:1,badge:'Assumed',note:'',grid:false},
+  {k:'abmContactMin',label:'ABM tools budget for contact-level ABM',unit:'$k',min:0,max:200,step:5,badge:'Assumed',note:'From this budget, ABM reaches named people in the buying group, not just the account.',grid:false},
+  {k:'abmContactUplift',label:'Contact-level ABM uplift on lead → opp',unit:'pts',min:0,max:40,step:1,badge:'Assumed',note:'Replaces the account-level uplift once contact-level ABM is funded.',grid:false},
   {k:'entLogoShare',label:'Enterprise share of new logos',unit:'%',min:0,max:60,step:1,badge:'Assumed',note:'From the intro call with Fermat: about 20% of clients are enterprise. To confirm with CRM data.',grid:false},
   {k:'entAcv',label:'Enterprise average deal size (ABM)',unit:'$k',min:50,max:250,step:5,badge:'Assumed',note:'Not in the brief, which gives ACV $15k–$120k, blended about $50k, and Calle Brava at $120k. $100k is my working average for enterprise.',grid:false},
   {k:'midAcv',label:'Mid-market average deal size',unit:'$k',min:10,max:80,step:1,badge:'Assumed',note:'Average of the brief\'s three smaller sample customers: Harlow & Pine $50k, Nordvik Studio $40k, Maison Ferrand $15k.',grid:false},
@@ -822,6 +835,8 @@ function migrate(o){
   if(o.global.baseLeads===35&&!o.global.base40){o.global.baseLeads=40;}o.global.base40=true;
   if(o.global.baseL2O===45&&!o.global.cal40){o.global.baseL2O=40;}o.global.cal40=true;
   const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
+  if(!o.channels.some(c=>c.id==='activations')){const i=o.channels.findIndex(c=>c.id==='partners');o.channels.splice(i<0?o.channels.length:i,0,clone(DEFAULTS.channels.find(c=>c.id==='activations')));}
+  if(!o.global.aMix1){const A=o.scenarios.A;if(!A||!Object.values(A.budget||{}).some(v=>+v>0))o.scenarios.A=clone(DEFAULTS.scenarios.A);o.global.aMix1=true;}
   return o;
 }
 function load(){try{const s=localStorage.getItem(STORE);if(!s)return null;const o=JSON.parse(s);if(!o||!o.global||!o.channels||!o.scenarios)return null;return migrate(o);}catch(e){return null}}
@@ -894,6 +909,7 @@ function run(sc){
   const g=S.global,has=hasBudget(sc);
   const {w}=phasing(sc);const [f1,f2]=lagSplit();
   const abmB=budget(sc,'abm');const abmOn=abmB>0&&abmB>=g.abmThreshold;
+  const abmLift=abmB>=num(g.abmContactMin)?num(g.abmContactUplift):num(g.abmUplift);
   const baseQ=g.baseLeads*3*(g.baseL2O/100)*(g.baseO2W/100);
   const lines={base:[baseQ,baseQ,baseQ,baseQ,0,0]};
   const acvOf={base:g.acv*1000};
@@ -902,7 +918,7 @@ function run(sc){
   for(const c of S.channels){
     const sp=budget(sc,c.id)*1000;
     if(c.kind==='abm'){spend+=sp;ch[c.id]={spend:sp,abm:true,active:abmOn};continue;}
-    const l2o=Math.min(1,(num(c.l2o)+(abmOn&&c.abmBoost?g.abmUplift:0))/100),o2w=num(c.o2w)/100;
+    const l2o=Math.min(1,(num(c.l2o)+(abmOn&&c.abmBoost?abmLift:0))/100),o2w=num(c.o2w)/100;
     const a=[0,0,0,0,0,0];let L=0,O=0,W=0;
     w.forEach((wq,q)=>{const s=sp*wq;const l=c.cpl>0?s/c.cpl:0;const o=l*Math.min(1,l2o+(sdrOn&&q>=sdrQ?num(g.sdrLift)/100:0));const x=o*o2w;L+=l;O+=o;W+=x;a[q+1]+=x*f1;a[q+2]+=x*f2;});
     const cm=c.commission?W*acvK(c)*1000*g.commission/100:0;
@@ -1350,17 +1366,20 @@ function renderRoad(r,sel){
   const status=hit?', enough to reach the target.':hitA?`: the ARR is covered (${M$(r.arr2027,1)}), but ${fmt(d.gapL)} logos short.`:`, ${fmt(d.gapL)} logos and ${M$(d.gapA,1)} short.`;
   const head=`Today's inbound brings <b>${fmt(d.baseC)} logos, ${M$(d.baseArr,1)}</b>. The budget has to buy the gap: ${fmt(entNeed)} enterprise deals and about ${fmt(midNeed)} mid-market. ${sel==='A'&&!r.has?'Plan A has no budget yet.':`Plan ${sel} closes <b class="${hit?'':'no'}">${fmt(d.newC)} more in 2027</b>${status}`}`;
   const capTxt=`${g.aes} AEs${o.ae4?` + a 4th AE from Q${o.ae4Start}`:''}${sdrMode(sel)?` + ${SDRNAME[sdrMode(sel)].replace('SDR agency','an SDR agency')} from Q${sdrStartQ(sel)}`:''}`;
+  const wasOpen=!!(document.querySelector('#wbRoad details')||{}).open;
   document.getElementById('wbRoad').innerHTML=`<p class="roadhead">${head}</p>`+
     bar('Logos',[{v:d.baseC,cls:'base',t:'Today\'s inbound'},{v:d.newC,cls:'',bg:col,t:'Bought by the budget'},{v:d.gapL,cls:'gap',t:'Gap'}],d.tgtL,v=>fmt(v))+
     bar('ARR',[{v:d.baseArr,cls:'base',t:'Today\'s inbound'},{v:d.newArr,cls:'',bg:col,t:'Bought by the budget'},{v:d.gapA,cls:'gap',t:'Gap'}],d.tgtA,v=>M$(v,1))+
-    `<div class="rdleg">
+    `<div class="rdcap">Sales can close <b>${fmt(d.cap)} logos</b> in 2027 with ${capTxt}.${d.cap<d.tgtL?` That's ${fmt(d.tgtL-d.cap)} short of ${fmt(d.tgtL)}, whatever the budget.`:''}</div>
+    <details class="more"${wasOpen?' open':''}><summary>Show the detail</summary>
+    <div class="rdleg">
       <div><span class="k">Protect: today's inbound</span><b>${fmt(d.baseC)} · ${M$(d.baseArr,1)}</b>${g.baseLeads} qualified leads a month at ${g.baseL2O}% and ${g.baseO2W}%.</div>
       <div style="border-top-color:${col}"><span class="k">Buy: the budget</span><b>${fmt(d.newC)} · ${M$(d.newArr,1)}</b>${r.has?`${fmt(d.entC)} enterprise + ${fmt(d.midC)} mid-market, closed in 2027.`:'No budget yet.'}</div>
       <div class="gap"><span class="k">Gap to target</span><b>${hit?'None':(hitL?'0 logos':fmt(d.gapL)+' logos')+' · '+(hitA?'ARR covered':M$(d.gapA,1))}</b>${hit?'The target is covered.':hitA?'ARR is there; the logo count isn\'t.':'Still missing in 2027.'}</div>
       <div class="slip"><span class="k">Slips to 2028</span><b>${fmt(d.slip)} logos</b>Won by the budget but closed after 2027: timing or sales capacity.</div>
     </div>
     ${r.has?`<div class="rdtime"><b>Timing caveat: the budget starts in January 2027.</b> With a ${g.cycle}-month sales cycle, nothing it buys closes in Q1, which runs on inbound alone. About half of what Q3 spend buys and all of Q4 lands in 2028. That's most of the ${fmt(d.slip)} logos slipping. To limit it without spending early: do the free prep in Q4 2026 (named-account list, tracking, hand-off rules, Q1 events booked) so spend goes live on 2 January, ${sdrMode(sel)?`build MQLs in Q1 so the SDRs have conversations to pick up from Q${sdrStartQ(sel)}, `:''}weight spend to the first half (now ${phasing(sel).w.map(x=>Math.round(x*100)).join('/')}), and treat Q4 2027 spend as 2028 pipeline.</div>`:''}
-    <div class="rdcap">Sales can close <b>${fmt(d.cap)} logos</b> in 2027 with ${capTxt}.${d.cap<d.tgtL?` That's ${fmt(d.tgtL-d.cap)} short of ${fmt(d.tgtL)}, whatever the budget.`:''}</div>`;
+    </details>`;
   return d;
 }
 function renderWorkBack(R){
@@ -1446,7 +1465,7 @@ const CH=[
    groups:[['How I\'d run it',['<b>Learn first.</b> Who refers today, why, and how those deals convert compared with other sources.','<b>Pick partner types that sell to the same buyer:</b> agencies that design or develop collections, PLM and fashion-tech implementers, sourcing agents and manufacturers, design schools.','<b>Pilot small.</b> 3–5 partners, a simple kit (deck, demo account, case studies), referrals tracked in Attio, commission on first-year ACV paid only on won deals.','<b>Decide in Q2.</b> Scale what brings opportunities, drop the rest.']],
      ['Measure',['Partner-sourced opportunities and win rate','Active partners and intros a month','Watch: commission cost per win']]],
    note:'Open question for Fermat: is partner commission paid from the growth budget or from revenue?'},
-  {n:2,name:'ABM on named accounts',c:'--blue',ids:['abm'],why:'The ICP of $100M–$5B brands is a list you can name. Build it, score it, and point every other channel at it.',
+  {n:2,name:'ABM on named accounts',c:'--blue',ids:['abm','activations'],why:'The ICP of $100M–$5B brands is a list you can name. Build it, score it, and point every other channel at it.',
    groups:[['How I\'d run it',['Build the list and map the buying group: Heads of Design, Product and Digital','Define the obsession logos with sales','LinkedIn and contact-based ads to the same people','SDRs call when someone visits or clicks, not when a score fills up']],
      ['Measure',['Opportunities from named accounts','Engaged accounts and buying-group coverage','Watch: share of pipeline from the list']]]},
   {n:3,name:'Events: attend and host, no booths',c:'--magenta',ids:['events'],why:'Go where the buyers are, book meetings before the trip, and host small dinners for named accounts.',
