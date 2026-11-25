@@ -307,6 +307,7 @@ details.more[open]>summary::before{content:'–'}
 details.more.big>summary{font-size:15px;padding:12px 18px;background:var(--surface);border-color:var(--surface)}
 .wbtiles{margin-bottom:0}
 .wbtiles+.road{margin-top:16px}
+.roadhead .full{display:block;margin-top:10px;font-family:Inter;font-size:16px;letter-spacing:0;color:var(--red);font-weight:500}
 .tacgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .tac{padding:18px 18px 16px;font-size:13px;color:var(--text);line-height:1.45}
 .tac.t1{background:var(--surface)} .tac.t2{background:var(--magenta-light)} .tac.t3{background:var(--blue-light)} .tac.t4{background:var(--green)}
@@ -1373,7 +1374,8 @@ function renderRoad(r,sel){
   const bar=(label,parts,tgt,fv)=>{const tot=parts.reduce((a,p)=>a+p.v,0),mx=Math.max(tgt,tot)*1.04;
     return `<div class="rdrow"><div class="rdlab">${label}</div><div class="rdtrack">${parts.filter(p=>p.v>0.05).map(p=>`<i class="${p.cls}" style="width:${p.v/mx*100}%;${p.bg?'background:'+p.bg:''}" title="${p.t}: ${fv(p.v)}">${p.v/mx>0.07?fv(p.v):''}</i>`).join('')}<em style="left:${tgt/mx*100}%"><span>Target ${fv(tgt)}</span></em></div></div>`;};
   const hitL=d.gapL<0.5,hitA=d.gapA<50000,hit=hitL&&hitA;
-  const status=hit?'. Target reached.':hitA?`. ARR target reached, ${fmt(d.gapL)} logos short.`:`. ${fmt(d.gapL)} logos and ${M$(d.gapA,1)} short.`;
+  const full=r.capHit&&!hit;
+  const status=(hit?'. Target reached.':hitA?`. ARR target reached, ${fmt(d.gapL)} logos short.`:`. ${fmt(d.gapL)} logos and ${M$(d.gapA,1)} short.`)+(full?` <span class="full">The AEs are full: ${fmt(d.slip)} more wins wait. More budget won't help without an SDR or a 4th AE.</span>`:'');
   const head=`Inbound brings <b>${fmt(d.baseC)} logos, ${M$(d.baseArr,1)}</b>. ${sel==='A'&&!r.has?'Plan A has no budget yet.':`Plan ${sel} adds <b class="${hit?'':'no'}">${fmt(d.newC)}</b>${status}`}`;
   const capTxt=`${g.aes} AEs${o.ae4?` + a 4th AE from Q${o.ae4Start}`:''}${sdrMode(sel)?` + ${SDRNAME[sdrMode(sel)].replace('SDR agency','an SDR agency')} from Q${sdrStartQ(sel)}`:''}`;
   const wasOpen=!!(document.querySelector('#wbRoad details')||{}).open;
@@ -1415,7 +1417,7 @@ function renderWorkBack(R){
   document.getElementById('wbTiles').innerHTML=
     t('Marketing leads (MQL)',fmt(F.mql),`${fmt(F.mql/12)} a month`)+
     t('Pipeline created',M$(D.pipe,1),`${fmt(r.opps)} opportunities`)+
-    t('New logos in 2027',`${fmt(r.wins2027)}<span class="of"> / ${g.targetLogos}</span>`,`${fmt(D.baseC)} inbound + ${fmt(D.newC)} from the budget`,r.wins2027<g.targetLogos-0.5?'short':'')+
+    t('New logos in 2027',`${fmt(r.wins2027)}<span class="of"> / ${g.targetLogos}</span>`,`${fmt(D.baseC)} inbound + ${fmt(D.newC)} outbound${r.capHit?` · <b>AEs full</b>, ${fmt(D.slip)} wait`:''}`,r.wins2027<g.targetLogos-0.5?'short':'')+
     t('New ARR in 2027',M$(r.arr2027,1),`vs. $${g.targetArr}M target`,r.arr2027<g.targetArr*1e6-50000?'short':'')+
     t('CAC',k$(r.cac),'Cost per new logo')+
     t('Payback',`${n1(r.payback)}<span style="font-size:.45em"> mo</span>`,`Target ≤ ${g.paybackTarget} months`,pb?'bad':'');
