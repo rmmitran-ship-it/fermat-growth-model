@@ -212,6 +212,8 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 .rdleg>div.slip{border-top-color:var(--surface-2)}
 .rdleg .k{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
 .rdleg b{display:block;font-family:'Inter Tight';font-size:22px;font-weight:600;color:var(--ink);letter-spacing:-0.02em;margin:4px 0}
+.wbcost{margin-top:8px;font-size:13px;color:var(--ink);max-width:52ch}
+.wbteam select{width:auto;margin-left:4px}
 .rdtime{margin-top:20px;font-size:13px;color:var(--ink);background:var(--blue-light);padding:12px 16px;line-height:1.5}
 .rdcap{margin-top:8px;font-size:13px;color:var(--ink);background:var(--surface);padding:12px 16px}
 .wbt .v .of{font-size:.5em;color:var(--muted)}
@@ -365,6 +367,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
       <label for="wbBudget" class="wbk">2027 marketing budget</label>
       <div class="wbfield"><span>$</span><input id="wbBudget" type="number" min="0" step="10" placeholder="Your budget" aria-label="2027 marketing budget in thousands of dollars"><span>k</span></div>
       <p class="small muted" id="wbMix"></p>
+      <p class="wbcost" id="wbCost"></p>
     </div>
     <div class="wbpre"><div class="wbk">Plans</div><div class="wbbtns" id="wbBtns"></div><div class="wbteam" id="wbTeam"></div></div>
   </div>
@@ -635,7 +638,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{baseLeads:35,baseL2O:45,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2},
+  global:{baseLeads:35,baseL2O:45,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,aeCost:110},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -646,9 +649,9 @@ const DEFAULTS={
     {id:'abm',name:'ABM tools',kind:'abm',color:'--ink'}
   ],
   scenarios:{
-    A:{budget:{},phasing:[null,null,null,null],ae4:false,ae4Start:1,isr:false,isrStart:1},
-    B:{budget:{linkedin:130,google:30,chatgpt:10,reddit:10,events:60,partners:45,abm:25},phasing:[25,25,25,25],ae4:false,ae4Start:1,isr:false,isrStart:1},
-    C:{budget:{linkedin:215,google:50,chatgpt:20,reddit:15,events:150,partners:60,abm:40},phasing:[25,25,25,25],ae4:false,ae4Start:1,isr:false,isrStart:1}
+    A:{budget:{},phasing:[null,null,null,null],ae4:false,ae4Start:1,sdr:0,sdrStart:2},
+    B:{budget:{linkedin:130,google:30,chatgpt:10,reddit:10,events:60,partners:45,abm:25},phasing:[25,25,25,25],ae4:false,ae4Start:1,sdr:0,sdrStart:2},
+    C:{budget:{linkedin:215,google:50,chatgpt:20,reddit:15,events:150,partners:60,abm:40},phasing:[25,25,25,25],ae4:false,ae4Start:1,sdr:0,sdrStart:2}
   }
 };
 const GMETA=[
@@ -660,7 +663,11 @@ const GMETA=[
   {k:'gm',label:'Gross margin',unit:'%',min:40,max:90,step:1,badge:'Given',note:'Brief: 60–70%.'},
   {k:'aes',label:'AEs',unit:'',min:1,max:8,step:1,badge:'Given',note:'Toggle a 4th AE per scenario in the budget table.'},
   {k:'aeCap',label:'AE capacity / quarter',unit:'logos',min:2,max:8,step:0.5,badge:'Given',note:'Brief: 4–5 per AE.'},
-  {k:'isrCap',label:'Inside sales closes / quarter',unit:'logos',min:0,max:6,step:0.5,badge:'Assumed',note:'One inside sales rep qualifies inbound and closes smaller mid-market deals. Half in the first quarter.'},
+  {k:'sdrInCost',label:'In-house SDR, cost a year',unit:'$k',min:20,max:150,step:5,badge:'Assumed',note:'Fully loaded. Prorated from the start quarter. Paid from the marketing budget.'},
+  {k:'sdrAgCost',label:'SDR agency (3 SDRs), Q2–Q4',unit:'$k',min:10,max:200,step:5,badge:'Assumed',note:'Your estimate for Q2 to Q4. Prorated if it starts later. Paid from the marketing budget.'},
+  {k:'sdrLift',label:'SDR uplift on lead → opp',unit:'pts',min:0,max:20,step:1,badge:'Assumed',note:'SDRs qualify and keep conversations warm before the AE hand-off. Applies to new-channel leads from the start quarter.'},
+  {k:'sdrCapLift',label:'Extra closes per AE / quarter with SDRs',unit:'logos',min:0,max:2,step:0.25,badge:'Assumed',note:'AEs stop qualifying, so each closes a bit more. Half in the first quarter.'},
+  {k:'aeCost',label:'4th AE, cost a year',unit:'$k',min:50,max:250,step:5,badge:'Assumed',note:'Fully loaded. Prorated from the start quarter. Sales budget, not marketing.'},
   {k:'paybackTarget',label:'Target CAC payback',unit:'months',min:6,max:36,step:1,badge:'Given',note:'Payback turns red above this.'},
   {k:'commission',label:'Partner commission',unit:'% of first-year ACV',min:0,max:40,step:1,badge:'Assumed',note:'Added to partner spend on each win.'},
   {k:'targetLogos',label:'2027 logo target',unit:'logos',min:20,max:120,step:1,badge:'Given',note:''},
@@ -718,8 +725,14 @@ function groups(){const out=[];S.channels.forEach(c=>{const k=c.group||c.id;let 
 const groupBudget=(s,g)=>g.channels.reduce((a,c)=>a+budget(s,c.id),0);
 const acvK=c=>c.entDeal?num(S.global.entAcv):num(c.acv);
 const budget=(sc,id)=>num(S.scenarios[sc].budget[id]);
-const totalBudget=sc=>S.channels.reduce((a,c)=>a+budget(sc,c.id),0);
-const hasBudget=sc=>totalBudget(sc)>0;
+const chanBudget=sc=>S.channels.reduce((a,c)=>a+budget(sc,c.id),0);
+const SDRNAME=['No SDR','1 in-house SDR','SDR agency, 3 SDRs'];
+const sdrMode=sc=>+(S.scenarios[sc].sdr||0);
+const sdrStartQ=sc=>+(S.scenarios[sc].sdrStart||2);
+function sdrK(sc){const m=sdrMode(sc),st=sdrStartQ(sc),g=S.global;if(!m)return 0;return m===1?num(g.sdrInCost)*(5-st)/4:num(g.sdrAgCost)*Math.min(1,(5-st)/3);}
+function aeK(sc){const o=S.scenarios[sc];return o.ae4?num(S.global.aeCost)*(5-(+o.ae4Start||1))/4:0;}
+const totalBudget=sc=>chanBudget(sc)+sdrK(sc);
+const hasBudget=sc=>chanBudget(sc)>0;
 
 /* ---------- model ---------- */
 function lagSplit(){const c=S.global.cycle;const f1=Math.min(1,Math.max(0,(6-c)/3));return [f1,1-f1];}
@@ -731,7 +744,7 @@ function phasing(sc){
 }
 function capacity(sc){
   const g=S.global,s=S.scenarios[sc];
-  return [0,1,2,3].map(q=>{let c=g.aes*g.aeCap;if(s.ae4){const st=(+s.ae4Start||1)-1;if(q===st)c+=g.aeCap/2;else if(q>st)c+=g.aeCap;}if(s.isr){const st=(+s.isrStart||1)-1;if(q===st)c+=num(g.isrCap)/2;else if(q>st)c+=num(g.isrCap);}return c;});
+  return [0,1,2,3].map(q=>{let c=g.aes*g.aeCap;if(s.ae4){const st=(+s.ae4Start||1)-1;if(q===st)c+=g.aeCap/2;else if(q>st)c+=g.aeCap;}if(+s.sdr){const st=(+s.sdrStart||2)-1,x=g.aes*num(g.sdrCapLift);if(q===st)c+=x/2;else if(q>st)c+=x;}return c;});
 }
 function simulate(lines,cap){
   const ids=Object.keys(lines),carry={};ids.forEach(i=>carry[i]=0);
@@ -753,13 +766,14 @@ function run(sc){
   const baseQ=g.baseLeads*3*(g.baseL2O/100)*(g.baseO2W/100);
   const lines={base:[baseQ,baseQ,baseQ,baseQ,0,0]};
   const acvOf={base:g.acv*1000};
-  const ch={};let spend=0,wins=0,arr=0,leads=0,opps=0,comm=0;
+  const sdrOn=sdrMode(sc)>0,sdrQ=sdrStartQ(sc)-1,sdrCost=sdrK(sc)*1000;
+  const ch={};let spend=sdrCost,wins=0,arr=0,leads=0,opps=0,comm=0;
   for(const c of S.channels){
     const sp=budget(sc,c.id)*1000;
     if(c.kind==='abm'){spend+=sp;ch[c.id]={spend:sp,abm:true,active:abmOn};continue;}
     const l2o=Math.min(1,(num(c.l2o)+(abmOn&&c.abmBoost?g.abmUplift:0))/100),o2w=num(c.o2w)/100;
     const a=[0,0,0,0,0,0];let L=0,O=0,W=0;
-    w.forEach((wq,q)=>{const s=sp*wq;const l=c.cpl>0?s/c.cpl:0;const o=l*l2o;const x=o*o2w;L+=l;O+=o;W+=x;a[q+1]+=x*f1;a[q+2]+=x*f2;});
+    w.forEach((wq,q)=>{const s=sp*wq;const l=c.cpl>0?s/c.cpl:0;const o=l*Math.min(1,l2o+(sdrOn&&q>=sdrQ?num(g.sdrLift)/100:0));const x=o*o2w;L+=l;O+=o;W+=x;a[q+1]+=x*f1;a[q+2]+=x*f2;});
     const cm=c.commission?W*acvK(c)*1000*g.commission/100:0;
     lines[c.id]=a;acvOf[c.id]=acvK(c)*1000;
     ch[c.id]={spend:sp,leads:L,opps:O,wins:W,arr:W*acvK(c)*1000,comm:cm,l2o,o2w,cpo:O>0?(sp+cm)/O:null,cpw:W>0?(sp+cm)/W:null};
@@ -775,7 +789,7 @@ function run(sc){
   const cac=wins>0.01?spend/wins:null;
   const cac27=incr>0.01?spend/incr:null;
   const payback=fin(cac)?cac/(wAcv*(g.gm/100)/12):null;
-  return {sc,has,ch,lines,cap,sim,baseQ,abmOn,spend,newWins:wins,newArr:arr,comm,leads,opps,
+  return {sc,has,ch,lines,cap,sim,baseQ,abmOn,spend,sdrCost,aeCost:aeK(sc)*1000,newWins:wins,newArr:arr,comm,leads,opps,
     wins2027:sim.wins,arr2027,spill,incr,cac,cac27,payback,cpo:opps>0?spend/opps:null,
     yearLeads:g.baseLeads*12+leads,yearOpps:g.baseLeads*12*g.baseL2O/100+opps,yearWins:4*baseQ+wins,capHit:sim.capHit};
 }
@@ -801,7 +815,7 @@ function renderBudgetTable(){
     h+=`<tr class="total"><td>Total</td>${list.map(s=>cell(s,hasBudget(s)?'$'+Math.round(totalBudget(s))+'k':'—')).join('')}</tr>`;
     h+=`<tr><td>Phasing Q1/Q2/Q3/Q4</td>${list.map(s=>cell(s,hasBudget(s)?phasing(s).w.map(x=>Math.round(x*100)).join(' / '):'—')).join('')}</tr>`;
     h+=`<tr><td>4th AE</td>${list.map(s=>cell(s,S.scenarios[s].ae4?'Starts Q'+S.scenarios[s].ae4Start:'No')).join('')}</tr>`;
-    h+=`<tr><td>Inside sales</td>${list.map(s=>cell(s,S.scenarios[s].isr?'Starts Q'+(S.scenarios[s].isrStart||1):'No')).join('')}</tr></tbody>`;
+    h+=`<tr><td>SDR support</td>${list.map(s=>cell(s,sdrMode(s)?SDRNAME[sdrMode(s)]+', Q'+sdrStartQ(s)+' · $'+Math.round(sdrK(s))+'k':'No')).join('')}</tr></tbody>`;
     el.innerHTML=sw+`<div class="tw"><table>${h}</table></div><p class="small muted mt">Read-only. Pick a plan above to edit it.</p>`;
     return;
   }
@@ -817,7 +831,7 @@ function renderBudgetTable(){
   let right=`<div class="ptitle">Spend phasing <span class="muted">(% of budget)</span></div>`;
   for(let q=0;q<4;q++)right+=`<div class="prow"><span>Q${q+1}</span>${ctl(`scenarios.${s}.phasing.${q}`,o.phasing[q],0,100,5,'25',25)}</div>`;
   right+=`<div class="prow" style="border-bottom:0"><span></span><span id="phw${s}"></span></div>`;
-  right+=`<div class="ptitle mt2">Sales capacity</div><div class="prow"><span>4th AE</span><label style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input type="checkbox" data-p="scenarios.${s}.ae4" ${o.ae4?'checked':''}> Hire, starts <select data-p="scenarios.${s}.ae4Start" style="width:64px">${[1,2,3,4].map(q=>`<option value="${q}" ${+o.ae4Start===q?'selected':''}>Q${q}</option>`).join('')}</select></label></div><p class="small muted">Half capacity in the first quarter while ramping.</p><div class="prow"><span>Inside sales</span><label style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input type="checkbox" data-p="scenarios.${s}.isr" ${o.isr?'checked':''}> Hire, starts <select data-p="scenarios.${s}.isrStart" style="width:64px">${[1,2,3,4].map(q=>`<option value="${q}" ${+(o.isrStart||1)===q?'selected':''}>Q${q}</option>`).join('')}</select></label></div><p class="small muted">Qualifies inbound and closes smaller deals: +${S.global.isrCap} logos a quarter.</p>`;
+  right+=`<div class="ptitle mt2">Sales capacity</div><div class="prow"><span>4th AE</span><label style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input type="checkbox" data-p="scenarios.${s}.ae4" ${o.ae4?'checked':''}> Hire, starts <select data-p="scenarios.${s}.ae4Start" style="width:64px">${[1,2,3,4].map(q=>`<option value="${q}" ${+o.ae4Start===q?'selected':''}>Q${q}</option>`).join('')}</select></label></div><p class="small muted">Half capacity in the first quarter while ramping.</p><div class="prow"><span>SDR support</span><label style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><select data-p="scenarios.${s}.sdr" style="width:auto">${SDRNAME.map((n,i)=>`<option value="${i}" ${sdrMode(s)===i?'selected':''}>${n}</option>`).join('')}</select> from <select data-p="scenarios.${s}.sdrStart" style="width:64px">${[1,2,3,4].map(q=>`<option value="${q}" ${sdrStartQ(s)===q?'selected':''}>Q${q}</option>`).join('')}</select></label></div><p class="small muted">Paid from this budget: ${sdrK(s)?'$'+Math.round(sdrK(s))+'k':'nothing'}. 4th AE: ${aeK(s)?'~$'+Math.round(aeK(s))+'k from the sales budget':'not hired'}.</p>`;
   el.innerHTML=sw+`<div class="planed" style="border-top-color:var(${SCVAR[s]})"><h3>${PLABEL[s]}</h3>${intro}<div class="pgrid"><div>${left}</div><div>${right}</div></div></div>`;
 }
 function renderChanTable(){
@@ -1163,7 +1177,7 @@ function renderRoad(r,sel){
   const hitL=d.gapL<0.5,hitA=d.gapA<50000,hit=hitL&&hitA;
   const status=hit?', enough to reach the target.':hitA?`: the ARR is covered (${M$(r.arr2027,1)}), but ${fmt(d.gapL)} logos short.`:`, ${fmt(d.gapL)} logos and ${M$(d.gapA,1)} short.`;
   const head=`Today's inbound brings <b>${fmt(d.baseC)} logos, ${M$(d.baseArr,1)}</b>. The budget has to buy the gap: ${fmt(entNeed)} enterprise deals and about ${fmt(midNeed)} mid-market. ${sel==='A'&&!r.has?'Plan A has no budget yet.':`Plan ${sel} closes <b class="${hit?'':'no'}">${fmt(d.newC)} more in 2027</b>${status}`}`;
-  const capTxt=`${g.aes} AEs${o.ae4?` + a 4th AE from Q${o.ae4Start}`:''}${o.isr?` + inside sales from Q${o.isrStart||1}`:''}`;
+  const capTxt=`${g.aes} AEs${o.ae4?` + a 4th AE from Q${o.ae4Start}`:''}${sdrMode(sel)?` + ${SDRNAME[sdrMode(sel)].replace('SDR agency','an SDR agency')} from Q${sdrStartQ(sel)}`:''}`;
   document.getElementById('wbRoad').innerHTML=`<p class="roadhead">${head}</p>`+
     bar('Logos',[{v:d.baseC,cls:'base',t:'Today\'s inbound'},{v:d.newC,cls:'',bg:col,t:'Bought by the budget'},{v:d.gapL,cls:'gap',t:'Gap'}],d.tgtL,v=>fmt(v))+
     bar('ARR',[{v:d.baseArr,cls:'base',t:'Today\'s inbound'},{v:d.newArr,cls:'',bg:col,t:'Bought by the budget'},{v:d.gapA,cls:'gap',t:'Gap'}],d.tgtA,v=>M$(v,1))+
@@ -1173,7 +1187,7 @@ function renderRoad(r,sel){
       <div class="gap"><span class="k">Gap to target</span><b>${hit?'None':(hitL?'0 logos':fmt(d.gapL)+' logos')+' · '+(hitA?'ARR covered':M$(d.gapA,1))}</b>${hit?'The target is covered.':hitA?'ARR is there; the logo count isn\'t.':'Still missing in 2027.'}</div>
       <div class="slip"><span class="k">Slips to 2028</span><b>${fmt(d.slip)} logos</b>Won by the budget but closed after 2027: timing or sales capacity.</div>
     </div>
-    ${r.has?`<div class="rdtime"><b>Timing caveat: the budget starts in January 2027.</b> With a ${g.cycle}-month sales cycle, nothing it buys closes in Q1, which runs on inbound alone. About half of what Q3 spend buys and all of Q4 lands in 2028. That's most of the ${fmt(d.slip)} logos slipping. To limit it without spending early: do the free prep in Q4 2026 (named-account list, tracking, hand-off rules, Q1 events booked) so spend goes live on 2 January, weight spend to the first half (now ${phasing(sel).w.map(x=>Math.round(x*100)).join('/')}), and treat Q4 2027 spend as 2028 pipeline.</div>`:''}
+    ${r.has?`<div class="rdtime"><b>Timing caveat: the budget starts in January 2027.</b> With a ${g.cycle}-month sales cycle, nothing it buys closes in Q1, which runs on inbound alone. About half of what Q3 spend buys and all of Q4 lands in 2028. That's most of the ${fmt(d.slip)} logos slipping. To limit it without spending early: do the free prep in Q4 2026 (named-account list, tracking, hand-off rules, Q1 events booked) so spend goes live on 2 January, ${sdrMode(sel)?`build MQLs in Q1 so the SDRs have conversations to pick up from Q${sdrStartQ(sel)}, `:''}weight spend to the first half (now ${phasing(sel).w.map(x=>Math.round(x*100)).join('/')}), and treat Q4 2027 spend as 2028 pipeline.</div>`:''}
     <div class="rdcap">Sales can close <b>${fmt(d.cap)} logos</b> in 2027 with ${capTxt}.${d.cap<d.tgtL?` That's ${fmt(d.tgtL-d.cap)} short of ${fmt(d.tgtL)}, whatever the budget.`:''}</div>`;
   return d;
 }
@@ -1186,9 +1200,12 @@ function renderWorkBack(R){
   document.getElementById('wbMix').innerHTML=sel==='A'
     ?(r.has?`Your plan, spread like ${A.wbFrom?'plan '+A.wbFrom:'your own split'}. Change the split under <a href="#inputs">Inputs</a>.`:'Type a budget to start your own plan from the B mix.')
     :`The brief's plan ${sel}. Type a different number to start your own plan from this mix.`;
+  if(sel==='A'&&r.has&&sdrK('A'))document.getElementById('wbMix').innerHTML+=` The SDR comes out of the total, so channels get the rest.`;
   const lab={A:'A · Your budget',B:'B · Brief',C:'C · Brief'};
   const so=S.scenarios[sel];
-  document.getElementById('wbTeam').innerHTML=`<span class="wbk">Sales team</span><label><input type="checkbox" data-p="scenarios.${sel}.ae4" ${so.ae4?'checked':''}> 4th AE</label><label><input type="checkbox" data-p="scenarios.${sel}.isr" ${so.isr?'checked':''}> Inside sales rep</label>`;
+  const g2=S.global,inK=Math.round(num(g2.sdrInCost)*(5-sdrStartQ(sel))/4),agK=Math.round(num(g2.sdrAgCost)*Math.min(1,(5-sdrStartQ(sel))/3));
+  document.getElementById('wbTeam').innerHTML=`<span class="wbk">Sales support</span><label>SDR <select data-p="scenarios.${sel}.sdr" style="width:auto"><option value="0" ${sdrMode(sel)===0?'selected':''}>None</option><option value="1" ${sdrMode(sel)===1?'selected':''}>1 in-house SDR · $${inK}k</option><option value="2" ${sdrMode(sel)===2?'selected':''}>Agency, 3 SDRs · $${agK}k</option></select></label><label><input type="checkbox" data-p="scenarios.${sel}.ae4" ${so.ae4?'checked':''}> 4th AE</label>`;
+  document.getElementById('wbCost').innerHTML=r.has?`Channels <b>$${Math.round(chanBudget(sel))}k</b>${sdrK(sel)?` + ${SDRNAME[sdrMode(sel)]} from Q${sdrStartQ(sel)} <b>$${Math.round(sdrK(sel))}k</b>`:''} = <b>$${Math.round(totalBudget(sel))}k</b> marketing budget.${aeK(sel)?` The 4th AE adds ~$${Math.round(aeK(sel))}k from the sales budget.`:''}`:'';
   const D=renderRoad(r,sel);
   document.getElementById('wbBtns').innerHTML=SC.map(s=>`<button class="wbbtn ${s}" data-act="view" data-v="${s}" aria-pressed="${s===sel}">${lab[s]}<small>${hasBudget(s)?'$'+Math.round(totalBudget(s))+'k':'Empty'}</small></button>`).join('');
   const F=wbFunnel(r),pb=fin(r.payback)&&r.payback>g.paybackTarget;
@@ -1198,7 +1215,7 @@ function renderWorkBack(R){
     t('Pipeline created',M$(D.pipe,1),`${fmt(r.opps)} opportunities`)+
     t('New logos in 2027',`${fmt(r.wins2027)}<span class="of"> / ${g.targetLogos}</span>`,`${fmt(D.baseC)} inbound + ${fmt(D.newC)} from the budget`,r.wins2027<g.targetLogos-0.5?'short':'')+
     t('New ARR in 2027',M$(r.arr2027,1),`vs. $${g.targetArr}M target`,r.arr2027<g.targetArr*1e6-50000?'short':'')+
-    t('CAC',k$(r.cac),'Spend and commission ÷ new logos')+
+    t('CAC',k$(r.cac),r.sdrCost?'Spend, SDRs and commission ÷ new logos':'Spend and commission ÷ new logos')+
     t('Payback',`${n1(r.payback)}<span style="font-size:.45em"> mo</span>`,`Target ≤ ${g.paybackTarget} months`,pb?'bad':'');
   document.getElementById('wbNote').textContent=r.has?`Logos and ARR count everything that closes in 2027, today's inbound included. MQLs, pipeline, CAC and payback cover only what the budget creates.`:'';
   const fe=document.getElementById('wbFunnel');
@@ -1235,10 +1252,10 @@ function setBudgetA(v){
   if(!mix){
     const src=hasBudget('A')?'A':(SC.includes(view)&&view!=='A'?view:'B');
     if(src!=='A'){S.scenarios.A=clone(S.scenarios[src]);from=src;}else from=null;
-    const t=totalBudget(src);mix={};S.channels.forEach(c=>{const b=budget(src,c.id);if(b)mix[c.id]=b/t;});
+    const t=chanBudget(src);mix={};S.channels.forEach(c=>{const b=budget(src,c.id);if(b)mix[c.id]=b/t;});
   }
-  const A=S.scenarios.A;A.budget={};
-  Object.entries(mix).forEach(([id,sh])=>{A.budget[id]=Math.round(v*sh*10)/10;});
+  const A=S.scenarios.A;A.budget={};const cv=Math.max(0,v-sdrK('A'));
+  Object.entries(mix).forEach(([id,sh])=>{A.budget[id]=Math.round(cv*sh*10)/10;});
   A.wbMix=mix;A.wbFrom=from;
 }
 document.getElementById('wbBudget').addEventListener('input',e=>{
@@ -1253,7 +1270,9 @@ function onInput(e){
   const [o,k]=resolve(p);if(!o)return;
   let v;
   if(t.type==='checkbox')v=t.checked;else if(t.type==='text')v=t.value;else if(t.tagName==='SELECT')v=+t.value;else v=t.value===''?null:+t.value;
+  const prevA=/^scenarios\.A\.sdr/.test(p)&&S.scenarios.A.wbMix?totalBudget('A'):null;
   o[k]=v;
+  if(prevA!=null){setBudgetA(prevA);renderBudgetTable();}
   if(p.startsWith('scenarios.A.budget.'))delete S.scenarios.A.wbMix;
   document.querySelectorAll(`[data-p="${p}"]`).forEach(x=>{if(x!==t&&x.type!=='checkbox'&&x.tagName!=='SELECT'){x.value=(v==null?(x.type==='range'?x.min:''):v);}});
   if(t.type==='text'&&e.type==='input'){save();update();return;}
