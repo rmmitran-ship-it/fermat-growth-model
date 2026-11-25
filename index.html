@@ -881,8 +881,10 @@ function simulate(lines,cap){
   for(let q=0;q<4;q++){
     const d={};let tot=0;ids.forEach(i=>{d[i]=carry[i]+lines[i][q];tot+=d[i];});
     demand.push(tot);
-    const r=tot>cap[q]?cap[q]/tot:1;if(tot>cap[q]+0.05)capHit=true;
-    const c={};ids.forEach(i=>{c[i]=d[i]*r;carry[i]=d[i]-c[i];});closed.push(c);
+    if(tot>cap[q]+0.05)capHit=true;
+    // AEs work today's inbound first; budget deals share what capacity is left
+    const bc=d.base!=null?Math.min(d.base,cap[q]):0,restD=tot-(d.base||0),restCap=Math.max(0,cap[q]-bc),r=restD>restCap?restCap/restD:1;
+    const c={};ids.forEach(i=>{c[i]=i==='base'?bc:d[i]*r;carry[i]=d[i]-c[i];});closed.push(c);
   }
   const spillBy={};ids.forEach(i=>spillBy[i]=carry[i]+lines[i][4]+lines[i][5]);
   const wins=closed.reduce((a,c)=>a+Object.values(c).reduce((x,y)=>x+y,0),0);
