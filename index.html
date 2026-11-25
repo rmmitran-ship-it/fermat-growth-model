@@ -212,7 +212,8 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 .rdleg>div.slip{border-top-color:var(--surface-2)}
 .rdleg .k{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
 .rdleg b{display:block;font-family:'Inter Tight';font-size:22px;font-weight:600;color:var(--ink);letter-spacing:-0.02em;margin:4px 0}
-.rdcap{margin-top:20px;font-size:13px;color:var(--ink);background:var(--surface);padding:12px 16px}
+.rdtime{margin-top:20px;font-size:13px;color:var(--ink);background:var(--blue-light);padding:12px 16px;line-height:1.5}
+.rdcap{margin-top:8px;font-size:13px;color:var(--ink);background:var(--surface);padding:12px 16px}
 .wbt .v .of{font-size:.5em;color:var(--muted)}
 .wbt .v.short{color:var(--red)}
 @media (max-width:800px){.rdleg{grid-template-columns:1fr 1fr}.road{padding:20px}}
@@ -1170,8 +1171,9 @@ function renderRoad(r,sel){
       <div><span class="k">Protect: today's inbound</span><b>${fmt(d.baseC)} · ${M$(d.baseArr,1)}</b>${g.baseLeads} qualified leads a month at ${g.baseL2O}% and ${g.baseO2W}%.</div>
       <div style="border-top-color:${col}"><span class="k">Buy: the budget</span><b>${fmt(d.newC)} · ${M$(d.newArr,1)}</b>${r.has?`${fmt(d.entC)} enterprise + ${fmt(d.midC)} mid-market, closed in 2027.`:'No budget yet.'}</div>
       <div class="gap"><span class="k">Gap to target</span><b>${hit?'None':(hitL?'0 logos':fmt(d.gapL)+' logos')+' · '+(hitA?'ARR covered':M$(d.gapA,1))}</b>${hit?'The target is covered.':hitA?'ARR is there; the logo count isn\'t.':'Still missing in 2027.'}</div>
-      <div class="slip"><span class="k">Slips to 2028</span><b>${fmt(d.slip)} logos</b>Won by the budget but closed after 2027: sales capacity or timing.</div>
+      <div class="slip"><span class="k">Slips to 2028</span><b>${fmt(d.slip)} logos</b>Won by the budget but closed after 2027: timing or sales capacity.</div>
     </div>
+    ${r.has?`<div class="rdtime"><b>Timing caveat: the budget starts in January 2027.</b> With a ${g.cycle}-month sales cycle, nothing it buys closes in Q1, which runs on inbound alone. About half of what Q3 spend buys and all of Q4 lands in 2028. That's most of the ${fmt(d.slip)} logos slipping. To limit it without spending early: do the free prep in Q4 2026 (named-account list, tracking, hand-off rules, Q1 events booked) so spend goes live on 2 January, weight spend to the first half (now ${phasing(sel).w.map(x=>Math.round(x*100)).join('/')}), and treat Q4 2027 spend as 2028 pipeline.</div>`:''}
     <div class="rdcap">Sales can close <b>${fmt(d.cap)} logos</b> in 2027 with ${capTxt}.${d.cap<d.tgtL?` That's ${fmt(d.tgtL-d.cap)} short of ${fmt(d.tgtL)}, whatever the budget.`:''}</div>`;
   return d;
 }
