@@ -257,11 +257,38 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 .wbjoin span{background:var(--surface-2);border:1px dashed var(--ink);padding:6px 12px;font-size:12px;font-weight:600;color:var(--ink)}
 .okt{color:var(--green-deep);font-weight:600}
 .shortt{color:var(--red);font-weight:600}
-.card.opt{background:var(--white);border:1px solid var(--line)}
-.card.opt p{margin-bottom:10px}
-.optm{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:13px}
-.card.phase{background:var(--surface)}
-.card.phase .pk{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:14px 0 4px}
+.tl{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;margin-top:8px}
+.tlstep{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:2px;padding:14px 14px 12px;background:var(--surface);border-top:6px solid var(--c,var(--base));min-height:62px}
+.tlstep:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.tlstep .w{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.tlstep b{font-family:'Inter Tight';font-size:17px;font-weight:600;color:var(--ink);letter-spacing:-0.02em;line-height:1.15}
+.tlstep[aria-pressed="true"]{background:var(--c,var(--ink));box-shadow:inset 0 -3px 0 var(--ink)}
+.tlstep[aria-pressed="true"] .w{color:var(--ink)}
+.tlstep.flag{border-top-style:dashed}
+.tlstep.quiet{cursor:default;opacity:.55}
+.tlpanel{margin-top:16px;border:1px solid var(--line);padding:24px 28px}
+.tlhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:12px 24px;margin-bottom:18px}
+.tlhead .w{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.tlhead h3{font-size:clamp(24px,2.6vw,32px);margin-top:4px}
+.tlgoal{font-size:16px;color:var(--ink);margin-top:8px;max-width:60ch}
+.tlnav{display:flex;gap:8px}
+.tlnav button{font:600 13px Inter;padding:8px 14px;border:1px solid var(--ink);background:var(--white);color:var(--ink);cursor:pointer;border-radius:0}
+.tlnav button:disabled{opacity:.3;cursor:default}
+.tlgroups{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.tlg{background:var(--surface);padding:14px 16px}
+.tlg.no{background:var(--ink);color:#ddd}
+.tlg.no .k{color:#9a9a9a}
+.tlg .k{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:6px}
+.tlg ul{margin:0;padding-left:16px;font-size:14px;line-height:1.45}
+.tlg li{margin:5px 0}
+.tlopts{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.tlopt{border:1px solid var(--line);padding:16px}
+.tlopt .k{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.tlopt .nm{display:block;font-family:'Inter Tight';font-size:19px;font-weight:600;color:var(--ink);margin:4px 0 6px}
+.tlopt p{font-size:14px}
+.tlopt ul{margin:8px 0 0;padding-left:16px;font-size:14px}
+.tlopt .m{margin-top:10px;padding-top:8px;border-top:1px solid var(--line);font-size:13px}
+@media (max-width:800px){.tl{grid-template-columns:repeat(2,minmax(0,1fr))}.tlopts{grid-template-columns:1fr}.tlpanel{padding:18px}}
 .tacgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .tac{padding:18px 18px 16px;font-size:13px;color:var(--text);line-height:1.45}
 .tac.t1{background:var(--surface)} .tac.t2{background:var(--magenta-light)} .tac.t3{background:var(--blue-light)} .tac.t4{background:var(--green)}
@@ -704,65 +731,10 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 <!-- 90 DAYS -->
 <section id="ninety"><div class="wrap">
   <div class="eyebrow">07 · First 90 days</div>
-  <h2>Run it myself. <span class="hl hl-m">Buy</span> the rest.</h2>
-
-  <div class="grid g2 mt2">
-    <div class="card b"><div class="eyebrow" style="color:var(--blue-deep)">Milestone by month 3</div><h3>The ABM strategy</h3>
-      <ul class="clean">
-        <li>How do we define the handoff between marketing and sales?</li>
-        <li>How do we build a pitch for each type of account?</li>
-        <li>Which tools do we need, and which ones do we skip?</li>
-        <li>Do we need an in-house SDR, or can the AEs cover it?</li>
-      </ul></div>
-    <div class="card m"><div class="eyebrow" style="color:var(--magenta-deep)">Milestone by month 6</div><h3>The narrative</h3>
-      <p>Neither founder-led nor product-led growth is switched on yet. I'd test both lightly in Q1, read the results, and commit to one story by month 6. Built with brand and comms.</p></div>
-  </div>
-
-  <div class="grid g2 mt">
-    <div class="card opt"><div class="eyebrow">Option 1</div><h3>Founder-led media kit</h3>
-      <p>Build an ecosystem around Pol, so buyers know the person behind Fermat before sales calls.</p>
-      <ul class="clean">
-        <li>Video series: how Pol started Fermat, and why idea to delivery should take weeks, not months</li>
-        <li>LinkedIn plan for Pol: announcements, customer stories, point of view on AI in fashion</li>
-        <li>Speaking slots and dinners at the big fashion moments</li>
-      </ul>
-      <p class="optm"><b>Measure:</b> engagement from ICP accounts, inbound that mentions Pol, meetings Pol's content opens</p></div>
-    <div class="card opt"><div class="eyebrow">Option 2</div><h3>Product-led community</h3>
-      <p>Build a community around designers, so champions bring Fermat into their companies.</p>
-      <ul class="clean">
-        <li>Restart the podcast, with designers and heads of design as guests</li>
-        <li>Find 3–5 fashion creators who make their own clothes to design with Fermat in public</li>
-        <li>Designer community: challenges, showcases, templates</li>
-      </ul>
-      <p class="optm"><b>Measure:</b> sign-ups from ICP companies, champions who reach a buyer, content shared by designers</p></div>
-  </div>
-
-  <h3 class="mt3">The first 90 days</h3>
-  <div class="grid g3 mt">
-    <div class="card phase"><div class="eyebrow">Days 1–30</div><h3>Listen and set up</h3>
-      <div class="pk">Questions to answer</div><ul class="clean"><li>What's our pitch?</li><li>Who is sales targeting?</li></ul>
-      <div class="pk">Strategy</div><ul class="clean">
-        <li>Analyse the best 20 deals and find 2–3 narratives to test in ads</li>
-        <li>Review the inbound motion and scoring: what can be qualified today, and what needs more engagement</li>
-        <li>Review the events already committed to</li>
-        <li>Set up basic scoring in Attio</li></ul>
-      <div class="pk">Tactics</div><ul class="clean">
-        <li>A simple email workflow with a cohort of 20 companies, for 2 months</li>
-        <li>Account-based targeting on LinkedIn, for 2 months</li></ul>
-      <div class="pk">What I won't do</div><ul class="clean">
-        <li>Switch on 5 channels at the same time</li>
-        <li>Put money into paid before inbound has a proper handoff</li></ul></div>
-    <div class="card phase"><div class="eyebrow">Days 31–60</div><h3>Test the story</h3>
-      <div class="pk">Strategy</div><ul class="clean">
-        <li>Explore founder-led sales: build a universe around Pol, with brand and comms (LinkedIn plan, videos, features)</li>
-        <li>Kick off ABM with sales: define the obsession logos</li></ul>
-      <div class="pk">Tactics</div><ul class="clean">
-        <li>Narrative tests: two Pol videos and one designer creator pilot, with brand and comms</li>
-        <li>First case study from the best 20 deals</li></ul></div>
-    <div class="card phase"><div class="eyebrow">Days 61–90</div><h3>Decide</h3>
-      <div class="pk">Milestone</div><ul class="clean">
-        <li>ABM strategy signed off: handoff, pitches per account type, tools, SDR decision</li></ul></div>
-  </div>
+  <h2>Ninety days to a plan <span class="hl hl-m">we can scale</span>.</h2>
+  <p class="lede">Click a step on the timeline, or walk through it with Next.</p>
+  <div class="tl" id="tl"></div>
+  <div class="tlpanel" id="tlPanel" aria-live="polite"></div>
 
   <h3 class="mt3">What I run, what I buy</h3>
   <div class="grid g2 mt">
@@ -1483,6 +1455,47 @@ document.getElementById('wbBudget').addEventListener('input',e=>{
   const v=e.target.value===''?null:+e.target.value;
   setBudgetA(v);view='A';renderTabs();renderBudgetTable();save();update();
 });
+
+/* ---------- 90-day timeline ---------- */
+const TL=[
+  {when:'Days 1–30',title:'Listen and set up',c:'--surface-2',goal:'Learn what wins today before spending on anything new.',groups:[
+    ['Questions to answer',["What's our pitch?",'Who is sales targeting?']],
+    ['Strategy',['Analyse the best 20 deals and find 2–3 narratives to test in ads','Review inbound and scoring: what can be qualified today, and what needs more engagement','Review the events already committed to','Set up basic scoring in Attio']],
+    ['Tactics',['A simple email workflow with a cohort of 20 companies, for 2 months','Account-based targeting on LinkedIn, for 2 months']],
+    ["What I won't do",['Switch on 5 channels at the same time','Put money into paid before inbound has a proper handoff'],'no']]},
+  {when:'Days 31–60',title:'Test the story',c:'--magenta-light',goal:'Test two stories lightly and start ABM with sales.',groups:[
+    ['Strategy',['Explore founder-led sales: build a universe around Pol, with brand and comms (LinkedIn plan, videos, features)','Kick off ABM with sales: define the obsession logos']],
+    ['Tactics',['Narrative tests: two Pol videos and one designer creator pilot, with brand and comms','First case study from the best 20 deals']]]},
+  {when:'Days 61–90',title:'Decide',c:'--blue-light',goal:'Sign off how marketing and sales work the named accounts.',groups:[
+    ['Milestone',['ABM strategy signed off: handoff, pitches per account type, tools, SDR decision']]]},
+  {when:'Month 3',title:'The ABM strategy',c:'--blue',flag:true,goal:'Four questions, answered and signed off with sales.',groups:[
+    ['Questions',['How do we define the handoff between marketing and sales?','How do we build a pitch for each type of account?','Which tools do we need, and which ones do we skip?','Do we need an in-house SDR, or can the AEs cover it?']]]},
+  {when:'Months 4–5',title:'Run and read',c:'--surface',quiet:true},
+  {when:'Month 6',title:'The narrative',c:'--magenta',flag:true,goal:'Neither founder-led nor product-led growth is switched on yet. Test both lightly in Q1, read the results, and commit to one story by month 6. Built with brand and comms.',opts:[
+    ['Option 1','Founder-led media kit','Build an ecosystem around Pol, so buyers know the person behind Fermat before sales calls.',['Video series: how Pol started Fermat, and why idea to delivery should take weeks, not months','LinkedIn plan for Pol: announcements, customer stories, point of view on AI in fashion','Speaking slots and dinners at the big fashion moments'],"Engagement from ICP accounts, inbound that mentions Pol, meetings Pol's content opens"],
+    ['Option 2','Product-led community','Build a community around designers, so champions bring Fermat into their companies.',['Restart the podcast, with designers and heads of design as guests','Find 3–5 fashion creators who make their own clothes to design with Fermat in public','Designer community: challenges, showcases, templates'],'Sign-ups from ICP companies, champions who reach a buyer, content shared by designers']]}
+];
+const tlIdx=TL.map((t,i)=>t.quiet?-1:i).filter(i=>i>=0);
+let tlSel=0;
+try{const v=+localStorage.getItem('fermat-tl');if(tlIdx.includes(v))tlSel=v;}catch(e){}
+function renderTL(){
+  document.getElementById('tl').innerHTML=TL.map((t,i)=>`<button class="tlstep${t.flag?' flag':''}${t.quiet?' quiet':''}" style="--c:var(${t.c})" ${t.quiet?'disabled':`data-tl="${i}"`} aria-pressed="${i===tlSel}"><span class="w">${t.flag?'Milestone · ':''}${t.when}</span><b>${t.title}</b></button>`).join('');
+  const t=TL[tlSel],pos=tlIdx.indexOf(tlSel);
+  const groups=t.groups?`<div class="tlgroups">${t.groups.map(([k,items,cls])=>`<div class="tlg ${cls||''}"><div class="k">${k}</div><ul>${items.map(x=>`<li>${x}</li>`).join('')}</ul></div>`).join('')}</div>`:'';
+  const opts=t.opts?`<div class="tlopts">${t.opts.map(([k,name,why,items,m])=>`<div class="tlopt"><span class="k">${k}</span><span class="nm">${name}</span><p>${why}</p><ul>${items.map(x=>`<li>${x}</li>`).join('')}</ul><p class="m"><b>Measure:</b> ${m}</p></div>`).join('')}</div>`:'';
+  const panel=document.getElementById('tlPanel');
+  panel.style.borderTop=`6px solid var(${t.c})`;
+  panel.innerHTML=`<div class="tlhead"><div><div class="w">${t.flag?'Milestone · ':''}${t.when}</div><h3>${t.title}</h3><p class="tlgoal">${t.goal}</p></div><div class="tlnav"><button data-tlnav="-1" ${pos<=0?'disabled':''}>← Back</button><button data-tlnav="1" ${pos>=tlIdx.length-1?'disabled':''}>Next →</button></div></div>${groups}${opts}`;
+}
+document.addEventListener('click',e=>{
+  const st=e.target.closest('[data-tl]'),nv=e.target.closest('[data-tlnav]');
+  if(!st&&!nv)return;
+  if(st)tlSel=+st.dataset.tl;
+  else{const pos=tlIdx.indexOf(tlSel)+(+nv.dataset.tlnav);if(pos<0||pos>=tlIdx.length)return;tlSel=tlIdx[pos];}
+  try{localStorage.setItem('fermat-tl',tlSel);}catch(e){}
+  renderTL();
+});
+renderTL();
 
 /* ---------- events ---------- */
 function resolve(path){const parts=path.split('.');let o=S;for(let i=0;i<parts.length-1;i++){const p=parts[i];if(p==='chan'){o=S.channels.find(c=>c.id===parts[++i]);}else o=o[p];if(!o)return [null];}return [o,parts[parts.length-1]];}
