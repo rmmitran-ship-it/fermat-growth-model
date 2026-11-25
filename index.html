@@ -1087,6 +1087,7 @@ function renderDealMixInputs(){
   const f=(p,v,min,max,pre,suf,w)=>`<span class="gi">${pre||''}<input type="number" data-p="${p}" min="${min}" max="${max}" value="${v}"${w?` style="width:${w}px"`:''}>${suf||''}</span>`;
   document.getElementById('dmIn').innerHTML=
     `<label>New logos in 2027 <span class="pill given">Given</span>${f('global.targetLogos',g.targetLogos,20,120)}</label>`+
+    `<label>Inbound qualified leads a month <span class="pill given" title="Brief: 30–40">Given</span>${f('global.baseLeads',g.baseLeads,10,80)}</label>`+
     `<label>Enterprise share of logos <span class="pill assumed" title="From the intro call, to confirm">Assumed</span>${f('global.entLogoShare',g.entLogoShare,0,60,'','%')}</label>`+
     `<label>Enterprise deal size <span class="pill given">Given</span>${f('global.entAcv',g.entAcv,50,250,'$','k')}</label>`+
     `<label>Mid-market deal size <span class="pill given">Given</span>${f('global.midAcv',g.midAcv,10,80,'$','k')}</label>`+
@@ -1105,31 +1106,35 @@ function goalMix(){
 function renderDealMix(){
   const g=S.global,m=goalMix(),fmt=x=>Math.round(x).toLocaleString('en-US');
   const back=w=>{const o=BRIEF.o2w.map(r=>w/(r/100));return {o,l:o.map((x,i)=>x/(BRIEF.l2o[i]/100))};};
-  const E=back(m.entN),Sm=back(m.smN);
+  const E=back(m.entN);
+  const inL=num(g.baseLeads)*12,inO=inL*num(g.baseL2O)/100,inW=inO*num(g.baseO2W)/100;
+  const gapW=Math.max(0,m.smN-inW),G=back(gapW);
+  const Sm={l:G.l.map(x=>x+inL),o:G.o.map(x=>x+inO)};
+  const smWon=inW+gapW;
   document.getElementById('dmGoal').innerHTML=`Goal: <b>${M$(m.arr,1)}</b> of new ARR. ${fmt(m.entN)} enterprise at ${k$(m.entAcv)} + ${fmt(m.smN)} mid-market at ${k$(m.smAvg)} = <b>${fmt(m.need)} logos</b>.`;
   const icp=(rule,rows)=>`<div class="icp"><div class="icprule">${rule}</div><table class="icpt"><tbody>${rows.map(r=>`<tr><td><b>${r[0]}</b><span>${r[1]}</span></td><td class="num">${r[2]}</td><td class="num">${r[3]}</td></tr>`).join('')}</tbody></table></div>`;
   const entIcp=icp('<span class="k">ICP</span> Revenue above $500M · international retail, many locations · many collections a year <span class="pill assumed" title="To confirm with Fermat">To confirm</span>',[['Calle Brava','Spanish value fashion','~$900M revenue','$120k']]);
   const midIcp=icp('<span class="k">ICP</span> Revenue about $150–500M · brands from the brief',[['Harlow &amp; Pine','US premium denim','~$400M revenue','$50k'],['Nordvik Studio','Scandinavian womenswear','~$250M revenue','$40k'],['Maison Ferrand','French accessories','~$150M revenue','$15k']]);
   const row=(cls,label,mid,lo,hi,sub)=>`<div class="rrow ${cls}"><span class="rl">${label}</span><b>${fmt(mid)}</b><span class="rr">${lo!=null?`Range ${fmt(lo)}–${fmt(hi)}<br>`:''}${sub}</span></div>`;
-  const rate=(label,r)=>`<div class="rrate"><span class="rarr"></span><span class="rpill"><span class="pk">${label}</span><b>${r[0]}–${r[2]}%</b><span>mid ${r[1]}%</span></span></div>`;
-  const funnel=(P,top,topSub,won,wonSub)=>`<div class="rfun">${row('r1',top,P.l[1],P.l[2],P.l[0],topSub)}${rate('Lead → opp',BRIEF.l2o)}${row('r2','Opportunities',P.o[1],P.o[2],P.o[0],`${fmt(P.o[1]/12)} a month`)}${rate('Opp → won',BRIEF.o2w)}${row('r3','Won',won,null,null,wonSub)}</div>`;
+  const rate=(label,r,mid)=>`<div class="rrate"><span class="rarr"></span><span class="rpill"><span class="pk">${label}</span><b>${r[0]}–${r[2]}%</b><span>${mid||'mid '+r[1]+'%'}</span></span></div>`;
+  const funnel=(P,top,topSub,won,wonSub,m1,m2)=>`<div class="rfun">${row('r1',top,P.l[1],P.l[2],P.l[0],topSub)}${rate('Lead → opp',BRIEF.l2o,m1)}${row('r2','Opportunities',P.o[1],P.o[2],P.o[0],`${fmt(P.o[1]/12)} a month`)}${rate('Opp → won',BRIEF.o2w,m2)}${row('r3','Won',won,null,null,wonSub)}</div>`;
   const listPct=E.l[1]/Math.max(1,num(g.abmAccounts));
   document.getElementById('dmFunnel').innerHTML=`<div class="rfun2">
     <div><div class="rhead"><span class="dot" style="background:var(--ink)"></span><b>Enterprise · ABM</b><span>${fmt(m.entN)} × ${k$(m.entAcv)} avg = ${M$(m.entArr,1)}</span></div>
       ${entIcp}${funnel(E,'Qualified leads',`${fmt(E.l[1]/12)} a month, from ${fmt(g.abmAccounts)} named accounts`,m.entN,`${pct(m.entArr/m.arr)} of new ARR`)}</div>
     <div><div class="rhead"><span class="dot" style="background:var(--magenta)"></span><b>Mid-market</b><span>${fmt(m.smN)} × ${k$(m.smAvg)} avg = ${M$(m.smArr,1)}</span></div>
-      ${midIcp}${funnel(Sm,'Qualified leads',`${fmt(Sm.l[1]/12)} a month`,m.smN,`${pct(m.smArr/m.arr)} of new ARR`)}</div>
+      ${midIcp}${funnel(Sm,'Qualified leads',`${fmt(Sm.l[1]/12)} a month: ${fmt(inL/12)} inbound today + ${fmt(G.l[1]/12)} new`,smWon,`${fmt(inW)} from today's inbound + ${fmt(gapW)} new · ${pct(m.smArr/m.arr)} of new ARR`,`blend ${pct(Sm.o[1]/Sm.l[1])}`,`blend ${pct(smWon/Sm.o[1])}`)}</div>
   </div>`;
   const cap=g.aes*g.aeCap*4,need=m.need/g.aes/4,totL=E.l[1]+Sm.l[1];
-  const inT=Math.min(Sm.l[1],num(g.baseLeads)*12),midGap=Math.max(0,Sm.l[1]-inT),midOut=midGap*num(g.midOutShare)/100,midIn=midGap-midOut,entOut=E.l[1];
+  const inT=inL,midGap=G.l[1],midOut=midGap*num(g.midOutShare)/100,midIn=midGap-midOut,entOut=E.l[1];
   const inAll=inT+midIn,outAll=entOut+midOut,sdrs=outAll/12/Math.max(1,num(g.sdrMeetings));
   const seg=(v,cls,label)=>v>0.5?`<i class="${cls}" style="width:${v/totL*100}%" title="${label}: ${fmt(v)}">${v/totL>0.08?`${fmt(v)}`:''}</i>`:'';
   const card=(cls,k,v,sub,body)=>`<div class="iocard ${cls}"><span class="k">${k}</span><b>${fmt(v)}<span> a year · ${fmt(v/12)} a month</span></b><div class="iosub">${sub}</div><p>${body}</p></div>`;
   document.getElementById('dmIO').innerHTML=`
-    <p class="iolede">Of the <b>${fmt(totL)}</b> qualified leads a year, <b>${pct(inAll/totL)} inbound</b> and <b>${pct(outAll/totL)} outbound</b>. Today's inbound covers ${pct(inT/totL)}. Everything enterprise is outbound: nobody at a $500M+ retailer fills in a demo form first.</p>
+    <p class="iolede">Today's inbound already brings about <b>${fmt(inW)} logos</b> a year (brief: 10–12 a quarter). The gap is <b>${fmt(m.entN+gapW)} logos</b>: ${fmt(m.entN)} enterprise and ${fmt(gapW)} mid-market. That takes <b>${fmt(totL-inT)} new qualified leads</b> on top of today's ${fmt(inT)}, <b>+${pct((totL-inT)/inT)}</b>. Everything enterprise is outbound: nobody at a $500M+ retailer fills in a demo form first.</p>
     <div class="iobar">${seg(inT,'in0','Inbound today')}${seg(midIn,'in1','New inbound')}${seg(midOut,'out1','Outbound, mid-market')}${seg(entOut,'out0','Outbound, enterprise')}</div>
     <div class="iogrid">
-      ${card('in0','Inbound today',inT,`Mid-market · brief: 30–40 a month`,'Events, partners and brand. Already there: protect it and measure it by source.')}
+      ${card('in0','Inbound today',inT,`Mid-market · ${fmt(inW)} logos at today's rates`,'Events, partners and brand. Already there: protect it and measure it by source.')}
       ${card('in1','New inbound',midIn,`Mid-market · ${pct(1-num(g.midOutShare)/100)} of the mid-market gap`,'Comes to us: Google search, AI search, partner referrals, content and comparison pages.')}
       ${card('out1','Outbound, mid-market',midOut,`${pct(num(g.midOutShare)/100)} of the mid-market gap`,'We go to them: brands like Harlow &amp; Pine and Nordvik Studio, sequenced by SDRs with LinkedIn on the same list.')}
       ${card('out0','Outbound, enterprise',entOut,`ABM · ${fmt(g.abmAccounts)} named accounts`,'Brands like Calle Brava: ABM, LinkedIn on the buying group, dinners and events, SDR follow-up.')}
@@ -1141,8 +1146,8 @@ function renderDealMix(){
     <li><b>Leads:</b> today ${fmt(b0)} qualified leads a month. ${M$(m.arr,0)} needs <b>${fmt(totL/12)} a month</b> (${fmt(totL)} a year).</li>
     <li><b>Inbound has to grow ${pct(inM/b0-1)}:</b> from ${fmt(b0)} to about ${fmt(inM)} a month on average. Starting at ${fmt(b0)} in Q1, that's roughly <b>${path} a month</b> by Q4.</li>
     <li><b>Outbound adds ${fmt(outM)} a month on top:</b> <b>+${pct(outM/b0)}</b> more leads than today, ${pct(outAll/totL)} of the total. That's about ${n1(sdrs)} SDRs at ${g.sdrMeetings} meetings each${sdrFit}, built from zero.</li>
-    <li><b>Sales:</b> ${fmt(totL)} leads become ${fmt(E.o[1]+Sm.o[1])} opportunities and ${fmt(m.need)} logos. ${g.aes} AEs close ${fmt(cap)} a year${m.need>cap?`, ${fmt(m.need-cap)} short: each AE needs ${n1(need)} a quarter instead of ${g.aeCap}, or SDR help or a 4th AE`:', enough'}.</li>
-  </ul><p>Midpoint rates: 40% lead to opportunity, 20% opportunity to won. Range 30–50% and 15–25%.</p>`;
+    <li><b>Sales:</b> ${fmt(totL)} leads become ${fmt(E.o[1]+Sm.o[1])} opportunities and ${fmt(m.entN+smWon)} logos. ${g.aes} AEs close ${fmt(cap)} a year${m.need>cap?`, ${fmt(m.need-cap)} short: each AE needs ${n1(need)} a quarter instead of ${g.aeCap}, or SDR help or a 4th AE`:', enough'}.</li>
+  </ul><p>Today's inbound converts at today's rates (${g.baseL2O}% and ${g.baseO2W}%, about ${fmt(inW/4)} logos a quarter). New leads use the brief's midpoints: 40% and 20% (range 30–50% and 15–25%).</p>`;
 }
 function dealGoal(){
   const won=goalMix().need;
