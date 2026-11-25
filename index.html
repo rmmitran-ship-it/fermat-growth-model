@@ -153,14 +153,14 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 .dmcap em{position:absolute;top:-20px;right:6px;font-style:normal;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap}
 .pcbar{margin-bottom:22px}
 .pchd{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 12px;font-size:13px;margin-bottom:26px;color:var(--ink)}
-.rfun2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.rfun2{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(7,auto);column-gap:24px}
 .rhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin-bottom:10px;color:var(--ink);font-size:13px}
 .rhead b{font-family:'Inter Tight';font-size:20px;letter-spacing:-0.02em}
 .rfun2 .rrow{padding:14px 16px;gap:10px}
 .rfun2 .rrow b{font-size:clamp(30px,3.2vw,44px)}
 .rfun2 .rpill{padding:6px 10px;gap:8px}
 .rfun2 .rpill b{font-size:17px}
-@media (max-width:900px){.rfun2{grid-template-columns:1fr;gap:40px}}
+@media (max-width:900px){.rfun2{grid-template-columns:1fr;grid-template-rows:none;row-gap:40px}.rfun2>div,.rfun2 .rfun{display:flex!important;flex-direction:column}.rfun2 .rfun{align-items:center}}
 /* work-back */
 .wbpanel{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px 40px;background:var(--surface);border-left:6px solid var(--blue);padding:28px 32px}
 .wbk{display:block;font-weight:600;font-size:14px;color:var(--ink);margin-bottom:12px}
@@ -220,7 +220,9 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 .wbt .v.short{color:var(--red)}
 @media (max-width:800px){.rdleg{grid-template-columns:1fr 1fr}.road{padding:20px}}
 .goalwarn{display:block;margin-top:10px;font-family:Inter;font-size:14px;letter-spacing:0;line-height:1.45;color:var(--text);max-width:60ch}
-.rfun2>div{display:flex;flex-direction:column}
+.rfun2>div{display:grid;grid-template-rows:subgrid;grid-row:span 7}
+.rfun2 .rfun{display:grid;grid-template-rows:subgrid;grid-row:span 5;justify-items:center}
+.rfun2 .rrow{align-self:stretch}
 .icp{flex:1;background:var(--white);border:1px solid var(--line);padding:12px 14px;margin-bottom:14px;font-size:13px;color:var(--ink)}
 .icprule{line-height:1.5}
 .icprule .k{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-right:6px}
