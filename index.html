@@ -373,6 +373,37 @@ details.more.big>summary{font-size:15px;padding:12px 18px;background:var(--surfa
   .rm-opts{grid-template-columns:1fr}
   .rm-or{justify-self:center}
 }
+.ptabs{display:flex;gap:6px;align-items:center}
+.ptab{font:600 14px Inter;border:0;background:var(--surface);color:var(--ink);padding:10px 16px;border-radius:0;cursor:pointer;white-space:nowrap}
+.ptab[aria-selected="true"]{background:var(--ink);color:var(--white)}
+.ptab.app{margin-left:auto;background:none;color:var(--muted);font-weight:500;font-size:13px;padding:10px 8px}
+.ptab.app[aria-selected="true"]{color:var(--ink);background:var(--surface)}
+.page[hidden]{display:none}
+section.page{padding:36px 0 64px;border-top:0}
+.page .hero{padding:4px 0 20px}
+.page .hero .topbar{margin-bottom:24px}
+.page .hero h1{font-size:clamp(40px,5.4vw,76px);margin-bottom:10px}
+.page .hero .sub{margin-bottom:0;font-size:clamp(20px,2.4vw,28px)}
+.ansh{margin-top:20px}
+.ansbox{margin-top:4px}
+.anst td,.anst th{vertical-align:middle}
+.ansv{font-family:'Inter Tight';font-size:clamp(30px,3.4vw,44px);font-weight:700;color:var(--ink);letter-spacing:-0.03em}
+.ans4{margin:10px 0 0;padding-left:20px;max-width:80ch}
+.ans4 li{margin:8px 0;color:var(--text)}
+.ans4 b{color:var(--ink)}
+.watch{margin-top:18px;padding:14px 18px;background:var(--surface);color:var(--ink);max-width:none}
+.mgrid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:16px;align-items:start}
+.mgrid .pies{grid-template-columns:1fr}
+.rank5{margin:0;padding-left:22px}
+.rank5 li{margin:0 0 12px;color:var(--text)}
+.rank5 b{color:var(--ink)}
+.own{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin-bottom:16px}
+.own>div{padding:10px 12px;font-size:13px;color:var(--ink)}
+.own .o1{background:var(--magenta)} .own .o2{background:var(--blue-light)} .own .o3{background:var(--surface-2);color:#5b5b5b}
+.own .k{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px}
+.own ul{margin:0;padding-left:16px}
+@media (max-width:900px){.mgrid{grid-template-columns:1fr}}
+@media (max-width:600px){.own{grid-template-columns:1fr}.ptabs{gap:4px}.ptab{padding:9px 12px;font-size:13px}}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -489,220 +520,145 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 </head>
 <body>
 
-<header class="hero">
-  <div class="wrap">
-    <div class="topbar"><b>fermat</b><span>2027 growth model · for Martí and Pol · illustrative figures</span></div>
-    <h1>Where <span class="hl hl-m">pipeline</span><br>happens.</h1>
-    <p class="sub">Fermat 2027 new-logo plan.</p>
-    <p class="liveline" id="liveline"></p>
-  </div>
-</header>
-
-<nav class="tabbar" aria-label="Scenario">
-  <div class="wrap" role="tablist">
-    <button class="tab tA" role="tab" data-act="view" data-v="A">A · My plan</button>
-    <button class="tab tB" role="tab" data-act="view" data-v="B">B · $310k</button>
-    <button class="tab tC" role="tab" data-act="view" data-v="C">C · $550k</button>
-    <button class="tab tX" role="tab" data-act="view" data-v="compare">Compare all three</button>
-    <div class="jump">
-      <a href="#target">Target</a><a href="#plan">Plan</a><a href="#diagnosis">Diagnosis</a><a href="#inputs">Inputs</a><a href="#outputs">Outputs</a><a href="#channels">Channels</a><a href="#paid">Paid</a><a href="#measure">Measurement</a><a href="#ninety">90 days</a><a href="#known">Known vs. assumed</a>
-    </div>
+<nav class="tabbar" aria-label="Sections">
+  <div class="wrap ptabs" role="tablist">
+    <button class="ptab" role="tab" data-go="answer">The answer</button>
+    <button class="ptab" role="tab" data-go="diagnosis">Diagnosis</button>
+    <button class="ptab" role="tab" data-go="model">Model</button>
+    <button class="ptab" role="tab" data-go="channels">Channels</button>
+    <button class="ptab" role="tab" data-go="ninety">90 days</button>
+    <button class="ptab app" role="tab" data-go="appendix">Appendix</button>
   </div>
 </nav>
 
 <main>
-<!-- TARGET -->
-<section id="target"><div class="wrap">
-  <div class="eyebrow">00 · The target</div>
-  <h2>What <span class="hl hl-g">$3M</span> actually takes.</h2>
-  <p class="lede">60 new logos, $3M new ARR. Fashion brands with $100M–$5B revenue. Buyers: Heads of Design, Product and Digital.</p>
-  <div class="iocall top" id="dmNote"></div>
-  <div class="goal">
-    <p class="goalline" id="dmGoal"></p>
-    <div class="goalin" id="dmIn"></div>
+<!-- THE ANSWER -->
+<section class="page" data-page="answer"><div class="wrap">
+  <header class="hero">
+    <div class="topbar"><b>fermat</b><span>2027 growth model · for Martí and Pol · illustrative figures</span></div>
+    <h1>Where <span class="hl hl-m">pipeline</span> happens.</h1>
+    <p class="sub">Fermat 2027 new-logo plan.</p>
+  </header>
+  <h2 class="ansh">Is <span class="hl hl-g">60 logos</span> reachable?</h2>
+  <p class="lede"><b>Yes, but only if every AE closes at full capacity, every quarter.</b> 3 AEs × 5 logos × 4 quarters = 60, with zero slack. So the plan isn't about buying more leads. It's about making every AE hour count.</p>
+  <div class="ansbox">
+    <div class="planswitch"><span class="small muted" style="align-self:center;margin-right:4px">Plan</span><button class="tab tA" data-act="view" data-v="A">A · My plan</button><button class="tab tB" data-act="view" data-v="B">B · $310k</button><button class="tab tC" data-act="view" data-v="C">C · $550k</button></div>
+    <div class="tw"><table id="ansTable" class="anst"></table></div>
+    <p class="small muted" id="ansPlan"></p>
   </div>
-  <div id="dmFunnel"></div>
-  <div class="io">
-    <div class="iohead"><h3>Inbound vs. outbound</h3><div class="goalin" id="dmIOIn"></div></div>
-    <div id="dmIO"></div>
-  </div>
-</div></section>
-
-<!-- WORK-BACK -->
-<section id="plan"><div class="wrap">
-  <div class="eyebrow">00 · The budget</div>
-  <h2>Splitting the budget <span class="hl hl-m">to win</span>.</h2>
-  <p class="lede">Inbound brings most logos. The budget buys the rest, mostly enterprise.</p>
-  <div class="wbpanel" id="wbPanel">
-    <div class="wbin">
-      <label for="wbBudget" class="wbk">2027 marketing budget</label>
-      <div class="wbfield"><span>$</span><input id="wbBudget" type="number" min="0" step="10" placeholder="Your budget" aria-label="2027 marketing budget in thousands of dollars"><span>k</span></div>
-      <p class="small muted" id="wbMix"></p>
-      <p class="wbcost" id="wbCost"></p>
-    </div>
-    <div class="wbpre"><div class="wbk">Plans</div><div class="wbbtns" id="wbBtns"></div><div class="wbteam" id="wbTeam"></div></div>
-  </div>
-  <div class="wbtiles" id="wbTiles"></div>
-  <div class="road" id="wbRoad"></div>
-  <p class="small muted mt" id="wbNote" hidden></p>
-
-  <details class="more big mt2"><summary>How the budget gets there: funnel, assumptions and tactics</summary>
-  <h3 class="mt2">How the budget gets there</h3>
-  <p class="small muted" id="wbLede" style="margin-bottom:16px"></p>
-  <div class="wbgrid">
-    <div id="wbFunnel"></div>
-    <div class="wbside"><div class="wbk">Assumptions</div><div class="goalin" id="wbIn"></div><p class="small muted mt">Pink means assumed. Swap in CRM numbers when you have them.</p></div>
-  </div>
-
-  <h3 class="mt3">What runs at each stage</h3>
-  <p class="small muted" style="margin-bottom:16px">Colours match the funnel.</p>
-  <div class="tacgrid">
-    <div class="tac t1"><span class="k">Prospecting</span><b>Accounts and contacts</b>
-      <ul><li>Build the list: fashion brands with $100M–$5B revenue, enterprise first.</li>
-      <li>Map the buying group: Heads of Design, Product and Digital. About 15 people per enterprise account, 6 per mid-market.</li>
-      <li>Rank titles: green to target, yellow when easier to reach, red to skip.</li></ul>
-      <p class="tacm">Watch: share of the list with a full buying group.</p></div>
-    <div class="tac t2"><span class="k">Intent</span><b>New leads and MQLs</b>
-      <ul><li>ABM on LinkedIn to the named list, plus person-based ads to the same people.</li>
-      <li>Intent data to spot brands in market now.</li>
-      <li>Email to engaged contacts.</li>
-      <li>Organic: pick the podcast back up, with Heads of Design from target brands as guests.</li>
-      <li>Events and partner intros.</li>
-      <li>Small tests: Reddit and paid ChatGPT.</li></ul>
-      <p class="tacm">Watch: engaged accounts and cost per MQL.</p></div>
-    <div class="tac t3"><span class="k">Always on</span><b>SQLs and opportunities</b>
-      <ul><li>One evergreen contact-based ad journey: warm-up, then a theme that changes each quarter.</li>
-      <li>One site visit or two clicks moves a person to a "talk to us now" ad, and an SDR calls. Clicks trigger a call, not a score.</li>
-      <li>Once a deal opens, the ads follow it: the AE's face and a short video, then customer proof at the demo stage.</li></ul>
-      <p class="tacm">Watch: how much faster engaged accounts convert than cold ones.</p></div>
-    <div class="tac t4"><span class="k">Client marketing</span><b>New logos and beyond</b>
-      <ul><li>Person-based ads to each new customer's team, timed with customer success onboarding.</li>
-      <li>Upsell and cross-sell campaigns: more teams, more seats, more brands in the group.</li>
-      <li>Turn wins into case studies and referrals that feed the top of the funnel.</li></ul>
-      <p class="tacm">Watch: expansion pipeline and referrals.</p></div>
-  </div>
-  </details>
+  <h3 class="mt2">What gets us from base to stretch</h3>
+  <ol class="ans4">
+    <li><b>Qualified leads that reach sales ready.</b> A shared definition, scoring in Attio, and a follow-up time AEs agree to. This is my first 30 days.</li>
+    <li><b>Air cover for AEs.</b> Marketing qualifies, researches the account and warms the buying group before the first call. AE time goes into closing.</li>
+    <li><b>Early pipeline.</b> Spend front-loaded in Q1–Q2, so wins land in 2027, not 2028.</li>
+    <li><b>Partners converting as assumed.</b> The cheapest logos there are, if the pilot works.</li>
+  </ol>
+  <p class="watch"><b>What I'd watch:</b> lead → opportunity conversion after the handoff is fixed. If it rises, 60 is in reach. If it doesn't, the limit is sales capacity, and we'd talk about an extra AE or an SDR in Q2.</p>
 </div></section>
 
 <!-- DIAGNOSIS -->
-<section id="diagnosis"><div class="wrap">
-  <div class="eyebrow">01 · Diagnosis</div>
-  <h2>Three things stand between<br>today and <span class="hl hl-g">60 logos</span>.</h2>
-  <p class="lede">Today: <b id="dToday"></b> logos a year. The gap: leads, sales capacity, timing.</p>
+<section class="page" data-page="diagnosis"><div class="wrap">
+  <h2>Three things stand between today and <span style="white-space:nowrap"><span class="hl hl-g">60 logos</span>.</span></h2>
+  <p class="lede">Today: <b id="dToday"></b> logos a year. The real gap isn't more leads. It's turning them into conversations AEs can close.</p>
   <div class="grid g3">
-    <div class="card m"><div class="eyebrow" style="color:var(--magenta-deep)">Lead gap</div><h3 id="dLead"></h3><p class="small" id="dLeadNote"></p></div>
-    <div class="card b"><div class="eyebrow" style="color:var(--blue-deep)">Capacity ceiling</div><h3 id="dCap"></h3><p class="small" id="dCapNote"></p></div>
-    <div class="card g"><div class="eyebrow" style="color:var(--green-deep)">Timing</div><h3 id="dTime"></h3><p class="small" id="dTimeNote"></p></div>
+    <div class="card m"><div class="eyebrow" style="color:var(--magenta-deep)">The biggest gap · qualification and handoff</div><h3>Leads come in. Not all of them reach sales ready.</h3><p class="small">AEs are used to hot leads. Warmer leads from events, partners and content need qualifying, nurturing and a clean handoff, or they go cold.</p></div>
+    <div class="card b"><div class="eyebrow" style="color:var(--blue-deep)">Capacity risk</div><h3>3 AEs × 5 = 60. Zero slack.</h3><p class="small">One slow quarter and we miss. So AEs need air cover: marketing qualifies, researches the account and warms the buying group before the first call.</p></div>
+    <div class="card g"><div class="eyebrow" style="color:var(--green-deep)">Timing</div><h3>Q4 leads close in 2028.</h3><p class="small">At a 4.5-month cycle, a lead from October closes next year. Spend early and fill Q1–Q2.</p></div>
   </div>
   <div class="grid g2 mt">
     <div class="card">
       <h3>Today's funnel vs. what 60 logos needs</h3>
-      <div class="tw"><table id="dFunnel"></table></div>
-      <p class="small muted mt">"Needs" uses today's rates. Only leads in by month <span id="dMonths"></span> close in 2027.</p>
+      <p class="small mt" id="dFunNote"></p>
+      <div class="tw mt"><table id="dFunnel"></table></div>
     </div>
     <div class="card">
       <h3>How I'd confirm it in 30 days</h3>
       <ul class="clean">
-        <li>Pull conversion by source from the CRM: lead to opp, opp to won.</li>
-        <li>Measure cycle length by source and deal size.</li>
-        <li>Check AE workload: open opps per AE and time spent per deal.</li>
-        <li>Run 3 win and 2 loss interviews.</li>
-        <li>Agree the definition of a qualified lead and the handoff with the AEs.</li>
+        <li>Conversion by source in Attio</li>
+        <li>Time from lead to first meeting</li>
+        <li>AE workload</li>
+        <li>3 win and 2 loss interviews</li>
+        <li>Agreed qualified-lead definition</li>
       </ul>
     </div>
   </div>
-
-  <h3 class="mt3">Your 2027 pipeline</h3>
-  <p class="small muted" id="pcLede" style="margin-bottom:16px"></p>
-  <div id="pcBody"></div>
 </div></section>
 
-<!-- INPUTS -->
-<section id="inputs"><div class="wrap">
-  <div class="eyebrow">02 · Inputs</div>
+<!-- MODEL -->
+<section class="page" data-page="model"><div class="wrap">
   <h2>Move the <span class="hl hl-b">budget</span>. Watch the logos.</h2>
-  <p class="lede">Edit any number. <span class="pill given">Given</span> = brief. <span class="pill assumed">Assumed</span> = mine. <button class="btn sm ghost" data-act="reset" style="margin-left:6px">Reset to defaults</button></p>
-
-  <h3>Assumptions you can change</h3>
-  <p class="small muted" style="margin-bottom:16px">Ranges from the brief. "Model" is what the calculator uses.</p>
-  <div class="pipe" id="pipe">
-    <a class="pst p1" href="#chanTable"><span class="pk">Stage 1</span><b>Qualified lead</b><span class="pd">Leads from today's engine and the new channels</span></a>
-    <div class="pcon"><span class="parrow"></span><a class="prate" href="#chanTable"><span class="pk">Lead → opp</span><b>30–50%</b><span class="pm" id="pmL2o"></span></a></div>
-    <a class="pst p2" href="#chanTable"><span class="pk">Stage 2</span><b>Opportunity</b><span class="pd">Worked by the AEs</span></a>
-    <div class="pcon"><span class="parrow"></span><a class="prate" href="#chanTable"><span class="pk">Opp → won</span><b>15–25%</b><span class="pm" id="pmO2w"></span></a><a class="pgate" href="#globals"><span class="pk">AE capacity</span><b>4–5</b> new logos per quarter each<span class="pm" id="pmCap"></span></a></div>
-    <a class="pst p3" href="#outputs"><span class="pk">Stage 3</span><b>Won</b><span class="pd">New logo, new ARR</span></a>
-    <div class="pcon"><span class="parrow"></span></div>
-    <a class="pst p4" href="#globals"><span class="pk">Economics</span><b>Payback</b><span class="pline"><span>Gross margin</span><b>60–70%</b></span><span class="pm" id="pmGm"></span><span class="pline"><span>Target CAC payback</span><b>&lt; 18 mo</b></span><span class="pm" id="pmPay"></span></a>
-    <a class="pcycle" href="#globals"><span class="pk">Sales cycle</span><b>3–6 months</b> from qualified lead to won<span class="pm" id="pmCycle"></span></a>
-  </div>
-
-  <h3 class="mt3">Budget mix</h3>
-  <div class="pies" id="pies"></div>
-
-  <h3 class="mt3">Budget by channel and quarter <span class="small muted" style="font-family:Inter;letter-spacing:0;font-weight:400">($k)</span></h3>
-  <div id="budgetTable"></div>
-  <div class="addrow" id="addRow">
-    <label>Custom channel<input type="text" id="nName" placeholder="e.g. Customer referrals"></label>
-    <label>Cost per lead ($)<input type="number" id="nCpl" value="1500" min="1"></label>
-    <label>Lead → opp (%)<input type="number" id="nL2o" value="35" min="0" max="100"></label>
-    <label>Opp → won (%)<input type="number" id="nO2w" value="20" min="0" max="100"></label>
-    <label>ACV ($k)<input type="number" id="nAcv" value="50" min="1"></label>
-    <button class="btn" data-act="addch">Add channel</button>
-  </div>
-
-  <h3 class="mt3">Conversion assumptions by channel</h3>
-  <div class="tw"><table id="chanTable"></table></div>
-
-  <h3 class="mt3">Global inputs and sales capacity</h3>
-  <div class="grid g4" id="globals"></div>
-</div></section>
-
-<!-- OUTPUTS -->
-<section id="outputs"><div class="wrap">
-  <div class="eyebrow">03 · Outputs</div>
-  <h2>What the plan <span class="hl hl-m">delivers</span>.</h2>
-  <p class="lede" id="outLede"></p>
-  <div class="callouts" id="callouts"></div>
+  <p class="lede">Pick a plan and edit it; every number updates live. <span class="pill given">Given</span> = brief, <span class="pill assumed">Assumed</span> = mine.</p>
+  <div class="planswitch"><button class="tab tA" data-act="view" data-v="A">A · My plan</button><button class="tab tB" data-act="view" data-v="B">B · $310k</button><button class="tab tC" data-act="view" data-v="C">C · $550k</button><button class="tab tX" data-act="view" data-v="compare">Compare</button></div>
   <div id="tiles"></div>
-
+  <div class="mgrid mt2"><div id="budgetTable"></div><div id="pies"></div></div>
   <div class="chartbox mt2">
-    <h3>Wins per quarter, by channel</h3>
-    <p class="small muted">Closed wins after the sales cycle lag and AE capacity. Dashed line: <span id="tgtQ"></span>/quarter target. Solid line: AE capacity.</p>
+    <h3>Wins per quarter</h3>
+    <p class="small muted">Dashed line: <span id="tgtQ"></span> a quarter target. Solid line: AE capacity.</p>
     <div id="winsCharts"></div>
   </div>
-
-  <div class="chartbox mt">
-    <h3>Compare A / B / C</h3>
-    <p class="small muted">A appears once it has a budget.</p>
-    <div class="minis mt">
-      <div><div class="small" style="font-weight:600;color:var(--ink)">2027 logos</div><div class="chartwrap"><canvas id="cmpLogos"></canvas></div></div>
-      <div><div class="small" style="font-weight:600;color:var(--ink)">2027 new ARR ($M)</div><div class="chartwrap"><canvas id="cmpArr"></canvas></div></div>
-      <div><div class="small" style="font-weight:600;color:var(--ink)">CAC ($k)</div><div class="chartwrap"><canvas id="cmpCac"></canvas></div></div>
-      <div><div class="small" style="font-weight:600;color:var(--ink)">Payback (months)</div><div class="chartwrap"><canvas id="cmpPay"></canvas></div></div>
+  <h3 class="mt2">Compare A / B / C</h3>
+  <div class="tw mt"><table id="cmpTable"></table></div>
+  <details class="more big mt2"><summary>Assumptions</summary>
+    <h3 class="mt2">By channel</h3>
+    <div class="tw"><table id="chanTable"></table></div>
+    <div class="addrow" id="addRow">
+      <label>Custom channel<input type="text" id="nName" placeholder="e.g. Customer referrals"></label>
+      <label>Cost per lead ($)<input type="number" id="nCpl" value="1500" min="1"></label>
+      <label>Lead → opp (%)<input type="number" id="nL2o" value="35" min="0" max="100"></label>
+      <label>Opp → won (%)<input type="number" id="nO2w" value="20" min="0" max="100"></label>
+      <label>ACV ($k)<input type="number" id="nAcv" value="50" min="1"></label>
+      <button class="btn" data-act="addch">Add channel</button>
     </div>
-  </div>
-
-  <div class="grid g2 mt">
-    <div class="chartbox"><h3>Full-year funnel</h3><p class="small muted">Baseline plus new channels, 2027 leads.</p><div id="funnel"></div></div>
-    <div class="chartbox"><h3>Cost per opportunity by channel</h3><p class="small muted">Spend plus partner commission, divided by opportunities.</p><div id="cpo"></div></div>
-  </div>
+    <h3 class="mt2">Global inputs</h3>
+    <div class="grid g4" id="globals"></div>
+    <p class="mt"><button class="btn sm ghost" data-act="reset">Reset to defaults</button></p>
+  </details>
 </div></section>
 
 <!-- CHANNELS -->
-<section id="channels"><div class="wrap">
-  <div class="eyebrow">04 · Channels</div>
+<section class="page" data-page="channels"><div class="wrap">
   <h2>Where I'd <span class="hl hl-g">put the money</span>.</h2>
-  <p class="lede">Ranked by how fast each one creates opportunities. Click one.</p>
-  <div class="chpick" id="chPick"></div>
-  <div class="tlpanel" id="chPanel" aria-live="polite"></div>
-</div></section>
-
-<!-- PAID ENTERPRISE -->
-<section id="paid"><div class="wrap">
-  <div class="eyebrow">05 · Paid enterprise</div>
-  <h2>Paid enterprise: four channels, <span class="hl hl-b">four jobs</span>.</h2>
-  <p class="lede">Each channel has one job and one number that decides its budget.</p>
-
+  <p class="lede">Ranked by how fast each one creates opportunities AEs can close.</p>
+  <div class="grid g2">
+    <ol class="rank5">
+      <li><b>Partners and referrals.</b> Highest win rate and larger deals; pay only on won deals.</li>
+      <li><b>ABM on named accounts.</b> One list of $100M–$5B brands, and every channel points at it.</li>
+      <li><b>Events: attend and host, no booths.</b> Meetings booked before the trip, dinners for named accounts.</li>
+      <li><b>Paid enterprise, as an ABM layer.</b> LinkedIn on the named list, search for buyers already looking.</li>
+      <li><b>Organic: AI search and the podcast.</b> Show up in AI answers; guests from target brands.</li>
+    </ol>
+    <div class="card ink">
+      <h3>What I won't do</h3>
+      <ul class="clean" style="color:#ddd">
+        <li><b style="color:#fff">Broad awareness paid.</b> Reach without a named account behind it.</li>
+        <li><b style="color:#fff">Booth sponsorships.</b> High cost, badge scans, few buyers.</li>
+        <li><b style="color:#fff">Mass cold outbound.</b> It burns the list we need for ABM.</li>
+        <li><b style="color:#fff">SEO as a 2027 pipeline channel.</b> Worth starting, too slow for this year.</li>
+      </ul>
+    </div>
+  </div>
+  <h3 class="mt2">How I measure them</h3>
+  <div class="tw mt"><table>
+    <thead><tr><th>Channel</th><th>What I measure</th><th>Keep or cut</th></tr></thead>
+    <tbody>
+      <tr><td>Partners</td><td>Partner-sourced opportunities and win rate</td><td>By Q2, scale the partner types that bring opportunities, drop the rest</td></tr>
+      <tr><td>ABM</td><td>Opportunities from named accounts</td><td>Keep if engaged accounts convert at 2x non-engaged ones</td></tr>
+      <tr><td>Events</td><td>Opportunities within 60 days of the event</td><td>Cut events with no opportunity in 60 days</td></tr>
+      <tr><td>Paid enterprise</td><td>Cost per opportunity</td><td>Move budget from the highest cost per opportunity to the lowest</td></tr>
+      <tr><td>Organic</td><td>Share of AI answers, meetings from the podcast</td><td>Keep if ICP meetings come from it within 2 quarters</td></tr>
+    </tbody>
+  </table></div>
+  <p class="mt"><b style="color:var(--ink)">Review monthly.</b> Once a channel has 10+ qualified leads, move 10–20% of budget from the highest cost per opportunity to the lowest. Cut any channel with no opportunities after 2 quarters.</p>
+  <div class="card g mt2">
+    <h3>Partnerships: how I'd approach them</h3>
+    <ul class="clean">
+      <li><b>Learn first.</b> Who refers today, why, and how those deals convert.</li>
+      <li><b>Pick partner types that sell to the same buyer.</b> Collection agencies, PLM implementers, sourcing agents, design schools.</li>
+      <li><b>Pilot small.</b> 3–5 partners, a simple kit, referrals tracked in Attio, commission paid only on won deals.</li>
+      <li><b>Decide in Q2.</b> Scale what brings opportunities, drop the rest.</li>
+    </ul>
+  </div>
+  <details class="more big mt2"><summary>Paid: four channels, four jobs</summary>
   <div class="paidsplit" aria-label="Scenario B paid split">
     <div style="flex:130;background:var(--blue)"><b>LinkedIn</b><span>~$130k</span></div>
     <div style="flex:30;background:var(--blue-light)"><b>Google</b><span>~$30k</span></div>
@@ -739,96 +695,33 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
     </article>
   </div>
 
-  <div class="card ink mt">
-    <div class="eyebrow" style="color:#9a9a9a">Organic, no media budget</div>
-    <h3>AI search visibility</h3>
-    <p style="color:#ddd"><b style="color:#fff">Why:</b> buyers ask AI before they talk to sales. Showing up in answers is free reach.</p>
-    <p style="color:#ddd;margin-top:8px"><b style="color:#fff">Measure:</b> share of AI answers across 20–30 tracked prompts, quarter on quarter.</p>
-  </div>
-
-  <h3 class="mt3">The link between them</h3>
-  <ol class="flow">
-    <li style="background:var(--magenta-light)">Designer channels (ChatGPT, Reddit) find champions</li>
-    <li style="background:var(--blue-light)">Their company gets added to LinkedIn ABM</li>
-    <li style="background:var(--blue)">The buying group warms up</li>
-    <li style="background:var(--green)">Sales starts the conversation with a champion already inside</li>
-  </ol>
-  <p class="mt2"><b style="color:var(--ink)">Rule for moving budget:</b> review monthly. Once a channel has 10+ qualified leads, move 10–20% of budget from the highest cost per opportunity to the lowest.</p>
-</div></section>
-
-<!-- MEASUREMENT -->
-<section id="measure"><div class="wrap">
-  <div class="eyebrow">06 · Measurement</div>
-  <h2>Track it monthly. <span class="hl hl-b">Move money</span> fast.</h2>
-  <div class="tw mt2"><table>
-    <thead><tr><th>Channel</th><th>Primary metric</th><th>Leading indicators</th><th>Watch for</th></tr></thead>
-    <tbody>
-      <tr><td><span class="dot" style="background:var(--green)"></span>Partners</td><td>Partner-sourced opportunities and win rate</td><td>Active partners, intros per month, co-sell meetings</td><td>Commission cost per win</td></tr>
-      <tr><td><span class="dot" style="background:var(--ink)"></span>ABM</td><td>Opportunities from named accounts</td><td>Account engagement, meetings booked, coverage of buying group</td><td>Share of pipeline from the list</td></tr>
-      <tr><td><span class="dot" style="background:var(--magenta)"></span>Events</td><td>Opportunities within 60 days of the event</td><td>Meetings booked before and at the event</td><td>Cost per opportunity per event</td></tr>
-      <tr><td><span class="dot" style="background:var(--blue)"></span>Paid enterprise</td><td>Cost per opportunity</td><td>Cost per qualified lead, share of spend on named accounts</td><td>Leads outside the ICP</td></tr>
-      <tr><td><span class="dot" style="background:var(--base)"></span>All</td><td>Wins and new ARR vs. plan</td><td>AE open opps vs. capacity, cycle length by source</td><td>Opps waiting for an AE</td></tr>
-    </tbody>
-  </table></div>
-  <div class="card m mt2">
-    <div class="eyebrow" style="color:var(--magenta-deep)">The rule for moving budget</div>
-    <p class="rule">Review monthly. Once a channel has 10+ qualified leads, move 10–20% of budget from the highest cost per opportunity to the lowest. Cut any channel with no opportunities after 2 quarters.</p>
-  </div>
+  </details>
 </div></section>
 
 <!-- 90 DAYS -->
-<section id="ninety"><div class="wrap">
-  <div class="eyebrow">07 · First 90 days</div>
-  <h2>What I own, <span class="hl hl-m">from day one</span>.</h2>
-  <div class="rm" id="rm">
-    <div class="rm-miles"><span></span><button class="rm-mile" data-rmcol="0"><span class="rm-ml"><b>Day 30</b>Foundations in place, every channel measurable</span><i></i></button><button class="rm-mile" data-rmcol="1"><span class="rm-ml"><b>Day 60</b>Narrative tests running</span><i></i></button><button class="rm-mile" data-rmcol="2"><span class="rm-ml"><b>Day 90</b>Narrative decision + ABM strategy signed off</span><i></i></button><button class="rm-mile" data-rmcol="3"><span class="rm-ml"><b>Month 6</b>One repeatable engine</span><i></i></button></div>
-    <div class="rm-grid">
-      <div class="rm-hcell"></div><div class="rm-hcell" data-col="0">Days 0–30 · Foundations</div><div class="rm-hcell" data-col="1">Days 31–60 · First engine</div><div class="rm-hcell" data-col="2">Days 61–90 · Decide</div><div class="rm-hcell" data-col="3">Months 4–6 · Scale</div>
-      <div class="rm-lab rm-own">I own and do</div><div class="rm-cell rm-own" data-col="0"><span class="rm-chip" tabindex="0">Measurement in Attio</span><span class="rm-chip" tabindex="0">ICP check + best 20 deals</span><span class="rm-chip" tabindex="0">Handoff rules with AEs</span><span class="rm-chip" tabindex="0">Take over Martí's webinar</span><span class="rm-chip" tabindex="0">First prospecting lists</span></div><div class="rm-cell rm-own" data-col="1"><span class="rm-chip" tabindex="0">20-account ABM cohort (email + LinkedIn)</span><span class="rm-chip" tabindex="0">Small paid tests</span><span class="rm-chip" tabindex="0">First case study</span></div><div class="rm-cell rm-own" data-col="2"><span class="rm-chip" tabindex="0">Read results</span><span class="rm-chip" tabindex="0">First budget move</span><span class="rm-chip" tabindex="0">ABM strategy: handoff, pitches, tools, SDR?</span></div><div class="rm-cell rm-own" data-col="3"><span class="rm-chip" tabindex="0">Run the chosen motion</span><span class="rm-chip" tabindex="0">Monthly budget moves</span></div>
-      <div class="rm-lab rm-set">I set it up, others deliver</div><div class="rm-cell rm-set" data-col="0"><span class="rm-chip" tabindex="0">Case-study needs, with sales</span></div><div class="rm-cell rm-set" data-col="1"><span class="rm-chip" tabindex="0">Narrative tests with brand and comms: 2 Pol videos, 1 creator or student pilot, podcast guests</span></div><div class="rm-cell rm-set" data-col="2"><span class="rm-chip" tabindex="0">Narrative recommendation: product-led or founder-led</span></div><div class="rm-cell rm-set" data-col="3"><span class="rm-chip" tabindex="0">Media kit and podcast with brand</span><span class="rm-chip" tabindex="0">Paid scaled with an agency, if needed</span></div>
-      <div class="rm-lab rm-not">Not mine</div><div class="rm-cell rm-not" data-col="0"><span class="rm-chip" tabindex="0">Closing deals (AEs)</span></div><div class="rm-cell rm-not" data-col="1"><span class="rm-chip" tabindex="0">Event production (brand team)</span></div><div class="rm-cell rm-not" data-col="2"><span class="rm-chip" tabindex="0">Product roadmap</span></div><div class="rm-cell rm-not" data-col="3"><span class="rm-chip" tabindex="0">Brand identity and PR (brand and comms)</span></div>
-    </div>
-    <div class="rm-run"><span class="rm-runl">Already running: I improve, I don't rebuild</span><span class="rm-chip">Events: pre-event outreach and follow-up on every event</span><span class="rm-chip">Partners: learn why they refer, then pilot 3–5</span></div>
-  </div>
-  <div class="rm-dec">
-    <h3>Day 90: which story do we tell?</h3>
-    <p class="rm-q">Do buyers not know what Fermat does, or not know why to trust it?</p>
-    <div class="rm-opts">
-      <div class="rm-opt pl"><span class="k">Product-led</span><b>"They don't know what it does."</b><p>Creators who make their own clothes, design-school students (e.g. Elisava), champions inside brands.</p><p class="rm-pod">Podcast guests: designers.</p></div>
-      <div class="rm-or">or</div>
-      <div class="rm-opt fl"><span class="k">Founder-led</span><b>"They don't know why to trust it."</b><p>Pol's story in short videos, LinkedIn, dinners. Pol opens doors, AEs walk through.</p><p class="rm-pod">Podcast guests: heads of design and leaders.</p></div>
-    </div>
-    <p class="rm-foot">Both keep the podcast. What changes is who's on it.</p>
-  </div>
-
+<section class="page" data-page="ninety"><div class="wrap">
   <h2>Ninety days to a plan <span class="hl hl-m">we can scale</span>.</h2>
   <p class="lede">Click a step, or use Next.</p>
   <div class="tl" id="tl"></div>
   <div class="tlpanel" id="tlPanel" aria-live="polite"></div>
-
-  <h3 class="mt3">What I run, what I buy</h3>
+  <h3 class="mt2">What I run, what I buy</h3>
   <div class="grid g2 mt">
     <div class="card m"><h3>I run myself</h3><ul class="clean">
-      <li>Strategy, messaging and narratives</li><li>Paid media execution and small one-off ads</li><li>Case studies, from interview to finished story</li><li>ABM list and cohort campaigns</li><li>Attio scoring and handoff with AEs</li><li>Partner program and event selection</li><li>Reporting and budget moves</li></ul></div>
+      <li>Strategy, messaging and narratives</li><li>ABM list, cohorts and paid media</li><li>Attio scoring and handoff with AEs</li><li>Case studies, partners and events</li><li>Reporting and budget moves</li></ul></div>
     <div class="card b"><h3>I buy or borrow</h3><ul class="clean">
       <li>Video shoots and editing for Pol and creator content</li><li>Enrichment and intent tools (Clay or similar)</li><li>Event production and media kits, with brand and comms</li></ul></div>
   </div>
 </div></section>
 
-<!-- KNOWN VS ASSUMED -->
-<section id="known"><div class="wrap">
-  <div class="eyebrow">08 · Known vs. assumed</div>
-  <h2>Every input, <span class="hl hl-g">labeled</span>.</h2>
-  <p class="lede">Values update as you edit them above.</p>
-  <div class="tw"><table id="knownTable"></table></div>
-</div></section>
-
-<!-- HOW -->
-<section id="how"><div class="wrap">
-  <div class="eyebrow">09 · How I built it</div>
-  <h2>How I built it.</h2>
-  <p class="lede mt">Built with Claude Code. The reasoning and assumptions are mine, from running ABM and events at Foundever. Fermat figures come from the case brief, plus the enterprise split from the intro call. Everything else is marked Assumed.</p>
-  <p class="small muted">The model turns spend into leads, opportunities and wins per channel and quarter, lands wins after the sales cycle, caps closes at AE capacity and carries the overflow forward. Single HTML file, no backend. Your edits stay in this browser.</p>
+<!-- APPENDIX -->
+<section class="page" data-page="appendix"><div class="wrap">
+  <h2>Appendix</h2>
+  <h3 class="mt2">Known vs. assumed</h3>
+  <p class="small muted">Values update as you edit them.</p>
+  <div class="tw mt"><table id="knownTable"></table></div>
+  <h3 class="mt3">How I built it</h3>
+  <p class="mt">Built with Claude Code. The reasoning and assumptions are mine, from running ABM and events at Foundever. Fermat figures come from the case brief, plus the enterprise split from the intro call. Everything else is marked Assumed.</p>
+  <p class="small muted mt">The model turns spend into leads, opportunities and wins per channel and quarter, lands wins after the sales cycle, caps closes at AE capacity and carries the overflow forward. Single HTML file, no backend. Your edits stay in this browser.</p>
 </div></section>
 </main>
 <footer><div class="wrap">Fermat 2027 growth model · illustrative figures from the case brief and my assumptions.</div></footer>
@@ -843,7 +736,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{baseLeads:40,baseL2O:40,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,aeCost:100,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
+  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -855,20 +748,21 @@ const DEFAULTS={
     {id:'abm',name:'ABM tools',kind:'abm',color:'--ink'}
   ],
   scenarios:{
-    A:{budget:{linkedin:70,google:30,chatgpt:5,reddit:5,events:60,activations:35,partners:45,abm:60},phasing:[null,null,null,null],ae4:false,ae4Start:1,sdr:0,sdrStart:2},
-    B:{budget:{linkedin:130,google:30,chatgpt:10,reddit:10,events:60,partners:45,abm:25},phasing:[25,25,25,25],ae4:false,ae4Start:1,sdr:0,sdrStart:2},
-    C:{budget:{linkedin:215,google:50,chatgpt:20,reddit:15,events:150,partners:60,abm:40},phasing:[25,25,25,25],ae4:false,ae4Start:1,sdr:2,sdrStart:2}
+    A:{budget:{},phasing:[null,null,null,null],sdr:0,sdrStart:2},
+    B:{budget:{linkedin:130,google:30,chatgpt:10,reddit:10,events:60,partners:45,abm:25},phasing:[25,25,25,25],sdr:0,sdrStart:2},
+    C:{budget:{linkedin:215,google:50,chatgpt:20,reddit:15,events:150,partners:60,abm:40},phasing:[25,25,25,25],sdr:2,sdrStart:2}
   }
 };
 const GMETA=[
-  {k:'baseLeads',label:'Baseline qualified leads / month',unit:'',min:10,max:80,step:1,badge:'Given',note:'Brief: 30–40, mostly from events, partners and brand. Set at the top of the range.'},
-  {k:'baseL2O',label:'Baseline lead → opp',unit:'%',min:10,max:80,step:1,badge:'Assumed',note:'Not in the brief. Set so 40 leads a month give about 11 logos a quarter, matching the brief: three AEs close 10–12 a quarter.'},
+  {k:'baseLeads',label:'Baseline qualified leads / month',unit:'',min:10,max:80,step:1,badge:'Given',note:'Brief: 30–40.'},
+  {k:'inboundLift',label:'Inbound lift from paid',unit:'%',min:0,max:50,step:1,badge:'Assumed',note:'Applies to baseline leads only when paid enterprise spend > 0.'},
+  {k:'baseL2O',label:'Baseline lead → opp',unit:'%',min:10,max:80,step:1,badge:'Assumed',note:'Not in the brief. Calibrated so today ≈ 44 logos a year (brief: three AEs close 10–12 a quarter).'},
   {k:'baseO2W',label:'Baseline opp → won',unit:'%',min:5,max:50,step:1,badge:'Assumed',note:'Not in the brief. Calibrated with lead → opp to match 10–12 logos a quarter.'},
   {k:'acv',label:'Blended ACV',unit:'$k',min:20,max:120,step:1,badge:'Given',note:'Used for baseline wins.'},
   {k:'cycle',label:'Sales cycle',unit:'months',min:1,max:9,step:0.5,badge:'Given',note:'Brief: 3–6. 3 → wins land next quarter, 6 → two quarters out.'},
   {k:'gm',label:'Gross margin',unit:'%',min:40,max:90,step:1,badge:'Given',note:'Brief: 60–70%.'},
-  {k:'aes',label:'AEs',unit:'',min:1,max:8,step:1,badge:'Given',note:'Toggle a 4th AE per scenario in the budget table.'},
-  {k:'aeCap',label:'AE capacity / quarter',unit:'logos',min:2,max:8,step:0.5,badge:'Given',note:'Brief: 4–5 per AE.'},
+  {k:'aes',label:'AEs',unit:'',min:1,max:8,step:1,badge:'Given',note:'Brief: three AEs.'},
+  {k:'aeCap',label:'AE capacity / quarter',unit:'logos',min:4,max:5,step:0.1,badge:'Given',note:'Brief: 4–5 per AE.'},
   {k:'sdrInCost',label:'In-house SDR, cost a year',unit:'$k',min:20,max:150,step:5,badge:'Assumed',note:'Fully loaded. Prorated from the start quarter. Paid from the marketing budget.'},
   {k:'sdrAgCost',label:'SDR agency (3 SDRs), Q2–Q4',unit:'$k',min:10,max:200,step:5,badge:'Assumed',note:'Your estimate for Q2 to Q4. Prorated if it starts later. Paid from the marketing budget.'},
   {k:'sdrLift',label:'SDR uplift on lead → opp',unit:'pts',min:0,max:20,step:1,badge:'Assumed',note:'SDRs qualify and keep conversations warm before the AE hand-off. Applies to new-channel leads from the start quarter.'},
@@ -876,7 +770,6 @@ const GMETA=[
   {k:'sdrMin',label:'Budget needed for SDR support',unit:'$k',min:0,max:1000,step:25,badge:'Mine',note:'SDRs only make sense once the budget creates enough MQLs to keep them busy.'},
   {k:'midOutShare',label:'Mid-market gap filled by outbound',unit:'%',min:0,max:100,step:5,badge:'Assumed',note:'The rest comes from new inbound: Google search, AI search, partners, content.',grid:false},
   {k:'sdrMeetings',label:'Qualified meetings per SDR a month',unit:'',min:2,max:30,step:1,badge:'Assumed',note:'Outbound SDR benchmark for B2B SaaS: about 8–12.',grid:false},
-  {k:'aeCost',label:'4th AE, cost a year',unit:'$k',min:50,max:250,step:5,badge:'Assumed',note:'Fully loaded. Prorated from the start quarter. Sales budget, not marketing.'},
   {k:'paybackTarget',label:'Target CAC payback',unit:'months',min:6,max:36,step:1,badge:'Given',note:'Payback turns red above this.'},
   {k:'commission',label:'Partner commission',unit:'% of first-year ACV',min:0,max:40,step:1,badge:'Assumed',note:'Added to partner spend on each win.'},
   {k:'targetLogos',label:'2027 logo target',unit:'logos',min:20,max:120,step:1,badge:'Given',note:''},
@@ -908,7 +801,6 @@ function migrate(o){
   Object.values(o.scenarios).forEach(sc=>{const v=sc.budget.paid;sc.budget=Object.fromEntries(Object.entries(sc.budget).filter(([k])=>k!=='paid'));if(v==null||v==='')return;
     let left=+v;const ks=Object.keys(PAID_SPLIT);ks.forEach((k,j)=>{const x=j<ks.length-1?Math.round(v*PAID_SPLIT[k]/180/5)*5:left;sc.budget[k]=x;left-=x;});});
   }
-  if(o.global.aeCost===110)o.global.aeCost=100;
   const ev=o.channels.find(c=>c.id==='events');if(ev&&ev.name==='Events')ev.name='Additional events';
   if(o.global.baseLeads===35&&!o.global.base40){o.global.baseLeads=40;}o.global.base40=true;
   if(o.global.baseL2O===45&&!o.global.cal40){o.global.baseL2O=40;}o.global.cal40=true;
@@ -916,6 +808,7 @@ function migrate(o){
   if(!o.channels.some(c=>c.id==='activations')){const i=o.channels.findIndex(c=>c.id==='partners');o.channels.splice(i<0?o.channels.length:i,0,clone(DEFAULTS.channels.find(c=>c.id==='activations')));}
   if(!o.global.cSdr1){if(o.scenarios.C)o.scenarios.C.sdr=2;o.global.cSdr1=true;}
   if(!o.global.aMix1){const A=o.scenarios.A;if(!A||!Object.values(A.budget||{}).some(v=>+v>0))o.scenarios.A=clone(DEFAULTS.scenarios.A);o.global.aMix1=true;}
+  if(!o.global.v2){o.global.baseLeads=35;o.global.baseL2O=46;o.scenarios.A=clone(DEFAULTS.scenarios.A);Object.values(o.scenarios).forEach(x=>{delete x.ae4;delete x.ae4Start;});o.global.v2=true;}
   return o;
 }
 function load(){try{const s=localStorage.getItem(STORE);if(!s)return null;const o=JSON.parse(s);if(!o||!o.global||!o.channels||!o.scenarios)return null;return migrate(o);}catch(e){return null}}
@@ -956,7 +849,6 @@ const sdrMin=()=>num(S.global.sdrMin);
 const sdrOk=sc=>{const o=S.scenarios[sc],m=+(o.sdr||0);if(sc!=='A')return rawChan(sc)>=sdrMin();if(o.wbMix&&o.wbTotal!=null)return o.wbTotal>=sdrMin();return rawChan(sc)+sdrCostOf(m||2,sdrStartQ(sc))>=sdrMin();};
 const sdrMode=sc=>sdrOk(sc)?+(S.scenarios[sc].sdr||0):0;
 const sdrK=sc=>sdrCostOf(sdrMode(sc),sdrStartQ(sc));
-function aeK(sc){const o=S.scenarios[sc];return o.ae4?num(S.global.aeCost)*(5-(+o.ae4Start||1))/4:0;}
 const totalBudget=sc=>chanBudget(sc)+sdrK(sc);
 const hasBudget=sc=>chanBudget(sc)>0;
 
@@ -970,7 +862,7 @@ function phasing(sc){
 }
 function capacity(sc){
   const g=S.global,s=S.scenarios[sc];
-  return [0,1,2,3].map(q=>{let c=g.aes*g.aeCap;if(s.ae4){const st=(+s.ae4Start||1)-1;if(q===st)c+=g.aeCap/2;else if(q>st)c+=g.aeCap;}if(sdrMode(sc)){const st=(+s.sdrStart||2)-1,x=g.aes*num(g.sdrCapLift);if(q===st)c+=x/2;else if(q>st)c+=x;}return c;});
+  return [0,1,2,3].map(q=>{let c=g.aes*g.aeCap;if(sdrMode(sc)){const st=(+s.sdrStart||2)-1,x=g.aes*num(g.sdrCapLift);if(q===st)c+=x/2;else if(q>st)c+=x;}return c;});
 }
 function simulate(lines,cap){
   const ids=Object.keys(lines),carry={};ids.forEach(i=>carry[i]=0);
@@ -992,7 +884,9 @@ function run(sc){
   const {w}=phasing(sc);const [f1,f2]=lagSplit();
   const abmB=budget(sc,'abm');const abmOn=abmB>0&&abmB>=g.abmThreshold;
   const abmLift=abmB>=num(g.abmContactMin)?num(g.abmContactUplift):num(g.abmUplift);
-  const baseQ=g.baseLeads*3*(g.baseL2O/100)*(g.baseO2W/100);
+  const paidOn=S.channels.some(c=>c.group==='paid'&&budget(sc,c.id)>0);
+  const bl=g.baseLeads*(paidOn?1+num(g.inboundLift)/100:1);
+  const baseQ=bl*3*(g.baseL2O/100)*(g.baseO2W/100);
   const lines={base:[baseQ,baseQ,baseQ,baseQ,0,0]};
   const acvOf={base:g.acv*1000};
   const sdrOn=sdrMode(sc)>0,sdrQ=sdrStartQ(sc)-1,sdrCost=sdrK(sc)*1000;
@@ -1018,9 +912,9 @@ function run(sc){
   const cac=wins>0.01?spend/wins:null;
   const cac27=incr>0.01?spend/incr:null;
   const payback=fin(cac)?cac/(wAcv*(g.gm/100)/12):null;
-  return {sc,has,ch,lines,cap,sim,baseQ,abmOn,spend,sdrCost,aeCost:aeK(sc)*1000,newWins:wins,newArr:arr,comm,leads,opps,
+  return {sc,has,ch,lines,cap,sim,baseQ,abmOn,spend,sdrCost,bl,newWins:wins,newArr:arr,comm,leads,opps,
     wins2027:sim.wins,arr2027,spill,incr,cac,cac27,payback,cpo:opps>0?spend/opps:null,
-    yearLeads:g.baseLeads*12+leads,yearOpps:g.baseLeads*12*g.baseL2O/100+opps,yearWins:4*baseQ+wins,capHit:sim.capHit};
+    yearLeads:bl*12+leads,yearOpps:bl*12*g.baseL2O/100+opps,yearWins:4*baseQ+wins,capHit:sim.capHit};
 }
 
 /* ---------- static input rendering ---------- */
@@ -1029,10 +923,10 @@ function ctl(path,val,min,max,step,ph,rdef){
   return `<div class="ctl"><input type="range" aria-label="${path}" data-p="${path}" min="${min}" max="${max}" step="${step}" value="${v===''?(rdef??min):v}"><input type="number" aria-label="${path}" data-p="${path}" min="${min}" step="${step}" value="${v}" placeholder="${ph||''}"></div>`;
 }
 const PLABEL={A:'A · My plan',B:'B · Brief, $310k',C:'C · Brief, $550k'};
-function salesBoxHTML(s){const o=S.scenarios[s];return `<div class="prow"><span>4th AE</span><label style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input type="checkbox" data-p="scenarios.${s}.ae4" ${o.ae4?'checked':''}> Hire, starts <select data-p="scenarios.${s}.ae4Start" style="width:64px">${[1,2,3,4].map(q=>`<option value="${q}" ${+o.ae4Start===q?'selected':''}>Q${q}</option>`).join('')}</select></label></div><p class="small muted">Half capacity in the first quarter while ramping.</p><div class="prow"><span>SDR support</span>${sdrOk(s)?'':`<span class="small muted">From a $${sdrMin()}k budget</span>`}<label style="display:${sdrOk(s)?'flex':'none'};gap:8px;align-items:center;flex-wrap:wrap"><select data-p="scenarios.${s}.sdr" style="width:auto">${SDRNAME.map((n,i)=>`<option value="${i}" ${sdrMode(s)===i?'selected':''}>${n}</option>`).join('')}</select> from <select data-p="scenarios.${s}.sdrStart" style="width:64px">${[1,2,3,4].map(q=>`<option value="${q}" ${sdrStartQ(s)===q?'selected':''}>Q${q}</option>`).join('')}</select></label></div><p class="small muted">Paid from this budget: ${sdrK(s)?'$'+Math.round(sdrK(s))+'k':'nothing'}. 4th AE: ${aeK(s)?'+$'+Math.round(aeK(s))+'k in the sales budget':'not hired'}.</p>`;}
+function salesBoxHTML(s){return `<div class="prow"><span>SDR support</span>${sdrOk(s)?'':`<span class="small muted">From a $${sdrMin()}k budget</span>`}<label style="display:${sdrOk(s)?'flex':'none'};gap:8px;align-items:center;flex-wrap:wrap"><select data-p="scenarios.${s}.sdr" style="width:auto">${SDRNAME.map((n,i)=>`<option value="${i}" ${sdrMode(s)===i?'selected':''}>${n}</option>`).join('')}</select> from <select data-p="scenarios.${s}.sdrStart" style="width:64px">${[1,2,3,4].map(q=>`<option value="${q}" ${sdrStartQ(s)===q?'selected':''}>Q${q}</option>`).join('')}</select></label></div><p class="small muted">Paid from this budget: ${sdrK(s)?'$'+Math.round(sdrK(s))+'k':'nothing'}.</p>`;}
 function renderBudgetTable(){
   const el=document.getElementById('budgetTable');
-  const sw=`<div class="planswitch" role="tablist">`+SC.map(s=>`<button class="tab t${s}" role="tab" data-act="view" data-v="${s}" aria-selected="${view===s}">${PLABEL[s]}</button>`).join('')+`<button class="tab tX" role="tab" data-act="view" data-v="compare" aria-selected="${view==='compare'}">All three, side by side</button></div>`;
+  const sw='';
   if(view==='compare'){
     const list=SC;
     const cell=(s,v)=>`<td class="num col${s}">${v}</td>`;
@@ -1044,14 +938,13 @@ function renderBudgetTable(){
     }
     h+=`<tr class="total"><td>Total</td>${list.map(s=>cell(s,hasBudget(s)?'$'+Math.round(totalBudget(s))+'k':'—')).join('')}</tr>`;
     h+=`<tr><td>Phasing Q1/Q2/Q3/Q4</td>${list.map(s=>cell(s,hasBudget(s)?phasing(s).w.map(x=>Math.round(x*100)).join(' / '):'—')).join('')}</tr>`;
-    h+=`<tr><td>4th AE</td>${list.map(s=>cell(s,S.scenarios[s].ae4?'Starts Q'+S.scenarios[s].ae4Start:'No')).join('')}</tr>`;
     h+=`<tr><td>SDR support</td>${list.map(s=>cell(s,sdrMode(s)?SDRNAME[sdrMode(s)]+', Q'+sdrStartQ(s)+' · $'+Math.round(sdrK(s))+'k':'No')).join('')}</tr></tbody>`;
     el.innerHTML=sw+`<div class="tw"><table>${h}</table></div><p class="small muted mt">Read-only. Pick a plan above to edit it.</p>`;
     return;
   }
   const s=view,o=S.scenarios[s],isA=s==='A';
   const introBC=`<div class="aintro"><p>The brief's plan, read-only. To change it, start your own plan from it.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" data-act="copy" data-from="${s}">Start my plan from ${s}</button></div></div>`;
-  const intro=isA?`<div class="aintro"><p>${hasBudget('A')?'Your own split. Edit any number below.':'Build your own split. Type budgets below, or start from a brief scenario and edit from there.'}</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" data-act="copy" data-from="B">Start from B</button><button class="btn sm ghost" data-act="copy" data-from="C">Start from C</button>${hasBudget('A')?'<button class="btn sm ghost" data-act="clearA">Clear A</button>':''}</div></div>`:`<p class="small muted aintro">From the case brief. Edit freely, or reset to defaults at the top.</p>`;
+  const intro=isA?`<div class="aintro"><p>${hasBudget('A')?'Your own split. Edit any number below.':'Plan A is empty. Start from a brief plan, or blank.'}</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" data-act="copy" data-from="B">Start from B</button><button class="btn sm ghost" data-act="copy" data-from="C">Start from C</button><button class="btn sm ghost" data-act="clearA">Start blank</button></div></div>`:`<p class="small muted aintro">From the case brief. Edit freely, or reset to defaults at the top.</p>`;
   let left=`<div class="ptitle">Budget by channel <span class="muted">($k)</span></div>`;
   const crow=(c,sub)=>`<div class="prow${sub?' subrow':''}"><span><span class="dot" style="background:${chColor(c)}"></span>${esc(c.name)}${c.custom?` <button class="btn x" title="Remove channel" data-act="rmch" data-id="${c.id}">×</button>`:''}</span>${isA?ctl(`scenarios.${s}.budget.${c.id}`,o.budget[c.id],0,600,5,'—'):`<b class="ro">${budget(s,c.id)?'$'+budget(s,c.id)+'k':'—'}</b>`}</div>`;
   for(const g of groups()){
@@ -1086,7 +979,7 @@ function renderGlobals(){
 function renderTabs(){
   document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===view?'true':'false'));
 }
-function renderInputs(){renderWbInputs();renderDealMixInputs();renderBudgetTable();renderChanTable();renderGlobals();renderTabs();}
+function renderInputs(){renderBudgetTable();renderChanTable();renderGlobals();renderTabs();}
 
 /* ---------- charts ---------- */
 Chart.defaults.font.family='Inter, system-ui, sans-serif';
@@ -1103,7 +996,7 @@ const sliceLabels={id:'sliceLabels',afterDatasetsDraw(chart){
 /* ---------- outputs ---------- */
 function renderPies(R){
   const el=document.getElementById('pies');
-  const order=hasBudget('A')?['A','B','C']:['B','C','A'];
+  const order=[SC.includes(view)?view:'B'];
   el.innerHTML=order.map(s=>{
     if(!R[s].has)return `<div class="pie empty"><div class="hd"><b>A · My plan</b></div><p class="muted">Build your own split.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" data-act="copy" data-from="B">Start from B</button><button class="btn sm ghost" data-act="copy" data-from="C">Start from C</button></div></div>`;
     const tot=totalBudget(s);
@@ -1126,24 +1019,19 @@ function renderPies(R){
 function focusList(R){return view==='compare'?SC.filter(s=>R[s].has):[view];}
 function tileHTML(r,s,tint){
   const g=S.global;
-  if(!r.has)return `<div class="tiles">${['2027 new logos','New ARR','CAC','Payback','Cost per opportunity','Wins spilling into 2028'].map(k=>`<div class="tile"><div class="k">${k}</div><div class="v">—</div><div class="s">Build your own split.</div></div>`).join('')}</div>`;
+  if(!r.has)return `<div class="tiles">${['2027 new logos','New ARR','CAC','Payback'].map(k=>`<div class="tile"><div class="k">${k}</div><div class="v">—</div><div class="s">Build your own split.</div></div>`).join('')}</div>`;
   const cls=tint?` s${s}`:'';
   const pl=Math.min(100,r.wins2027/g.targetLogos*100),pa=Math.min(100,r.arr2027/(g.targetArr*1e6)*100);
   return `<div class="tiles">
     <div class="tile${cls}"><div class="k">2027 new logos</div><div class="v">${n0(r.wins2027)}</div><div class="s">vs ${g.targetLogos} target<div class="meter"><i style="width:${pl}%"></i></div></div></div>
     <div class="tile${cls}"><div class="k">New ARR</div><div class="v">${M$(r.arr2027,1)}</div><div class="s">vs $${g.targetArr}M target<div class="meter"><i style="width:${pa}%"></i></div></div></div>
-    <div class="tile${cls}"><div class="k">CAC</div><div class="v">${k$(r.cac)}</div><div class="s">All new-channel wins, incl. 2028. ${k$(r.cac27)} on extra logos closed in 2027.</div></div>
+    <div class="tile${cls}"><div class="k">CAC</div><div class="v">${k$(r.cac)}</div><div class="s">Cost per new logo</div></div>
     <div class="tile${cls}"><div class="k">Payback</div><div class="v ${fin(r.payback)&&r.payback>g.paybackTarget?'bad':''}">${n1(r.payback)}<span style="font-size:.45em"> mo</span></div><div class="s">Target ≤ ${g.paybackTarget} months at ${g.gm}% margin</div></div>
-    <div class="tile${cls}"><div class="k">Cost per opportunity</div><div class="v">${k$(r.cpo)}</div><div class="s">Blended across new channels, incl. ABM and commission</div></div>
-    <div class="tile${cls}"><div class="k">Wins spilling into 2028</div><div class="v">${n0(r.spill)}</div><div class="s">${M$(r.spill*(r.newWins>0?r.newArr/r.newWins:g.acv*1000),1)} of ARR that lands next year</div></div>
   </div>`;
 }
 function renderTiles(R){
   const el=document.getElementById('tiles');
-  if(view!=='compare'){el.innerHTML=tileHTML(R[view],view,false);return;}
-  const list=SC.filter(s=>R[s].has),g=S.global;
-  const rows=[['2027 new logos',r=>n0(r.wins2027)+` / ${g.targetLogos}`],['New ARR',r=>M$(r.arr2027)],['Total budget',r=>'$'+Math.round(totalBudget(r.sc))+'k'],['CAC (all wins)',r=>k$(r.cac)],['CAC (extra 2027 logos)',r=>k$(r.cac27)],['Payback',r=>`<span style="${fin(r.payback)&&r.payback>g.paybackTarget?'color:var(--red)':''}">${n1(r.payback)} mo</span>`],['Cost per opportunity',r=>k$(r.cpo)],['Wins spilling into 2028',r=>n0(r.spill)],['AE capacity hit',r=>r.capHit?'Yes':'No']];
-  el.innerHTML=`<div class="tw"><table><thead><tr><th>Metric</th>${list.map(s=>`<th class="col${s} on num">${s==='A'?'A · My plan':'Scenario '+s}</th>`).join('')}</tr></thead><tbody>${rows.map(([k,f])=>`<tr><td>${k}</td>${list.map(s=>`<td class="num col${s}" style="font-weight:600;color:var(--ink)">${f(R[s])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${hasBudget('A')?'':'<p class="small muted mt">A is hidden until it has a budget.</p>'}`;
+  el.innerHTML=view==='compare'?'':tileHTML(R[view],view,false);
 }
 function renderCallouts(R){
   const g=S.global,out=[];
@@ -1230,28 +1118,31 @@ function renderBudgetTotals(){
     pe.innerHTML=even?'<span class="small muted">Even phasing: 25% a quarter</span>':(Math.abs(p.sum-100)>0.5?`<span class="warn">Sums to ${Math.round(p.sum)}%. Scaled to 100%.</span>`:'<span class="small muted">Sums to 100%</span>');});
 }
 function renderDiagnosis(R){
-  const g=S.global,baseQ=g.baseLeads*3*g.baseL2O/100*g.baseO2W/100,baseYear=baseQ*4;
-  const conv=g.baseL2O/100*g.baseO2W/100;
-  const gap=Math.max(0,g.targetLogos-baseYear);
-  const lead=S.channels.filter(c=>c.kind==='lead'&&(c.diag||c.custom));
-  const newConv=lead.length?lead.reduce((a,c)=>a+Math.min(1,(num(c.l2o)+(c.abmBoost?g.abmUplift:0))/100)*num(c.o2w)/100,0)/lead.length:conv;
-  const months=Math.max(1,12-g.cycle);
-  const extra=gap/(newConv*months);
-  const ex5=Math.max(5,Math.round(extra/5)*5);
+  const g=S.global,conv=g.baseL2O/100*g.baseO2W/100,baseQ=g.baseLeads*3*conv,baseYear=baseQ*4;
+  const lifted=g.baseLeads*(1+num(g.inboundLift)/100),gap=Math.max(0,g.targetLogos-lifted*12*conv);
   document.getElementById('dToday').textContent=n0(baseYear);
-  document.getElementById('dLead').textContent=`~${ex5} more qualified leads a month needed`;
-  document.getElementById('dLeadNote').textContent=`Today: ${g.baseLeads} a month, about ${n1(baseQ)} wins a quarter. ${n0(gap)} more logos at ~${pct(newConv)} lead-to-win from new channels, generated in the ${n1(months)} months that still close in 2027.`;
-  const lo=g.aes*4*4,hi=g.aes*5*4,now=g.aes*g.aeCap*4;
-  document.getElementById('dCap').textContent=`${g.aes} AEs × 4–5 = ${lo}–${hi} logos max`;
-  document.getElementById('dCapNote').textContent=`At ${g.aeCap} a quarter each, the team closes ${n0(now)} a year. Today's engine alone fills ${pct(baseYear/now)} of that.`;
-  document.getElementById('dTime').textContent=`A 3–6 month cycle means Q4 leads close in 2028`;
-  document.getElementById('dTimeNote').textContent=`At ${g.cycle} months, a lead from ${g.cycle>=3?'October':'late November'} closes in ${g.cycle>=3?'2028':'early 2028'}. Spend after Q3 builds next year's pipeline.`;
-  document.getElementById('dMonths').textContent=n1(months);
+  document.getElementById('dFunNote').innerHTML=`Today: ~${n0(g.baseLeads)} qualified leads a month (<span class="pill given">Given</span> 30–40), about ${n0(baseQ)} wins a quarter. Once paid starts, I assume a ~${n0(g.inboundLift)}% lift in inbound, to ~${n0(lifted)} <span class="pill assumed">Assumed</span>. That still leaves ~${n0(gap)} more logos to find from new channels.`;
   const needQ=g.targetLogos/4,needLeads=needQ/3/conv;
   const r=(k,a,b)=>`<tr><td>${k}</td><td class="num">${a}</td><td class="num" style="font-weight:600;color:var(--ink)">${b}</td></tr>`;
   document.getElementById('dFunnel').innerHTML=`<thead><tr><th></th><th class="num">Today</th><th class="num">${g.targetLogos} logos needs</th></tr></thead><tbody>
     ${r('Qualified leads / month',n0(g.baseLeads),n0(needLeads))}${r('Opportunities / month',n0(g.baseLeads*g.baseL2O/100),n0(needLeads*g.baseL2O/100))}
-    ${r('Wins / quarter',n1(baseQ),n1(needQ))}${r('Logos / year',n0(baseYear),n0(g.targetLogos))}${r('AE capacity / year',n0(g.aes*g.aeCap*4),n0(g.aes*g.aeCap*4))}</tbody>`;
+    ${r('Wins / quarter',n1(baseQ),n1(needQ))}${r('Logos / year',n0(baseYear),n0(g.targetLogos))}</tbody>`;
+}
+function runCap(sc,cap){const o=S.global.aeCap;S.global.aeCap=cap;try{return run(sc);}finally{S.global.aeCap=o;}}
+function renderAnswer(R){
+  const el=document.getElementById('ansTable');if(!el)return;
+  const g=S.global,sc=SC.includes(view)?view:'B',base=R[sc],st=runCap(sc,5);
+  const cell=r=>r.has?`<span class="ansv">${n0(r.wins2027)}</span><span class="muted"> / ${g.targetLogos}</span>`:'—';
+  el.innerHTML=`<thead><tr><th></th><th class="num">Logos 2027</th><th>What it takes</th></tr></thead><tbody>
+    <tr><td><b>Base case</b></td><td class="num">${cell(base)}</td><td>Today's engine + new channels, AEs closing ~${g.aeCap} a quarter</td></tr>
+    <tr><td><b>Stretch</b></td><td class="num">${cell(st)}</td><td>Every AE at 5 a quarter, Q1 to Q4</td></tr></tbody>`;
+  document.getElementById('ansPlan').textContent=base.has?'':'Plan A is empty. Build it in the Model tab.';
+}
+function renderCompareTable(R){
+  const el=document.getElementById('cmpTable');if(!el)return;
+  const g=S.global,list=SC.filter(s=>R[s].has);
+  const rows=[['Budget',r=>'$'+Math.round(totalBudget(r.sc))+'k'],['2027 logos',r=>n0(r.wins2027)+' / '+g.targetLogos],['New ARR 2027',r=>M$(r.arr2027,1)],['CAC',r=>k$(r.cac)],['Payback',r=>n1(r.payback)+' mo'],['SDR support',r=>sdrMode(r.sc)?SDRNAME[sdrMode(r.sc)]:'No'],['AEs full',r=>r.capHit?'Yes':'No']];
+  el.innerHTML=`<thead><tr><th></th>${list.map(s=>`<th class="num col${s} on">${PLABEL[s]}</th>`).join('')}</tr></thead><tbody>${rows.map(([k,f])=>`<tr><td>${k}</td>${list.map(s=>`<td class="num" style="font-weight:600;color:var(--ink)">${f(R[s])}</td>`).join('')}</tr>`).join('')}</tbody>`;
 }
 function renderKnown(){
   const g=S.global;const rows=[];
@@ -1263,361 +1154,57 @@ function renderKnown(){
   ['B','C'].forEach(s=>rows.push([`Scenario ${s} budget`,S.channels.filter(c=>budget(s,c.id)>0).map(c=>`${c.name} $${budget(s,c.id)}k`).join(' · ')||'—','Given','From the case brief. Phasing 25% a quarter is my default.']));
   rows.push(['Scenario A budget',hasBudget('A')?S.channels.filter(c=>budget('A',c.id)>0).map(c=>`${c.name} $${budget('A',c.id)}k`).join(' · '):'Empty: build your own split.','Mine','']);
   rows.push(['Sales cycle lag','Wins land in the next 1–2 quarters','Assumed',`At ${g.cycle} months: ${pct(lagSplit()[0])} next quarter, ${pct(lagSplit()[1])} the one after.`]);
-  rows.push(['4th AE ramp','Half capacity in the first quarter','Assumed','']);
   document.getElementById('knownTable').innerHTML=`<thead><tr><th>Input</th><th>Value</th><th>Badge</th><th>Note</th></tr></thead><tbody>${rows.map(([a,b,c,d])=>`<tr><td>${esc(a)}</td><td style="font-weight:600;color:var(--ink)">${esc(b)}</td><td><span class="pill ${c.toLowerCase()}">${c}</span></td><td class="small muted">${esc(d)}</td></tr>`).join('')}</tbody>`;
-}
-function renderDealMixInputs(){
-  const g=S.global;
-  const f=(p,v,min,max,pre,suf,w)=>`<span class="gi">${pre||''}<input type="number" data-p="${p}" min="${min}" max="${max}" value="${v}"${w?` style="width:${w}px"`:''}>${suf||''}</span>`;
-  document.getElementById('dmIn').innerHTML=
-    `<label>New logos in 2027 <span class="pill given">Given</span>${f('global.targetLogos',g.targetLogos,20,120)}</label>`+
-    `<label>Inbound qualified leads a month <span class="pill given" title="Brief: 30–40">Given</span>${f('global.baseLeads',g.baseLeads,10,80)}</label>`+
-    `<label>Enterprise share of logos <span class="pill assumed" title="From the intro call, to confirm">Assumed</span>${f('global.entLogoShare',g.entLogoShare,0,60,'','%')}</label>`+
-    `<label>Enterprise avg deal size <span class="pill assumed" title="Brief: ACV $15k–$120k, Calle Brava $120k">Assumed</span>${f('global.entAcv',g.entAcv,50,250,'$','k')}</label>`+
-    `<label>Mid-market avg deal size <span class="pill assumed" title="Average of the brief's three smaller samples">Assumed</span>${f('global.midAcv',g.midAcv,10,80,'$','k')}</label>`+
-    `<label>Named ABM accounts <span class="pill assumed">Assumed</span>${f('global.abmAccounts',g.abmAccounts,100,2000,'','',72)}</label>`;
-  document.getElementById('dmIOIn').innerHTML=
-    `<label>Mid-market gap from outbound <span class="pill assumed">Assumed</span>${f('global.midOutShare',g.midOutShare,0,100,'','%')}</label>`+
-    `<label>Meetings per SDR a month <span class="pill assumed">Assumed</span>${f('global.sdrMeetings',g.sdrMeetings,2,30)}</label>`;
-}
-const BRIEF={l2o:[30,40,50],o2w:[15,20,25]};
-function goalMix(){
-  const g=S.global,arr=g.targetArr*1e6,won=Math.max(1,num(g.targetLogos));
-  const entN=won*num(g.entLogoShare)/100,entAcv=num(g.entAcv)*1000,entArr=entN*entAcv;
-  const smAvg=Math.max(1,num(g.midAcv))*1000,smArr=Math.max(0,arr-entArr),smN=smArr/smAvg,need=entN+smN;
-  return {arr,won,entN,entAcv,entArr,smN,smArr,smAvg,need,avg:arr/need};
-}
-function renderDealMix(){
-  const g=S.global,m=goalMix(),fmt=x=>Math.round(x).toLocaleString('en-US');
-  const back=w=>{const o=BRIEF.o2w.map(r=>w/(r/100));return {o,l:o.map((x,i)=>x/(BRIEF.l2o[i]/100))};};
-  const E=back(m.entN);
-  const inL=num(g.baseLeads)*12,inO=inL*num(g.baseL2O)/100,inW=inO*num(g.baseO2W)/100;
-  const gapW=Math.max(0,m.smN-inW),G=back(gapW);
-  const Sm={l:G.l.map(x=>x+inL),o:G.o.map(x=>x+inO)};
-  const smWon=inW+gapW;
-  document.getElementById('dmGoal').innerHTML=`Goal: <b>${M$(m.arr,1)}</b> of new ARR. ${fmt(m.entN)} enterprise at ${k$(m.entAcv)} + ${fmt(m.smN)} mid-market at ${k$(m.smAvg)} = <b>${fmt(m.need)} logos</b>.`;
-  const icp=(rule,rows)=>`<div class="icp"><div class="icprule">${rule}</div><table class="icpt"><tbody>${rows.map(r=>`<tr><td><b>${r[0]}</b><span>${r[1]}</span></td><td class="num">${r[2]}</td><td class="num">${r[3]}</td></tr>`).join('')}</tbody></table></div>`;
-  const entIcp=icp('<span class="k">ICP</span> Revenue above $500M · international retail, many locations · many collections a year <span class="pill assumed" title="Split from the intro call. The brief ICP is $100M–$5B.">To confirm</span>',[['Calle Brava','Spanish value fashion','~$900M revenue','$120k']]);
-  const midIcp=icp('<span class="k">ICP</span> Revenue about $100–500M · sample customers from the brief',[['Harlow &amp; Pine','US premium denim','~$400M revenue','$50k'],['Nordvik Studio','Scandinavian womenswear','~$250M revenue','$40k'],['Maison Ferrand','French accessories','~$150M revenue','$15k']]);
-  const row=(cls,label,mid,lo,hi,sub)=>`<div class="rrow ${cls}"><span class="rl">${label}</span><b>${fmt(mid)}</b><span class="rr">${lo!=null?`Range ${fmt(lo)}–${fmt(hi)}<br>`:''}${sub}</span></div>`;
-  const rate=(label,r,mid)=>`<div class="rrate"><span class="rarr"></span><span class="rpill"><span class="pk">${label}</span><b>${r[0]}–${r[2]}%</b><span>${mid||'mid '+r[1]+'%'}</span></span></div>`;
-  const funnel=(P,top,topSub,won,wonSub,m1,m2)=>`<div class="rfun">${row('r1',top,P.l[1],P.l[2],P.l[0],topSub)}${rate('Lead → opp',BRIEF.l2o,m1)}${row('r2','Opportunities',P.o[1],P.o[2],P.o[0],`${fmt(P.o[1]/12)} a month`)}${rate('Opp → won',BRIEF.o2w,m2)}${row('r3','Won',won,null,null,wonSub)}</div>`;
-  const listPct=E.l[1]/Math.max(1,num(g.abmAccounts));
-  document.getElementById('dmFunnel').innerHTML=`<div class="rfun2">
-    <div><div class="rhead"><span class="dot" style="background:var(--ink)"></span><b>Enterprise · ABM</b><span>${fmt(m.entN)} × ${k$(m.entAcv)} avg = ${M$(m.entArr,1)}</span></div>
-      ${entIcp}${funnel(E,'Qualified leads',`${fmt(E.l[1]/12)} a month, from ${fmt(g.abmAccounts)} named accounts`,m.entN,`${pct(m.entArr/m.arr)} of new ARR`)}</div>
-    <div><div class="rhead"><span class="dot" style="background:var(--magenta)"></span><b>Mid-market</b><span>${fmt(m.smN)} × ${k$(m.smAvg)} avg = ${M$(m.smArr,1)}</span></div>
-      ${midIcp}${funnel(Sm,'Qualified leads',`${fmt(Sm.l[1]/12)} a month: ${fmt(inL/12)} inbound today + ${fmt(G.l[1]/12)} new`,smWon,`${fmt(inW)} from today's inbound + ${fmt(gapW)} new · ${pct(m.smArr/m.arr)} of new ARR`,`blend ${pct(Sm.o[1]/Sm.l[1])}`,`blend ${pct(smWon/Sm.o[1])}`)}</div>
-  </div>`;
-  const cap=g.aes*g.aeCap*4,need=m.need/g.aes/4,totL=E.l[1]+Sm.l[1];
-  const inT=inL,midGap=G.l[1],midOut=midGap*num(g.midOutShare)/100,midIn=midGap-midOut,entOut=E.l[1];
-  const inAll=inT+midIn,outAll=entOut+midOut,sdrs=outAll/12/Math.max(1,num(g.sdrMeetings));
-  const seg=(v,cls,label)=>v>0.5?`<i class="${cls}" style="width:${v/totL*100}%" title="${label}: ${fmt(v)}">${v/totL>0.08?`${fmt(v/12)} a month`:''}</i>`:'';
-  const card=(cls,k,v,sub,body)=>`<div class="iocard ${cls}"><span class="k">${k}</span><b>${fmt(v/12)}<span> a month</span></b><div class="iosub">${sub}</div><p>${body}</p></div>`;
-  document.getElementById('dmIO').innerHTML=`
-    <p class="iolede"><b>Inbound brings ${fmt(inW)} of ${fmt(m.entN+inW+gapW)} logos.</b> Outbound brings most of the rest: a $500M+ retailer won't fill in a demo form.</p>
-    <div class="iobar">${seg(inT,'in0','Inbound today')}${seg(midIn,'in1','New inbound')}${seg(midOut,'out1','Outbound, mid-market')}${seg(entOut,'out0','Outbound, enterprise')}</div>
-    <div class="iogrid">
-      ${card('in0','Inbound today',inT,'Mid-market','Events, partners and brand. Keep it running.')}
-      ${card('in1','New inbound',midIn,'Mid-market','Comes from the paid spend: brands see us, then search for us. No extra budget.')}
-      ${card('out1','Outbound',midOut,'Mid-market','SDRs reach brands like Harlow &amp; Pine.')}
-      ${card('out0','Outbound',entOut,'Enterprise','ABM on 800 named brands like Calle Brava.'.replace('800',fmt(g.abmAccounts)))}
-    </div>
-`;
-  const b0=num(g.baseLeads),inM=inAll/12,outM=outAll/12,step=(inM-b0)/1.5,path=[0,1,2,3].map(i=>fmt(b0+i*step)).join(' → ');
-  const sdrFit=sdrs>2.5&&sdrs<3.5?', about what the 3-SDR agency gives':sdrs<=2.5?', less than a 3-SDR agency':', more than a 3-SDR agency';
-  document.getElementById('dmNote').innerHTML=`<div class="k">In short</div><ul>
-    <li><b>Leads:</b> ${fmt(b0)} a month today. ${M$(m.arr,0)} needs <b>${fmt(totL/12)}</b>.</li>
-    <li><b>Inbound grows ${pct(inM/b0-1)}:</b> ${path} a month, Q1 to Q4.</li>
-    <li><b>Outbound adds ${fmt(outM)} a month</b> on top.</li>
-    <li><b>Sales:</b> ${g.aes} AEs close ${fmt(cap)} a year${m.need>cap?`. The goal needs ${fmt(m.need)}: add SDR help or a 4th AE`:', enough'}.</li>
-  </ul><p>Rates: inbound ${g.baseL2O}% / ${g.baseO2W}% (11 logos a quarter, as the brief says). New leads 40% / 20% (brief midpoints).</p>`;
-}
-function goalNeeds(){
-  const g=S.global,m=goalMix();
-  const back=w=>{const o=w/(BRIEF.o2w[1]/100);return {o,l:o/(BRIEF.l2o[1]/100)};};
-  const E=back(m.entN),inL=num(g.baseLeads)*12,inO=inL*num(g.baseL2O)/100,inW=inO*num(g.baseO2W)/100;
-  const G=back(Math.max(0,m.smN-inW));
-  return {sql:inL+E.l+G.l,opp:inO+E.o+G.o,won:m.entN+Math.max(m.smN,inW),inL,inO,inW};
-}
-function dealGoal(){
-  const won=goalMix().need;
-  const opps=won/(BRIEF.o2w[1]/100),leads=opps/(BRIEF.l2o[1]/100);
-  return {won,opps,leads};
-}
-function pipeRows(r){
-  const g=S.global,rows=[];
-  const bl=g.baseLeads*12,bo=bl*g.baseL2O/100;
-  rows.push({name:"Today's engine",color:cssv('--base'),budget:null,leads:bl,opps:bo,wins:bo*g.baseO2W/100});
-  S.channels.forEach(c=>{const x=r.ch[c.id];if(!x||x.abm||!(x.spend>0))return;
-    rows.push({name:c.name,color:chColor(c),budget:x.spend+x.comm,leads:x.leads,opps:x.opps,wins:x.wins});});
-  return rows;
-}
-function renderPipeByChannel(R){
-  const G=dealGoal(),fmt=x=>Math.round(x).toLocaleString('en-US');
-  const list=view==='compare'?SC.filter(s=>R[s].has):[view];
-  document.getElementById('pcLede').textContent=view==='compare'
-    ?'2027 leads and wins by plan, vs. the goal. Before AE capacity and timing.'
-    :`Plan ${view}: 2027 leads and wins by source, vs. the goal. Before AE capacity and timing.`;
-  const el=document.getElementById('pcBody');
-  if(!list.length||!R[list[0]].has){el.innerHTML='<div class="card"><p>Build your own split to see where A\'s pipeline comes from.</p><div style="display:flex;gap:8px;margin-top:12px"><button class="btn sm" data-act="copy" data-from="B">Start from B</button><button class="btn sm ghost" data-act="copy" data-from="C">Start from C</button></div></div>';return;}
-  const tot=rows=>rows.reduce((a,x)=>({leads:a.leads+x.leads,opps:a.opps+x.opps,wins:a.wins+x.wins,budget:a.budget+(x.budget||0)}),{leads:0,opps:0,wins:0,budget:0});
-  const gapCell=(have,need)=>have>=need?'<span style="color:var(--green-deep);font-weight:600">Covered</span>':`<span style="color:var(--red);font-weight:600">${fmt(need-have)}</span>`;
-  if(view==='compare'){
-    let h=`<div class="tw"><table><thead><tr><th>Scenario</th><th class="num">Budget</th><th class="num">Leads</th><th class="num">Opps</th><th class="num">Wins</th><th class="num">Lead gap</th><th class="num">Win gap</th><th class="num">Closed in 2027</th></tr></thead><tbody>`;
-    list.forEach(s=>{const t=tot(pipeRows(R[s]));h+=`<tr><td><span class="dot" style="background:var(${SCVAR[s]})"></span>${s==='A'?'A · My plan':'Scenario '+s}</td><td class="num">${k$(t.budget+((R[s].ch.abm&&R[s].ch.abm.spend)||0))}</td><td class="num">${fmt(t.leads)}</td><td class="num">${fmt(t.opps)}</td><td class="num">${fmt(t.wins)}</td><td class="num">${gapCell(t.leads,G.leads)}</td><td class="num">${gapCell(t.wins,G.won)}</td><td class="num">${fmt(R[s].wins2027)}</td></tr>`;});
-    h+=`<tr class="total"><td>Goal</td><td></td><td class="num">${fmt(G.leads)}</td><td class="num">${fmt(G.opps)}</td><td class="num">${fmt(G.won)}</td><td></td><td></td><td class="num">${fmt(G.won)}</td></tr></tbody></table></div>`;
-    el.innerHTML=h;return;
-  }
-  const r=R[view],rows=pipeRows(r),t=tot(rows);
-  const bar=(key,goal,label)=>{const mx=Math.max(t[key],goal)*1.03;
-    return `<div class="pcbar"><div class="pchd"><b>${label}</b><span>${fmt(t[key])} of ${fmt(goal)} needed${t[key]<goal?` · <span style="color:var(--red);font-weight:600">${fmt(goal-t[key])} short</span>`:' · covered'}</span></div>
-    <div class="dmtrack">${rows.map(x=>`<i title="${esc(x.name)}: ${fmt(x[key])}" style="width:${x[key]/mx*100}%;background:${x.color}"></i>`).join('')}<span class="dmcap" style="left:${goal/mx*100}%"><em>Goal ${fmt(goal)}</em></span></div></div>`;};
-  let h=bar('leads',G.leads,'Qualified leads')+bar('wins',G.won,'Wins');
-  h+=`<div class="legend" style="margin-bottom:16px">${rows.map(x=>`<span><span class="dot" style="background:${x.color}"></span>${esc(x.name)}</span>`).join('')}</div>`;
-  h+=`<div class="tw"><table><thead><tr><th>Source</th><th class="num">Spend</th><th class="num">Leads</th><th class="num">Opps</th><th class="num">Wins</th><th class="num">Lead → win</th><th class="num">Share of wins</th></tr></thead><tbody>`;
-  rows.forEach(x=>{h+=`<tr><td><span class="dot" style="background:${x.color}"></span>${esc(x.name)}</td><td class="num">${x.budget==null?'—':k$(x.budget)}</td><td class="num">${fmt(x.leads)}</td><td class="num">${fmt(x.opps)}</td><td class="num">${x.wins.toFixed(1)}</td><td class="num">${x.leads?pct(x.wins/x.leads):'—'}</td><td class="num">${pct(x.wins/t.wins)}</td></tr>`;});
-  const abm=r.ch.abm;
-  if(abm&&abm.spend>0)h+=`<tr><td><span class="dot" style="background:${cssv('--ink')}"></span>ABM tools</td><td class="num">${k$(abm.spend)}</td><td class="num muted" colspan="5" style="text-align:right">${r.abmOn?`No leads of its own · +${S.global.abmUplift} pts lead → opp on LinkedIn, Google and events`:'Below threshold · no uplift'}</td></tr>`;
-  h+=`<tr class="total"><td>Total</td><td class="num">${k$(t.budget+(abm?abm.spend:0))}</td><td class="num">${fmt(t.leads)}</td><td class="num">${fmt(t.opps)}</td><td class="num">${t.wins.toFixed(1)}</td><td class="num">${pct(t.wins/t.leads)}</td><td class="num">100%</td></tr>`;
-  h+=`<tr><td>Goal (midpoint rates)</td><td></td><td class="num">${fmt(G.leads)}</td><td class="num">${fmt(G.opps)}</td><td class="num">${fmt(G.won)}</td><td class="num">${pct(G.won/G.leads)}</td><td></td></tr>`;
-  h+=`<tr><td style="font-weight:600;color:var(--ink)">Gap vs goal</td><td></td><td class="num">${gapCell(t.leads,G.leads)}</td><td class="num">${gapCell(t.opps,G.opps)}</td><td class="num">${t.wins>=G.won?gapCell(1,0):`<span style="color:var(--red);font-weight:600">${(G.won-t.wins).toFixed(1)}</span>`}</td><td></td><td></td></tr></tbody></table></div>`;
-  h+=`<p class="small muted mt">Of these ${fmt(t.wins)} wins, ${fmt(r.wins2027)} close in 2027 once the sales cycle and AE capacity are applied. The rest wait for an AE or close in 2028.</p>`;
-  el.innerHTML=h;
-}
-function renderPipe(){
-  const g=S.global,lead=S.channels.filter(c=>c.kind==='lead');
-  const rng=(f)=>{const v=lead.map(f);const lo=Math.min(...v),hi=Math.max(...v);return lo===hi?lo+'%':lo+'–'+hi+'%';};
-  const set=(id,t)=>{const e=document.getElementById(id);if(e)e.textContent=t;};
-  set('pmL2o',`Model: ${g.baseL2O}% today, ${rng(c=>num(c.l2o))} by channel`);
-  set('pmO2w',`Model: ${g.baseO2W}% today, ${rng(c=>num(c.o2w))} by channel`);
-  set('pmCap',`Model: ${g.aes} AEs × ${g.aeCap} = ${n1(g.aes*g.aeCap)} a quarter`);
-  set('pmGm',`Model: ${g.gm}%`);
-  set('pmPay',`Model: ${g.paybackTarget} months`);
-  const [f1]=lagSplit();
-  set('pmCycle',`· Model: ${g.cycle} months, so wins land ${f1>=1?'the next quarter':f1<=0?'two quarters later':pct(f1)+' next quarter, '+pct(1-f1)+' the one after'}`);
 }
 function update(){
   const R={};SC.forEach(s=>R[s]=run(s));
   {const sb=document.getElementById('salesBox');if(sb&&SC.includes(view))sb.innerHTML=salesBoxHTML(view);}
-  renderHero(R);renderWorkBack(R);renderPipe();renderDealMix();renderPipeByChannel(R);renderPies(R);renderBudgetTotals();renderDiagnosis(R);renderCallouts(R);renderTiles(R);
-  document.getElementById('tgtQ').textContent=n1(S.global.targetLogos/4);
-  renderWins(R);renderCompare(R);renderFunnel(R);renderCpo(R);renderKnown();
+  renderAnswer(R);renderDiagnosis(R);renderPies(R);renderBudgetTotals();renderTiles(R);renderWins(R);renderCompareTable(R);renderKnown();
+  const tq=document.getElementById('tgtQ');if(tq)tq.textContent=n1(S.global.targetLogos/4);
   window.__fermat=R;
 }
 
-/* ---------- work-back ---------- */
-const isBrief=sc=>{const a=S.scenarios[sc].budget,d=DEFAULTS.scenarios[sc].budget,ks=new Set([...Object.keys(a),...Object.keys(d)]);return [...ks].every(k=>num(a[k])===num(d[k]))&&JSON.stringify(S.scenarios[sc].phasing.map(num))===JSON.stringify(DEFAULTS.scenarios[sc].phasing.map(num));};
-const wbSel=()=>SC.includes(view)?view:'B';
-function renderWbInputs(){
-  const g=S.global;
-  const f=(k,min,max,suf,label,hint)=>`<label>${label} <span class="pill assumed"${hint?` title="${hint}"`:''}>Assumed</span><span class="gi"><input type="number" data-p="global.${k}" min="${min}" max="${max}" value="${g[k]}">${suf}</span></label>`;
-  document.getElementById('wbIn').innerHTML=
-    f('cpaMid',1,20,'','Contacts per mid-market account','Rule of thumb: 5–7')+
-    f('cpaEnt',5,40,'','Contacts per enterprise account','Rule of thumb: about 15')+
-    f('contact2lead',1,50,'%','Contact → new lead')+
-    f('lead2mql',5,100,'%','New lead → MQL')+
-    f('mql2sql',5,100,'%','MQL → SQL')+
-    f('sql2assign',10,100,'%','SQL → assigned');
-}
-function wbFunnel(r){
-  const g=S.global,q=v=>Math.max(0.01,num(v)/100);
-  const sql=r.leads,mql=sql/q(g.mql2sql),nl=mql/q(g.lead2mql),con=nl/q(g.contact2lead);
-  const es=num(g.entLogoShare)/100,entCon=con*es,midCon=con-entCon;
-  const entAcc=entCon/Math.max(1,num(g.cpaEnt)),midAcc=midCon/Math.max(1,num(g.cpaMid));
-  const asg=sql*q(g.sql2assign),opp=r.opps,won=r.newWins;
-  return {sql,mql,nl,con,entCon,midCon,entAcc,midAcc,acc:entAcc+midAcc,asg,opp,won};
-}
-function road(r){
-  const g=S.global,acv=g.acv*1000;
-  const baseC=r.sim.closed.reduce((a,c)=>a+(c.base||0),0);
-  const newC=Math.max(0,r.wins2027-baseC);
-  const baseArr=baseC*acv,newArr=Math.max(0,r.arr2027-baseArr);
-  const entIds=S.channels.filter(x=>x.entDeal).map(x=>x.id);
-  const entC=r.sim.closed.reduce((a,c)=>a+entIds.reduce((y,id)=>y+(c[id]||0),0),0);
-  const tgtL=num(g.targetLogos),tgtA=num(g.targetArr)*1e6;
-  const pipe=S.channels.filter(c=>c.kind!=='abm').reduce((a,c)=>a+((r.ch[c.id]&&r.ch[c.id].opps)||0)*acvK(c)*1000,0);
-  return {baseC,newC,baseArr,newArr,entC,midC:newC-entC,slip:Math.max(0,r.newWins-newC),tgtL,tgtA,
-    gapL:Math.max(0,tgtL-baseC-newC),gapA:Math.max(0,tgtA-r.arr2027),cap:r.cap.reduce((a,b)=>a+b,0),pipe};
-}
-function renderRoad(r,sel){
-  const g=S.global,d=road(r),fmt=x=>Math.round(x).toLocaleString('en-US'),o=S.scenarios[sel];
-  const entNeed=d.tgtL*num(g.entLogoShare)/100,midNeed=Math.max(0,d.tgtL-entNeed-d.baseC);
-  const col=`var(${SCVAR[sel]})`;
-  const bar=(label,parts,tgt,fv)=>{const tot=parts.reduce((a,p)=>a+p.v,0),mx=Math.max(tgt,tot)*1.04;
-    return `<div class="rdrow"><div class="rdlab">${label}</div><div class="rdtrack">${parts.filter(p=>p.v>0.05).map(p=>`<i class="${p.cls}" style="width:${p.v/mx*100}%;${p.bg?'background:'+p.bg:''}" title="${p.t}: ${fv(p.v)}">${p.v/mx>0.07?fv(p.v):''}</i>`).join('')}<em style="left:${tgt/mx*100}%"><span>Target ${fv(tgt)}</span></em></div></div>`;};
-  const hitL=d.gapL<0.5,hitA=d.gapA<50000,hit=hitL&&hitA;
-  const full=r.capHit&&!hit;
-  const status=(hit?'. Target reached.':hitA?`. ARR target reached, ${fmt(d.gapL)} logos short.`:`. ${fmt(d.gapL)} logos and ${M$(d.gapA,1)} short.`)+(full?` <span class="full">The AEs are full: ${fmt(d.slip)} more wins wait. More budget won't help without ${sdrMode(sel)?'a 4th AE':'an SDR or a 4th AE'}.</span>`:'');
-  const head=`Inbound brings <b>${fmt(d.baseC)} logos, ${M$(d.baseArr,1)}</b>. ${sel==='A'&&!r.has?'Plan A has no budget yet.':`Plan ${sel} adds <b class="${hit?'':'no'}">${fmt(d.newC)}</b>${status}`}`;
-  const capTxt=`${g.aes} AEs${o.ae4?` + a 4th AE from Q${o.ae4Start}`:''}${sdrMode(sel)?` + ${SDRNAME[sdrMode(sel)].replace('SDR agency','an SDR agency')} from Q${sdrStartQ(sel)}`:''}`;
-  const wasOpen=!!(document.querySelector('#wbRoad details')||{}).open;
-  document.getElementById('wbRoad').innerHTML=`<p class="roadhead">${head}</p>`+
-    bar('Logos',[{v:d.baseC,cls:'base',t:'Today\'s inbound'},{v:d.newC,cls:'',bg:col,t:'Outbound'},{v:d.gapL,cls:'gap',t:'Gap'}],d.tgtL,v=>fmt(v))+
-    bar('ARR',[{v:d.baseArr,cls:'base',t:'Today\'s inbound'},{v:d.newArr,cls:'',bg:col,t:'Outbound'},{v:d.gapA,cls:'gap',t:'Gap'}],d.tgtA,v=>M$(v,1))+
-    `<div class="rdcap">${capTxt} can close <b>${fmt(d.cap)} logos</b> in 2027.${d.cap<d.tgtL?` ${fmt(d.tgtL-d.cap)} short of ${fmt(d.tgtL)}, whatever the budget.`:''}</div>
-    <details class="more"${wasOpen?' open':''}><summary>Show the detail</summary>
-    <div class="rdleg">
-      <div><span class="k">Protect: today's inbound</span><b>${fmt(d.baseC)} · ${M$(d.baseArr,1)}</b>${g.baseLeads} qualified leads a month at ${g.baseL2O}% and ${g.baseO2W}%.</div>
-      <div style="border-top-color:${col}"><span class="k">Outbound</span><b>${fmt(d.newC)} · ${M$(d.newArr,1)}</b>${r.has?`${fmt(d.entC)} enterprise + ${fmt(d.midC)} mid-market, closed in 2027.`:'No budget yet.'}</div>
-      <div class="gap"><span class="k">Gap to target</span><b>${hit?'None':(hitL?'0 logos':fmt(d.gapL)+' logos')+' · '+(hitA?'ARR covered':M$(d.gapA,1))}</b>${hit?'The target is covered.':hitA?'ARR is there; the logo count isn\'t.':'Still missing in 2027.'}</div>
-      <div class="slip"><span class="k">Slips to 2028</span><b>${fmt(d.slip)} logos</b>Won by the budget but closed after 2027: timing or sales capacity.</div>
-    </div>
-    ${r.has?`<div class="rdtime"><b>Timing caveat: the budget starts in January 2027.</b> With a ${g.cycle}-month sales cycle, nothing it buys closes in Q1, which runs on inbound alone. About half of what Q3 spend buys and all of Q4 lands in 2028. That's most of the ${fmt(d.slip)} logos slipping. To limit it without spending early: do the free prep in Q4 2026 (named-account list, tracking, hand-off rules, Q1 events booked) so spend goes live on 2 January, ${sdrMode(sel)?`build MQLs in Q1 so the SDRs have conversations to pick up from Q${sdrStartQ(sel)}, `:''}weight spend to the first half (now ${phasing(sel).w.map(x=>Math.round(x*100)).join('/')}), and treat Q4 2027 spend as 2028 pipeline.</div>`:''}
-    </details>`;
-  return d;
-}
-function renderWorkBack(R){
-  const g=S.global,sel=wbSel(),r=R[sel],fmt=x=>fin(x)?Math.round(x).toLocaleString('en-US'):'—';
-  document.getElementById('wbPanel').style.borderLeftColor=`var(${SCVAR[sel]})`;
-  const inp=document.getElementById('wbBudget');
-  if(document.activeElement!==inp)inp.value=r.has?Math.round(totalBudget(sel)):'';
-  const A=S.scenarios.A;
-  document.getElementById('wbMix').innerHTML=sel==='A'
-    ?(r.has?`Your plan. Edit the split under <a href="#inputs">Inputs</a>.`:'Type a budget to build your plan.')
-    :`The brief's plan ${sel}. Type a number to build your own.`;
-  if(sel==='A'&&r.has&&sdrK('A'))document.getElementById('wbMix').innerHTML+=` SDR included.`;
-  const lab={A:'A · Your budget',B:'B · Brief',C:'C · Brief'};
-  const so=S.scenarios[sel];
-  const g2=S.global,inK=Math.round(num(g2.sdrInCost)*(5-sdrStartQ(sel))/4),agK=Math.round(num(g2.sdrAgCost)*Math.min(1,(5-sdrStartQ(sel))/3));
-  const ok=sdrOk(sel);
-  document.getElementById('wbTeam').innerHTML=`<span class="wbk">Sales support</span>${!ok?`<span class="small muted">SDR support from a $${sdrMin()}k budget</span>`:''}<label${ok?'':' style="display:none"'}>SDR <select data-p="scenarios.${sel}.sdr" style="width:auto"><option value="0" ${sdrMode(sel)===0?'selected':''}>None</option><option value="1" ${sdrMode(sel)===1?'selected':''}>1 in-house SDR · $${inK}k</option><option value="2" ${sdrMode(sel)===2?'selected':''}>Agency, 3 SDRs · $${agK}k</option></select></label><label><input type="checkbox" data-p="scenarios.${sel}.ae4" ${so.ae4?'checked':''}> 4th AE <span class="muted">optional · +$${Math.round(num(g2.aeCost)*(5-(+so.ae4Start||1))/4)}k sales budget</span></label>`;
-  document.getElementById('wbCost').innerHTML=r.has?`Channels <b>$${Math.round(chanBudget(sel))}k</b>${sdrK(sel)?` + ${SDRNAME[sdrMode(sel)]} from Q${sdrStartQ(sel)} <b>$${Math.round(sdrK(sel))}k</b>`:''} = <b>$${Math.round(totalBudget(sel))}k</b> marketing budget.${aeK(sel)?` Plus <b>$${Math.round(aeK(sel))}k</b> more in the sales budget for the 4th AE.`:''}`:'';
-  const D=renderRoad(r,sel);
-  document.getElementById('wbBtns').innerHTML=SC.map(s=>`<button class="wbbtn ${s}" data-act="view" data-v="${s}" aria-pressed="${s===sel}">${lab[s]}<small>${hasBudget(s)?'$'+Math.round(totalBudget(s))+'k':'Empty'}</small></button>`).join('');
-  const F=wbFunnel(r),pb=fin(r.payback)&&r.payback>g.paybackTarget;
-  const t=(k,v,sub,cls)=>`<div class="wbt"><div class="k">${k}</div><div class="v ${cls||''}">${r.has?v:'—'}</div><div class="s">${r.has?sub:'&nbsp;'}</div></div>`;
-  document.getElementById('wbTiles').innerHTML=
-    t('Marketing leads (MQL)',fmt(F.mql),`${fmt(F.mql/12)} a month`)+
-    t('Pipeline created',M$(D.pipe,1),`${fmt(r.opps)} opportunities`)+
-    t('New logos in 2027',`${fmt(r.wins2027)}<span class="of"> / ${g.targetLogos}</span>`,`${fmt(D.baseC)} inbound + ${fmt(D.newC)} outbound${r.capHit?` · <b>AEs full</b>, ${fmt(D.slip)} wait`:''}`,r.wins2027<g.targetLogos-0.5?'short':'')+
-    t('New ARR in 2027',M$(r.arr2027,1),`vs. $${g.targetArr}M target`,r.arr2027<g.targetArr*1e6-50000?'short':'')+
-    t('CAC',k$(r.cac),'Cost per new logo')+
-    t('Payback',`${n1(r.payback)}<span style="font-size:.45em"> mo</span>`,`Target ≤ ${g.paybackTarget} months`,pb?'bad':'');
-  document.getElementById('wbNote').textContent=r.has?`Logos and ARR count everything that closes in 2027, today's inbound included. MQLs, pipeline, CAC and payback cover only what the budget creates.`:'';
-  const fe=document.getElementById('wbFunnel');
-  if(!r.has){fe.innerHTML='<div class="wbempty">Plan A is empty. Type a budget above or pick B or C.</div>';document.getElementById('wbLede').textContent='';return;}
-  const T=goalNeeds(),inL=T.inL,inO=T.inO,inW=T.inW;
-  const sqlT=inL+F.sql,asgT=sqlT*num(g.sql2assign)/100,oppT=inO+F.opp,wonT=inW+F.won;
-  const chip=(v,t)=>v>=t-0.5?`<span class="chip ok">✓ target ${fmt(t)}</span>`:`<span class="chip no">${fmt(t-v)} short of ${fmt(t)}</span>`;
-  document.getElementById('wbLede').innerHTML=`The budget fills the top four rows. Inbound joins at SQL.`;
-  const W=[100,95,90,85,82,78,74,70,66],bg=['var(--surface)','var(--surface)','var(--magenta-light)','var(--magenta-light)','var(--blue-light)','var(--blue-light)','var(--blue)','var(--green)','var(--green-bright)'];
-  const arrChip=r.arr2027>=num(g.targetArr)*1e6-50000?`<span class="chip ok">✓ ${M$(r.arr2027,1)} of $${g.targetArr}M</span>`:`<span class="chip no">${M$(r.arr2027,1)} of $${g.targetArr}M</span>`;
-  const wsc=wbSel(),wso=S.scenarios[wsc],abmB=budget(wsc,'abm'),contact=abmB>=num(g.abmContactMin),lift=contact?num(g.abmContactUplift):num(g.abmUplift);
-  const sdrOn=sdrMode(wsc)>0,act=budget(wsc,'activations')>0,ev=budget(wsc,'events')>0,par=budget(wsc,'partners')>0;
-  const WHY=[
-    '',
-    contact?'Contact-level ABM reaches the whole buying group':r.abmOn?'ABM points every channel at named accounts':'',
-    '',
-    (act||ev)?`${act?'Activations and events':'Events'} turn engaged contacts into meetings`:'',
-    sdrOn?`SDRs qualify and keep leads warm: +${g.sdrLift} pts to opportunity`:'',
-    '',
-    r.abmOn?`ABM lifts lead → opp by ${lift} pts${contact?' (contact-level)':''}`:'',
-    (par||act)?`${par&&act?'Partner and activation':par?'Partner':'Activation'} deals win 1 in 4`:'',
-    wso.ae4?`4th AE adds ${g.aeCap} closes a quarter${sdrOn?', SDRs free AE time':''}`:sdrOn?`SDRs free AE time: +${g.sdrCapLift} closes per AE a quarter`:'More closes need SDRs or a 4th AE'
-  ];
-  const row=(i,label,how,v,sub)=>`<div class="rrow" style="width:${W[i]}%;background:${bg[i]}"><span class="rl">${label}${how?`<span class="rs">${how}</span>`:''}${WHY[i]?`<span class="why">↑ ${WHY[i]}</span>`:''}</span><b>${fmt(v)}</b><span class="rr">${sub}</span></div>`;
-  const pr=(a,b)=>a>0?pct(b/a):'—';
-  fe.innerHTML=`<div class="rfun wbf">${
-    row(0,'Accounts','',F.acc,`${fmt(F.entAcc)} enterprise · ${fmt(F.midAcc)} mid-market`)+
-    row(1,'Contacts',`${g.cpaEnt} per enterprise, ${g.cpaMid} per mid-market account`,F.con,'')+
-    row(2,'New leads',`${g.contact2lead}% of contacts`,F.nl,`${fmt(F.nl/12)} a month`)+
-    row(3,'MQLs',`${g.lead2mql}% of new leads`,F.mql,`${fmt(F.mql/12)} a month`)+
-    `<div class="wbdiv">+ ${fmt(inL/12)} inbound leads a month join here</div>`+
-    row(4,'SQLs',`${g.mql2sql}% of MQLs + inbound`,sqlT,`${fmt(sqlT/12)} a month<br>${chip(sqlT,T.sql)}`)+
-    row(5,'Assigned to an AE',`${g.sql2assign}% of SQLs`,asgT,`${fmt(asgT/g.aes/12)} a month per AE`)+
-    row(6,'Opportunities',`${pr(asgT,oppT)} of assigned`,oppT,chip(oppT,T.opp))+
-    row(7,'Logos won',`${pr(oppT,wonT)} of opportunities`,wonT,`Pipeline ${wonT>=T.won-0.5?'covers':'misses'} the target`)+
-    `<div class="wbdiv">− ${fmt(wonT-r.wins2027)} wait for an AE or close in 2028</div>`+
-    row(8,'Closed in 2027',`limited by ${S.scenarios[wbSel()].ae4?'4':g.aes} AEs and timing`,r.wins2027,`${chip(r.wins2027,T.won)}<br>${arrChip}`)
-  }</div>`;
-}
-function setBudgetA(v){
-  const A0=S.scenarios.A;
-  if(v==null||!(v>0)){S.scenarios.A=clone(DEFAULTS.scenarios.A);return;}
-  let mix=A0.wbMix,from=A0.wbFrom;
-  if(!mix){
-    const src=hasBudget('A')?'A':(SC.includes(view)&&view!=='A'?view:'B');
-    if(src!=='A'){S.scenarios.A=clone(S.scenarios[src]);from=src;}else from=null;
-    const t=chanBudget(src);mix={};S.channels.forEach(c=>{const b=budget(src,c.id);if(b)mix[c.id]=b/t;});
-  }
-  const A=S.scenarios.A;A.budget={};const am=+(A.sdr||0),ak=sdrCostOf(am,sdrStartQ('A')),cv=Math.max(0,v>=sdrMin()&&am?v-ak:v);A.wbTotal=v;
-  Object.entries(mix).forEach(([id,sh])=>{A.budget[id]=Math.round(cv*sh*10)/10;});
-  A.wbMix=mix;A.wbFrom=from;
-}
-document.getElementById('wbBudget').addEventListener('input',e=>{
-  const v=e.target.value===''?null:+e.target.value;
-  setBudgetA(v);view='A';renderTabs();renderBudgetTable();save();update();
-});
-
-/* ---------- channel picker ---------- */
-const CH=[
-  {n:1,name:'Partners and referrals',c:'--green',ids:['partners'],why:'Highest win rate and larger deals. Agencies and platforms already sit inside the brands we want. Pay on wins, not on promises.',
-   groups:[['How I\'d run it',['<b>Learn first.</b> Who refers today, why, and how those deals convert compared with other sources.','<b>Pick partner types that sell to the same buyer:</b> agencies that design or develop collections, PLM and fashion-tech implementers, sourcing agents and manufacturers, design schools.','<b>Pilot small.</b> 3–5 partners, a simple kit (deck, demo account, case studies), referrals tracked in Attio, commission on first-year ACV paid only on won deals.','<b>Decide in Q2.</b> Scale what brings opportunities, drop the rest.']],
-     ['Measure',['Partner-sourced opportunities and win rate','Active partners and intros a month','Watch: commission cost per win']]],
-   note:'Open question for Fermat: is partner commission paid from the growth budget or from revenue?'},
-  {n:2,name:'ABM on named accounts',c:'--blue',ids:['abm','activations'],why:'The ICP of $100M–$5B brands is a list you can name. Build it, score it, and point every other channel at it.',
-   groups:[['How I\'d run it',['Build the list and map the buying group: Heads of Design, Product and Digital','Define the obsession logos with sales','LinkedIn and contact-based ads to the same people','SDRs call when someone visits or clicks, not when a score fills up']],
-     ['Measure',['Opportunities from named accounts','Engaged accounts and buying-group coverage','Watch: share of pipeline from the list']]]},
-  {n:3,name:'Events: attend and host, no booths',c:'--magenta',ids:['events'],why:'Go where the buyers are, book meetings before the trip, and host small dinners for named accounts.',
-   groups:[['How I\'d run it',['Review the events already committed to before adding new ones','Book meetings with named accounts before every trip','Host small dinners instead of buying booths','Follow up within a week, with the AE on the account']],
-     ['Measure',['Opportunities within 60 days of the event','Meetings booked before and at the event','Watch: cost per opportunity per event']]]},
-  {n:4,name:'Paid enterprise, as an ABM layer',c:'--blue-light',group:'paid',why:'Target the named list, retarget engaged accounts, and judge it on cost per opportunity, not clicks.',
-   groups:[['How I\'d run it',['LinkedIn, about 70%: warm the whole buying group','Google search, about 15%: catch buyers already looking','Paid ChatGPT, about 5%: a test to find designer champions','Reddit, 3–5%: mostly time, in designer communities']],
-     ['Measure',['Cost per opportunity','Cost per qualified lead and share of spend on named accounts','Watch: leads outside the ICP']]],
-   note:'<a href="#paid">See each paid channel\'s job and keep-or-cut rule →</a>'},
-  {n:'×',name:"What I won't do",no:true,c:'--ink',why:'Four things that look like growth but would spend the budget without filling the pipeline.',
-   groups:[['Not in 2027',['<b>Broad awareness paid.</b> Reach without a named account behind it doesn\'t turn into pipeline this year.','<b>Booth sponsorships.</b> High cost, badge scans, few buyers.','<b>Mass cold outbound.</b> It burns the list we need for ABM, and the brand with it.','<b>SEO as a 2027 pipeline channel.</b> Worth starting, too slow to count on this year.'],'no']]}
-];
-let chSel=0;
-try{const v=+localStorage.getItem('fermat-ch');if(v>=0&&v<CH.length)chSel=v;}catch(e){}
-function chBudget(c,sc){return c.group?S.channels.filter(x=>x.group===c.group).reduce((a,x)=>a+budget(sc,x.id),0):(c.ids||[]).reduce((a,id)=>a+budget(sc,id),0);}
-function renderCH(){
-  document.getElementById('chPick').innerHTML=CH.map((c,i)=>`<button class="tlstep${c.no?' no':''}" style="--c:var(${c.c})" data-ch="${i}" aria-pressed="${i===chSel}"><span class="n">${c.n}</span><b>${c.name}</b></button>`).join('');
-  const c=CH[chSel],bud=c.no?'':`<div class="chbud"><span>Plan B<b>$${Math.round(chBudget(c,'B'))}k</b></span><span>Plan C<b>$${Math.round(chBudget(c,'C'))}k</b></span></div>`;
-  const panel=document.getElementById('chPanel');
-  panel.style.borderTop=`6px solid var(${c.c})`;
-  panel.innerHTML=`<div class="tlhead"><div><div class="w">${c.no?'Not doing':'Rank '+c.n}</div><h3>${c.name}</h3><p class="tlgoal">${c.why}</p></div>${bud}</div><div class="tlgroups">${c.groups.map(([k,items,cls])=>`<div class="tlg ${cls||''}"><div class="k">${k}</div><ul>${items.map(x=>`<li>${x}</li>`).join('')}</ul></div>`).join('')}</div>${c.note?`<p class="chnote">${c.note}</p>`:''}<div class="tlnav" style="margin-top:16px"><button data-chnav="-1" ${chSel<=0?'disabled':''}>← Back</button><button data-chnav="1" ${chSel>=CH.length-1?'disabled':''}>Next →</button></div>`;
-}
-document.addEventListener('click',e=>{
-  const st=e.target.closest('[data-ch]'),nv=e.target.closest('[data-chnav]');
-  if(!st&&!nv)return;
-  chSel=st?+st.dataset.ch:Math.max(0,Math.min(CH.length-1,chSel+(+nv.dataset.chnav)));
-  try{localStorage.setItem('fermat-ch',chSel);}catch(e){}
-  renderCH();
-});
-renderCH();
-
 /* ---------- 90-day timeline ---------- */
 const TL=[
-  {when:'Days 1–30',title:'Listen and set up',c:'--surface-2',goal:'Learn what wins today before spending on anything new.',groups:[
+  {when:'Days 1–30',title:'Listen and set up',c:'--surface-2',goal:'Learn what wins today before spending on anything new.',
+   own:[['Measurement in Attio','ICP check + best 20 deals','Handoff rules with AEs',"Take over Martí's webinar",'First prospecting lists'],['Case-study needs, with sales'],['Closing deals (AEs)']],
+   groups:[
     ['Questions to answer',["What's our pitch?",'Who is sales targeting?']],
-    ['Strategy',['Analyse the best 20 deals and find 2–3 narratives to test in ads','Review inbound and scoring: what can be qualified today, and what needs more engagement','Review the events already committed to','Set up basic scoring in Attio']],
+    ['Strategy',['Analyse the best 20 deals and find 2–3 narratives to test in ads','Review inbound and scoring: what can be qualified today, and what needs more engagement','Review the events already committed to','Set up basic scoring in Attio','AE air cover: qualified-lead definition, scoring, follow-up time, and an account brief before every first call']],
     ['Tactics',['A simple email workflow with a cohort of 20 companies, for 2 months','Account-based targeting on LinkedIn, for 2 months']],
     ["What I won't do",['Switch on 5 channels at the same time','Put money into paid before inbound has a proper handoff'],'no']]},
-  {when:'Days 31–60',title:'Test the story',c:'--magenta-light',goal:'Test two stories lightly and start ABM with sales.',groups:[
-    ['Strategy',['Explore founder-led sales: build a universe around Pol, with brand and comms (LinkedIn plan, videos, features)','Kick off ABM with sales: define the obsession logos']],
-    ['Tactics',['Narrative tests: two Pol videos and one designer creator pilot, with brand and comms','First case study from the best 20 deals']]]},
-  {when:'Days 61–90',title:'Decide',c:'--blue-light',goal:'Sign off how marketing and sales work the named accounts.',groups:[
-    ['Milestone',['ABM strategy signed off: handoff, pitches per account type, tools, SDR decision']]]},
-  {when:'Month 3',title:'The ABM strategy',c:'--blue',flag:true,goal:'Four questions, answered and signed off with sales.',groups:[
-    ['Questions',['How do we define the handoff between marketing and sales?','How do we build a pitch for each type of account?','Which tools do we need, and which ones do we skip?','Do we need an in-house SDR, or can the AEs cover it?']]]},
-  {when:'Months 4–5',title:'Run and read',c:'--surface',quiet:true},
-  {when:'Month 6',title:'The narrative',c:'--magenta',flag:true,goal:'Neither founder-led nor product-led growth is switched on yet. Test both lightly in Q1, read the results, and commit to one story by month 6. Built with brand and comms.',opts:[
-    ['Option 1','Founder-led media kit','Build an ecosystem around Pol, so buyers know the person behind Fermat before sales calls.',['Video series: how Pol started Fermat, and why idea to delivery should take weeks, not months','LinkedIn plan for Pol: announcements, customer stories, point of view on AI in fashion','Speaking slots and dinners at the big fashion moments'],"Engagement from ICP accounts, inbound that mentions Pol, meetings Pol's content opens"],
-    ['Option 2','Product-led community','Build a community around designers, so champions bring Fermat into their companies.',['Restart the podcast, with designers and heads of design as guests','Find 3–5 fashion creators who make their own clothes to design with Fermat in public','Designer community: challenges, showcases, templates'],'Sign-ups from ICP companies, champions who reach a buyer, content shared by designers']]}
+  {when:'Days 31–60',title:'Test the story',c:'--magenta-light',goal:'Test two stories lightly and start ABM with sales.',
+   own:[['20-account ABM cohort (email + LinkedIn)','Small paid tests','First case study'],['Narrative tests with brand and comms: 2 Pol videos, 1 creator or student pilot, podcast guests'],['Event production (brand team)']],
+   groups:[
+    ['Strategy',['Explore founder-led sales: build a universe around Pol, with brand and comms','Kick off ABM with sales: define the obsession logos']],
+    ['Tactics',['Narrative tests: two Pol videos and one designer creator pilot','First case study from the best 20 deals']]]},
+  {when:'Days 61–90',title:'Decide',c:'--blue-light',goal:'Sign off how marketing and sales work the named accounts.',
+   own:[['Read results','First budget move','ABM strategy: handoff, pitches, tools, SDR?'],['Narrative recommendation: product-led or founder-led'],['Product roadmap']],
+   groups:[['Milestone',['ABM strategy signed off: handoff, pitches per account type, tools, SDR decision']]]},
+  {when:'Month 3',title:'The ABM strategy',c:'--blue',flag:true,goal:'Four questions, answered and signed off with sales.',
+   own:[['The ABM strategy, written and signed off'],['Sales: handoff rules and pitches per account type'],['Headcount decisions']],
+   groups:[['Questions',['How do we define the handoff between marketing and sales?','How do we build a pitch for each type of account?','Which tools do we need, and which ones do we skip?','Do we need an in-house SDR, or can the AEs cover it?']]]},
+  {when:'Months 4–5',title:'Run and read',c:'--surface',goal:'Run what worked and move budget every month.',
+   own:[['Run the chosen motion','Monthly budget moves'],['Paid scaled with an agency, if needed'],['Brand identity and PR (brand and comms)']],
+   groups:[['Focus',['Run the motion that worked in Q1','Move budget monthly, from highest to lowest cost per opportunity','Read lead → opportunity conversion after the handoff fix']]]},
+  {when:'Month 6',title:'The narrative',c:'--magenta',flag:true,goal:'Do buyers not know what Fermat does, or not know why to trust it? Commit to one story, built with brand and comms.',
+   own:[['Narrative recommendation'],['Media kit and podcast with brand'],['Brand identity and PR (brand and comms)']],
+   opts:[
+    ['Product-led',"They don't know what it does.",'Build a community around designers, so champions bring Fermat into their companies.',['Creators who make their own clothes, design-school students (e.g. Elisava)','Champions inside brands','Podcast guests: designers'],'Sign-ups from ICP companies, champions who reach a buyer'],
+    ['Founder-led',"They don't know why to trust it.",'Build an ecosystem around Pol, so buyers know the person behind Fermat before sales calls.',["Pol's story in short videos, LinkedIn, dinners",'Pol opens doors, AEs walk through','Podcast guests: heads of design and leaders'],"Engagement from ICP accounts, meetings Pol's content opens"]]}
 ];
-const tlIdx=TL.map((t,i)=>t.quiet?-1:i).filter(i=>i>=0);
+const tlIdx=TL.map((t,i)=>i);
 let tlSel=0;
 try{const v=+localStorage.getItem('fermat-tl');if(tlIdx.includes(v))tlSel=v;}catch(e){}
 function renderTL(){
-  document.getElementById('tl').innerHTML=TL.map((t,i)=>`<button class="tlstep${t.flag?' flag':''}${t.quiet?' quiet':''}" style="--c:var(${t.c})" ${t.quiet?'disabled':`data-tl="${i}"`} aria-pressed="${i===tlSel}"><span class="w">${t.flag?'Milestone · ':''}${t.when}</span><b>${t.title}</b></button>`).join('');
+  document.getElementById('tl').innerHTML=TL.map((t,i)=>`<button class="tlstep${t.flag?' flag':''}" style="--c:var(${t.c})" data-tl="${i}" aria-pressed="${i===tlSel}"><span class="w">${t.flag?'Milestone · ':''}${t.when}</span><b>${t.title}</b></button>`).join('');
   const t=TL[tlSel],pos=tlIdx.indexOf(tlSel);
+  const own=t.own?`<div class="own">${['I own','With others','Not mine'].map((k,i)=>`<div class="o${i+1}"><span class="k">${k}</span><ul>${t.own[i].map(x=>`<li>${x}</li>`).join('')}</ul></div>`).join('')}</div>`:'';
   const groups=t.groups?`<div class="tlgroups">${t.groups.map(([k,items,cls])=>`<div class="tlg ${cls||''}"><div class="k">${k}</div><ul>${items.map(x=>`<li>${x}</li>`).join('')}</ul></div>`).join('')}</div>`:'';
-  const opts=t.opts?`<div class="tlopts">${t.opts.map(([k,name,why,items,m])=>`<div class="tlopt"><span class="k">${k}</span><span class="nm">${name}</span><p>${why}</p><ul>${items.map(x=>`<li>${x}</li>`).join('')}</ul><p class="m"><b>Measure:</b> ${m}</p></div>`).join('')}</div>`:'';
+  const opts=t.opts?`<div class="tlopts">${t.opts.map(([k,name,why,items,m])=>`<div class="tlopt"><span class="k">${k}</span><span class="nm">"${name}"</span><p>${why}</p><ul>${items.map(x=>`<li>${x}</li>`).join('')}</ul><p class="m"><b>Measure:</b> ${m}</p></div>`).join('')}</div><p class="small" style="margin-top:12px;font-weight:600;color:var(--ink)">Both keep the podcast. What changes is who's on it.</p>`:'';
   const panel=document.getElementById('tlPanel');
   panel.style.borderTop=`6px solid var(${t.c})`;
-  panel.innerHTML=`<div class="tlhead"><div><div class="w">${t.flag?'Milestone · ':''}${t.when}</div><h3>${t.title}</h3><p class="tlgoal">${t.goal}</p></div><div class="tlnav"><button data-tlnav="-1" ${pos<=0?'disabled':''}>← Back</button><button data-tlnav="1" ${pos>=tlIdx.length-1?'disabled':''}>Next →</button></div></div>${groups}${opts}`;
+  panel.innerHTML=`<div class="tlhead"><div><div class="w">${t.flag?'Milestone · ':''}${t.when}</div><h3>${t.title}</h3><p class="tlgoal">${t.goal}</p></div><div class="tlnav"><button data-tlnav="-1" ${pos<=0?'disabled':''}>← Back</button><button data-tlnav="1" ${pos>=tlIdx.length-1?'disabled':''}>Next →</button></div></div>${own}${groups}${opts}`;
 }
 document.addEventListener('click',e=>{
   const st=e.target.closest('[data-tl]'),nv=e.target.closest('[data-tlnav]');
@@ -1629,23 +1216,22 @@ document.addEventListener('click',e=>{
 });
 renderTL();
 
-/* ---------- roadmap highlights ---------- */
-(function(){
-  const rm=document.getElementById('rm');if(!rm)return;
-  const COLS=['Days 0–30','Days 31–60','Days 61–90','Months 4–6'];
-  rm.querySelectorAll('.rm-cell').forEach(c=>c.dataset.label=COLS[+c.dataset.col]);
-  let pinned=null;
-  const show=i=>{
-    if(i==null){rm.classList.remove('focus');rm.querySelectorAll('.on').forEach(e=>e.classList.remove('on'));return;}
-    rm.classList.add('focus');
-    rm.querySelectorAll('[data-col],[data-rmcol]').forEach(e=>e.classList.toggle('on',+(e.dataset.col??e.dataset.rmcol)===i));
-  };
-  const colOf=e=>{const c=e.closest('[data-col],[data-rmcol]');return c?+(c.dataset.col??c.dataset.rmcol):null;};
-  rm.addEventListener('mouseover',e=>{if(pinned!=null)return;const ch=e.target.closest('.rm-chip,.rm-mile');if(ch&&rm.querySelector('.rm-grid,.rm-miles').parentNode)show(colOf(ch));});
-  rm.addEventListener('mouseleave',()=>{if(pinned==null)show(null);});
-  rm.addEventListener('focusin',e=>{if(pinned==null)show(colOf(e.target));});
-  rm.addEventListener('click',e=>{const t=e.target.closest('.rm-chip,.rm-mile');if(!t)return;const i=colOf(t);if(i==null)return;pinned=pinned===i?null:i;show(pinned);});
-})();
+/* ---------- page tabs ---------- */
+const PAGES=['answer','diagnosis','model','channels','ninety','appendix'];
+let page=(location.hash||'').slice(1);
+if(!PAGES.includes(page)){try{page=localStorage.getItem('fermat-page')||'';}catch(e){}}
+if(!PAGES.includes(page))page='answer';
+function showPage(p){
+  page=p;
+  document.querySelectorAll('.page').forEach(x=>x.hidden=x.dataset.page!==p);
+  document.querySelectorAll('.ptab').forEach(b=>b.setAttribute('aria-selected',b.dataset.go===p?'true':'false'));
+  try{localStorage.setItem('fermat-page',p);}catch(e){}
+  try{history.replaceState(null,'','#'+p);}catch(e){}
+  window.scrollTo(0,0);
+  if(p==='model'||p==='answer')update();
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)showPage(b.dataset.go);});
+window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(PAGES.includes(h)&&h!==page)showPage(h);});
 
 /* ---------- events ---------- */
 function resolve(path){const parts=path.split('.');let o=S;for(let i=0;i<parts.length-1;i++){const p=parts[i];if(p==='chan'){o=S.channels.find(c=>c.id===parts[++i]);}else o=o[p];if(!o)return [null];}return [o,parts[parts.length-1]];}
@@ -1655,9 +1241,7 @@ function onInput(e){
   const [o,k]=resolve(p);if(!o)return;
   let v;
   if(t.type==='checkbox')v=t.checked;else if(t.type==='text')v=t.value;else if(t.tagName==='SELECT')v=+t.value;else v=t.value===''?null:+t.value;
-  const prevA=/^scenarios\.A\.sdr/.test(p)&&S.scenarios.A.wbMix?totalBudget('A'):null;
   o[k]=v;
-  if(prevA!=null){setBudgetA(prevA);renderBudgetTable();}
   if(p.startsWith('scenarios.A.budget.'))delete S.scenarios.A.wbMix;
   document.querySelectorAll(`[data-p="${p}"]`).forEach(x=>{if(x!==t&&x.type!=='checkbox'&&x.tagName!=='SELECT'){x.value=(v==null?(x.type==='range'?x.min:''):v);}});
   if(t.type==='text'&&e.type==='input'){save();update();return;}
@@ -1681,7 +1265,7 @@ document.addEventListener('click',e=>{
     document.getElementById('nName').value='';renderInputs();save();update();
   }
 });
-renderInputs();update();
+renderInputs();showPage(page);update();
 })();
 </script>
 </body>
