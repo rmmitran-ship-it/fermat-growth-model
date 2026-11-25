@@ -327,6 +327,52 @@ details.more.big>summary{font-size:15px;padding:12px 18px;background:var(--surfa
 .chip.no{background:var(--white);color:var(--red)}
 .wbdiv{width:82%;font-size:12px;font-weight:600;color:var(--ink);border-top:1px dashed var(--ink);padding-top:6px;margin:4px 0 0;text-align:center}
 .wbf .why{display:block;margin-top:4px;font-weight:600;font-size:11.5px;color:var(--magenta-deep)}
+.rm{margin:8px 0 24px}
+.rm-miles,.rm-grid{display:grid;grid-template-columns:170px repeat(4,minmax(0,1fr));column-gap:4px}
+.rm-miles{position:relative;align-items:end;margin-bottom:10px}
+.rm-miles::after{content:'';position:absolute;left:170px;right:0;bottom:6px;height:2px;background:var(--ink)}
+.rm-mile{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;align-items:flex-end;text-align:right;gap:8px;padding-right:0;position:relative;z-index:1}
+.rm-mile i{display:block;width:14px;height:14px;background:var(--ink)}
+.rm-ml{font-size:12px;line-height:1.3;color:var(--text);max-width:22ch}
+.rm-ml b{display:block;font-family:'Inter Tight';font-size:15px;font-weight:700;letter-spacing:-0.024em;color:var(--ink)}
+.rm-mile:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+.rm-grid{row-gap:4px}
+.rm-hcell{font-family:'Inter Tight';font-weight:600;font-size:15px;letter-spacing:-0.024em;color:var(--ink);padding:6px 10px;border-bottom:1px solid var(--ink)}
+.rm-lab{font-family:'Inter Tight';font-weight:700;font-size:15px;letter-spacing:-0.024em;color:var(--ink);padding:14px 12px;display:flex;align-items:center}
+.rm-cell{padding:10px;display:flex;flex-direction:column;gap:6px;transition:opacity .15s}
+.rm-own{background:var(--magenta)}
+.rm-set{background:var(--blue-light)}
+.rm-not{background:var(--surface-2);color:#5b5b5b}
+.rm-lab.rm-not{color:#5b5b5b}
+.rm-chip{display:block;background:var(--white);color:var(--ink);font-size:13px;line-height:1.35;padding:7px 9px;cursor:default}
+.rm-not .rm-chip{color:#5b5b5b}
+.rm.focus .rm-cell,.rm.focus .rm-hcell{opacity:.28}
+.rm.focus .rm-cell.on,.rm.focus .rm-hcell.on{opacity:1}
+.rm.focus .rm-mile:not(.on){opacity:.35}
+.rm-run{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px;padding:10px 12px;background:var(--surface)}
+.rm-runl{font-weight:600;font-size:13px;color:var(--ink);margin-right:8px}
+.rm-run .rm-chip{display:inline-block}
+.rm-dec{border-top:1px solid var(--ink);padding-top:24px;margin:32px 0 48px}
+.rm-dec h3{font-size:clamp(22px,2.4vw,30px)}
+.rm-q{font-size:17px;color:var(--ink);margin:8px 0 18px}
+.rm-opts{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:stretch}
+.rm-opt{padding:20px 22px;font-size:14px;color:var(--ink)}
+.rm-opt.pl{background:var(--green)} .rm-opt.fl{background:var(--magenta-light)}
+.rm-opt .k{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em}
+.rm-opt b{display:block;font-family:'Inter Tight';font-size:20px;font-weight:700;letter-spacing:-0.024em;margin:6px 0 10px}
+.rm-opt p{margin-top:6px}
+.rm-pod{font-weight:600}
+.rm-or{align-self:center;font-family:'Inter Tight';font-size:22px;font-weight:700;color:var(--ink)}
+.rm-foot{margin-top:14px;font-size:14px;color:var(--ink);font-weight:600}
+@media (max-width:900px){
+  .rm-miles{display:none}
+  .rm-grid{grid-template-columns:1fr}
+  .rm-hcell{display:none}
+  .rm-lab{padding:12px 10px 4px}
+  .rm-cell::before{content:attr(data-label);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em}
+  .rm-opts{grid-template-columns:1fr}
+  .rm-or{justify-self:center}
+}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -733,6 +779,28 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 <!-- 90 DAYS -->
 <section id="ninety"><div class="wrap">
   <div class="eyebrow">07 · First 90 days</div>
+  <h2>What I own, <span class="hl hl-m">from day one</span>.</h2>
+  <div class="rm" id="rm">
+    <div class="rm-miles"><span></span><button class="rm-mile" data-rmcol="0"><span class="rm-ml"><b>Day 30</b>Foundations in place, every channel measurable</span><i></i></button><button class="rm-mile" data-rmcol="1"><span class="rm-ml"><b>Day 60</b>Narrative tests running</span><i></i></button><button class="rm-mile" data-rmcol="2"><span class="rm-ml"><b>Day 90</b>Narrative decision + ABM strategy signed off</span><i></i></button><button class="rm-mile" data-rmcol="3"><span class="rm-ml"><b>Month 6</b>One repeatable engine</span><i></i></button></div>
+    <div class="rm-grid">
+      <div class="rm-hcell"></div><div class="rm-hcell" data-col="0">Days 0–30 · Foundations</div><div class="rm-hcell" data-col="1">Days 31–60 · First engine</div><div class="rm-hcell" data-col="2">Days 61–90 · Decide</div><div class="rm-hcell" data-col="3">Months 4–6 · Scale</div>
+      <div class="rm-lab rm-own">I own and do</div><div class="rm-cell rm-own" data-col="0"><span class="rm-chip" tabindex="0">Measurement in Attio</span><span class="rm-chip" tabindex="0">ICP check + best 20 deals</span><span class="rm-chip" tabindex="0">Handoff rules with AEs</span><span class="rm-chip" tabindex="0">Take over Martí's webinar</span><span class="rm-chip" tabindex="0">First prospecting lists</span></div><div class="rm-cell rm-own" data-col="1"><span class="rm-chip" tabindex="0">20-account ABM cohort (email + LinkedIn)</span><span class="rm-chip" tabindex="0">Small paid tests</span><span class="rm-chip" tabindex="0">First case study</span></div><div class="rm-cell rm-own" data-col="2"><span class="rm-chip" tabindex="0">Read results</span><span class="rm-chip" tabindex="0">First budget move</span><span class="rm-chip" tabindex="0">ABM strategy: handoff, pitches, tools, SDR?</span></div><div class="rm-cell rm-own" data-col="3"><span class="rm-chip" tabindex="0">Run the chosen motion</span><span class="rm-chip" tabindex="0">Monthly budget moves</span></div>
+      <div class="rm-lab rm-set">I set it up, others deliver</div><div class="rm-cell rm-set" data-col="0"><span class="rm-chip" tabindex="0">Case-study needs, with sales</span></div><div class="rm-cell rm-set" data-col="1"><span class="rm-chip" tabindex="0">Narrative tests with brand and comms: 2 Pol videos, 1 creator or student pilot, podcast guests</span></div><div class="rm-cell rm-set" data-col="2"><span class="rm-chip" tabindex="0">Narrative recommendation: product-led or founder-led</span></div><div class="rm-cell rm-set" data-col="3"><span class="rm-chip" tabindex="0">Media kit and podcast with brand</span><span class="rm-chip" tabindex="0">Paid scaled with an agency, if needed</span></div>
+      <div class="rm-lab rm-not">Not mine</div><div class="rm-cell rm-not" data-col="0"><span class="rm-chip" tabindex="0">Closing deals (AEs)</span></div><div class="rm-cell rm-not" data-col="1"><span class="rm-chip" tabindex="0">Event production (brand team)</span></div><div class="rm-cell rm-not" data-col="2"><span class="rm-chip" tabindex="0">Product roadmap</span></div><div class="rm-cell rm-not" data-col="3"><span class="rm-chip" tabindex="0">Brand identity and PR (brand and comms)</span></div>
+    </div>
+    <div class="rm-run"><span class="rm-runl">Already running: I improve, I don't rebuild</span><span class="rm-chip">Events: pre-event outreach and follow-up on every event</span><span class="rm-chip">Partners: learn why they refer, then pilot 3–5</span></div>
+  </div>
+  <div class="rm-dec">
+    <h3>Day 90: which story do we tell?</h3>
+    <p class="rm-q">Do buyers not know what Fermat does, or not know why to trust it?</p>
+    <div class="rm-opts">
+      <div class="rm-opt pl"><span class="k">Product-led</span><b>"They don't know what it does."</b><p>Creators who make their own clothes, design-school students (e.g. Elisava), champions inside brands.</p><p class="rm-pod">Podcast guests: designers.</p></div>
+      <div class="rm-or">or</div>
+      <div class="rm-opt fl"><span class="k">Founder-led</span><b>"They don't know why to trust it."</b><p>Pol's story in short videos, LinkedIn, dinners. Pol opens doors, AEs walk through.</p><p class="rm-pod">Podcast guests: heads of design and leaders.</p></div>
+    </div>
+    <p class="rm-foot">Both keep the podcast. What changes is who's on it.</p>
+  </div>
+
   <h2>Ninety days to a plan <span class="hl hl-m">we can scale</span>.</h2>
   <p class="lede">Click a step, or use Next.</p>
   <div class="tl" id="tl"></div>
@@ -1560,6 +1628,24 @@ document.addEventListener('click',e=>{
   renderTL();
 });
 renderTL();
+
+/* ---------- roadmap highlights ---------- */
+(function(){
+  const rm=document.getElementById('rm');if(!rm)return;
+  const COLS=['Days 0–30','Days 31–60','Days 61–90','Months 4–6'];
+  rm.querySelectorAll('.rm-cell').forEach(c=>c.dataset.label=COLS[+c.dataset.col]);
+  let pinned=null;
+  const show=i=>{
+    if(i==null){rm.classList.remove('focus');rm.querySelectorAll('.on').forEach(e=>e.classList.remove('on'));return;}
+    rm.classList.add('focus');
+    rm.querySelectorAll('[data-col],[data-rmcol]').forEach(e=>e.classList.toggle('on',+(e.dataset.col??e.dataset.rmcol)===i));
+  };
+  const colOf=e=>{const c=e.closest('[data-col],[data-rmcol]');return c?+(c.dataset.col??c.dataset.rmcol):null;};
+  rm.addEventListener('mouseover',e=>{if(pinned!=null)return;const ch=e.target.closest('.rm-chip,.rm-mile');if(ch&&rm.querySelector('.rm-grid,.rm-miles').parentNode)show(colOf(ch));});
+  rm.addEventListener('mouseleave',()=>{if(pinned==null)show(null);});
+  rm.addEventListener('focusin',e=>{if(pinned==null)show(colOf(e.target));});
+  rm.addEventListener('click',e=>{const t=e.target.closest('.rm-chip,.rm-mile');if(!t)return;const i=colOf(t);if(i==null)return;pinned=pinned===i?null:i;show(pinned);});
+})();
 
 /* ---------- events ---------- */
 function resolve(path){const parts=path.split('.');let o=S;for(let i=0;i<parts.length-1;i++){const p=parts[i];if(p==='chan'){o=S.channels.find(c=>c.id===parts[++i]);}else o=o[p];if(!o)return [null];}return [o,parts[parts.length-1]];}
