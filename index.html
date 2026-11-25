@@ -241,6 +241,11 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 .iocard b{display:block;font-family:'Inter Tight';font-size:26px;font-weight:600;color:var(--ink);letter-spacing:-0.02em;margin:4px 0 2px}
 .iocard b span{font-family:Inter;font-size:12px;font-weight:400;letter-spacing:0;color:var(--muted)}
 .iosub{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.iocall{margin-top:24px;background:var(--green);padding:18px 22px;color:var(--ink);font-size:14px;line-height:1.5}
+.iocall .k{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--green-deep);margin-bottom:8px}
+.iocall ul{margin:0;padding-left:18px}
+.iocall li{margin:4px 0}
+.iocall p{max-width:none;margin-top:10px;font-size:12px;color:var(--green-deep)}
 .iosdr{margin-top:20px;font-size:13px;color:var(--ink);background:var(--surface);padding:12px 16px}
 @media (max-width:900px){.iogrid{grid-template-columns:1fr 1fr}}
 /* deal mix */
@@ -395,7 +400,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
     <div class="iohead"><h3>Inbound vs. outbound</h3><div class="goalin" id="dmIOIn"></div></div>
     <div id="dmIO"></div>
   </div>
-  <p class="small muted mt" id="dmNote"></p>
+  <div class="iocall" id="dmNote"></div>
 </div></section>
 
 <!-- WORK-BACK -->
@@ -1128,8 +1133,15 @@ function renderDealMix(){
       ${card('out1','Outbound, mid-market',midOut,`${pct(num(g.midOutShare)/100)} of the mid-market gap`,'We go to them: brands like Harlow &amp; Pine and Nordvik Studio, sequenced by SDRs with LinkedIn on the same list.')}
       ${card('out0','Outbound, enterprise',entOut,`ABM · ${fmt(g.abmAccounts)} named accounts`,'Brands like Calle Brava: ABM, LinkedIn on the buying group, dinners and events, SDR follow-up.')}
     </div>
-    <p class="iosdr">Outbound means <b>${fmt(outAll/12)} qualified meetings a month</b>. At ${g.sdrMeetings} per SDR, that's <b>${n1(sdrs)} SDRs</b> full time${sdrs>2.5&&sdrs<3.5?', which is what the 3-SDR agency would give.':sdrs<=2.5?'.':', more than a 3-SDR agency.'} No outbound engine exists today, so this is the part to build from zero.</p>`;
-  document.getElementById('dmNote').innerHTML=`Big numbers: midpoint rates. Range: best case (50%, 25%) to conservative (30%, 15%). Together: ${fmt(totL)} qualified leads, ${fmt(E.o[1]+Sm.o[1])} opportunities. Today's inbound is counted as mid-market at the same midpoint rates. ${g.aes} AEs at ${g.aeCap} a quarter close ${fmt(cap)} logos a year, ${m.need>cap?fmt(m.need-cap)+' short':'enough'}: the goal needs ${n1(need)} per AE per quarter.`;
+`;
+  const b0=num(g.baseLeads),inM=inAll/12,outM=outAll/12,step=(inM-b0)/1.5,path=[0,1,2,3].map(i=>fmt(b0+i*step)).join(' → ');
+  const sdrFit=sdrs>2.5&&sdrs<3.5?', about what the 3-SDR agency gives':sdrs<=2.5?', less than a 3-SDR agency':', more than a 3-SDR agency';
+  document.getElementById('dmNote').innerHTML=`<div class="k">In short</div><ul>
+    <li><b>Leads:</b> today ${fmt(b0)} qualified leads a month. ${M$(m.arr,0)} needs <b>${fmt(totL/12)} a month</b> (${fmt(totL)} a year).</li>
+    <li><b>Inbound has to grow ${pct(inM/b0-1)}:</b> from ${fmt(b0)} to about ${fmt(inM)} a month on average. Starting at ${fmt(b0)} in Q1, that's roughly <b>${path} a month</b> by Q4.</li>
+    <li><b>Outbound adds ${fmt(outM)} a month on top:</b> <b>+${pct(outM/b0)}</b> more leads than today, ${pct(outAll/totL)} of the total. That's about ${n1(sdrs)} SDRs at ${g.sdrMeetings} meetings each${sdrFit}, built from zero.</li>
+    <li><b>Sales:</b> ${fmt(totL)} leads become ${fmt(E.o[1]+Sm.o[1])} opportunities and ${fmt(m.need)} logos. ${g.aes} AEs close ${fmt(cap)} a year${m.need>cap?`, ${fmt(m.need-cap)} short: each AE needs ${n1(need)} a quarter instead of ${g.aeCap}, or SDR help or a 4th AE`:', enough'}.</li>
+  </ul><p>Midpoint rates: 40% lead to opportunity, 20% opportunity to won. Range 30–50% and 15–25%.</p>`;
 }
 function dealGoal(){
   const won=goalMix().need;
