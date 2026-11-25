@@ -1368,13 +1368,13 @@ function renderRoad(r,sel){
   const capTxt=`${g.aes} AEs${o.ae4?` + a 4th AE from Q${o.ae4Start}`:''}${sdrMode(sel)?` + ${SDRNAME[sdrMode(sel)].replace('SDR agency','an SDR agency')} from Q${sdrStartQ(sel)}`:''}`;
   const wasOpen=!!(document.querySelector('#wbRoad details')||{}).open;
   document.getElementById('wbRoad').innerHTML=`<p class="roadhead">${head}</p>`+
-    bar('Logos',[{v:d.baseC,cls:'base',t:'Today\'s inbound'},{v:d.newC,cls:'',bg:col,t:'Bought by the budget'},{v:d.gapL,cls:'gap',t:'Gap'}],d.tgtL,v=>fmt(v))+
-    bar('ARR',[{v:d.baseArr,cls:'base',t:'Today\'s inbound'},{v:d.newArr,cls:'',bg:col,t:'Bought by the budget'},{v:d.gapA,cls:'gap',t:'Gap'}],d.tgtA,v=>M$(v,1))+
+    bar('Logos',[{v:d.baseC,cls:'base',t:'Today\'s inbound'},{v:d.newC,cls:'',bg:col,t:'Outbound'},{v:d.gapL,cls:'gap',t:'Gap'}],d.tgtL,v=>fmt(v))+
+    bar('ARR',[{v:d.baseArr,cls:'base',t:'Today\'s inbound'},{v:d.newArr,cls:'',bg:col,t:'Outbound'},{v:d.gapA,cls:'gap',t:'Gap'}],d.tgtA,v=>M$(v,1))+
     `<div class="rdcap">Sales can close <b>${fmt(d.cap)} logos</b> in 2027 with ${capTxt}.${d.cap<d.tgtL?` That's ${fmt(d.tgtL-d.cap)} short of ${fmt(d.tgtL)}, whatever the budget.`:''}</div>
     <details class="more"${wasOpen?' open':''}><summary>Show the detail</summary>
     <div class="rdleg">
       <div><span class="k">Protect: today's inbound</span><b>${fmt(d.baseC)} · ${M$(d.baseArr,1)}</b>${g.baseLeads} qualified leads a month at ${g.baseL2O}% and ${g.baseO2W}%.</div>
-      <div style="border-top-color:${col}"><span class="k">Buy: the budget</span><b>${fmt(d.newC)} · ${M$(d.newArr,1)}</b>${r.has?`${fmt(d.entC)} enterprise + ${fmt(d.midC)} mid-market, closed in 2027.`:'No budget yet.'}</div>
+      <div style="border-top-color:${col}"><span class="k">Outbound</span><b>${fmt(d.newC)} · ${M$(d.newArr,1)}</b>${r.has?`${fmt(d.entC)} enterprise + ${fmt(d.midC)} mid-market, closed in 2027.`:'No budget yet.'}</div>
       <div class="gap"><span class="k">Gap to target</span><b>${hit?'None':(hitL?'0 logos':fmt(d.gapL)+' logos')+' · '+(hitA?'ARR covered':M$(d.gapA,1))}</b>${hit?'The target is covered.':hitA?'ARR is there; the logo count isn\'t.':'Still missing in 2027.'}</div>
       <div class="slip"><span class="k">Slips to 2028</span><b>${fmt(d.slip)} logos</b>Won by the budget but closed after 2027: timing or sales capacity.</div>
     </div>
