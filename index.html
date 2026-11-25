@@ -1148,7 +1148,7 @@ function renderDealMix(){
     <div class="iobar">${seg(inT,'in0','Inbound today')}${seg(midIn,'in1','New inbound')}${seg(midOut,'out1','Outbound, mid-market')}${seg(entOut,'out0','Outbound, enterprise')}</div>
     <div class="iogrid">
       ${card('in0','Inbound today',inT,`Mid-market · about ${fmt(inW)} logos a year`,'Events, partners and brand. Already there: protect it and measure it by source.')}
-      ${card('in1','New inbound',midIn,`Mid-market · ${pct(1-num(g.midOutShare)/100)} of the mid-market gap`,'A by-product of the paid media spend: LinkedIn and events build awareness, then buyers come to us through Google search, AI search, partner referrals and content. No separate budget.')}
+      ${card('in1','New inbound',midIn,`Mid-market · ${pct(1-num(g.midOutShare)/100)} of the mid-market gap`,'A by-product of the paid media spend: LinkedIn, paid search and events build awareness, and buyers then come to us through branded and AI search, partner referrals and content. No separate budget.')}
       ${card('out1','Outbound, mid-market',midOut,`${pct(num(g.midOutShare)/100)} of the mid-market gap`,'We go to them: brands like Harlow &amp; Pine and Nordvik Studio, sequenced by SDRs with LinkedIn on the same list.')}
       ${card('out0','Outbound, enterprise',entOut,`ABM · ${fmt(g.abmAccounts)} named accounts`,'Brands like Calle Brava: ABM, LinkedIn on the buying group, dinners and events, SDR follow-up.')}
     </div>
