@@ -251,6 +251,7 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 .iocall p{max-width:none;margin-top:10px;font-size:12px;color:var(--green-deep)}
 .iosdr{margin-top:20px;font-size:13px;color:var(--ink);background:var(--surface);padding:12px 16px}
 @media (max-width:900px){.iogrid{grid-template-columns:1fr 1fr}}
+.linkbtn{background:none;border:0;padding:0;font:inherit;color:var(--ink);text-decoration:underline;cursor:pointer}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -685,7 +686,7 @@ const DEFAULTS={
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
     {id:'chatgpt',name:'Paid ChatGPT',group:'paid',kind:'lead',cpl:2000,l2o:25,o2w:15,acv:50,abmBoost:false,color:'--blue-mid'},
     {id:'reddit',name:'Reddit',group:'paid',kind:'lead',cpl:2500,l2o:25,o2w:15,acv:50,abmBoost:false,color:'--blue-deep'},
-    {id:'events',name:'Events',kind:'lead',cpl:1000,l2o:40,o2w:20,acv:50,abmBoost:true,diag:true,color:'--magenta'},
+    {id:'events',name:'Additional events',kind:'lead',cpl:1000,l2o:40,o2w:20,acv:50,abmBoost:true,diag:true,color:'--magenta'},
     {id:'partners',name:'Partner program',kind:'lead',cpl:2500,l2o:50,o2w:25,acv:60,commission:true,diag:true,color:'--green'},
     {id:'abm',name:'ABM tools',kind:'abm',color:'--ink'}
   ],
@@ -742,6 +743,7 @@ function migrate(o){
     let left=+v;const ks=Object.keys(PAID_SPLIT);ks.forEach((k,j)=>{const x=j<ks.length-1?Math.round(v*PAID_SPLIT[k]/180/5)*5:left;sc.budget[k]=x;left-=x;});});
   }
   if(o.global.aeCost===110)o.global.aeCost=100;
+  const ev=o.channels.find(c=>c.id==='events');if(ev&&ev.name==='Events')ev.name='Additional events';
   if(o.global.baseLeads===35&&!o.global.base40){o.global.baseLeads=40;}o.global.base40=true;
   if(o.global.baseL2O===45&&!o.global.cal40){o.global.baseL2O=40;}o.global.cal40=true;
   const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
@@ -1219,6 +1221,7 @@ function update(){
 }
 
 /* ---------- work-back ---------- */
+const isBrief=sc=>{const a=S.scenarios[sc].budget,d=DEFAULTS.scenarios[sc].budget,ks=new Set([...Object.keys(a),...Object.keys(d)]);return [...ks].every(k=>num(a[k])===num(d[k]))&&JSON.stringify(S.scenarios[sc].phasing.map(num))===JSON.stringify(DEFAULTS.scenarios[sc].phasing.map(num));};
 const wbSel=()=>SC.includes(view)?view:'B';
 function renderWbInputs(){
   const g=S.global;
@@ -1282,7 +1285,7 @@ function renderWorkBack(R){
   const A=S.scenarios.A;
   document.getElementById('wbMix').innerHTML=sel==='A'
     ?(r.has?`Your plan, spread like ${A.wbFrom?'plan '+A.wbFrom:'your own split'}. Change the split under <a href="#inputs">Inputs</a>.`:'Type a budget to start your own plan from the B mix.')
-    :`The brief's plan ${sel}. Type a different number to start your own plan from this mix.`;
+    :(isBrief(sel)?`The brief's plan ${sel}. Type a different number to start your own plan from this mix.`:`Plan ${sel} has been edited and no longer matches the brief ($${Math.round(totalBudget(sel))}k vs $${sel==='B'?310:550}k). <button class="linkbtn" data-act="resetBC">Reset B and C to the brief</button>`);
   if(sel==='A'&&r.has&&sdrK('A'))document.getElementById('wbMix').innerHTML+=` The SDR comes out of the total, so channels get the rest.`;
   const lab={A:'A · Your budget',B:'B · Brief',C:'C · Brief'};
   const so=S.scenarios[sel];
@@ -1369,6 +1372,7 @@ document.addEventListener('click',e=>{
   const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act;
   if(a==='view'){view=b.dataset.v;renderTabs();renderBudgetTable();save();update();}
   else if(a==='copy'){const f=S.scenarios[b.dataset.from];S.scenarios.A=clone(f);view='A';renderInputs();save();update();}
+  else if(a==='resetBC'){['B','C'].forEach(k=>{S.scenarios[k]=clone(DEFAULTS.scenarios[k]);});renderInputs();save();update();}
   else if(a==='clearA'){S.scenarios.A=clone(DEFAULTS.scenarios.A);renderInputs();save();update();}
   else if(a==='reset'){if(!confirm('Reset every input to the defaults?'))return;S=clone(DEFAULTS);view='B';renderInputs();save();update();}
   else if(a==='rmch'){const id=b.dataset.id;S.channels=S.channels.filter(c=>c.id!==id);SC.forEach(s=>delete S.scenarios[s].budget[id]);renderInputs();save();update();}
