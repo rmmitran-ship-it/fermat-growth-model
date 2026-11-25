@@ -253,6 +253,10 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 @media (max-width:900px){.iogrid{grid-template-columns:1fr 1fr}}
 .linkbtn{background:none;border:0;padding:0;font:inherit;color:var(--ink);text-decoration:underline;cursor:pointer}
 .ro{font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.wbjoin{width:100%;display:flex;justify-content:center;padding:10px 0;position:relative}
+.wbjoin span{background:var(--surface-2);border:1px dashed var(--ink);padding:6px 12px;font-size:12px;font-weight:600;color:var(--ink)}
+.okt{color:var(--green-deep);font-weight:600}
+.shortt{color:var(--red);font-weight:600}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -1158,6 +1162,13 @@ function renderDealMix(){
     <li><b>Sales:</b> ${fmt(totL)} leads become ${fmt(E.o[1]+Sm.o[1])} opportunities and ${fmt(m.entN+smWon)} logos. ${g.aes} AEs close ${fmt(cap)} a year${m.need>cap?`, ${fmt(m.need-cap)} short: each AE needs ${n1(need)} a quarter instead of ${g.aeCap}, or SDR help or a 4th AE`:', enough'}.</li>
   </ul><p>Today's inbound converts at ${g.baseL2O}% and ${g.baseO2W}%, my calibration so it closes about ${fmt(inW/4)} logos a quarter, as the brief says (10–12). New leads use the brief's midpoints: 40% and 20% (range 30–50% and 15–25%).</p>`;
 }
+function goalNeeds(){
+  const g=S.global,m=goalMix();
+  const back=w=>{const o=w/(BRIEF.o2w[1]/100);return {o,l:o/(BRIEF.l2o[1]/100)};};
+  const E=back(m.entN),inL=num(g.baseLeads)*12,inO=inL*num(g.baseL2O)/100,inW=inO*num(g.baseO2W)/100;
+  const G=back(Math.max(0,m.smN-inW));
+  return {sql:inL+E.l+G.l,opp:inO+E.o+G.o,won:m.entN+Math.max(m.smN,inW),inL,inO,inW};
+}
 function dealGoal(){
   const won=goalMix().need;
   const opps=won/(BRIEF.o2w[1]/100),leads=opps/(BRIEF.l2o[1]/100);
@@ -1310,10 +1321,13 @@ function renderWorkBack(R){
   document.getElementById('wbNote').textContent=r.has?`Logos and ARR count everything that closes in 2027, today's inbound included. MQLs, pipeline, CAC and payback cover only what the budget creates.`:'';
   const fe=document.getElementById('wbFunnel');
   if(!r.has){fe.innerHTML='<div class="wbempty">Plan A is empty. Type a budget above or pick B or C.</div>';document.getElementById('wbLede').textContent='';return;}
-  document.getElementById('wbLede').innerHTML=`Read it bottom up: to land ${fmt(F.won)} new logos, marketing has to reach ${fmt(F.con)} contacts across ${fmt(F.acc)} accounts. Enterprise is ${pct(num(g.entLogoShare)/100)} of the contacts, matching its share of logos.`;
+  const T=goalNeeds(),inL=T.inL,inO=T.inO,inW=T.inW;
+  const sqlT=inL+F.sql,asgT=sqlT*num(g.sql2assign)/100,oppT=inO+F.opp,wonT=inW+F.won;
+  const vs=(v,t)=>v>=t-0.5?`<span class="okt">target ${fmt(t)}, covered</span>`:`<span class="shortt">target ${fmt(t)}, ${fmt(t-v)} short</span>`;
+  document.getElementById('wbLede').innerHTML=`The top four stages are what the budget's channels have to generate: ${fmt(F.con)} contacts across ${fmt(F.acc)} accounts. From SQL down, today's inbound (${fmt(inL/12)} qualified leads a month) is added, so each stage compares with the $3M target above.`;
   const row=(cls,label,v,sub)=>`<div class="rrow ${cls}"><span class="rl">${label}</span><b>${fmt(v)}</b><span class="rr">${sub}</span></div>`;
   const rate=(k,v,sub)=>`<div class="rrate"><span class="rarr"></span><span class="rpill"><span class="pk">${k}</span><b>${v}</b>${sub?`<span>${sub}</span>`:''}</span></div>`;
-  const W=[100,93,86,79,72,65,58,51],bg=['var(--surface)','var(--surface)','var(--magenta-light)','var(--magenta-light)','var(--blue-light)','var(--blue-light)','var(--blue)','var(--green)'];
+  const W=[100,95,90,85,82,78,74,70],bg=['var(--surface)','var(--surface)','var(--magenta-light)','var(--magenta-light)','var(--blue-light)','var(--blue-light)','var(--blue)','var(--green)'];
   const st=i=>`style="width:${W[i]}%;background:${bg[i]}"`;
   const R2=(i,label,v,sub)=>row('',label,v,sub).replace('class="rrow "',`class="rrow" ${st(i)}`);
   const pr=(a,b)=>a>0?pct(b/a):'—';
@@ -1326,13 +1340,14 @@ function renderWorkBack(R){
     rate('Lead → MQL',g.lead2mql+'%')+
     R2(3,'Engaged leads (MQL)',F.mql,`${fmt(F.mql/12)} a month`)+
     rate('MQL → SQL',g.mql2sql+'%')+
-    R2(4,'Qualified (SQL)',F.sql,`${fmt(F.sql/12)} a month · from cost per lead`)+
+    `<div class="wbjoin"><span>+ today's inbound: ${fmt(inL)} qualified leads a year</span></div>`+
+    R2(4,'Qualified (SQL)',sqlT,`${fmt(sqlT/12)} a month: ${fmt(inL/12)} inbound + ${fmt(F.sql/12)} budget<br>${vs(sqlT,T.sql)}`)+
     rate('SQL → assigned',g.sql2assign+'%')+
-    R2(5,'Assigned to an AE',F.asg,`${fmt(F.asg/g.aes/12)} a month per AE`)+
-    rate('Assigned → opp',pr(F.asg,F.opp),'channel model')+
-    R2(6,'Opportunities',F.opp,`${fmt(F.opp/12)} a month`)+
-    rate('Opp → won',pr(F.opp,F.won),'channel model')+
-    R2(7,'New logos',F.won,`${M$(r.newArr,1)} new ARR · ${fmt(D.newC)} close in 2027`)
+    R2(5,'Assigned to an AE',asgT,`${fmt(asgT/g.aes/12)} a month per AE`)+
+    rate('Assigned → opp',pr(asgT,oppT),'inbound + channels')+
+    R2(6,'Opportunities',oppT,`${fmt(inO)} inbound + ${fmt(F.opp)} budget<br>${vs(oppT,T.opp)}`)+
+    rate('Opp → won',pr(oppT,wonT),'inbound + channels')+
+    R2(7,'New logos won',wonT,`${fmt(inW)} inbound + ${fmt(F.won)} budget · ${vs(wonT,T.won)}<br>${fmt(r.wins2027)} close in 2027 after AE capacity and timing`)
   }</div>`;
 }
 function setBudgetA(v){
