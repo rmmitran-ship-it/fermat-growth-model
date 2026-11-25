@@ -191,6 +191,31 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--ink);outli
 .wbempty{background:var(--surface);padding:32px;color:var(--muted)}
 @media (max-width:1000px){.wbtiles{grid-template-columns:repeat(3,minmax(0,1fr))}.wbgrid{grid-template-columns:1fr}}
 @media (max-width:600px){.wbtiles{grid-template-columns:repeat(2,minmax(0,1fr))}.wbpanel{padding:20px}}
+.wbteam{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;margin-top:16px;font-size:14px;color:var(--ink)}
+.wbteam .wbk{margin:0}
+.wbteam label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.road{margin-top:24px;border:1px solid var(--line);padding:24px 28px 28px}
+.roadhead{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:48ch}
+.roadhead b{font-weight:600;background:var(--green);padding:0 .12em}
+.roadhead b.no{background:var(--magenta-light)}
+.rdrow{display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:center;margin-top:34px}
+.rdlab{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.rdtrack{position:relative;display:flex;height:44px;background:var(--white)}
+.rdtrack i{display:flex;align-items:center;padding:0 10px;overflow:hidden;white-space:nowrap;font-style:normal;font-weight:600;font-size:13px;color:var(--ink);min-width:0}
+.rdtrack i.base{background:var(--base)}
+.rdtrack i.gap,.rdleg .gap{background:repeating-linear-gradient(45deg,var(--white) 0 6px,var(--surface-2) 6px 12px);box-shadow:inset 0 0 0 1px var(--ink)}
+.rdtrack em{position:absolute;top:-24px;bottom:-4px;border-left:2px solid var(--ink)}
+.rdtrack em span{position:absolute;top:0;right:6px;font-style:normal;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap}
+.rdleg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin-top:24px}
+.rdleg>div{padding-top:10px;border-top:6px solid var(--base);font-size:12.5px;color:var(--text)}
+.rdleg>div.gap{background:none;border-top:6px dashed var(--ink);box-shadow:none}
+.rdleg>div.slip{border-top-color:var(--surface-2)}
+.rdleg .k{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.rdleg b{display:block;font-family:'Inter Tight';font-size:22px;font-weight:600;color:var(--ink);letter-spacing:-0.02em;margin:4px 0}
+.rdcap{margin-top:20px;font-size:13px;color:var(--ink);background:var(--surface);padding:12px 16px}
+.wbt .v .of{font-size:.5em;color:var(--muted)}
+.wbt .v.short{color:var(--red)}
+@media (max-width:800px){.rdleg{grid-template-columns:1fr 1fr}.road{padding:20px}}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -332,16 +357,17 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 <!-- WORK-BACK -->
 <section id="plan"><div class="wrap">
   <div class="eyebrow">00 · Budget vs. pipeline</div>
-  <h2>Put in a budget. See the <span class="hl hl-m">pipeline</span> it buys.</h2>
-  <p class="lede">Start from the brief's two budgets, or type your own. Then work it back to the accounts and contacts marketing has to reach.</p>
+  <h2>Protect the inbound. <span class="hl hl-m">Buy the gap</span>.</h2>
+  <p class="lede">The plan doesn't need to buy $3M from scratch. Today's inbound already brings most of the logos. The budget has to buy the gap: mostly the enterprise deals, plus a few mid-market ones.</p>
   <div class="wbpanel" id="wbPanel">
     <div class="wbin">
       <label for="wbBudget" class="wbk">2027 marketing budget</label>
       <div class="wbfield"><span>$</span><input id="wbBudget" type="number" min="0" step="10" placeholder="Your budget" aria-label="2027 marketing budget in thousands of dollars"><span>k</span></div>
       <p class="small muted" id="wbMix"></p>
     </div>
-    <div class="wbpre"><div class="wbk">Plans</div><div class="wbbtns" id="wbBtns"></div></div>
+    <div class="wbpre"><div class="wbk">Plans</div><div class="wbbtns" id="wbBtns"></div><div class="wbteam" id="wbTeam"></div></div>
   </div>
+  <div class="road" id="wbRoad"></div>
   <div class="wbtiles" id="wbTiles"></div>
   <p class="small muted mt" id="wbNote"></p>
 
@@ -608,7 +634,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{baseLeads:35,baseL2O:45,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90},
+  global:{baseLeads:35,baseL2O:45,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -619,9 +645,9 @@ const DEFAULTS={
     {id:'abm',name:'ABM tools',kind:'abm',color:'--ink'}
   ],
   scenarios:{
-    A:{budget:{},phasing:[null,null,null,null],ae4:false,ae4Start:1},
-    B:{budget:{linkedin:130,google:30,chatgpt:10,reddit:10,events:60,partners:45,abm:25},phasing:[25,25,25,25],ae4:false,ae4Start:1},
-    C:{budget:{linkedin:215,google:50,chatgpt:20,reddit:15,events:150,partners:60,abm:40},phasing:[25,25,25,25],ae4:false,ae4Start:1}
+    A:{budget:{},phasing:[null,null,null,null],ae4:false,ae4Start:1,isr:false,isrStart:1},
+    B:{budget:{linkedin:130,google:30,chatgpt:10,reddit:10,events:60,partners:45,abm:25},phasing:[25,25,25,25],ae4:false,ae4Start:1,isr:false,isrStart:1},
+    C:{budget:{linkedin:215,google:50,chatgpt:20,reddit:15,events:150,partners:60,abm:40},phasing:[25,25,25,25],ae4:false,ae4Start:1,isr:false,isrStart:1}
   }
 };
 const GMETA=[
@@ -633,6 +659,7 @@ const GMETA=[
   {k:'gm',label:'Gross margin',unit:'%',min:40,max:90,step:1,badge:'Given',note:'Brief: 60–70%.'},
   {k:'aes',label:'AEs',unit:'',min:1,max:8,step:1,badge:'Given',note:'Toggle a 4th AE per scenario in the budget table.'},
   {k:'aeCap',label:'AE capacity / quarter',unit:'logos',min:2,max:8,step:0.5,badge:'Given',note:'Brief: 4–5 per AE.'},
+  {k:'isrCap',label:'Inside sales closes / quarter',unit:'logos',min:0,max:6,step:0.5,badge:'Assumed',note:'One inside sales rep qualifies inbound and closes smaller mid-market deals. Half in the first quarter.'},
   {k:'paybackTarget',label:'Target CAC payback',unit:'months',min:6,max:36,step:1,badge:'Given',note:'Payback turns red above this.'},
   {k:'commission',label:'Partner commission',unit:'% of first-year ACV',min:0,max:40,step:1,badge:'Assumed',note:'Added to partner spend on each win.'},
   {k:'targetLogos',label:'2027 logo target',unit:'logos',min:20,max:120,step:1,badge:'Given',note:''},
@@ -703,7 +730,7 @@ function phasing(sc){
 }
 function capacity(sc){
   const g=S.global,s=S.scenarios[sc];
-  return [0,1,2,3].map(q=>{let c=g.aes*g.aeCap;if(s.ae4){const st=(+s.ae4Start||1)-1;if(q===st)c+=g.aeCap/2;else if(q>st)c+=g.aeCap;}return c;});
+  return [0,1,2,3].map(q=>{let c=g.aes*g.aeCap;if(s.ae4){const st=(+s.ae4Start||1)-1;if(q===st)c+=g.aeCap/2;else if(q>st)c+=g.aeCap;}if(s.isr){const st=(+s.isrStart||1)-1;if(q===st)c+=num(g.isrCap)/2;else if(q>st)c+=num(g.isrCap);}return c;});
 }
 function simulate(lines,cap){
   const ids=Object.keys(lines),carry={};ids.forEach(i=>carry[i]=0);
@@ -772,7 +799,8 @@ function renderBudgetTable(){
     }
     h+=`<tr class="total"><td>Total</td>${list.map(s=>cell(s,hasBudget(s)?'$'+Math.round(totalBudget(s))+'k':'—')).join('')}</tr>`;
     h+=`<tr><td>Phasing Q1/Q2/Q3/Q4</td>${list.map(s=>cell(s,hasBudget(s)?phasing(s).w.map(x=>Math.round(x*100)).join(' / '):'—')).join('')}</tr>`;
-    h+=`<tr><td>4th AE</td>${list.map(s=>cell(s,S.scenarios[s].ae4?'Starts Q'+S.scenarios[s].ae4Start:'No')).join('')}</tr></tbody>`;
+    h+=`<tr><td>4th AE</td>${list.map(s=>cell(s,S.scenarios[s].ae4?'Starts Q'+S.scenarios[s].ae4Start:'No')).join('')}</tr>`;
+    h+=`<tr><td>Inside sales</td>${list.map(s=>cell(s,S.scenarios[s].isr?'Starts Q'+(S.scenarios[s].isrStart||1):'No')).join('')}</tr></tbody>`;
     el.innerHTML=sw+`<div class="tw"><table>${h}</table></div><p class="small muted mt">Read-only. Pick a plan above to edit it.</p>`;
     return;
   }
@@ -788,7 +816,7 @@ function renderBudgetTable(){
   let right=`<div class="ptitle">Spend phasing <span class="muted">(% of budget)</span></div>`;
   for(let q=0;q<4;q++)right+=`<div class="prow"><span>Q${q+1}</span>${ctl(`scenarios.${s}.phasing.${q}`,o.phasing[q],0,100,5,'25',25)}</div>`;
   right+=`<div class="prow" style="border-bottom:0"><span></span><span id="phw${s}"></span></div>`;
-  right+=`<div class="ptitle mt2">Sales capacity</div><div class="prow"><span>4th AE</span><label style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input type="checkbox" data-p="scenarios.${s}.ae4" ${o.ae4?'checked':''}> Hire, starts <select data-p="scenarios.${s}.ae4Start" style="width:64px">${[1,2,3,4].map(q=>`<option value="${q}" ${+o.ae4Start===q?'selected':''}>Q${q}</option>`).join('')}</select></label></div><p class="small muted">Half capacity in the first quarter while ramping.</p>`;
+  right+=`<div class="ptitle mt2">Sales capacity</div><div class="prow"><span>4th AE</span><label style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input type="checkbox" data-p="scenarios.${s}.ae4" ${o.ae4?'checked':''}> Hire, starts <select data-p="scenarios.${s}.ae4Start" style="width:64px">${[1,2,3,4].map(q=>`<option value="${q}" ${+o.ae4Start===q?'selected':''}>Q${q}</option>`).join('')}</select></label></div><p class="small muted">Half capacity in the first quarter while ramping.</p><div class="prow"><span>Inside sales</span><label style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input type="checkbox" data-p="scenarios.${s}.isr" ${o.isr?'checked':''}> Hire, starts <select data-p="scenarios.${s}.isrStart" style="width:64px">${[1,2,3,4].map(q=>`<option value="${q}" ${+(o.isrStart||1)===q?'selected':''}>Q${q}</option>`).join('')}</select></label></div><p class="small muted">Qualifies inbound and closes smaller deals: +${S.global.isrCap} logos a quarter.</p>`;
   el.innerHTML=sw+`<div class="planed" style="border-top-color:var(${SCVAR[s]})"><h3>${PLABEL[s]}</h3>${intro}<div class="pgrid"><div>${left}</div><div>${right}</div></div></div>`;
 }
 function renderChanTable(){
@@ -1113,6 +1141,40 @@ function wbFunnel(r){
   const asg=sql*q(g.sql2assign),opp=r.opps,won=r.newWins;
   return {sql,mql,nl,con,entCon,midCon,entAcc,midAcc,acc:entAcc+midAcc,asg,opp,won};
 }
+function road(r){
+  const g=S.global,acv=g.acv*1000;
+  const baseC=r.sim.closed.reduce((a,c)=>a+(c.base||0),0);
+  const newC=Math.max(0,r.wins2027-baseC);
+  const baseArr=baseC*acv,newArr=Math.max(0,r.arr2027-baseArr);
+  const entIds=S.channels.filter(x=>x.entDeal).map(x=>x.id);
+  const entC=r.sim.closed.reduce((a,c)=>a+entIds.reduce((y,id)=>y+(c[id]||0),0),0);
+  const tgtL=num(g.targetLogos),tgtA=num(g.targetArr)*1e6;
+  const pipe=S.channels.filter(c=>c.kind!=='abm').reduce((a,c)=>a+((r.ch[c.id]&&r.ch[c.id].opps)||0)*acvK(c)*1000,0);
+  return {baseC,newC,baseArr,newArr,entC,midC:newC-entC,slip:Math.max(0,r.newWins-newC),tgtL,tgtA,
+    gapL:Math.max(0,tgtL-baseC-newC),gapA:Math.max(0,tgtA-r.arr2027),cap:r.cap.reduce((a,b)=>a+b,0),pipe};
+}
+function renderRoad(r,sel){
+  const g=S.global,d=road(r),fmt=x=>Math.round(x).toLocaleString('en-US'),o=S.scenarios[sel];
+  const entNeed=d.tgtL*num(g.entLogoShare)/100,midNeed=Math.max(0,d.tgtL-entNeed-d.baseC);
+  const col=`var(${SCVAR[sel]})`;
+  const bar=(label,parts,tgt,fv)=>{const tot=parts.reduce((a,p)=>a+p.v,0),mx=Math.max(tgt,tot)*1.04;
+    return `<div class="rdrow"><div class="rdlab">${label}</div><div class="rdtrack">${parts.filter(p=>p.v>0.05).map(p=>`<i class="${p.cls}" style="width:${p.v/mx*100}%;${p.bg?'background:'+p.bg:''}" title="${p.t}: ${fv(p.v)}">${p.v/mx>0.07?fv(p.v):''}</i>`).join('')}<em style="left:${tgt/mx*100}%"><span>Target ${fv(tgt)}</span></em></div></div>`;};
+  const hitL=d.gapL<0.5,hitA=d.gapA<50000,hit=hitL&&hitA;
+  const status=hit?', enough to reach the target.':hitA?`: the ARR is covered (${M$(r.arr2027,1)}), but ${fmt(d.gapL)} logos short.`:`, ${fmt(d.gapL)} logos and ${M$(d.gapA,1)} short.`;
+  const head=`Today's inbound brings <b>${fmt(d.baseC)} logos, ${M$(d.baseArr,1)}</b>. The budget has to buy the gap: ${fmt(entNeed)} enterprise deals and about ${fmt(midNeed)} mid-market. ${sel==='A'&&!r.has?'Plan A has no budget yet.':`Plan ${sel} closes <b class="${hit?'':'no'}">${fmt(d.newC)} more in 2027</b>${status}`}`;
+  const capTxt=`${g.aes} AEs${o.ae4?` + a 4th AE from Q${o.ae4Start}`:''}${o.isr?` + inside sales from Q${o.isrStart||1}`:''}`;
+  document.getElementById('wbRoad').innerHTML=`<p class="roadhead">${head}</p>`+
+    bar('Logos',[{v:d.baseC,cls:'base',t:'Today\'s inbound'},{v:d.newC,cls:'',bg:col,t:'Bought by the budget'},{v:d.gapL,cls:'gap',t:'Gap'}],d.tgtL,v=>fmt(v))+
+    bar('ARR',[{v:d.baseArr,cls:'base',t:'Today\'s inbound'},{v:d.newArr,cls:'',bg:col,t:'Bought by the budget'},{v:d.gapA,cls:'gap',t:'Gap'}],d.tgtA,v=>M$(v,1))+
+    `<div class="rdleg">
+      <div><span class="k">Protect: today's inbound</span><b>${fmt(d.baseC)} · ${M$(d.baseArr,1)}</b>${g.baseLeads} qualified leads a month at ${g.baseL2O}% and ${g.baseO2W}%.</div>
+      <div style="border-top-color:${col}"><span class="k">Buy: the budget</span><b>${fmt(d.newC)} · ${M$(d.newArr,1)}</b>${r.has?`${fmt(d.entC)} enterprise + ${fmt(d.midC)} mid-market, closed in 2027.`:'No budget yet.'}</div>
+      <div class="gap"><span class="k">Gap to target</span><b>${hit?'None':(hitL?'0 logos':fmt(d.gapL)+' logos')+' · '+(hitA?'ARR covered':M$(d.gapA,1))}</b>${hit?'The target is covered.':hitA?'ARR is there; the logo count isn\'t.':'Still missing in 2027.'}</div>
+      <div class="slip"><span class="k">Slips to 2028</span><b>${fmt(d.slip)} logos</b>Won by the budget but closed after 2027: sales capacity or timing.</div>
+    </div>
+    <div class="rdcap">Sales can close <b>${fmt(d.cap)} logos</b> in 2027 with ${capTxt}.${d.cap<d.tgtL?` That's ${fmt(d.tgtL-d.cap)} short of ${fmt(d.tgtL)}, whatever the budget.`:''}</div>`;
+  return d;
+}
 function renderWorkBack(R){
   const g=S.global,sel=wbSel(),r=R[sel],fmt=x=>fin(x)?Math.round(x).toLocaleString('en-US'):'—';
   document.getElementById('wbPanel').style.borderLeftColor=`var(${SCVAR[sel]})`;
@@ -1123,17 +1185,20 @@ function renderWorkBack(R){
     ?(r.has?`Your plan, spread like ${A.wbFrom?'plan '+A.wbFrom:'your own split'}. Change the split under <a href="#inputs">Inputs</a>.`:'Type a budget to start your own plan from the B mix.')
     :`The brief's plan ${sel}. Type a different number to start your own plan from this mix.`;
   const lab={A:'A · Your budget',B:'B · Brief',C:'C · Brief'};
+  const so=S.scenarios[sel];
+  document.getElementById('wbTeam').innerHTML=`<span class="wbk">Sales team</span><label><input type="checkbox" data-p="scenarios.${sel}.ae4" ${so.ae4?'checked':''}> 4th AE</label><label><input type="checkbox" data-p="scenarios.${sel}.isr" ${so.isr?'checked':''}> Inside sales rep</label>`;
+  const D=renderRoad(r,sel);
   document.getElementById('wbBtns').innerHTML=SC.map(s=>`<button class="wbbtn ${s}" data-act="view" data-v="${s}" aria-pressed="${s===sel}">${lab[s]}<small>${hasBudget(s)?'$'+Math.round(totalBudget(s))+'k':'Empty'}</small></button>`).join('');
   const F=wbFunnel(r),pb=fin(r.payback)&&r.payback>g.paybackTarget;
   const t=(k,v,sub,cls)=>`<div class="wbt"><div class="k">${k}</div><div class="v ${cls||''}">${r.has?v:'—'}</div><div class="s">${r.has?sub:'&nbsp;'}</div></div>`;
   document.getElementById('wbTiles').innerHTML=
     t('Marketing leads (MQL)',fmt(F.mql),`${fmt(F.mql/12)} a month`)+
-    t('Opportunities',fmt(r.opps),`${fmt(r.opps/12)} a month`)+
-    t('New logos',fmt(r.newWins),`${fmt(r.incr)} close in 2027, the rest in 2028`)+
-    t('New ARR',M$(r.newArr,1),`${M$(r.arr2027,1)} in 2027 with today's engine`)+
+    t('Pipeline created',M$(D.pipe,1),`${fmt(r.opps)} opportunities`)+
+    t('New logos in 2027',`${fmt(r.wins2027)}<span class="of"> / ${g.targetLogos}</span>`,`${fmt(D.baseC)} inbound + ${fmt(D.newC)} from the budget`,r.wins2027<g.targetLogos-0.5?'short':'')+
+    t('New ARR in 2027',M$(r.arr2027,1),`vs. $${g.targetArr}M target`,r.arr2027<g.targetArr*1e6-50000?'short':'')+
     t('CAC',k$(r.cac),'Spend and commission ÷ new logos')+
     t('Payback',`${n1(r.payback)}<span style="font-size:.45em"> mo</span>`,`Target ≤ ${g.paybackTarget} months`,pb?'bad':'');
-  document.getElementById('wbNote').textContent=r.has?`Pipeline this budget creates on top of today's engine (${g.baseLeads} qualified leads a month). New logos count every win the budget buys; AE capacity decides how many close in 2027.`:'';
+  document.getElementById('wbNote').textContent=r.has?`Logos and ARR count everything that closes in 2027, today's inbound included. MQLs, pipeline, CAC and payback cover only what the budget creates.`:'';
   const fe=document.getElementById('wbFunnel');
   if(!r.has){fe.innerHTML='<div class="wbempty">Plan A is empty. Type a budget above or pick B or C.</div>';document.getElementById('wbLede').textContent='';return;}
   document.getElementById('wbLede').innerHTML=`Read it bottom up: to land ${fmt(F.won)} new logos, marketing has to reach ${fmt(F.con)} contacts across ${fmt(F.acc)} accounts. Enterprise is ${pct(num(g.entLogoShare)/100)} of the contacts, matching its share of logos.`;
@@ -1158,7 +1223,7 @@ function renderWorkBack(R){
     rate('Assigned → opp',pr(F.asg,F.opp),'channel model')+
     R2(6,'Opportunities',F.opp,`${fmt(F.opp/12)} a month`)+
     rate('Opp → won',pr(F.opp,F.won),'channel model')+
-    R2(7,'New logos',F.won,`${M$(r.newArr,1)} new ARR`)
+    R2(7,'New logos',F.won,`${M$(r.newArr,1)} new ARR · ${fmt(D.newC)} close in 2027`)
   }</div>`;
 }
 function setBudgetA(v){
