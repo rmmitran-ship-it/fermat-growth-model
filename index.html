@@ -317,6 +317,14 @@ details.more.big>summary{font-size:15px;padding:12px 18px;background:var(--surfa
 .tacm{margin-top:12px;padding-top:10px;border-top:1px solid rgba(0,0,0,.12);font-weight:600;color:var(--ink)}
 @media (max-width:1000px){.tacgrid{grid-template-columns:1fr 1fr}}
 @media (max-width:600px){.tacgrid{grid-template-columns:1fr}}
+.wbf{gap:6px}
+.wbf .rrow{padding:12px 18px}
+.wbf .rrow .rl{font-size:14px}
+.wbf .rs{display:block;font-weight:400;font-size:12px;color:var(--text);margin-top:2px}
+.chip{display:inline-block;margin-top:4px;padding:2px 8px;font-size:11.5px;font-weight:600}
+.chip.ok{background:var(--white);color:var(--green-deep)}
+.chip.no{background:var(--white);color:var(--red)}
+.wbdiv{width:82%;font-size:12px;font-weight:600;color:var(--ink);border-top:1px dashed var(--ink);padding-top:6px;margin:4px 0 0;text-align:center}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -1414,31 +1422,21 @@ function renderWorkBack(R){
   if(!r.has){fe.innerHTML='<div class="wbempty">Plan A is empty. Type a budget above or pick B or C.</div>';document.getElementById('wbLede').textContent='';return;}
   const T=goalNeeds(),inL=T.inL,inO=T.inO,inW=T.inW;
   const sqlT=inL+F.sql,asgT=sqlT*num(g.sql2assign)/100,oppT=inO+F.opp,wonT=inW+F.won;
-  const vs=(v,t)=>v>=t-0.5?`<span class="okt">target ${fmt(t)}, covered</span>`:`<span class="shortt">target ${fmt(t)}, ${fmt(t-v)} short</span>`;
-  document.getElementById('wbLede').innerHTML=`Top four stages: what the budget generates. From SQL down, inbound is added and each stage is checked against the target.`;
-  const row=(cls,label,v,sub)=>`<div class="rrow ${cls}"><span class="rl">${label}</span><b>${fmt(v)}</b><span class="rr">${sub}</span></div>`;
-  const rate=(k,v,sub)=>`<div class="rrate"><span class="rarr"></span><span class="rpill"><span class="pk">${k}</span><b>${v}</b>${sub?`<span>${sub}</span>`:''}</span></div>`;
+  const chip=(v,t)=>v>=t-0.5?`<span class="chip ok">✓ target ${fmt(t)}</span>`:`<span class="chip no">${fmt(t-v)} short of ${fmt(t)}</span>`;
+  document.getElementById('wbLede').innerHTML=`The budget fills the top four rows. Inbound joins at SQL.`;
   const W=[100,95,90,85,82,78,74,70],bg=['var(--surface)','var(--surface)','var(--magenta-light)','var(--magenta-light)','var(--blue-light)','var(--blue-light)','var(--blue)','var(--green)'];
-  const st=i=>`style="width:${W[i]}%;background:${bg[i]}"`;
-  const R2=(i,label,v,sub)=>row('',label,v,sub).replace('class="rrow "',`class="rrow" ${st(i)}`);
+  const row=(i,label,how,v,sub)=>`<div class="rrow" style="width:${W[i]}%;background:${bg[i]}"><span class="rl">${label}${how?`<span class="rs">${how}</span>`:''}</span><b>${fmt(v)}</b><span class="rr">${sub}</span></div>`;
   const pr=(a,b)=>a>0?pct(b/a):'—';
   fe.innerHTML=`<div class="rfun wbf">${
-    R2(0,'Accounts to target',F.acc,`${fmt(F.entAcc)} enterprise · ${fmt(F.midAcc)} mid-market`)+
-    rate('Contacts per account',`${g.cpaEnt} / ${g.cpaMid}`,'enterprise / mid-market')+
-    R2(1,'Contacts',F.con,`${fmt(F.entCon)} enterprise · ${fmt(F.midCon)} mid-market`)+
-    rate('Contact → lead',g.contact2lead+'%')+
-    R2(2,'New leads',F.nl,`${fmt(F.nl/12)} a month`)+
-    rate('Lead → MQL',g.lead2mql+'%')+
-    R2(3,'Engaged leads (MQL)',F.mql,`${fmt(F.mql/12)} a month`)+
-    rate('MQL → SQL',g.mql2sql+'%')+
-    `<div class="wbjoin"><span>+ today's inbound: ${fmt(inL)} qualified leads a year</span></div>`+
-    R2(4,'Qualified (SQL)',sqlT,`${fmt(sqlT/12)} a month: ${fmt(inL/12)} inbound + ${fmt(F.sql/12)} budget<br>${vs(sqlT,T.sql)}`)+
-    rate('SQL → assigned',g.sql2assign+'%')+
-    R2(5,'Assigned to an AE',asgT,`${fmt(asgT/g.aes/12)} a month per AE`)+
-    rate('Assigned → opp',pr(asgT,oppT),'inbound + channels')+
-    R2(6,'Opportunities',oppT,`${fmt(inO)} inbound + ${fmt(F.opp)} budget<br>${vs(oppT,T.opp)}`)+
-    rate('Opp → won',pr(oppT,wonT),'inbound + channels')+
-    R2(7,'New logos won',wonT,`${fmt(inW)} inbound + ${fmt(F.won)} budget · ${vs(wonT,T.won)}<br>${fmt(r.wins2027)} close in 2027 after AE capacity and timing`)
+    row(0,'Accounts','',F.acc,`${fmt(F.entAcc)} enterprise · ${fmt(F.midAcc)} mid-market`)+
+    row(1,'Contacts',`${g.cpaEnt} per enterprise, ${g.cpaMid} per mid-market account`,F.con,'')+
+    row(2,'New leads',`${g.contact2lead}% of contacts`,F.nl,`${fmt(F.nl/12)} a month`)+
+    row(3,'MQLs',`${g.lead2mql}% of new leads`,F.mql,`${fmt(F.mql/12)} a month`)+
+    `<div class="wbdiv">+ ${fmt(inL/12)} inbound leads a month join here</div>`+
+    row(4,'SQLs',`${g.mql2sql}% of MQLs + inbound`,sqlT,`${fmt(sqlT/12)} a month<br>${chip(sqlT,T.sql)}`)+
+    row(5,'Assigned to an AE',`${g.sql2assign}% of SQLs`,asgT,`${fmt(asgT/g.aes/12)} a month per AE`)+
+    row(6,'Opportunities',`${pr(asgT,oppT)} of assigned`,oppT,chip(oppT,T.opp))+
+    row(7,'New logos',`${pr(oppT,wonT)} of opportunities`,wonT,`${fmt(r.wins2027)} close in 2027<br>${chip(wonT,T.won)}`)
   }</div>`;
 }
 function setBudgetA(v){
