@@ -1141,16 +1141,16 @@ function renderDealMix(){
   const cap=g.aes*g.aeCap*4,need=m.need/g.aes/4,totL=E.l[1]+Sm.l[1];
   const inT=inL,midGap=G.l[1],midOut=midGap*num(g.midOutShare)/100,midIn=midGap-midOut,entOut=E.l[1];
   const inAll=inT+midIn,outAll=entOut+midOut,sdrs=outAll/12/Math.max(1,num(g.sdrMeetings));
-  const seg=(v,cls,label)=>v>0.5?`<i class="${cls}" style="width:${v/totL*100}%" title="${label}: ${fmt(v)}">${v/totL>0.08?`${fmt(v)}`:''}</i>`:'';
-  const card=(cls,k,v,sub,body)=>`<div class="iocard ${cls}"><span class="k">${k}</span><b>${fmt(v)}<span> a year · ${fmt(v/12)} a month</span></b><div class="iosub">${sub}</div><p>${body}</p></div>`;
+  const seg=(v,cls,label)=>v>0.5?`<i class="${cls}" style="width:${v/totL*100}%" title="${label}: ${fmt(v)}">${v/totL>0.08?`${fmt(v/12)} a month`:''}</i>`:'';
+  const card=(cls,k,v,sub,body)=>`<div class="iocard ${cls}"><span class="k">${k}</span><b>${fmt(v/12)}<span> a month</span></b><div class="iosub">${sub}</div><p>${body}</p></div>`;
   document.getElementById('dmIO').innerHTML=`
-    <p class="iolede">Today's inbound already brings about <b>${fmt(inW)} logos</b> a year, ${fmt(inW/4)} a quarter (brief: three AEs close 10–12 a quarter). The gap is <b>${fmt(m.entN+gapW)} logos</b>: ${fmt(m.entN)} enterprise and ${fmt(gapW)} mid-market. That takes <b>${fmt(totL-inT)} new qualified leads</b> on top of today's ${fmt(inT)}, <b>+${pct((totL-inT)/inT)}</b>. Everything enterprise is outbound: nobody at a $500M+ retailer fills in a demo form first.</p>
+    <p class="iolede"><b>Inbound already brings ${fmt(inW)} of the ${fmt(m.entN+inW+gapW)} logos.</b> The other ${fmt(m.entN+gapW)} need about ${fmt((totL-inT)/12)} more qualified leads a month, ${pct((totL-inT)/inT)} more than today. Most of that has to be outbound: a $500M+ retailer won't fill in a demo form.</p>
     <div class="iobar">${seg(inT,'in0','Inbound today')}${seg(midIn,'in1','New inbound')}${seg(midOut,'out1','Outbound, mid-market')}${seg(entOut,'out0','Outbound, enterprise')}</div>
     <div class="iogrid">
-      ${card('in0','Inbound today',inT,`Mid-market · about ${fmt(inW)} logos a year`,'Events, partners and brand. Already there: protect it and measure it by source.')}
-      ${card('in1','New inbound',midIn,`Mid-market · ${pct(1-num(g.midOutShare)/100)} of the mid-market gap`,'A by-product of the paid media spend: LinkedIn, paid search and events build awareness, and buyers then come to us through branded and AI search, partner referrals and content. No separate budget.')}
-      ${card('out1','Outbound, mid-market',midOut,`${pct(num(g.midOutShare)/100)} of the mid-market gap`,'We go to them: brands like Harlow &amp; Pine and Nordvik Studio, sequenced by SDRs with LinkedIn on the same list.')}
-      ${card('out0','Outbound, enterprise',entOut,`ABM · ${fmt(g.abmAccounts)} named accounts`,'Brands like Calle Brava: ABM, LinkedIn on the buying group, dinners and events, SDR follow-up.')}
+      ${card('in0','Inbound today',inT,'Mid-market','Events, partners and brand. Keep it running.')}
+      ${card('in1','New inbound',midIn,'Mid-market','Comes from the paid spend: brands see us, then search for us. No extra budget.')}
+      ${card('out1','Outbound',midOut,'Mid-market','SDRs reach brands like Harlow &amp; Pine.')}
+      ${card('out0','Outbound',entOut,'Enterprise','ABM on 800 named brands like Calle Brava.'.replace('800',fmt(g.abmAccounts)))}
     </div>
 `;
   const b0=num(g.baseLeads),inM=inAll/12,outM=outAll/12,step=(inM-b0)/1.5,path=[0,1,2,3].map(i=>fmt(b0+i*step)).join(' → ');
