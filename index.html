@@ -502,6 +502,34 @@ section.page{padding:36px 0 64px;border-top:0}
 #narrSlot{margin-top:8px}
 @media (max-width:900px){.tl4{grid-template-columns:1fr 1fr}.tlhead{grid-template-columns:1fr}.tlgraph{width:100%}}
 @media (max-width:560px){.tl4{grid-template-columns:1fr}}
+.lv{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.lv-sec{background:var(--surface);padding:16px 18px}
+.lv-k{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:10px}
+.lv4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.lvc{background:var(--white);padding:14px 16px;display:flex;flex-direction:column;gap:4px;color:var(--ink);border:2px solid transparent}
+.lvc .k{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.lvn{font-family:'Inter Tight';font-size:30px;font-weight:700;letter-spacing:-0.03em;line-height:1.05}
+.lvn.big{font-size:42px}
+.lvn input{font:inherit;width:100px;border:1px solid var(--line);padding:2px 6px}
+.lvs{font-size:12.5px;color:var(--text);font-family:Inter;font-weight:400;letter-spacing:0}
+.lvs input,.lvd input,.lvq input,.lvrow>span>input{width:58px;font:600 13px Inter;border:1px solid var(--line);padding:3px 5px;margin:0 2px}
+.lvc.gap{background:var(--magenta-light)}
+.lvc.res.best{background:var(--green)}
+.lvc.res.pick{border-color:var(--ink)}
+.lvul{margin:6px 0 0;padding-left:16px;font-size:13px;line-height:1.5}
+.lvramp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:16px;align-items:end}
+.lvlab{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:8px}
+.lvq{display:flex;gap:10px;flex-wrap:wrap}.lvq label{display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:var(--ink)}
+.lvbars{background:var(--white);padding:10px 12px}
+.lvbars .gbars{height:120px}.lvbars em{white-space:nowrap}
+.lvl{display:flex;flex-direction:column;gap:6px}
+.lvrow{display:grid;grid-template-columns:200px 110px 1fr;gap:12px;align-items:center;background:var(--white);padding:10px 14px;font-size:13px;color:var(--ink)}
+.lvt{display:flex;align-items:center;gap:8px;font-size:14px}
+.lvrow select{font:600 13px Inter;padding:4px 6px;border:1px solid var(--line);background:var(--white)}
+.lvd{color:var(--text)}
+.lvmsg{margin:8px 0 0;padding:10px 14px;background:var(--white);border-left:4px solid var(--ink);color:var(--ink);font-size:14px;max-width:none}
+@media (max-width:900px){.lv4{grid-template-columns:1fr 1fr}.lvramp{grid-template-columns:1fr}.lvrow{grid-template-columns:1fr auto}.lvrow .lvd{grid-column:1/-1}}
+@media (max-width:480px){.lv4{grid-template-columns:1fr}}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -641,16 +669,22 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
   <p class="lede"><b>Yes, but only if every AE closes at full capacity, every quarter.</b> 3 AEs × 5 logos × 4 quarters = 60, with zero slack. So the plan isn't about buying more leads. It's about making every AE hour count.</p>
   <div class="ansbox">
     <div class="planswitch"><span class="small muted" style="align-self:center;margin-right:4px">Plan</span><button class="tab tA" data-act="view" data-v="A">A · My plan</button><button class="tab tB" data-act="view" data-v="B">B · $310k</button><button class="tab tC" data-act="view" data-v="C">C · $550k</button></div>
-    <div class="tw"><table id="ansTable" class="anst"></table></div>
     <p class="small muted" id="ansPlan"></p>
   </div>
-  <h3 class="mt2">What gets us from base to stretch</h3>
-  <ol class="ans4">
-    <li><b>Qualified leads that reach sales ready.</b> A shared definition, scoring in Attio, and a follow-up time AEs agree to. This is my first 30 days.</li>
-    <li><b>Air cover for AEs.</b> Marketing qualifies, researches the account and warms the buying group before the first call. AE time goes into closing.</li>
-    <li><b>Early pipeline.</b> Spend front-loaded in Q1–Q2, so wins land in 2027, not 2028.</li>
-    <li><b>Partners converting as assumed.</b> The cheapest logos there are, if the pilot works.</li>
-  </ol>
+  <h3 class="mt2">Is 60 logos reachable? Pull the levers.</h3>
+  <div class="lv">
+    <div class="lv-sec"><span class="lv-k">1 · Work it backwards</span>
+      <div class="lv4" id="ansBack"></div>
+      <p class="gx-cap" id="ansBackCap"></p></div>
+    <div class="lv-sec"><span class="lv-k">2 · Outbound ramp</span>
+      <div class="lvramp"><div class="lvin" id="ansRampIn"></div><div class="lvbars" id="ansRampBars"></div></div>
+      <p class="gx-cap">New outbound ramps up. Most of it lands from Q2.</p></div>
+    <div class="lv-sec"><span class="lv-k">3 · Levers</span>
+      <div class="lvl" id="ansLevers"></div></div>
+    <div class="lv-sec"><span class="lv-k">4 · Results, 2027</span>
+      <div class="lv4" id="ansCards"></div>
+      <div id="ansMsg"></div></div>
+  </div>
   <p class="watch"><b>What I'd watch:</b> lead → opportunity conversion after the handoff is fixed. If it rises, 60 is in reach. If it doesn't, the limit is sales capacity, and we'd talk about an extra AE or an SDR in Q2.</p>
 </div></section>
 
@@ -928,7 +962,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,ramp1:25,ramp2:75,ramp3:100,ramp4:100,tier1:50,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
+  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:12,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,tier1:50,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -958,10 +992,16 @@ const GMETA=[
   {k:'usInbound',label:"Today's inbound from the US",unit:'%',min:0,max:100,step:5,badge:'Assumed',note:'Europe is the base market, so most of today\'s inbound lands there.'},
   {k:'usQ1',label:'Share of new-channel budget to US, Q1',unit:'%',min:0,max:100,step:5,badge:'Assumed',note:'Q1 runs about 50/50 while we learn.',grid:false},
   {k:'usFrom2',label:'Share of new-channel budget to US, from Q2',unit:'%',min:0,max:100,step:5,badge:'Assumed',note:'Preset "Shift to US from Q2" sets 60%.',grid:false},
-  {k:'ramp1',label:'Channel ramp, Q1',unit:'%',min:0,max:100,step:5,badge:'Assumed',note:'New channels only produce part of their qualified leads in Q1. Today\'s engine is not ramped.'},
-  {k:'ramp2',label:'Channel ramp, Q2',unit:'%',min:0,max:100,step:5,badge:'Assumed',note:''},
-  {k:'ramp3',label:'Channel ramp, Q3',unit:'%',min:0,max:100,step:5,badge:'Assumed',note:''},
-  {k:'ramp4',label:'Channel ramp, Q4',unit:'%',min:0,max:100,step:5,badge:'Assumed',note:''},
+  {k:'out1',label:'Share of qualified leads from new outbound, Q1',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:'The one ramp in the model: its shape sets how fast new channels ramp; the budget sets the volume.'},
+  {k:'out2',label:'Share of qualified leads from new outbound, Q2',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:''},
+  {k:'out3',label:'Share of qualified leads from new outbound, Q3',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:''},
+  {k:'out4',label:'Share of qualified leads from new outbound, Q4',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:''},
+  {k:'wbO2W',label:'Work back: opp → won',unit:'%',min:5,max:50,step:1,badge:'Given',note:'Brief midpoint (15–25%).'},
+  {k:'wbL2O',label:'Work back: lead → opp',unit:'%',min:10,max:80,step:1,badge:'Given',note:'Brief midpoint (30–50%).'},
+  {k:'aeHireCost',label:'+1 AE, loaded cost a year',unit:'$k',min:40,max:250,step:5,badge:'Assumed',note:'Sales budget. Half capacity in the first quarter while ramping. Sits in the US, where cover is thinnest.'},
+  {k:'isCost',label:'Inside sales rep, loaded cost a year',unit:'$k',min:20,max:150,step:5,badge:'Assumed',note:'Two reps, in the US.'},
+  {k:'isLeads',label:'Qualified leads per inside sales rep a month',unit:'leads',min:0,max:40,step:1,badge:'Assumed',note:'After ramp; half in the first quarter.'},
+  {k:'isLift',label:'Inside sales lift on baseline lead → opp',unit:'pts',min:0,max:20,step:1,badge:'Assumed',note:'They qualify inbound faster.'},
   {k:'tier1',label:'ABM tier 1:1 accounts',unit:'accounts',min:0,max:300,step:5,badge:'Assumed',note:'',grid:false},
   {k:'tier2',label:'ABM tier 1:few accounts',unit:'accounts',min:0,max:600,step:10,badge:'Assumed',note:'',grid:false},
   {k:'tier3',label:'ABM tier 1:many accounts',unit:'accounts',min:0,max:2000,step:50,badge:'Assumed',note:'',grid:false},
@@ -1070,7 +1110,10 @@ function capacity(sc,n){
   const g=S.global,s=S.scenarios[sc];n=n??g.aes;
   return [0,1,2,3].map(q=>{let c=n*g.aeCap;if(sdrMode(sc)){const st=(+s.sdrStart||2)-1,x=n*num(g.sdrCapLift);if(q===st)c+=x/2;else if(q>st)c+=x;}return c;});
 }
-const rampQ=()=>{const g=S.global;return [g.ramp1,g.ramp2,g.ramp3,g.ramp4].map(v=>Math.min(1,Math.max(0,num(v)/100)));};
+const outQ=()=>{const g=S.global;return [g.out1,g.out2,g.out3,g.out4].map(v=>Math.max(0,num(v)));};
+const rampQ=()=>{const o=outQ(),m=Math.max(...o);return o.map(v=>m>0?v/m:1);};
+let HIRE=null; // {ae:fromQ|null, is:fromQ|null}
+const share=(q,from)=>from==null?0:q+1<from?0:q+1===from?0.5:1;
 const usSplit=()=>{const g=S.global;return [num(g.usQ1),num(g.usFrom2),num(g.usFrom2),num(g.usFrom2)].map(v=>Math.min(1,Math.max(0,v/100)));};
 function mergeSims(a,b){
   const closed=a.closed.map((c,q)=>{const o={};Object.keys(c).forEach(k=>o[k]=c[k]+(b.closed[q][k]||0));return o;});
@@ -1100,7 +1143,8 @@ function run(sc){
   const paidOn=S.channels.some(c=>c.group==='paid'&&budget(sc,c.id)>0);
   const bl=g.baseLeads*(paidOn?1+num(g.inboundLift)/100:1);
   const baseQ=bl*3*(g.baseL2O/100)*(g.baseO2W/100);
-  const lines={base:[baseQ,baseQ,baseQ,baseQ,0,0]};
+  const H=HIRE||{};
+  const lines={base:[0,1,2,3].map(q=>baseQ*(1+share(q,H.is)*num(g.isLift)/g.baseL2O)).concat([0,0])};
   const uIn=num(g.usInbound)/100,u=usSplit(),rq=rampQ();
   const LUS={base:lines.base.map(v=>v*uIn)},LEU={base:lines.base.map(v=>v*(1-uIn))};
   const acvOf={base:g.acv*1000};
@@ -1117,7 +1161,10 @@ function run(sc){
     ch[c.id]={spend:sp,leads:L,opps:O,wins:W,arr:W*acvK(c)*1000,comm:0,commRev:cm,l2o,o2w,cpo:O>0?sp/O:null,cpw:W>0?sp/W:null};
     spend+=sp;wins+=W;arr+=W*acvK(c)*1000;leads+=L;opps+=O;commRev+=cm;
   }
-  const capEU=capacity(sc,num(g.aesEU)),capUS=capacity(sc,num(g.aesUS)),cap=capEU.map((v,q)=>v+capUS[q]);
+  if(H.is!=null){const [f1,f2]=lagSplit(),a=[0,0,0,0,0,0],cv=Math.min(1,(g.baseL2O+num(g.isLift))/100)*g.baseO2W/100;
+    [0,1,2,3].forEach(q=>{const x=2*num(g.isLeads)*3*share(q,H.is)*cv;a[q+1]+=x*f1;a[q+2]+=x*f2;});
+    lines.is=a;LUS.is=a;LEU.is=[0,0,0,0,0,0];acvOf.is=g.acv*1000;}
+  const capEU=capacity(sc,num(g.aesEU)),capUS=capacity(sc,num(g.aesUS)).map((v,q)=>v+share(q,H.ae)*g.aeCap),cap=capEU.map((v,q)=>v+capUS[q]);
   const simEU=simulate(LEU,capEU),simUS=simulate(LUS,capUS),sim=mergeSims(simEU,simUS);
   const baseOnly=mergeSims(simulate({base:LEU.base},capEU),simulate({base:LUS.base},capUS));
   const arr2027=sim.closed.reduce((a,c)=>a+Object.entries(c).reduce((x,[i,v])=>x+v*acvOf[i],0),0);
@@ -1258,7 +1305,7 @@ function renderPtn(){
   el.innerHTML=`<b style="color:var(--ink)">Expected outcome</b> <span class="pill assumed">Assumed</span> ${n1(g.ptnPer)} partners per territory × 2 territories × ${n1(g.ptnOpps)} referred opportunities each in the first 2 quarters × ${n0(g.ptnWin)}% win rate ≈ <b style="color:var(--ink)">${n1(v)} logos in 2027</b>. Editable in Model → Assumptions.`;
 }
 function renderFlags(R){
-  {const rt=document.getElementById('rampTxt');if(rt)rt.textContent='Ramp: '+rampQ().map((v,i)=>'Q'+(i+1)+' '+Math.round(v*100)+'%').join(' · ')+'.';}
+  {const rt=document.getElementById('rampTxt');if(rt)rt.textContent='Outbound share of qualified leads: '+outQ().map((v,i)=>'Q'+(i+1)+' '+Math.round(v)+'%').join(' · ')+'.';}
   const el=document.getElementById('flags'),cl=document.getElementById('commLine');if(!el)return;
   const g=S.global,list=focusList(R).filter(s=>R[s].has),out=[];
   const hit=(sim,cap)=>sim.demand.some((d,q)=>d>cap[q]+0.05);
@@ -1372,14 +1419,67 @@ function renderDiagnosis(R){
     ${r('Wins / quarter',n1(baseQ),n1(needQ))}${r('Logos / year',n0(baseYear),n0(g.targetLogos))}</tbody>`;
 }
 function runCap(sc,cap){const o=S.global.aeCap;S.global.aeCap=cap;try{return run(sc);}finally{S.global.aeCap=o;}}
+function runV(sc,v){const prev=HIRE;HIRE=v;try{return run(sc);}finally{HIRE=prev;}}
+const Q=q=>'Q'+q;
+function renderAnsIn(){
+  const g=S.global,pill=b=>`<span class="pill ${b.toLowerCase()}">${b}</span>`;
+  const num1=(k,min,max,step)=>`<input type="number" data-p="global.${k}" value="${g[k]}" min="${min}" max="${max}" step="${step}">`;
+  const ri=document.getElementById('ansRampIn');
+  if(ri&&!ri.contains(document.activeElement))ri.innerHTML=`<span class="lvlab">Share of qualified leads from new outbound, by quarter ${pill('Assumed')}</span><div class="lvq">${[1,2,3,4].map(q=>`<label>Q${q}${num1('out'+q,0,100,1)}<span>%</span></label>`).join('')}</div>`;
+  const lv=document.getElementById('ansLevers');
+  if(lv&&!lv.contains(document.activeElement)){
+    const sel=(k)=>`<select data-p="global.${k}">${[1,2,3,4].map(q=>`<option value="${q}" ${+g[k]===q?'selected':''}>from Q${q}</option>`).join('')}</select>`;
+    lv.innerHTML=`
+      <div class="lvrow"><label class="lvt"><input type="checkbox" data-p="global.lvAE" ${g.lvAE?'checked':''}><b>+1 AE</b></label>${sel('lvAEfrom')}<span class="lvd">Adds ${g.aeCap} logos a quarter, half in the first quarter. Loaded cost ${num1('aeHireCost',40,250,5)} $k a year ${pill('Assumed')}</span></div>
+      <div class="lvrow"><label class="lvt"><input type="checkbox" data-p="global.lvIS" ${g.lvIS?'checked':''}><b>+2 inside sales reps</b></label>${sel('lvISfrom')}<span class="lvd">Each adds ${num1('isLeads',0,40,1)} qualified leads a month, and +${num1('isLift',0,20,1)} pts lead → opp on inbound. Loaded cost ${num1('isCost',20,150,5)} $k a year each ${pill('Assumed')}</span></div>
+      <div class="lvrow"><span class="lvt"><b>AE capacity</b></span><span>${num1('aeCap',4,5,0.1)}</span><span class="lvd">logos per AE a quarter (4–5) ${pill('Given')}. Ticked levers are your pick; all four cards always show. Hires sit in the US, where cover is thinnest.</span></div>`;}
+  const bk=document.getElementById('ansBack');
+  if(bk&&!bk.contains(document.activeElement))bk.innerHTML=`
+    <div class="lvc"><span class="k">Target logos ${pill('Given')}</span><b class="lvn">${num1('targetLogos',20,120,1)}</b></div>
+    <div class="lvc"><span class="k">Opportunities needed</span><b class="lvn" id="bkOpp"></b><span class="lvs">at ${num1('wbO2W',5,50,1)}% opp → won ${pill('Given')}</span></div>
+    <div class="lvc"><span class="k">Qualified leads needed</span><b class="lvn" id="bkLead"></b><span class="lvs">at ${num1('wbL2O',10,80,1)}% lead → opp ${pill('Given')} · <span id="bkMo"></span></span></div>
+    <div class="lvc gap"><span class="k">Gap vs today</span><b class="lvn" id="bkGap"></b><span class="lvs" id="bkGapS"></span></div>`;
+}
 function renderAnswer(R){
-  const el=document.getElementById('ansTable');if(!el)return;
-  const g=S.global,sc=SC.includes(view)?view:'B',base=R[sc],st=runCap(sc,5);
-  const cell=r=>r.has?`<span class="ansv">${n0(r.wins2027)}</span><span class="muted"> / ${g.targetLogos}</span>`:'—';
-  el.innerHTML=`<thead><tr><th></th><th class="num">Logos 2027</th><th>What it takes</th></tr></thead><tbody>
-    <tr><td><b>Base case</b></td><td class="num">${cell(base)}</td><td>Today's engine + new channels, AEs closing ~${g.aeCap} a quarter</td></tr>
-    <tr><td><b>Stretch</b></td><td class="num">${cell(st)}</td><td>Every AE at 5 a quarter, Q1 to Q4</td></tr></tbody>`;
-  document.getElementById('ansPlan').textContent=base.has?'':'Plan A is empty. Build it in the Model tab.';
+  if(!document.getElementById('ansCards'))return;
+  renderAnsIn();
+  const g=S.global,sc=SC.includes(view)?view:'B';
+  document.getElementById('ansPlan').textContent=R[sc].has?'':'Plan A is empty. Build it in the Model tab.';
+  // 1. work back
+  const opp=num(g.targetLogos)/(num(g.wbO2W)/100||1),lead=opp/(num(g.wbL2O)/100||1),mo=lead/12,bl=R[sc].bl||num(g.baseLeads),gap=Math.max(0,mo-bl);
+  document.getElementById('bkOpp').textContent='~'+n0(opp);document.getElementById('bkLead').textContent='~'+n0(lead);
+  document.getElementById('bkMo').textContent='~'+n0(mo)+' a month';
+  document.getElementById('bkGap').textContent='~'+n0(gap)+' more';document.getElementById('bkGapS').textContent=`qualified leads a month, vs today's ~${n0(bl)} (incl. ${n0(g.inboundLift)}% inbound lift)`;
+  document.getElementById('ansBackCap').textContent=`Working backwards from ${n0(g.targetLogos)}, at today's conversion rates.`;
+  // 2. ramp bars
+  const {w:ph}=phasing(sc),rq=rampQ();const per=[0,1,2,3].map(q=>{let L=0;S.channels.forEach(c=>{if(c.kind==='lead'&&c.cpl>0)L+=budget(sc,c.id)*1000*ph[q]/c.cpl*rq[q];});return L/3;});
+  const mx=Math.max(...per.map(x=>x+bl),1);
+  document.getElementById('ansRampBars').innerHTML=`<div class="gbars">${per.map((x,q)=>`<div><span class="gb" title="${n0(bl)} inbound + ${n0(x)} new outbound a month"><i style="flex:none;width:100%;height:100%;display:flex;flex-direction:column;justify-content:flex-end;background:none"><i style="display:block;height:${x/mx*100}%;background:${cssv('--blue')}"></i><i style="display:block;height:${bl/mx*100}%;background:${cssv('--surface-2')}"></i></i></span><em>Q${q+1} · ${n0(bl+x)}/mo</em></div>`).join('')}</div><div class="legend" style="margin-top:4px"><span><span class="dot" style="background:var(--blue)"></span>New outbound</span><span><span class="dot" style="background:var(--surface-2)"></span>Inbound</span></div>`;
+  // 3-4. cards
+  const aF=+g.lvAEfrom||1,iF=+g.lvISfrom||1;
+  const V=[['Today\'s team',{}],['+ 2 IS',{is:iF}],['+ 1 AE',{ae:aF}],['+ 1 AE + 2 IS',{ae:aF,is:iF}]].map(([name,h])=>{const r=runV(sc,h);
+    const cost=(h.ae!=null?num(g.aeHireCost)*(5-h.ae)/4:0)+(h.is!=null?2*num(g.isCost)*(5-h.is)/4:0);
+    return {name,h,r,cost:cost*1000,ceil:r.cap.reduce((a,b)=>a+b,0)};});
+  const t0=V[0].r;
+  V.forEach(v=>{v.dL=v.r.wins2027-t0.wins2027;v.dA=v.r.arr2027-t0.arr2027;v.pb=v.cost>0&&v.dA>0?v.cost/(v.dA*g.gm/100/12):null;v.lpd=v.cost>0?v.dL/v.cost:0;});
+  const best=V.slice(1).reduce((a,v)=>v.dL>0.3&&v.lpd>(a?a.lpd:0)?v:a,null);
+  const pick=g.lvAE&&g.lvIS?3:g.lvAE?2:g.lvIS?1:0;
+  document.getElementById('ansCards').innerHTML=V.map((v,i)=>`<div class="lvc res${v===best?' best':''}${i===pick?' pick':''}">
+    <span class="k">${v.name}${i===pick?' · your pick':''}</span>
+    <b class="lvn big">${R[sc].has?n0(v.r.wins2027):'—'} <span class="lvs">logos</span></b>
+    <span class="lvs">(ceiling ${n0(v.ceil)})</span>
+    ${i?`<ul class="lvul"><li><b>${v.dL>=-0.05?'+':'−'}${n1(Math.abs(v.dL)<0.05?0:Math.abs(v.dL))}</b> logos vs today's team</li><li><b>${v.dA>=-500?'+':'−'}${M$(Math.abs(v.dA)<500?0:Math.abs(v.dA),2)}</b> new ARR</li><li>Hires cost <b>${k$(v.cost)}</b> in 2027</li><li>${v.pb!=null?`Pays back in <b>${n0(v.pb)} months</b>`:'No extra ARR to pay it back'}</li></ul>`:`<ul class="lvul"><li>3 AEs, no inside sales</li><li>${M$(v.r.arr2027,1)} new ARR</li></ul>`}
+  </div>`).join('');
+  // messages
+  const msg=[],tg=num(g.targetLogos);
+  const hit=V.find(v=>v.r.wins2027>=tg-0.5);
+  if(hit)msg.push(hit===V[0]?`${n0(tg)} is reachable with today's team.`:`${n0(tg)} is reachable with ${hit.name.replace(/^\+ /,'+')}, from ${Q(hit.h.ae??hit.h.is)}.`);
+  const isPot=(()=>{const r=V[1].r;return Object.values(r.lines.is||[0]).slice(1,5).reduce((a,b)=>a+b,0);})();
+  if(V[1].dL<isPot*0.5)msg.push('Inside sales adds leads, but the AEs are full. More qualified leads only turn into logos with more closing capacity.');
+  const aeAdd=V[2].ceil-V[0].ceil;
+  if(V[2].dL<aeAdd*0.5)msg.push('An extra AE only helps if there are leads to close. Capacity without pipeline sits idle.');
+  const q1=qClosed(t0.sim)[0];if(q1<t0.cap[0]-0.5)msg.push('Q1 can only close what\'s already in the pipeline from 2026. Unused capacity can\'t be made up later.');
+  document.getElementById('ansMsg').innerHTML=msg.map(m=>`<p class="lvmsg">${m}</p>`).join('');
 }
 const BRIEF={l2o:[30,40,50],o2w:[15,20,25]};
 function goalMix(){
