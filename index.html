@@ -785,6 +785,39 @@ button.play[hidden]{display:none}
 .vid.jacket{aspect-ratio:698/396;background:#efefef}.vid.jacket img{object-fit:cover}
 .vids.two{grid-template-columns:repeat(2,minmax(0,1fr))}
 .lv-out{margin:22px 0 0}
+.brk-h{font-family:'Inter Tight';font-size:clamp(26px,3vw,40px);font-weight:700;letter-spacing:-0.03em;line-height:1.05;color:var(--ink);margin:0 0 14px;max-width:none}
+.brk-h span{padding:0 6px}.brk-h span.no{background:var(--magenta-light)}.brk-h span.ok{background:var(--green)}
+.brks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.brk{background:var(--white);padding:16px;display:flex;flex-direction:column;gap:6px;border-top:6px solid;color:var(--ink)}
+.brk.red{border-color:var(--red)}.brk.amb{border-color:#f2b84b}.brk.ok{border-color:#5cc96b}
+.brk .k{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.bbig{font-family:'Inter Tight';font-size:44px;font-weight:700;letter-spacing:-0.035em;line-height:1}
+.brk.red .bbig{color:var(--red)}.brk.amb .bbig{color:#b07800}
+.bbar{font-size:12px;color:var(--text)}.brk p{margin:4px 0 0;font-size:14px;font-weight:600;max-width:none}
+.wf{background:var(--white);padding:30px 16px 12px}
+.wfg{display:flex;flex-direction:column;gap:6px}
+.wfplot,.wflabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.wfplot{position:relative;height:190px}
+.wfc{display:flex;flex-direction:column;gap:4px;min-width:0}
+.wfp{position:relative;height:100%}
+.wfp i{position:absolute;left:0;right:0;display:block}.wfp i.base{background:var(--surface-2)}.wfp i.step{background:var(--magenta)}.wfp i.end{background:var(--green)}
+.wfp em{position:absolute;bottom:100%;left:0;right:0;text-align:center;font-style:normal;font-family:'Inter Tight';font-size:15px;font-weight:700;color:var(--ink);padding-bottom:3px;white-space:nowrap}
+.wfl{font-size:12px;font-weight:600;color:var(--ink);min-height:32px;line-height:1.3}
+.wft{display:flex;flex-wrap:wrap;gap:3px}.wft i{font-style:normal;font-size:10px;font-weight:700;background:var(--surface);padding:1px 6px}
+.wfline{position:absolute;left:0;right:0;border-top:2px solid var(--ink);z-index:2;pointer-events:none;margin-bottom:0}
+.wfline.c{border-top-style:dashed}
+.wfline em{position:absolute;right:0;top:-17px;font-style:normal;font-size:11px;font-weight:700;background:var(--white);padding:0 4px;color:var(--ink)}
+.wfline.c em{top:2px}
+.wfax{margin:8px 0 0;font-size:11.5px;color:var(--muted);max-width:none}
+.levs{display:flex;flex-direction:column;gap:4px;margin-top:10px}
+.lev{display:grid;grid-template-columns:190px 120px 210px 1fr;gap:10px;align-items:baseline;background:var(--white);padding:10px 14px;font-size:13.5px;color:var(--ink)}
+.lev b{font-family:'Inter Tight';font-size:15px}.lc{font-weight:700}.lf{font-size:12px;font-weight:600;color:var(--magenta-deep)}.ll{color:var(--text)}
+.s4bot{margin:12px 0 0;font-size:16px;color:var(--ink);max-width:none}
+.asm{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 16px;margin-top:10px}
+.asr{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--white);padding:8px 12px;font-size:13px;color:var(--ink)}
+.asc{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.asr input,.asr select{font:600 13px Inter;border:1px solid var(--line);padding:3px 5px;background:var(--white)}
+@media (max-width:900px){.brks{grid-template-columns:1fr}.lev{grid-template-columns:1fr;gap:2px}.asm{grid-template-columns:1fr}.wfplot{height:170px}.wfplot,.wflabs{gap:5px}.wfl{font-size:10.5px}.wfp em{font-size:12px}}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -945,11 +978,13 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
       </details></div>
     <h3 class="lv-out">Where does the model break?</h3>
     <div class="lv-sec">
-      <div class="meters" id="s3"></div></div>
-    <div class="lv-sec"><span class="lv-k">Step 4 · What we need in place</span>
-      <div class="lvl" id="s4"></div>
-      <p class="s4res" id="s4res"></p>
-      <p class="s1muted">With handoff + 2 IS, qualifying turns green. Sales stays at ~100%: 60 is the ceiling, the +1 AE is the buffer.</p></div>
+      <p class="brk-h" id="brkH"></p>
+      <div class="brks" id="s3"></div></div>
+    <div class="lv-sec"><span class="lv-k">Step 4 · What gets us back</span>
+      <div class="wf" id="wf"></div>
+      <div class="levs" id="levs"></div>
+      <p class="s4bot" id="s4bot"></p>
+      <details class="more mt" id="asmBox"><summary>Assumptions</summary><div class="asm" id="s4"></div></details></div>
   </div>
   <p class="watch"><b>What I'd watch:</b> lead → opportunity conversion after the handoff is fixed. If it rises, 60 is in reach. If it doesn't, the limit is sales capacity, and we'd talk about an extra AE or an SDR in Q2.</p>
 </div></section>
@@ -1721,6 +1756,8 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-fliptog]')
 function runV(sc,v){const prev=HIRE;HIRE=v;try{return run(sc);}finally{HIRE=prev;}}
 // Target-driven plan: works back from the logo target, then runs the result through the model's own
 // engine (simulate): sales-cycle lag, Q1 ramp, EU/US AE capacity, 2028 spillover.
+function goalPlanV(R,sc,ov){const g=S.global,keep={};Object.keys(ov).forEach(k=>{keep[k]=g[k];g[k]=ov[k];});try{return goalPlan(R,sc);}finally{Object.assign(g,keep);}}
+const LV0={lvHO:false,lvIS:false,lvAE:false,lvCS:false};
 function goalPlan(R,sc){
   const g=S.global,tg=num(g.targetLogos),bl=(R[sc]&&R[sc].bl)||num(g.baseLeads),acv=num(g.acv)*1000;
   const l2o=num(g.wbL2O)/100||0.0001,o2w=num(g.wbO2W)/100||0.0001;
@@ -1757,7 +1794,7 @@ function goalPlan(R,sc){
 }
 function renderAnswer(R){
   if(!document.getElementById('goal'))return;
-  const g=S.global,sc=SC.includes(view)?view:'B',D=goalPlan(R,sc);
+  const g=S.global,sc=SC.includes(view)?view:'B',D=goalPlanV(R,sc,LV0);
   const f=x=>'~'+Math.round(x).toLocaleString('en-US'),M=x=>'~$'+(x/1e6).toFixed(1)+'M',K=x=>x>=1e6?M(x):'~$'+Math.round(x/1000)+'k',pl=b=>`<span class="pill ${b.toLowerCase()}">${b}</span>`;
   const inp=(k,w,max)=>`<input type="number" data-p="global.${k}" value="${g[k]}" min="0" max="${max||100}" step="${String(g[k]).includes('.')?0.1:1}" style="width:${w||50}px">`;
   const once=(id,html)=>{const e=document.getElementById(id);if(e&&(!e.dataset.built||!e.contains(document.activeElement))){e.innerHTML=html();e.dataset.built='1';}return e;};
@@ -1873,31 +1910,50 @@ function renderAnswer(R){
   D.tiers.forEach((t,i)=>{sv(ab,'a'+i,f(t.acc));sv(ab,'c'+i,f(t.con));sv(ab,'e'+i,f(t.eng));sv(ab,'q'+i,f(t.q));sv(ab,'o'+i,'~'+n1(t.opp));sv(ab,'p'+i,K(t.pipe));sv(ab,'ar'+i,`${n0(D.l2o*100)}% → opp`);});
   const tOpp=D.tiers.reduce((a,t)=>a+t.opp,0),dOpp=D.paths[2].opp,ok=Math.abs(tOpp-dOpp)<=0.1*Math.max(dOpp,0.001);
   document.getElementById('tierCheck').innerHTML=`<span class="tc ${ok?'ok':'amb'}">Tier flow ${f(tOpp)} opps · Digital path ${f(dOpp)}</span>`;
-  // STEP 3
-  const meter=(lab,dem,cap,unit,txt)=>{const r=cap>0?dem/cap:9,c=r<0.85?'ok':r<=1.0001?'amb':'red';return `<div class="gm"><div class="gmh"><b>${lab}</b><span class="gmp ${c}">${n0(r*100)}%</span></div><div class="gmt"><i class="${c}" style="width:${Math.min(100,r*100)}%"></i></div><p class="gms">${f(dem)} ${unit} vs ${f(cap)} capacity</p>${txt?`<p class="gmx">${txt}</p>`:''}</div>`;};
-  const closeNeed=D.tg,closeCap=D.ceiling;
-  document.getElementById('s3').innerHTML=`
-    <div class="gmcard"><h5>a) Qualifying capacity</h5>
-      ${meter('Conversations to screen a month',D.screens,D.qualCap,'a month',`${g.lvIS?'Inside sales take':'Today the AEs take'} the screening: ${n0(num(g.aesEU)+num(g.aesUS))} AEs × ${inp('qualCalls',44)} calls a month ${pl('Assumed')}${g.lvIS?` + 2 IS × ${inp('isCalls',48,200)} calls`:''}.`)}
-      <p class="gms">${f(D.handover)} qualified leads a month to hand over to the AEs.</p>
-      <p class="gmq">Today AEs qualify their own leads. At ${f(D.handover)} a month, qualifying eats closing time.</p></div>
-    <div class="gmcard"><h5>b) Sales capacity</h5>
-      ${meter('Closes needed in 2027',closeNeed,closeCap,'logos','')}
-      ${meter('Active deals per AE',D.deals,num(g.maxDeals),'deals',`${f(D.opps/12)} opportunities a month × ${n1(g.cycle)}-month cycle ÷ ${D.aes} AEs, vs max ${inp('maxDeals',44,60)} ${pl('Assumed')}`)}
-      ${meter(`Europe · ${n0(g.aesEU)} AEs`,D.simEU.demand.reduce((a,b)=>a+b,0),D.capEU.reduce((a,b)=>a+b,0),'wins ready to close','')}
-      ${meter(`US · ${n0(g.aesUS)} AE${g.lvAE?' + 1':''}`,D.simUS.demand.reduce((a,b)=>a+b,0),D.capUS.reduce((a,b)=>a+b,0),'wins ready to close',`Budget split to the US: ${n0(g.usQ1)}% in Q1, ${n0(g.usFrom2)}% from Q2 (set in Model).`)}
-      <p class="gmq">Every AE has to close ${n1(g.aeCap)} a quarter, every quarter. One slow quarter and ${n0(D.tg)} is gone.</p></div>`;
-  // STEP 4
+  // STEP 3 · where it breaks (all levers off)
+  document.getElementById('brkH').innerHTML=`If nothing changes, we land at <span class="${D.closes>=D.tg-0.5?'ok':'no'}">${f(D.closes)}</span>, not ${n0(D.tg)}.`;
+  const tone=r=>r<0.85?'ok':r<=1.0001?'amb':'red';
+  const euL=D.euLoad,usL=D.usLoad,aesN=num(g.aesEU)+num(g.aesUS);
+  const brk=(name,big,dem,cap,barTxt,line)=>{const r=cap>0?dem/cap:9,c=tone(r);return `<div class="brk ${c}"><span class="k">${name}</span><b class="bbig">${big}</b><div class="gmt"><i class="${c}" style="width:${Math.min(100,r*100)}%"></i></div><span class="bbar">${barTxt}</span><p>${line}</p></div>`;};
+  document.getElementById('s3').innerHTML=
+    brk('Qualifying',`${(D.screens/D.qualCap).toFixed(1)}×`,D.screens,D.qualCap,`${f(D.screens)} to screen vs ${f(D.qualCap)} AEs can screen a month`,'AEs qualify their own leads. Qualifying eats closing time.')+
+    brk('Deals in flight',`${n0(D.deals)} vs ${n0(g.maxDeals)}`,D.deals,num(g.maxDeals),'open deals per AE vs what one AE can handle','Too many deals at once, so some go cold.')+
+    brk('Closing',`${n0(D.tg)} of ${n0(D.ceiling)}`,D.tg,D.ceiling,`logos needed vs ${aesN} AEs × ${n1(g.aeCap)} × 4`,`${D.tg>D.ceiling+0.5?`Short by ${f(D.tg-D.ceiling)}.`:'Zero slack.'} Europe is ${euL>1?'over':'at'} ${n0(euL*100)}%, the US ${usL<0.85?'has room':'is at'} ${n0(usL*100)}%.`);
+  // STEP 4 · waterfall, levers added cumulatively
+  const W=[['Nothing in place',{}],['Handoff & scoring',{lvHO:true},'$0',['Qualifying']],['2 inside sales',{lvHO:true,lvIS:true},k$(2*num(g.isCost)*1000*(5-(+g.lvISfrom||1))/4),['Qualifying','Deals in flight']],['US partner co-selling',{lvHO:true,lvIS:true,lvCS:true},'',['Closing']]]
+    .map(([n,o,cost,fix])=>({n,cost,fix,v:goalPlanV(R,sc,{...LV0,...o}).closes}));
+  const end=W[W.length-1].v,lo=Math.max(0,Math.floor((Math.min(...W.map(x=>x.v))-6)/5)*5),hi=Math.max(D.tg,D.ceiling,end)+3,y=v=>(v-lo)/(hi-lo)*100;
+  const bars=[],labs=[];const col=(lab,from,to,cls,top,tag)=>{bars.push(`<div class="wfp"><i class="${cls}" style="bottom:${y(Math.min(from,to))}%;height:${Math.max(0.8,Math.abs(y(to)-y(from)))}%"><em>${top}</em></i></div>`);labs.push(`<div class="wfc"><span class="wfl">${lab}</span>${tag||''}</div>`);};
+  W.forEach((x,i)=>{if(i===0){col(x.n,lo,x.v,'base',f(x.v),'');return;}const d=x.v-W[i-1].v;col(`+ ${x.n}${x.cost?` · ${x.cost}`:''}`,W[i-1].v,x.v,'step',`${d>=0?'+':''}${n1(d)} logos`,`<span class="wft">${x.fix.map(t=>`<i>${t}</i>`).join('')}</span>`);});
+  col('= with all three',lo,end,'end',f(end),'');
+  const h=`<div class="wfplot">${bars.join('')}</div><div class="wflabs">${labs.join('')}</div>`;
+  document.getElementById('wf').innerHTML=`<div class="wfg">${h.replace('<div class="wfplot">',`<div class="wfplot"><span class="wfline" style="bottom:${y(D.tg)}%"><em>${n0(D.tg)} target</em></span><span class="wfline c" style="bottom:${y(D.ceiling)}%"><em>ceiling: ${aesN} AEs × ${n1(g.aeCap)} × 4 = ${f(D.ceiling)}</em></span>`)}</div><p class="wfax">Axis starts at ${lo} logos. Values are the model's 2027 landing point with each lever added on top of the last.</p>`;
+  const ae=goalPlanV(R,sc,{...LV0,lvHO:true,lvIS:true,lvCS:true,lvAE:true}).closes;
+  const lev=(n,cost,fix,line)=>`<div class="lev"><b>${n}</b><span class="lc">${cost}</span><span class="lf">${fix}</span><span class="ll">${line}</span></div>`;
+  document.getElementById('levs').innerHTML=
+    lev('Handoff & scoring','$0','fixes Qualifying','AEs only get scored, qualified leads.')+
+    lev('+2 inside sales',W[2].cost,'fixes Qualifying + Deals in flight','They screen, AEs close.')+
+    lev('US partner co-selling','—','fixes Closing (US)','Partners help the one US AE on late-stage deals.')+
+    lev('+1 AE',`trigger, not in the ${f(end)}`,`would take it to ${f(ae)}`,`Add when open deals per AE pass ${n0(g.maxDeals)} or the US needs more than ${n1(g.aeCap)} logos a quarter. Hired in Q${n0(g.lvAEfrom)}, it closes from the quarter after.`);
+  document.getElementById('s4bot').innerHTML=`<b>${f(end)} is the realistic top.</b> ${n0(D.tg)} needs every AE at full speed every quarter${D.ceiling<D.tg?`, and with ${aesN} AEs at ${n1(g.aeCap)} a quarter the ceiling is ${f(D.ceiling)}`:''}.`;
+  // assumptions (all inputs for steps 3–4)
   const s4=document.getElementById('s4');
   if(!s4.contains(document.activeElement)){
     const sel=k=>`<select data-p="global.${k}">${[1,2,3,4].map(q=>`<option value="${q}" ${+g[k]===q?'selected':''}>Q${q}</option>`).join('')}</select>`;
-    s4.innerHTML=`
-      <div class="lvrow"><label class="lvt"><input type="checkbox" data-p="global.lvHO" ${g.lvHO?'checked':''}><b>Handoff and lead scoring in Attio</b></label><span class="lvd">No cost. AEs only get scored, qualified leads: +${inp('hoLift',40,20)} pts lead → opp on inbound, ${inp('hoCut',40,80)}% fewer conversations to screen by hand ${pl('Assumed')}</span></div>
-      <div class="lvrow"><label class="lvt"><input type="checkbox" data-p="global.lvIS" ${g.lvIS?'checked':''}><b>+2 inside sales / qualifiers</b></label><span class="lvd">from ${sel('lvISfrom')} · ${inp('isLeads',40,40)} qualified leads a month each, ${inp('isCost',48,150)} $k a year each ${pl('Assumed')}. Takes qualifying off the AEs.</span></div>
-      <div class="lvrow"><label class="lvt"><input type="checkbox" data-p="global.lvAE" ${g.lvAE?'checked':''}><b>+1 AE (trigger, not day one)</b></label><span class="lvd">hired in ${sel('lvAEfrom')}, closing from the quarter after · ${inp('aeHireCost',48,250)} $k ${pl('Assumed')}. Add when active deals per AE pass ${n0(g.maxDeals)}, or US pipeline needs more than ${n1(g.aeCap)} logos a quarter.</span></div>
-      <div class="lvrow"><label class="lvt"><input type="checkbox" data-p="global.lvCS" ${g.lvCS?'checked':''}><b>US partner co-selling</b></label><span class="lvd">Partners support the single US AE on late-stage deals: +${inp('csLift',40,50)}% US closing capacity ${pl('Assumed')}</span></div>`;}
-  const on=[g.lvHO&&'handoff',g.lvIS&&'2 IS',g.lvAE&&'+1 AE',g.lvCS&&'co-selling'].filter(Boolean);
-  document.getElementById('s4res').innerHTML=`${on.length?`With ${on.join(', ')}:`:'With nothing in place:'} the model lands at <b class="${D.closes>=D.tg-0.5?'ok':''}">${f(D.closes)} logos</b> of ${n0(D.tg)} in 2027.`;
+    const row=(lab,ctl)=>`<label class="asr"><span>${lab}</span><span class="asc">${ctl} ${pl('Assumed')}</span></label>`;
+    s4.innerHTML=
+      row('Qualification calls per AE a month',inp('qualCalls',52,80))+
+      row('Inbound conversations to screen per qualified lead',inp('inRaw',52,5))+
+      row('Max open deals per AE',inp('maxDeals',52,60))+
+      row('Handoff & scoring: lift on inbound lead → opp (pts)',inp('hoLift',52,20))+
+      row('Handoff & scoring: fewer conversations screened by hand (%)',inp('hoCut',52,80))+
+      row('Inside sales: calls per rep a month',inp('isCalls',52,200))+
+      row('Inside sales: qualified leads per rep a month',inp('isLeads',52,40))+
+      row('Inside sales: loaded cost per rep ($k a year)',inp('isCost',52,150))+
+      row('Inside sales: start quarter',sel('lvISfrom'))+
+      row('US partner co-selling: extra US closing capacity (%)',inp('csLift',52,50))+
+      row('+1 AE: hire quarter',sel('lvAEfrom'))+
+      row('+1 AE: loaded cost ($k a year)',inp('aeHireCost',52,250));}
 }
 const BRIEF={l2o:[30,40,50],o2w:[15,20,25]};
 function goalMix(){
