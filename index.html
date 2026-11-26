@@ -784,6 +784,7 @@ button.play[hidden]{display:none}
 @media (max-width:1000px){.betc{grid-template-columns:1fr}.face{min-height:0}}
 .vid.jacket{aspect-ratio:698/396;background:#efefef}.vid.jacket img{object-fit:cover}
 .vids.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.lv-out{margin:22px 0 0}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -942,7 +943,8 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
         <div class="paths mt" id="paths"></div>
         <details class="more mt" id="tierBox"><summary>By ABM tier (digital)</summary><div class="abm mt" id="abmFlow"></div><p class="tiercheck" id="tierCheck"></p></details>
       </details></div>
-    <div class="lv-sec"><span class="lv-k">Step 3 · Where it breaks</span>
+    <h3 class="lv-out">Where does the model break?</h3>
+    <div class="lv-sec">
       <div class="meters" id="s3"></div></div>
     <div class="lv-sec"><span class="lv-k">Step 4 · What we need in place</span>
       <div class="lvl" id="s4"></div>
