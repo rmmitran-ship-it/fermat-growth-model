@@ -1090,7 +1090,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
     <h1>Growth plan <span class="hl hl-m">2027</span></h1>
     <p class="sub">Fermat 2027 new-logo plan.</p>
   </header>
-  <div class="rec"><p class="rec-t" id="recT"></p><p class="rec-s">If that's not enough by day 30, add 2 SDRs.</p>
+  <div class="rec"><p class="rec-t" id="recT"></p><p class="rec-s">The SDRs follow up engaged accounts and take hand-off calls off the AEs.</p>
     <div class="planswitch"><span class="small muted" style="align-self:center;margin-right:4px">Plan</span><button class="tab tA" data-act="view" data-v="A">A · My plan</button><button class="tab tB" data-act="view" data-v="B">B · $310k · Recommended</button><button class="tab tC" data-act="view" data-v="C">C · $550k</button></div></div>
   <h3 class="mt2">What do we need to get to 60 logos?</h3>
   <div class="lv" id="goal">
@@ -1955,8 +1955,8 @@ function renderAnswer(R){
   const b0=num(g.baseLeads),lift=D.bl-b0,rIn=D.inL2O*D.inO2W,baseLogo=b0*12*rIn,liftLogo=lift*12*rIn,srcLogo=D.newLogo,newWork=liftLogo+srcLogo;
   const fL=(()=>{const fr=liftLogo-Math.floor(liftLogo);return fr>0.15&&fr<0.85?`~${Math.floor(liftLogo)}–${Math.ceil(liftLogo)}`:f(liftLogo);})();
   const pipeToday=b0*12*D.inL2O*D.acv,pipeLift=lift*12*D.inL2O*D.acv,pipeNew=D.newOpp*D.acv,pipeAll=pipeToday+pipeLift+pipeNew,allOpp=D.inOpp+D.newOpp;
-  const land0=D.closes,REC={...LV0,lvHO:true,lvAE:true,aeRegion:'EU',fixNewQL:Math.max(0.01,D.newQL)},landRec=goalPlanV(R,sc,REC).closes;
-  document.getElementById('recT').innerHTML=`I recommend plan B: fix the hand-off in month 1, and hire an EMEA AE once each AE has ${n0(g.maxDeals)}+ open deals. That gets us <b>${f(landRec)} of ${n0(D.tg)} logos</b>.`;
+  const land0=D.closes,REC={...LV0,lvHO:true,lvIS:true,lvISfrom:1,lvAE:true,aeRegion:'EU',fixNewQL:Math.max(0.01,D.newQL)},landRec=goalPlanV(R,sc,REC).closes;
+  document.getElementById('recT').innerHTML=`I recommend plan B: fix the hand-off and add 2 SDRs in month 1, and hire an EMEA AE once each AE has ${n0(g.maxDeals)}+ open deals. That gets us <b>${f(landRec)} of ${n0(D.tg)} logos</b>.`;
   // STEP 1
   const s1=once('s1',()=>`
     <div class="lvc"><span class="k">Target logos ${pl('Given')}</span><b class="lvn">${inp('targetLogos',90,120)}</b></div>
@@ -2123,7 +2123,7 @@ function renderAnswer(R){
    const coldM=D2.unscreened/12,spare=D2.qualCap-D2.screens;
    const who=coldM>0.5?`<span class="bad">Nobody has time today.</span> AEs are full: ~${n0(coldM)} MQLs a month already go cold. ${g.lvIS?'':'The 2 SDRs would own this.'}`
      :g.lvIS?'The 2 SDRs own it, alongside hand-off calls.'
-     :`AEs, in the time the hand-off fix frees up (~${n0(Math.max(0,spare))} calls a month). If that's not enough, the 2 SDRs.`;
+     :`AEs, in the time the hand-off fix frees up (~${n0(Math.max(0,spare))} calls a month). That's not enough for this many accounts, so the 2 SDRs own it.`;
    document.getElementById('acsup').innerHTML=`<p><b>Ads get an account to notice us. A person turns that into a conversation.</b></p>
      <ul><li>Follow up within 48 hours when 2+ people from an account engage</li><li>Invite engaged accounts to a dinner or event nearby</li><li>Ask a partner who already works with them for an intro</li><li>A short note from Martí or Pol for the ${f(T[0].acc).replace('~','')} accounts in the 1:1 group</li></ul>
      <p class="who"><b>Who does it:</b> ${who}</p>`;}
@@ -2131,7 +2131,7 @@ function renderAnswer(R){
   {const base=D0.closes,one=o=>goalPlanV(R,sc,{...LV0,...PU,...o}).closes;
    const qsel=k=>` · from <select data-p="global.${k}">${[1,2,3,4].map(q=>`<option value="${q}" ${+g[k]===q?'selected':''}>Q${q}</option>`).join('')}</select>`;
    const M3=[['lvHO','Fix the hand-off',`$0 · score leads so AEs call the best ones first ${pl('Assumed')}`,0,`${n0(g.hoCut)}% fewer calls for AEs. Makes the first break smaller.`,''],
-     ['lvIS','+2 SDRs',`only if the hand-off fix isn't enough`,2*num(g.isCost)*1000,`${n0(g.isCalls)} calls a month each ${pl('Assumed')}. Clears the first break.`,'lvISfrom'],
+     ['lvIS','+2 SDRs',`from day 1: follow up engaged accounts and take hand-off calls`,2*num(g.isCost)*1000,`${n0(g.isCalls)} calls a month each ${pl('Assumed')}. Clears the first break.`,'lvISfrom'],
      ['lvAE','+1 EMEA AE',`hire when each AE has ${n0(g.maxDeals)}+ open deals`,num(g.aeHireCost)*1000,`About ${n0(g.aeCap)} more deals a quarter, plus commission ${pl('Assumed')}. Clears the second break.`,'lvAEfrom']];
    const mi=document.getElementById('mits');
    if(!mi.contains(document.activeElement))mi.innerHTML=M3.map(([k,n,fx,cost,why,qk])=>{const d=Math.round(one({[k]:true}))-Math.round(base);
@@ -2139,9 +2139,9 @@ function renderAnswer(R){
   // Model tab: what the fixes cost
   {const ft=document.getElementById('fixTable');if(ft){const base=land0,gm=num(g.acv)*1000*num(g.gm)/100,one=o=>Math.round(goalPlanV(R,sc,{...LV0,aeRegion:'EU',fixNewQL:Math.max(0.01,D.newQL),...o}).closes)-Math.round(base);
    const be=c=>{if(!c)return '0';const v=c/gm,lo=Math.floor(v),hi=Math.ceil(v);return v-lo>0.25&&hi-v>0.25?`~${lo}–${hi}`:`~${Math.round(v)}`;};
-   const rows=[['Fix the hand-off',0,one({lvHO:true})],['+2 SDRs',2*num(g.isCost)*1000,one({lvIS:true})],['+1 EMEA AE',num(g.aeHireCost)*1000,one({lvAE:true})],['My recommendation: hand-off fix + EMEA AE',num(g.aeHireCost)*1000,one({lvHO:true,lvAE:true})]];
+   const rows=[['Fix the hand-off',0,one({lvHO:true})],['+2 SDRs',2*num(g.isCost)*1000,one({lvIS:true})],['+1 EMEA AE',num(g.aeHireCost)*1000,one({lvAE:true})],['My recommendation: hand-off fix + 2 SDRs + EMEA AE',(num(g.aeHireCost)+2*num(g.isCost))*1000,one({lvHO:true,lvIS:true,lvISfrom:1,lvAE:true})]];
    ft.innerHTML=`<thead><tr><th>Fix</th><th class="num">Cost a year</th><th class="num">Extra logos in 2027</th><th class="num">Break-even logos</th></tr></thead><tbody>${rows.map(([n,c,d])=>`<tr><td>${n}</td><td class="num">${c?k$(c):'$0'}</td><td class="num">+${Math.max(0,Math.round(d))}</td><td class="num">${be(c)}</td></tr>`).join('')}</tbody>`;
-   document.getElementById('fixWhy').innerHTML=`<li>Break-even logos = cost ÷ $${(gm/1000).toFixed(1).replace(/\.0$/,'')}k gross margin per logo a year (ACV × ${n0(g.gm)}%).</li><li>From ${f(land0)} logos if nothing changes to ${f(landRec)} with my recommendation.</li><li>Start with the hand-off fix. It's free. If it's not enough, add 2 SDRs.</li><li>Hire the EMEA AE only when each AE has ${n0(g.maxDeals)}+ open deals.</li>`;}}
+   document.getElementById('fixWhy').innerHTML=`<li>Break-even logos = cost ÷ $${(gm/1000).toFixed(1).replace(/\.0$/,'')}k gross margin per logo a year (ACV × ${n0(g.gm)}%).</li><li>From ${f(land0)} logos if nothing changes to ${f(landRec)} with my recommendation.</li><li>Month 1: fix the hand-off (free) and add 2 SDRs. They follow up engaged accounts, which ads can't do alone.</li><li>On top of the hand-off fix, the SDRs add no logos here: their follow-up on engaged accounts isn't modelled yet. That follow-up is their job.</li><li>Hire the EMEA AE only when each AE has ${n0(g.maxDeals)}+ open deals.</li>`;}}
   // assumptions (all inputs for steps 3–4)
   const s4=document.getElementById('s4');
   if(!s4.contains(document.activeElement)){
