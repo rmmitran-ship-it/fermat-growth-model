@@ -876,6 +876,9 @@ button.play[hidden]{display:none}
 .rflow.flowa .rfb b,.rflow.flowb .rfb b{white-space:nowrap}
 .rfb.nql .rstk{height:14px}.rstk:empty{display:none}
 .shrows{display:flex;flex-direction:column;gap:4px;margin-top:8px}
+.shz{margin-top:8px}.shz summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink);user-select:none}.shz summary::-webkit-details-marker{display:none}
+.shzb{width:24px;height:24px;border:1px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;background:var(--white)}.shzb::before{content:'+';font-size:16px;line-height:1;font-weight:500}
+.shz[open] .shzb::before{content:'−'}.shz summary:hover .shzb{background:var(--ink);color:var(--white)}.shz summary:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .shr{display:grid;grid-template-columns:10px 1fr auto 74px;gap:8px;align-items:center;font-size:13px}
 .shr>i{display:block;width:10px;height:10px}.shn{font-weight:600}.shi{display:flex;align-items:center;gap:2px}
 .shr b{font-family:Inter!important;font-size:13px!important;font-weight:700!important;letter-spacing:0!important;text-align:right;white-space:normal!important;line-height:1.2}
@@ -1976,7 +1979,8 @@ function renderAnswer(R){
       <div class="tmini">${['1:1','1:few','1:many','partners'].map((l,i)=>`<span><em>${l}</em><b data-pv="tm${i}"></b></span>`).join('')}</div></div>${arw}
     <div class="rfb"><span class="k">Contacts</span><b data-pv="bc"></b><span class="s">reached across buying groups</span></div>${arw}
     <div class="rfb nql"><span class="k">New MQLs</span><b data-pv="bq"></b><span class="s" data-pv="bqy"></span><div data-pv-html="bqs"></div>
-      <div class="shrows">${D.paths.map(({P},i)=>`<label class="shr"><i style="background:var(${['--green','--magenta','--blue'][i]})"></i><span class="shn">${['Partners','Experiential','Digital'][i]}</span><span class="shi">${inp(P.share,42)}%</span><b data-pv="sv${i}"></b></label>`).join('')}</div><span class="s" data-pv="bsum"></span><span class="s" data-pv="blift"></span></div>${arw}
+      <details class="shz" ${window.__shOpen?'open':''} ontoggle="window.__shOpen=this.open"><summary aria-label="Show the split by path"><span class="shzb" aria-hidden="true"></span>By path</summary>
+      <div class="shrows">${D.paths.map(({P},i)=>`<label class="shr"><i style="background:var(${['--green','--magenta','--blue'][i]})"></i><span class="shn">${['Partners','Experiential','Digital'][i]}</span><span class="shi">${inp(P.share,42)}%</span><b data-pv="sv${i}"></b></label>`).join('')}</div><span class="s" data-pv="blift"></span></details><span class="s" data-pv="bsum"></span></div>${arw}
     <div class="rfb"><span class="k">Opportunities</span><b data-pv="bo"></b><span class="s" data-pv="bor"></span></div>${arw}
     <div class="rfb lgs"><span class="k">Logos</span>
       <div class="lgp src"><b data-pv="bl"></b><span>sourced</span><em data-pv="blr"></em><div data-pv-html="bls"></div></div>
