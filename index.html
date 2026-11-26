@@ -754,6 +754,33 @@ button.play[hidden]{display:none}
 .measure{margin-top:14px;background:var(--surface);padding:12px 14px;color:var(--ink)}
 .measure b{font-family:'Inter Tight';font-size:15px}.measure ul{margin:6px 0 0;padding-left:18px;font-size:13.5px;line-height:1.5}
 .measure p{margin:6px 0 0;font-size:12.5px;color:var(--muted);max-width:none}
+.betc{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.flip{perspective:1200px;cursor:pointer}
+.flip-in{display:grid;transition:transform .45s ease;transform-style:preserve-3d;height:100%}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:18px 18px 14px;display:flex;flex-direction:column;gap:6px;color:var(--ink);min-height:280px}
+.face.back{transform:rotateY(180deg);background:var(--white)}
+.flip.p0 .front{background:var(--green)}.flip.p1 .front{background:var(--magenta-light)}.flip.p2 .front{background:var(--blue-light)}
+.flip.p0 .back{border-top:8px solid var(--green)}.flip.p1 .back{border-top:8px solid var(--magenta)}.flip.p2 .back{border-top:8px solid var(--blue)}
+.fh{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.fname{font-family:'Inter Tight';font-size:20px;font-weight:700;letter-spacing:-0.024em}
+.fshare{font-family:'Inter Tight';font-size:64px;font-weight:700;letter-spacing:-0.04em;line-height:.95;margin-top:6px}
+.fshare-s{font-family:'Inter Tight';font-size:18px;font-weight:700;color:var(--muted)}
+.fsub{font-size:12.5px;color:var(--text);margin-top:-2px}
+.fstats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:auto}
+.fstat{background:var(--white);padding:10px 12px;display:flex;flex-direction:column}.fstat b{font-family:'Inter Tight';font-size:26px;font-weight:700;letter-spacing:-0.03em}.fstat span{font-size:11.5px;color:var(--text)}
+.fmot{background:var(--white);padding:10px 12px;margin-top:auto;display:flex;flex-direction:column;gap:2px}
+.fmrow{display:flex;align-items:center;gap:6px}.fml{font-weight:700;font-size:13.5px}.fmrow b{margin-left:auto;font-family:'Inter Tight';font-size:20px}
+.fmrow .conf{font-size:10px;padding:1px 6px}
+.fms{font-size:11px;color:var(--text);margin-bottom:4px}
+.fmbar{display:flex;height:12px;margin-top:4px}.fmbar i{display:block;background:var(--blue)}.fmbar i.ao{background:#9db4f5}.fmbar i.lf{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Crect width='6' height='6' fill='%23bfffc6'/%3E%3Cpath d='M-1 1l2-2M0 6l6-6M5 7l2-2' stroke='%2314141455' stroke-width='1.2'/%3E%3C/svg%3E")}
+.fbtn{all:unset;cursor:pointer;align-self:flex-start;margin-top:10px;font-size:12.5px;font-weight:700;padding:6px 10px;background:var(--ink);color:var(--white)}
+.fbtn:focus-visible{outline:3px solid var(--magenta-deep);outline-offset:2px}
+.fsec{font-size:13.5px;line-height:1.45}.fsec span{display:block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:2px}
+.fsec ul{margin:2px 0 0;padding-left:16px}.fsec li{margin:2px 0}
+.face.back .fbtn{margin-top:auto}
+@media (prefers-reduced-motion:reduce){.flip-in{transition:none}}
+@media (max-width:1000px){.betc{grid-template-columns:1fr}.face{min-height:0}}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -1690,6 +1717,7 @@ const PATHS=[
   {k:'ex',name:'Marketing experiential',sub:'Events, dinners, high-touch',cls:'m',share:'shEx',top:'People met',mid:'Meetings',ra:['exMeet','book a meeting'],rb:['exQual','qualify']},
   {k:'dg',name:'Marketing digital',sub:'ABM ads, webinars, lead magnets, search',cls:'b',share:'shDg',top:'Contacts reached',mid:'Engaged',ra:['dgEng','engage'],rb:['dgQual','qualify']}];
 document.addEventListener('click',e=>{if(!e.target.closest('[data-toA]'))return;const r=document.getElementById('liftSeg');if(!r)return;r.scrollIntoView({behavior:'smooth',block:'center'});r.classList.add('flash');setTimeout(()=>r.classList.remove('flash'),1600);});
+document.addEventListener('click',e=>{const t=e.target.closest('[data-fliptog]');let c=t?t.closest('[data-flip]'):null;if(!c){const f=e.target.closest('[data-flip]');if(!f||e.target.closest('button,a,input,select'))return;c=f;}const i=c.dataset.flip,st=window.__flip||(window.__flip={});st[i]=!st[i];c.classList.toggle('on',st[i]);c.querySelectorAll('[data-fliptog]').forEach(b=>b.setAttribute('aria-expanded',st[i]));const face=c.querySelector(st[i]?'.back .fbtn':'.front .fbtn');if(t&&face)setTimeout(()=>face.focus(),st.noAnim?0:350);});
 function runV(sc,v){const prev=HIRE;HIRE=v;try{return run(sc);}finally{HIRE=prev;}}
 // Target-driven plan: works back from the logo target, then runs the result through the model's own
 // engine (simulate): sales-cycle lag, Q1 ramp, EU/US AE capacity, 2028 spillover.
@@ -1793,24 +1821,29 @@ function renderAnswer(R){
      <div class="rcleg"><span><i class="t"></i>${f(baseLogo)} baseline</span><span><i class="h"></i>${f(liftLogo)} inbound lift</span><span><i class="n"></i>${f(D.newLogo)} new work</span><span class="rcsi"><b>Sourced:</b> what I commit to · <b>Influenced:</b> measured as a trend, not by deal</span></div>
      <p class="rctxt">${f(baseLogo)} baseline + ${f(liftLogo)} lift + ${f(D.newLogo)} new = <b>${f(tot)}</b>. The model lands at <b class="${D.closes>=D.tg-0.5?'ok':'no'}">${f(D.closes)}</b>: Q1 can't fill${D.ceiling<D.tg?`, and ${n0(num(g.aesEU)+num(g.aesUS))} AEs at ${n1(g.aeCap)} a quarter can close ${f(D.ceiling)}`:''}.</p>
      <div class="measure"><b>How I'll measure what I can't attribute</b><ul><li>Inbound volume vs the Q4 2026 baseline</li><li>Share of inbound from named ABM accounts (matched by company in Attio)</li><li>"How did you hear about us?" on the demo form</li><li>Branded search trend</li></ul><p>If inbound stays flat after 2 quarters of always-on, the lift is zero and I cut it.</p></div>`;}
-  // Row D: bets
-  const BETS=[
-    ['Partners','High','hi','Partners already refer.','A structured program (value map, 10–20% commission from revenue) gets more intros, plus US co-sellers.',`Intros a month, ${n0(g.ptQual)}% qualify.`],
-    ['Experiential','High','hi','Events already bring leads.','Meetings booked before events, dinners around them, follow-up within 48h.',`Meetings per event, ${n0(g.exMeet)}% meet, ${n0(g.exQual)}% qualify.`],
-    ['Digital',"Low, so it's staged",'lo',"Brand works, no paid or outbound yet.",'LinkedIn on named accounts, outreach and competitor search capture demand brand creates. Only path that scales, so biggest share, budget in stages.',`${n0(g.dgEng)}% engage, ${n0(g.dgQual)}% qualify, or cut after 2 quarters.`]];
+  // Row D: bets as flip cards
   const tAcc=D.tiers[0].acc+D.tiers[1].acc,aAcc=D.tiers[2].acc;
-  const dig=`<div class="bc p2"><div class="bch"><b>Digital</b><span class="bcs">${n0(D.paths[2].sh*100)}%</span><span class="conf mix">Blend: targeted ABM + always-on</span></div>
-    <div class="mot m1"><div class="moh"><b>Targeted ABM</b><span>1:1 + 1:few · ${f(tAcc)} named accounts</span><span class="conf med">Medium</span></div>
-      <p><span>What</span>Personal outreach, account-based LinkedIn ads, signals (free sign-ups by domain, job changes, hiring).</p>
-      <p><span>Brings</span><b>${f(tgtM)} qualified leads a month</b> (1:1 + 1:few qualified ÷ 12)</p>
-      <p><span>I'll know by day 90</span>% of the ${f(tAcc).replace('~','')} accounts engaged, meetings booked, ${n0(g.ab2M)}–${n0(g.ab1M)}% qualify.</p></div>
-    <div class="mot m2"><div class="moh"><b>Always-on</b><span>1:many + competitor search · ${f(aAcc)} accounts + search</span><span class="conf lo">Low, so it's staged</span></div>
-      <p><span>What</span>One LinkedIn always-on campaign on the ICP list (story picked by the LinkedIn test, live in month 4), competitor search in the US.</p>
-      <p><span>Brings</span><b>${f(aoM)} qualified lead${Math.round(aoM)===1?'':'s'} a month</b> directly (1:many qualified ÷ 12)<br>+ the ${n0(g.inboundLift)}% lift on today's inbound (${f(lift)} a month) <button class="toA" data-toA>↑ Row A · inbound lift</button></p>
-      <p><span>I'll know by day 90</span>Engaged accounts, cost per qualified lead, inbound trend vs Q4. Cut after 2 quarters if flat.</p></div>
-    <p class="bccap">Targeted ABM brings new leads. Always-on mostly makes today's inbound bigger.</p></div>`;
-  document.getElementById('rowD').innerHTML=BETS.slice(0,2).map(([n,c,cc,t,b,h],i)=>`<div class="bc p${i}"><div class="bch"><b>${n}</b><span class="bcs">${n0(D.paths[i].sh*100)}%</span><span class="conf ${cc}">${c}</span></div>
-    <p><span>They told us</span>${t}</p><p><span>My bet</span>${b}</p><p><span>I'll know by day 90</span>${h}</p></div>`).join('')+dig;
+  const flipped=window.__flip||(window.__flip={});
+  const card=(i,cls,name,share,chip,chipCls,front,back)=>`<div class="flip ${cls}${flipped[i]?' on':''}" data-flip="${i}"><div class="flip-in">
+    <div class="face front"><div class="fh"><b class="fname">${name}</b><span class="conf ${chipCls}">${chip}</span></div><b class="fshare">${share}</b><span class="fsub">of new qualified leads</span>${front}<button type="button" class="fbtn" data-fliptog="${i}" aria-expanded="${!!flipped[i]}">See my bet ↻</button></div>
+    <div class="face back"><div class="fh"><b class="fname">${name}</b><span class="fshare-s">${share}</span></div>${back}<button type="button" class="fbtn" data-fliptog="${i}" aria-expanded="${!!flipped[i]}">↺ Back</button></div>
+  </div></div>`;
+  const stat=(v,l)=>`<div class="fstat"><b>${v}</b><span>${l}</span></div>`;
+  const pt=D.paths[0],ex=D.paths[1],dg=D.paths[2];
+  document.getElementById('rowD').innerHTML=
+    card(0,'p0','Partners',n0(pt.sh*100)+'%','High','hi',
+      `<div class="fstats">${stat(f(pt.q/12),'qualified leads a month')}${stat(f(pt.logos),'logos in 2027')}</div>`,
+      `<div class="fsec"><span>My bet</span>A structured program (value map, 10–20% commission from revenue) gets more intros from the same partners, plus US co-sellers.</div><div class="fsec"><span>I'll know by day 90</span><ul><li>Intros a month from pilot partners</li><li>${n0(g.ptQual)}% qualify</li></ul></div>`)+
+    card(1,'p1','Experiential',n0(ex.sh*100)+'%','High','hi',
+      `<div class="fstats">${stat(f(ex.q/12),'qualified leads a month')}${stat(f(ex.logos),'logos in 2027')}</div>`,
+      `<div class="fsec"><span>My bet</span>Turn events into ABM moments: meetings booked before, dinners around them, follow-up within 48h.</div><div class="fsec"><span>I'll know by day 90</span><ul><li>Meetings per event</li><li>${n0(g.exMeet)}% meet, ${n0(g.exQual)}% qualify</li></ul></div>`)+
+    card(2,'p2','Digital',n0(dg.sh*100)+'%','Blend','mix',
+      `<div class="fmot"><div class="fmrow"><span class="fml">Targeted ABM</span><span class="conf med">Medium</span><b>${f(tgtM)}/mo</b></div><span class="fms">1:1 + 1:few · ${f(tAcc)} named accounts</span>
+        <div class="fmrow"><span class="fml">Always-on</span><span class="conf lo">Staged</span><b>${f(aoM)}/mo</b></div><span class="fms">1:many + search · ${f(aAcc)} accounts, + ${f(lift)}/mo inbound lift</span>
+        <div class="fmbar"><i style="flex:${tgtM}"></i><i class="ao" style="flex:${aoM}"></i><i class="lf" style="flex:${lift}"></i></div><span class="fms">new ABM · new always-on · lift on today's inbound</span></div>`,
+      `<div class="fsec"><span>Targeted ABM · my bet</span>Personal outreach, account-based LinkedIn ads, signals (sign-ups by domain, job changes, hiring).</div>
+       <div class="fsec"><span>Always-on · my bet</span>One LinkedIn always-on on the ICP list (story from the LinkedIn test, live in month 4), competitor search in the US. <button class="toA" data-toA>↑ inbound lift</button></div>
+       <div class="fsec"><span>I'll know by day 90</span><ul><li>% of ${f(tAcc).replace('~','')} accounts engaged, ${n0(g.ab2M)}–${n0(g.ab1M)}% qualify</li><li>Cost per qualified lead, inbound trend vs Q4; cut after 2 quarters if flat</li></ul></div>`);
   // STEP 2c: path cards
   const el=once('paths',()=>{const rate=r=>r?`<div class="path-ar"><span>${inp(r[0],46)}% ${r[1]}</span>${pl('Assumed')}</div>`:'<div class="path-ph"></div>';
     return D.paths.map(({P},i)=>`<div class="path p-${P.cls}">
