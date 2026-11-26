@@ -951,6 +951,8 @@ button.play[hidden]{display:none}
 .fus{background:var(--surface);padding:10px 12px;display:flex;flex-direction:column;min-width:110px;flex:1}.fus b{font-family:'Inter Tight';font-size:22px;font-weight:600;color:var(--ink)}.fus span{font-size:12px;color:var(--ink)}.fus em{font-style:normal;font-size:11px;color:var(--muted);margin-top:2px}
 .fus:last-child{background:var(--green-light,#d9f5d0)}
 .fua{display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;color:var(--ink);padding:0 6px;gap:3px;text-align:center}.fua i{display:block;width:26px;height:2px;background:var(--ink)}
+.dg-acc{font-size:17px;color:var(--ink);margin:0 0 16px;max-width:none}.dg-land{margin:0 0 12px}
+.ppush{margin-top:10px}
 .acs-h{font-size:18px;margin:18px 0 10px}
 .acs{display:grid;grid-template-columns:1fr 64px 1fr 64px 1fr 64px 1fr;align-items:stretch}
 .acb{background:var(--surface);padding:14px;display:flex;flex-direction:column;gap:2px}.acb .k{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
@@ -1132,14 +1134,18 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 <section class="page" data-page="diagnosis"><div class="wrap">
   <h2>Where does the <span class="hl hl-m">model break</span> today?</h2>
   <p class="dg-sub" id="dgSub"></p>
-  <p class="dg-land" id="dgLand"></p>
-  <h3 class="acs-h" id="acsH"></h3>
-  <div class="acs" id="acs"></div>
-  <div class="acsup" id="acsup"></div>
+  <p class="dg-acc" id="dgAcc"></p>
   <div class="pp" id="pp"></div>
+  <details class="more mt" id="pushBox"><summary>Try it: push marketing harder</summary><div class="ppush" id="ppush"></div></details>
   <h3 class="mt2">Fixes, in this order</h3>
+  <p class="dg-land" id="dgLand"></p>
   <div class="mits" id="mits"></div>
   <p class="s1muted">New hires aren't in the $310k budget. <button class="linkbtn" data-go="model" data-fixjump>Cost and payback on the next page →</button></p>
+  <details class="more mt" id="sdrBox"><summary>Why the SDRs: engaged accounts need a person</summary>
+    <h3 class="acs-h" id="acsH"></h3>
+    <div class="acs" id="acs"></div>
+    <div class="acsup" id="acsup"></div>
+  </details>
   <details class="more mt" id="asmBox"><summary>Assumptions</summary><div class="asm" id="s4"></div></details>
   <div class="card mt2">
     <h3>How I'd confirm it in 30 days</h3>
@@ -2100,7 +2106,9 @@ function renderAnswer(R){
    const cold=D2.unscreened,slip=Math.min(D2.lagSlip,Math.max(0,D2.potWins-D2.closes)),lost2=Math.max(0,D2.potWins-D2.closes-slip),need2=D2.potWins-slip;
    const mqlM=(D2.inQL+D2.newQL)/12;
    const coldM=cold/12,cold0=D0.unscreened/12;document.getElementById('dgSub').innerHTML=`Marketing can deliver <b>${f((D0.inQL+D0.newQL)/12)} leads to be qualified (MQLs) a month</b>. AEs only have time to hand off ${f(D0.qualCap)}${cold0>0.5?`, so ${f(cold0)} a month go cold`:''}. They can close ${f(D0.ceiling)} logos a year.`;
-   document.getElementById('dgLand').innerHTML=anyOn0?`With ${onNames0.join(', ')}: <b>${f(D2.closes)} logos</b> in 2027.`:`If nothing changes: <b>${f(D2.closes)} logos</b> in 2027.`;
+   {const recL=goalPlanV(R,sc,{...LV0,...PU,lvHO:true,lvIS:true,lvISfrom:1,lvAE:true}).closes;
+    document.getElementById('dgLand').innerHTML=`<b>${f(D0.closes)}</b> logos if nothing changes → <b>${f(recL)}</b> with my recommendation (hand-off fix + 2 SDRs + EMEA AE).${anyOn0?` <span class="muted">With ${onNames0.join(', ')}: ${f(D2.closes)}.</span>`:''}`;
+    document.getElementById('dgAcc').innerHTML=`Of our ${f(D0.N)} target accounts, ${f(D0.fu.eng)} engage. ${cold0>0.5?'Sales has no time to follow them all up.':''}`;}
    const H=200,mx2=Math.sqrt(Math.max(...tot,cold,1)),hh=v=>v>0.05?Math.max(4,Math.sqrt(v)/mx2*H):0;
    const bar=(i,lab,sub)=>{let segs='';CH.forEach(c=>{const v=c.st[i];if(v<0.05)return;const prev=i>0?c.st[i-1]:0;segs+=`<i style="flex:${v};background:${c.c}" title="${c.n} · ${f(v)}${prev>0?` · ${n0(v/prev*100)}% of previous stage`:''}"></i>`;});
      return `<div class="pc"><span class="pt">${f(tot[i])}</span><div class="pb" style="height:${hh(tot[i])}px">${segs}</div><span class="pl">${lab}</span><span class="ps">${sub||''}</span></div>`;};
@@ -2112,16 +2120,16 @@ function renderAnswer(R){
      <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="height:${H}px"><path d="M0 ${H-hM} L38 ${H-hN} L62 ${H-hN} L${W} ${H-hS} L${W} ${H} L0 ${H} Z"/></svg>
      <span class="pl">Hand-off</span><span class="ps">${f(D2.qualCap)} a month</span><div class="parr ${b1}" aria-hidden="true"></div></div>`;
    const accNow=D2.N+D2.paths[0].top;
-   const pp=document.getElementById('pp');
-   const sl=pp.querySelector('.pslider input[type=range]');const keepFocus=sl&&document.activeElement===sl;
+   const pp=document.getElementById('pp'),pu=document.getElementById('ppush');
+   const sl=pu.querySelector('.pslider input[type=range]');const keepFocus=sl&&document.activeElement===sl;
    const top=`<div class="pz-head"><div class="pslider"><label><b>Marketing push</b> · accounts engaged <span class="pval">${f(accNow)}</span></label><input type="range" min="200" max="800" step="10" value="${Math.round(accNow)}" data-p="global.mktPush" aria-label="Accounts engaged by new work">${num(g.mktPush)?`<button class="linkbtn" data-pushreset>Back to the plan (${f(autoAcc0)})</button>`:''}<span class="ps">Marketing can fill the top. Without hand-off and closing capacity, more MQLs just go cold.</span></div></div>`;
-   const html=`${top}<div class="pzs"><div class="pz mk"><span class="pzl">Marketing</span><div class="pzc">${bar(0,'Contacts','reached')}${ar}${bar(1,'Contacts','engaged')}${ar}${bar(2,'MQLs','leads to be qualified')}</div></div>
+   const html=`<div class="pzs"><div class="pz mk"><span class="pzl">Marketing</span><div class="pzc">${bar(0,'Contacts','reached')}${ar}${bar(1,'Contacts','engaged')}${ar}${bar(2,'MQLs','leads to be qualified')}</div></div>
      ${neck}
      <div class="pz sl"><span class="pzl">Sales</span><div class="pzc">${bar(3,'SQL','accepted by sales')}${ar.replace('class="pa"',`class="pa b2 ${b2}"`)}${bar(4,'Opportunity')}${ar.replace('class="pa"',`class="pa b2 ${b2}"`)}<div class="pwon">${bar(5,'Won','in 2027')}${lost2>0.5?`<div class="pover">−${f(lost2)} wait for an AE</div>`:''}</div></div></div></div>
-     <div class="pbns"><div class="pbn ${b1}"><b>Break 1 · Hand-off:</b> ${f(D2.screens)} MQLs a month ${g.lvHO?`after scoring (from ${f(mqlM)})`:`(${f(num(g.baseLeads))} today + ${f(D2.inQL/12-num(g.baseLeads))} inbound lift + ${f(D2.newQL/12)} new)`}. ${(()=>{const qc=num(g.qualCalls),aeP=(num(g.aesEU)+num(g.aesUS))*qc+(g.lvAE?qc*(4-(+g.lvAEfrom||1))/4:0),sdP=D2.qualCap-aeP;return g.lvIS?`AEs have time for ${f(aeP)} and SDRs for ${f(sdP)} (after ${f(D2.fu.load)} follow-up calls on engaged accounts): ${f(D2.qualCap)} a month.`:`AEs have time for ${f(D2.qualCap)} a month.`;})()} ${r1>1.0001?`~${n0(cold/12)} a month wait and go cold.`:'They keep up.'}</div>
+     <div class="pbns"><div class="pbn ${b1}"><b>Break 1 · Hand-off:</b> ${f(D2.screens)} MQLs a month${g.lvHO?' after scoring':''}. ${g.lvIS?'AEs and SDRs have':'AEs have'} time for ${f(D2.qualCap)}. ${r1>1.0001?`~${n0(cold/12)} a month wait and go cold.`:'They keep up.'}</div>
        <div class="pbn ${b2}"><b>Break 2 · Closing:</b> each AE has ${f(D2.deals)} open deals (limit ${n0(g.maxDeals)}). ${f(need2)} logos to close, AEs can close ${f(D2.ceiling)}. ${b2==='idle'?'This breaks next, once the hand-off is fixed.':lost2>0.5?`Europe's ${n0(g.aesEU)} AEs are full: ${f(lost2)} deals wait.`:over2?'Too many deals each, so they slow down.':'They keep up.'}</div></div>
      <div class="legend">${CH.map(c=>`<span><span class="dot" style="background:${c.c}"></span>${c.n}</span>`).join('')}</div>`;
-   if(!keepFocus)pp.innerHTML=html;else{const v=pp.querySelector('.pval');if(v)v.textContent=f(accNow);const rest=document.createElement('div');rest.innerHTML=html;pp.querySelector('.pzs').replaceWith(rest.querySelector('.pzs'));pp.querySelector('.pbns').replaceWith(rest.querySelector('.pbns'));}
+   pp.innerHTML=html;if(!keepFocus)pu.innerHTML=top;else{const v=pu.querySelector('.pval');if(v)v.textContent=f(accNow);}
   }
   // target accounts: reached → engaged → pipeline (named list, digital)
   {const T=D2.tiers,N=T.reduce((a,t)=>a+t.acc,0),rp=Math.min(100,Math.max(0,num(g.acReach)))/100,rch=N*rp,
@@ -2148,7 +2156,8 @@ function renderAnswer(R){
      :`AEs, in the time the hand-off fix frees up (~${n0(Math.max(0,spare))} calls a month). That's not enough for this many accounts, so the 2 SDRs own it.`;
    document.getElementById('acsup').innerHTML=`<p><b>Ads get an account to notice us. A person turns that into a conversation.</b></p>
      <ul><li>Follow up within 48 hours when 2+ people from an account engage</li><li>Invite engaged accounts to a dinner or event nearby</li><li>Ask a partner who already works with them for an intro</li><li>A short note from Martí or Pol for the ${f(T[0].acc).replace('~','')} accounts in the 1:1 group</li></ul>
-     <p class="who"><b>Who does it:</b> ${who}</p>${fuHTML}`;}
+     <p class="who"><b>Who does it:</b> ${who}</p>
+     <p class="who"><b>SDR time:</b> 2 × ${n0(g.isCalls)} calls a month. ~${n0(FU.open*FU.touch/12)} go to engaged accounts (${n0(FU.touch)} each ${pl('Assumed')}), the rest to hand-off calls.</p>${fuHTML}`;}
   // fixes, in order
   {const base=D0.closes,one=o=>goalPlanV(R,sc,{...LV0,...PU,...o}).closes;
    const qsel=k=>` · from <select data-p="global.${k}">${[1,2,3,4].map(q=>`<option value="${q}" ${+g[k]===q?'selected':''}>Q${q}</option>`).join('')}</select>`;
