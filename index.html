@@ -884,6 +884,51 @@ button.play[hidden]{display:none}
 .rleg span{display:flex;align-items:center;gap:4px}.rleg b{font-family:Inter!important;font-size:12px!important;font-weight:700!important;letter-spacing:0!important;line-height:1.2!important}.rleg i{display:inline-block;width:9px;height:9px;border:1px solid rgba(20,20,20,.25)}
 .tmini{margin-top:auto}
 .rfb.new .rstk{background:var(--white)}.rfb.new .rstk i:nth-child(2),.rfb.new .rleg span:nth-child(2) i{background:var(--magenta-deep)!important}
+.pp{background:var(--white);padding:14px 16px 12px;border:1px solid var(--line)}
+.pz-head{margin-bottom:10px}
+.pslider{background:var(--blue-light);padding:10px 12px;display:grid;grid-template-columns:auto 1fr auto;gap:4px 14px;align-items:center}
+.pslider label{font-size:13.5px;color:var(--ink)}.pval{font-family:'Inter Tight';font-size:20px;font-weight:700;margin-left:6px}
+.pslider input[type=range]{width:100%;accent-color:var(--ink)}
+.pslider .ps{grid-column:1/-1;font-size:12px;color:var(--text)}
+.pzs{display:grid;grid-template-columns:minmax(0,3fr) minmax(70px,0.7fr) minmax(0,3.2fr);align-items:end}
+.pz{padding:22px 8px 8px;position:relative;align-self:stretch;display:flex;flex-direction:column;justify-content:flex-end}
+.pz.mk{background:#e6edff}.pz.sl{background:var(--surface)}
+.pzl{position:absolute;top:6px;left:10px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.pz.mk .pzl{color:var(--blue-deep)}
+.pzc{display:grid;grid-template-columns:minmax(0,1fr) 16px minmax(0,1fr) 16px minmax(0,1fr);align-items:end}
+.pc,.pwon{display:flex;flex-direction:column;gap:2px;min-width:0}
+.pt{font-family:'Inter Tight';font-size:17px;font-weight:700;text-align:center;color:var(--ink)}
+.pb{display:flex;flex-direction:column-reverse;background:var(--white)}.pb i{display:block;min-height:1px;border-top:1px solid var(--white)}
+.pl{font-size:12.5px;font-weight:700;text-align:center;color:var(--ink);margin-top:3px}.ps{font-size:10.5px;color:var(--muted);text-align:center;display:block}
+.pa{align-self:center;height:2px;margin-bottom:34px}.pa i{display:block;height:2px;background:var(--ink);position:relative}
+.pa i::after{content:'';position:absolute;right:-1px;top:-4px;border-left:6px solid var(--ink);border-top:5px solid transparent;border-bottom:5px solid transparent}
+.pa.b2.red i{background:var(--red);height:3px}.pa.b2.red i::after{border-left-color:var(--red)}
+.pa.b2.ok i{background:#5cc96b;height:3px}.pa.b2.ok i::after{border-left-color:#5cc96b}
+.pa.b2.idle i{background:none;height:0;border-top:2px dashed #9a9a9a}.pa.b2.idle i::after{border-left-color:#9a9a9a}
+.pn{position:relative;display:flex;flex-direction:column;justify-content:flex-end;align-self:stretch;padding:0 2px 8px;background:var(--white)}
+.pn svg{width:100%;display:block}.pn path{fill:#cfcfcf}.pn.red path{fill:#f3a6a6}.pn.amb path{fill:#ffd88a}.pn.ok path{fill:#a8e6b0}
+.pcold{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%23ffd6d6'/%3E%3Cpath d='M-2 2l4-4M0 8l8-8M6 10l4-4' stroke='%23d23b3b' stroke-width='1.5'/%3E%3C/svg%3E");border:2px solid var(--red);display:flex;align-items:center;justify-content:center;margin:0 4px 2px;overflow:hidden}
+.pcold:empty,.pcold[style*="height:0px"]{border:0}
+.pcold span{font-size:10.5px;font-weight:700;color:#a32020;text-align:center;line-height:1.2;padding:2px}.pcold b{display:block;font-size:12px}
+.parr{position:absolute;left:50%;bottom:-18px;width:0;height:0;margin-left:-9px;border-left:9px solid transparent;border-right:9px solid transparent;border-bottom:14px solid #9a9a9a}
+.parr.red{border-bottom-color:var(--red)}.parr.amb{border-bottom-color:#f2b84b}.parr.ok{border-bottom-color:#5cc96b}
+.pover{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%23ffd6d6'/%3E%3Cpath d='M-2 2l4-4M0 8l8-8M6 10l4-4' stroke='%23d23b3b' stroke-width='1.5'/%3E%3C/svg%3E");border:2px solid var(--red);font-size:10.5px;font-weight:700;color:#a32020;text-align:center;padding:3px 2px;margin-top:2px}
+.pbns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:20px}
+.pbn{padding:10px 12px;font-size:13px;color:var(--ink);background:var(--surface);border-left:6px solid #9a9a9a}
+.pbn.red{border-color:var(--red)}.pbn.red b{color:var(--red)}.pbn.amb{border-color:#f2b84b}.pbn.ok{border-color:#5cc96b}.pbn.idle{border-left-style:dashed;color:var(--text)}
+.pp .legend{margin-top:10px}
+@media (max-width:900px){
+  .pslider{grid-template-columns:1fr}
+  .pzs{grid-template-columns:1fr}
+  .pzc{grid-template-columns:1fr}
+  .pc{flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px}
+  .pc .pl{order:1;min-width:84px;text-align:left;margin:0}.pc .pt{order:2;min-width:60px;text-align:left;font-size:15px}.pc .pb{order:3;flex:1;height:16px!important;flex-direction:row}.pc .pb i{border-top:0;border-right:1px solid var(--white)}.pc .ps{order:4;flex-basis:100%;text-align:left}
+  .pa{height:18px;margin:0 0 0 30px;align-self:start}.pa i{width:2px!important;height:100%!important}
+  .pa i::after{right:-4px!important;top:auto!important;bottom:-2px;border-left:5px solid transparent!important;border-right:5px solid transparent;border-top:7px solid var(--ink);border-bottom:0}
+  .pn{background:var(--white);padding:8px 0}.pn svg{display:none}.pn .pl,.pn .ps{text-align:left}.parr{display:none}
+  .pcold{height:auto!important;padding:6px;margin:0}
+  .pbns{grid-template-columns:1fr}
+}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -1050,10 +1095,8 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 <section class="page" data-page="diagnosis"><div class="wrap">
   <h2>If nothing changes, where does the <span class="hl hl-m">model break</span>?</h2>
   <p class="dg-sub" id="dgSub"></p>
-  <div class="bridge" id="bridge"></div>
-  <div class="bns" id="bns"></div>
-  <p class="dg-line">Leads aren't the problem. Screening and closing are.</p>
-  <details class="more mt" id="cascBox"><summary>Show the full pipeline by channel</summary><div class="casc mt" id="casc"></div></details>
+  <div class="pp" id="pp"></div>
+  <p class="dg-line">Marketing can push the top. It breaks at screening first, then at the AEs. Fix them in that order.</p>
   <h3 class="mt2">Mitigations</h3>
   <div class="mits" id="mits"></div>
   <p class="mitsum" id="mitSum"></p>
@@ -1815,23 +1858,30 @@ const PATHS=[
 document.addEventListener('click',e=>{if(!e.target.closest('[data-toA]'))return;const r=document.getElementById('liftSeg');if(!r)return;r.scrollIntoView({behavior:'smooth',block:'center'});r.classList.add('flash');setTimeout(()=>r.classList.remove('flash'),1600);});
 document.addEventListener('click',e=>{const t=e.target.closest('[data-fliptog]');let c=t?t.closest('[data-flip]'):null;if(!c){const f=e.target.closest('[data-flip]');if(!f||e.target.closest('button,a,input,select'))return;c=f;}const i=c.dataset.flip,st=window.__flip||(window.__flip={});st[i]=!st[i];c.classList.toggle('on',st[i]);c.querySelectorAll('[data-fliptog]').forEach(b=>b.setAttribute('aria-expanded',st[i]));const face=c.querySelector(st[i]?'.back .fbtn':'.front .fbtn');if(t&&face)setTimeout(()=>face.focus(),st.noAnim?0:350);});
 document.addEventListener('click',e=>{if(e.target.closest('[data-fixjump]'))setTimeout(()=>{const b=document.getElementById('fixBox');if(b)b.scrollIntoView({block:'start'});},60);});
+document.addEventListener('click',e=>{if(!e.target.closest('[data-pushreset]'))return;S.global.mktPush=0;save();update();});
 function runV(sc,v){const prev=HIRE;HIRE=v;try{return run(sc);}finally{HIRE=prev;}}
 // Target-driven plan: works back from the logo target, then runs the result through the model's own
 // engine (simulate): sales-cycle lag, Q1 ramp, EU/US AE capacity, 2028 spillover.
 function goalPlanV(R,sc,ov){const g=S.global,keep={};Object.keys(ov).forEach(k=>{keep[k]=g[k];g[k]=ov[k];});try{return goalPlan(R,sc);}finally{Object.assign(g,keep);}}
-const LV0={lvHO:false,lvIS:false,lvAE:false,lvCS:false};
+const LV0={lvHO:false,lvIS:false,lvAE:false,lvCS:false,mktPush:0,fixNewQL:0};
 function goalPlan(R,sc){
   const g=S.global,tg=num(g.targetLogos),bl=(R[sc]&&R[sc].bl)||num(g.baseLeads),acv=num(g.acv)*1000;
   const l2o=num(g.wbL2O)/100||0.0001,o2w=num(g.wbO2W)/100||0.0001;
   const inL2O=(num(g.baseL2O)+(g.lvHO?num(g.hoLift):0))/100,inO2W=num(g.baseO2W)/100;
   const inQL=bl*12,inOpp=inQL*inL2O,inLogo=inOpp*inO2W;
-  const gap=Math.max(0,tg-inLogo),newQL=gap/(l2o*o2w);
-  const paths=PATHS.map(P=>{const sh=num(g[P.share])/100,q=newQL*sh,ra=P.ra?num(g[P.ra[0]])/100||0.0001:1,rb=num(g[P.rb[0]])/100||0.0001;
-    const mid=q/rb,top=P.ra?mid/ra:mid,opp=q*l2o;return {P,sh,q,top,mid,opp,logos:opp*o2w,pipe:opp*acv};});
+  const gap=Math.max(0,tg-inLogo),newQL0=gap/(l2o*o2w);
+  const mk=nq=>{const paths=PATHS.map(P=>{const sh=num(g[P.share])/100,q=nq*sh,ra=P.ra?num(g[P.ra[0]])/100||0.0001:1,rb=num(g[P.rb[0]])/100||0.0001;
+      const mid=q/rb,top=P.ra?mid/ra:mid,opp=q*l2o;return {P,sh,q,top,mid,opp,logos:opp*o2w,pipe:opp*acv};});
+    const C=paths[2].top,t1=num(g.tier1),t2=num(g.tier2),rem=C-t1*num(g.tc1)-t2*num(g.tc2),t3=Math.max(0,rem/(num(g.tc3)||1)),N=t1+t2+t3;
+    const tiers=[['tier1','1:1',t1,'tc1','ab1E','ab1M','All three paths'],['tier2','1:few',t2,'tc2','ab2E','ab2M','Events + segment digital'],[null,'1:many',t3,'tc3','ab3E','ab3M','Digital only']].map(([key,name,acc,tc,e,m,how])=>{
+      const con=acc*num(g[tc]),eng=con*num(g[e])/100,q=eng*num(g[m])/100,opp=q*l2o;return {key,name,acc,tc,e,m,how,con,eng,q,opp,pipe:opp*acv};});
+    return {paths,C,N,tiers};};
+  // marketing push: accounts engaged by new work (0 = what the target needs)
+  let newQL=newQL0,M0=mk(newQL0);const autoAcc=M0.N+M0.paths[0].top,push=num(g.mktPush);
+  if(num(g.fixNewQL)>0){newQL=num(g.fixNewQL);M0=mk(newQL);}
+  else if(push>0&&autoAcc>0&&newQL0>0){newQL=newQL0*push/autoAcc;M0=mk(newQL);}
+  const {paths,C,N,tiers}=M0,t1=num(g.tier1),t2=num(g.tier2);
   const newOpp=paths.reduce((a,x)=>a+x.opp,0),newLogo=paths.reduce((a,x)=>a+x.logos,0);
-  const C=paths[2].top,t1=num(g.tier1),t2=num(g.tier2),rem=C-t1*num(g.tc1)-t2*num(g.tc2),t3=Math.max(0,rem/(num(g.tc3)||1)),N=t1+t2+t3;
-  const tiers=[['tier1','1:1',t1,'tc1','ab1E','ab1M','All three paths'],['tier2','1:few',t2,'tc2','ab2E','ab2M','Events + segment digital'],[null,'1:many',t3,'tc3','ab3E','ab3M','Digital only']].map(([key,name,acc,tc,e,m,how])=>{
-    const con=acc*num(g[tc]),eng=con*num(g[e])/100,q=eng*num(g[m])/100,opp=q*l2o;return {key,name,acc,tc,e,m,how,con,eng,q,opp,pipe:opp*acv};});
   // run it through the engine
   const [f1,f2]=lagSplit(),rq=rampQ(),rs=rq.reduce((a,b)=>a+b,0)||1,u=usSplit(),uIn=num(g.usInbound)/100;
   // screening: SQLs = min(MQLs, what AEs (+SDRs, +the new AE) can screen) each quarter
@@ -1861,7 +1911,7 @@ function goalPlan(R,sc){
   const euReady=simEU.demand.reduce((a,b)=>a+b,0),usReady=simUS.demand.reduce((a,b)=>a+b,0),euCap=capEU.reduce((a,b)=>a+b,0),usCap=capUS.reduce((a,b)=>a+b,0);
   const euLoad=simEU.demand.reduce((a,b)=>a+b,0)/capEU.reduce((a,b)=>a+b,0),usLoad=simUS.demand.reduce((a,b)=>a+b,0)/capUS.reduce((a,b)=>a+b,0);
   return {g,tg,bl,acv,l2o,o2w,inL2O,inO2W,inQL,inOpp,inLogo,gap,newQL,newOpp,newLogo,paths,C,N,tiers,closes,ceiling,spill,simEU,simUS,capEU,capUS,
-    lagSlip,euReady,usReady,euCap,usCap,screens,qualCap,sfQ,inSQL,nwSQL,unscreened,potWins,hCut,handover:(inSQL+nwSQL+isQL)/12,opps,deals,aes,euLoad,usLoad,shTot:paths.reduce((a,x)=>a+x.sh,0)*100};
+    autoAcc,lagSlip,euReady,usReady,euCap,usCap,screens,qualCap,sfQ,inSQL,nwSQL,unscreened,potWins,hCut,handover:(inSQL+nwSQL+isQL)/12,opps,deals,aes,euLoad,usLoad,shTot:paths.reduce((a,x)=>a+x.sh,0)*100};
 }
 function renderAnswer(R){
   if(!document.getElementById('goal'))return;
@@ -1985,59 +2035,55 @@ function renderAnswer(R){
   const tOpp=D.tiers.reduce((a,t)=>a+t.opp,0),dOpp=D.paths[2].opp,ok=Math.abs(tOpp-dOpp)<=0.1*Math.max(dOpp,0.001);
   document.getElementById('tierCheck').innerHTML=`<span class="tc ${ok?'ok':'amb'}">Tier flow ${f(tOpp)} opps · Digital path ${f(dOpp)}</span>`;
   // DIAGNOSIS · cascading pipeline (current mitigations applied)
-  const D2=goalPlanV(R,sc,{lvCS:false}),D0=goalPlanV(R,sc,{...LV0});
+  const B0=goalPlanV(R,sc,{...LV0}),autoAcc0=B0.autoAcc,fxA=num(g.tier1)+num(g.tier2)-(num(g.tier1)*num(g.tc1)+num(g.tier2)*num(g.tc2))/(num(g.tc3)||1);
+  const pushAcc=num(g.mktPush)||autoAcc0,PU={mktPush:0,fixNewQL:Math.max(0.01,B0.newQL*(pushAcc-fxA)/Math.max(1,autoAcc0-fxA))},D2=goalPlanV(R,sc,{lvCS:false,...PU}),D0=goalPlanV(R,sc,{...LV0,...PU});
   const anyOn0=g.lvHO||g.lvIS||g.lvAE,onNames0=[g.lvHO&&'handoff and scoring',g.lvIS&&'2 SDRs',g.lvAE&&'+1 AE'].filter(Boolean);
-  {// the bridge: from the 60 the plan sources to what lands in 2027
-   const plan=D2.inLogo+D2.newLogo+(D2.potWins-(D2.inSQL*D2.inL2O*D2.inO2W+D2.nwSQL*D2.l2o*D2.o2w)),lost1=Math.max(0,plan-D2.potWins);
-   const slip=Math.min(D2.lagSlip,Math.max(0,D2.potWins-D2.closes)),lost2=Math.max(0,D2.potWins-D2.closes-slip),land=D2.closes;
-   const mxv=Math.max(plan,D2.tg)*1.08,y=v=>v/mxv*100;
-   const B=[['Planned',0,plan,'base',f(plan),'what the plan sources'],['Never screened',plan-lost1,plan,'red',`−${n1(lost1)}`,'Bottleneck 1 · qualifying'],['AEs full',plan-lost1-lost2,plan-lost1,'red',`−${n1(lost2)}`,'Bottleneck 2 · Europe'],['Close in 2028',land,land+slip,'amb',`−${n1(slip)}`,'Timing · sales cycle'],['We land at',0,land,'end',f(land),'logos in 2027']];
-   const bars=B.map(([,a,b,c,t])=>`<div class="wfp"><i class="${c==='base'?'base':c==='end'?'end':'lose '+c}" style="bottom:${y(a)}%;height:${Math.max(0.8,y(b)-y(a))}%"><em>${t}</em></i></div>`).join('');
-   const labs=B.map(([n,,,,,sub])=>`<div class="wfc"><span class="wfl">${n}</span><span class="wft"><i>${sub}</i></span></div>`).join('');
-   {const parts=[lost1>0.5&&`${f(lost1)} lost to screening`,lost2>0.5&&`${f(lost2)} wait for a Europe AE`,slip>0.5&&`${f(slip)} close in 2028`].filter(Boolean);document.getElementById('dgSub').innerHTML=`${anyOn0?`With ${onNames0.join(', ')}: we`:'We'} land at <b>${f(land)} logos</b>, not ${n0(D2.tg)}${parts.length?`: ${parts.join(', ')}`:''}.`;}
-   document.getElementById('bridge').innerHTML=`<div class="wfg"><div class="wfplot"><span class="wfline" style="bottom:${y(D2.tg)}%"><em>${n0(D2.tg)} target</em></span>${bars}</div><div class="wflabs">${labs}</div></div>`;
-   const sc1=D2.screens/D2.qualCap,euL=D2.euReady/D2.euCap,usL=D2.usReady/D2.usCap,tone=r=>r<0.85?'ok':r<=1.0001?'amb':'red';
-   document.getElementById('bns').innerHTML=`
-     <div class="bnc ${tone(sc1)}"><span class="k">Bottleneck 1 · Qualifying</span><b>${f(D2.screens)} to screen a month vs ${f(D2.qualCap)}</b><p>${sc1>1?`AEs qualify their own leads and can't keep up, so ${f(lost1)} logos' worth of leads go cold.`:'Screening keeps up. No leads go cold.'}</p></div>
-     <div class="bnc ${tone(euL)}"><span class="k">Bottleneck 2 · Closing in Europe</span><b>${f(D2.euReady)} deals ready vs ${f(D2.euCap)} that ${n0(g.aesEU)} AEs can close</b><p>${euL>1?`Europe is full: ${f(lost2)} wait for an AE.`:euL>0.85?`Europe is nearly full (${n0(euL*100)}%). Fix screening and it tips over.`:'Europe keeps up.'} The US has ${f(D2.usReady)} ready vs ${f(D2.usCap)} capacity${usL<1?', so it has room':''}.</p></div>`;}
-  const anyOn=g.lvHO||g.lvIS||g.lvAE,onNames=[g.lvHO&&'handoff and scoring',g.lvIS&&'2 SDRs',g.lvAE&&'+1 AE'].filter(Boolean);
   {const T=D2.tiers,tq=T.reduce((a,t)=>a+t.q,0)||1,dq=D2.paths[2].q,abmM=dq*(T[0].q+T[1].q)/tq,aoM=dq*T[2].q/tq;
    const sfN=D2.newQL>0?D2.nwSQL/D2.newQL:1,sfI=D2.inQL>0?D2.inSQL/D2.inQL:1;
    const CH=[
-     {n:'Targeted ABM',c:'--blue',st:[T[0].acc+T[1].acc,T[0].con+T[1].con,T[0].eng+T[1].eng,abmM],sf:sfN,r1:D2.l2o,r2:D2.o2w},
-     {n:'Always-on',c:'#9db4f5',st:[T[2].acc,T[2].con,T[2].eng,aoM],sf:sfN,r1:D2.l2o,r2:D2.o2w},
-     {n:'Experiential',c:'--magenta',st:[0,D2.paths[1].top,D2.paths[1].mid,D2.paths[1].q],sf:sfN,r1:D2.l2o,r2:D2.o2w},
-     {n:'Partners',c:'--green',st:[D2.paths[0].top,0,D2.paths[0].top,D2.paths[0].q],sf:sfN,r1:D2.l2o,r2:D2.o2w},
-     {n:"Today's inbound",c:'--surface-2',st:[0,0,0,D2.inQL],sf:sfI,r1:D2.inL2O,r2:D2.inO2W}];
-   CH.forEach(c=>{const sql=c.st[3]*c.sf,opp=sql*c.r1,pot=opp*c.r2;c.st.push(sql,opp,pot);});
-   const pot=CH.reduce((a,c)=>a+c.st[6],0)||1,won=D2.closes;CH.forEach(c=>c.st[6]=c.st[6]*won/pot);
-   const leak2=Math.max(0,D2.potWins-won),leak1=D2.unscreened;
-   const STG=['Accounts','Contacts','Engaged','MQL','SQL','Opportunity','Won'],SUB=['','','','needs screening','qualified, accepted by AE','',''];
-   const tot=STG.map((_,i)=>CH.reduce((a,c)=>a+c.st[i],0)),mx=Math.sqrt(Math.max(...tot)),H=220;
-   const r1=D2.screens/D2.qualCap,r2=Math.max(D2.deals/num(g.maxDeals),(D2.potWins)/D2.ceiling),tone=r=>r<0.85?'ok':r<=1.0001?'amb':'red';
-   const t1=tone(r1),t2=tone(r2),cv=x=>x.startsWith('--')?`var(${x})`:x;
-   const col=i=>{const h=Math.max(6,Math.sqrt(tot[i])/mx*H);let segs='';CH.forEach(c=>{const v=c.st[i];if(v<0.05)return;const prev=i>0?c.st[i-1]:0;const conv=prev>0&&i>0?` · ${n0(v/prev*100)}% of ${STG[i-1].toLowerCase()}`:'';segs+=`<i style="flex:${v};background:${cv(c.c)}" title="${c.n} · ${f(v)} ${STG[i].toLowerCase()}${conv}"></i>`;});
-     const leak=i===4&&leak1>0.5?`<div class="lk" title="MQLs never screened">−${f(leak1)} never screened</div>`:i===6&&leak2>0.5?`<div class="lk" title="Wins that wait for an AE or slip to 2028">−${f(leak2)} wait or slip to 2028</div>`:'';
-     return `<div class="cc"><span class="ct">${f(tot[i])}</span><div class="cb" style="height:${h}px">${segs}</div>${leak}<span class="cl">${STG[i]}</span><span class="cs">${SUB[i]}</span></div>`;};
-   const arr=i=>{const cls=i===3?t1:(i===4||i===5)?t2:'';return `<div class="ca ${cls}"><i></i></div>`;};
-   let row='';STG.forEach((_,i)=>{row+=col(i);if(i<6)row+=arr(i);});
-   const accN=CH[0].st[0]+CH[1].st[0]+CH[3].st[0];
-   document.getElementById('casc').innerHTML=`<p class="cacc">${f(accN)} accounts engaged · ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} planned ${pl('Assumed')}</p>
-     <div class="crow">${row}</div>
-     <div class="cbn"><div class="bn ${t1}" style="grid-column:7/10"><b>Bottleneck 1 · Qualifying.</b> ${f(D2.screens)} MQLs a month to screen${g.lvHO?' after scoring':''}, ${g.lvIS?'AEs and SDRs':'AEs'} can screen ${f(D2.qualCap)}. ${r1>1?'The rest wait and go cold.':'Screening keeps up.'}</div>
-       <div class="bn ${t2}" style="grid-column:9/14"><b>Bottleneck 2 · AE capacity.</b> ${n0(D2.deals)} open deals per AE vs ${n0(g.maxDeals)} they can handle, and ${f(D2.potWins)} closes ready vs ${f(D2.ceiling)} capacity. ${D2.potWins>D2.ceiling+0.5?'Short.':D2.potWins>D2.ceiling*0.85?'Zero slack.':'Room to spare.'}</div></div>
-     <div class="legend">${CH.map(c=>`<span><span class="dot" style="background:${cv(c.c)}"></span>${c.n}</span>`).join('')}<span><span class="dot lkdot"></span>Leaks</span></div>`;}
-  {const st=document.getElementById('mitSum');if(st){const b1=goalPlanV(R,sc,{...LV0}).closes;st.innerHTML=`<b>Now: ${f(D2.closes)} logos</b> (${D2.closes-b1>=0?'+':'−'}${n1(Math.abs(D2.closes-b1))} vs nothing in place). Fixes don't stack past ${f(goalPlanV(R,sc,{...LV0,lvHO:true,lvIS:true,lvAE:true}).closes)}: once screening is fixed, Europe's ${n0(g.aesEU)} AEs are the limit, and the +1 AE sits in the US.`;}}
+     {n:'Targeted ABM',c:'var(--blue)',st:[T[0].con+T[1].con,T[0].eng+T[1].eng,abmM],sf:sfN,r1:D2.l2o,r2:D2.o2w},
+     {n:'Always-on',c:'#9db4f5',st:[T[2].con,T[2].eng,aoM],sf:sfN,r1:D2.l2o,r2:D2.o2w},
+     {n:'Experiential',c:'var(--magenta)',st:[D2.paths[1].top,D2.paths[1].mid,D2.paths[1].q],sf:sfN,r1:D2.l2o,r2:D2.o2w},
+     {n:'Partners',c:'var(--green)',st:[0,D2.paths[0].top,D2.paths[0].q],sf:sfN,r1:D2.l2o,r2:D2.o2w},
+     {n:"Today's inbound",c:'#cfcfcf',st:[0,0,D2.inQL],sf:sfI,r1:D2.inL2O,r2:D2.inO2W}];
+   CH.forEach(c=>{const sql=c.st[2]*c.sf,opp=sql*c.r1;c.st.push(sql,opp,opp*c.r2);});
+   const pot=CH.reduce((a,c)=>a+c.st[5],0)||1;CH.forEach(c=>c.st[5]=c.st[5]*D2.closes/pot);
+   const tot=[0,1,2,3,4,5].map(i=>CH.reduce((a,c)=>a+c.st[i],0));
+   const cold=D2.unscreened,slip=Math.min(D2.lagSlip,Math.max(0,D2.potWins-D2.closes)),lost2=Math.max(0,D2.potWins-D2.closes-slip);
+   document.getElementById('dgSub').innerHTML=`${anyOn0?`With ${onNames0.join(', ')}: we`:'We'} land at <b>${f(D2.closes)} logos</b>, not ${n0(D2.tg)}${[cold>0.5&&`${f(cold*(D2.inL2O*D2.inO2W))} lost to screening`,lost2>0.5&&`${f(lost2)} wait for an AE`,slip>0.5&&`${f(slip)} close in 2028`].filter(Boolean).map((x,i,a)=>(i?'':': ')+x).join(', ')}.`;
+   const H=200,mx=Math.sqrt(Math.max(...tot,cold,1)),hh=v=>v>0.05?Math.max(4,Math.sqrt(v)/mx*H):0;
+   const bar=(i,lab,sub)=>{let segs='';CH.forEach(c=>{const v=c.st[i];if(v<0.05)return;const prev=i>0?c.st[i-1]:0;segs+=`<i style="flex:${v};background:${c.c}" title="${c.n} · ${f(v)}${prev>0?` · ${n0(v/prev*100)}% of previous stage`:''}"></i>`;});
+     return `<div class="pc"><span class="pt">${f(tot[i])}</span><div class="pb" style="height:${hh(tot[i])}px">${segs}</div><span class="pl">${lab}</span><span class="ps">${sub||''}</span></div>`;};
+   const ar='<div class="pa"><i></i></div>';
+   const r1=D2.screens/D2.qualCap,b1=r1>1.0001?'red':r1>0.85?'amb':'ok';
+   const b2=lost2>0.5?'red':g.lvAE?'ok':'idle';
+   const hM=hh(tot[2]),hS=hh(tot[3]),hN=Math.max(4,hM*Math.min(1,1/Math.max(r1,0.0001))),W=100;
+   const neck=`<div class="pn ${b1}"><div class="pcold" style="height:${cold>0.5?Math.max(52,hh(cold)):0}px">${cold>0.5?`<span>Waiting · going cold<b>−${f(cold)} a year</b></span>`:''}</div>
+     <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="height:${H}px"><path d="M0 ${H-hM} L38 ${H-hN} L62 ${H-hN} L${W} ${H-hS} L${W} ${H} L0 ${H} Z"/></svg>
+     <span class="pl">Screening</span><span class="ps">${f(D2.qualCap)} a month</span><div class="parr ${b1}" aria-hidden="true"></div></div>`;
+   const accNow=D2.N+D2.paths[0].top;
+   const pp=document.getElementById('pp');
+   const sl=pp.querySelector('.pslider input[type=range]');const keepFocus=sl&&document.activeElement===sl;
+   const top=`<div class="pz-head"><div class="pslider"><label><b>Marketing push</b> · accounts engaged <span class="pval">${f(accNow)}</span></label><input type="range" min="200" max="800" step="10" value="${Math.round(accNow)}" data-p="global.mktPush" aria-label="Accounts engaged by new work">${num(g.mktPush)?`<button class="linkbtn" data-pushreset>Back to the plan (${f(autoAcc0)})</button>`:''}<span class="ps">Marketing can fill the top. Without screening capacity, more leads just go cold.</span></div></div>`;
+   const html=`${top}<div class="pzs"><div class="pz mk"><span class="pzl">Marketing pushes here</span><div class="pzc">${bar(0,'Contacts')}${ar}${bar(1,'Engaged')}${ar}${bar(2,'MQL','needs screening')}</div></div>
+     ${neck}
+     <div class="pz sl"><span class="pzl">Sales</span><div class="pzc">${bar(3,'SQL','accepted by an AE')}${ar.replace('class="pa"',`class="pa b2 ${b2}"`)}${bar(4,'Opportunity')}${ar.replace('class="pa"',`class="pa b2 ${b2}"`)}<div class="pwon">${bar(5,'Won','in 2027')}${lost2>0.5?`<div class="pover">−${f(lost2)} wait for an AE</div>`:''}${slip>0.5?`<span class="ps">+${f(slip)} close in 2028</span>`:''}</div></div></div></div>
+     <div class="pbns"><div class="pbn ${b1}"><b>Bottleneck 1 · Qualifying.</b> ${f(D2.screens)} MQLs a month${g.lvHO?' after scoring':''}, ${g.lvIS?'AEs and SDRs':'AEs'} can screen ~${f(D2.qualCap).replace('~','')}. ${r1>1.0001?'The rest wait and go cold.':'Screening keeps up.'}</div>
+       <div class="pbn ${b2}"><b>Bottleneck 2 · AE capacity.</b> ${n0(D2.deals)} open deals per AE vs ${n0(g.maxDeals)}; ${f(D2.potWins-slip)} closes ready vs ${f(D2.ceiling)} (${n0(D2.aes)} AEs × ${n1(g.aeCap)} × 4). ${b2==='idle'?'Not hit yet: screening throttles the pipe first.':b2==='red'?`Europe's ${n0(g.aesEU)} AEs are full.`:'Covered.'}</div></div>
+     <div class="legend">${CH.map(c=>`<span><span class="dot" style="background:${c.c}"></span>${c.n}</span>`).join('')}</div>`;
+   if(!keepFocus)pp.innerHTML=html;else{const v=pp.querySelector('.pval');if(v)v.textContent=f(accNow);const rest=document.createElement('div');rest.innerHTML=html;pp.querySelector('.pzs').replaceWith(rest.querySelector('.pzs'));pp.querySelector('.pbns').replaceWith(rest.querySelector('.pbns'));}
+  }
+  {const st=document.getElementById('mitSum');if(st){const b1=D0.closes;st.innerHTML=`<b>Now: ${f(D2.closes)} logos</b> (${D2.closes-b1>=0?'+':'−'}${n1(Math.abs(D2.closes-b1))} vs nothing in place). Fixes don't stack past ${f(goalPlanV(R,sc,{...LV0,...PU,lvHO:true,lvIS:true,lvAE:true}).closes)}: once screening is fixed, Europe's ${n0(g.aesEU)} AEs are the limit, and the +1 AE sits in the US.`;}}
   // mitigations
-  {const base=D0.closes,one=o=>goalPlanV(R,sc,{...LV0,...o}).closes;
+  {const base=D0.closes,one=o=>goalPlanV(R,sc,{...LV0,...PU,...o}).closes;
    const M=[['lvHO','Handoff & lead scoring in Attio','fixes Bottleneck 1 partly',0,`AEs only see scored MQLs; ${n0(g.hoCut)}% fewer conversations to screen by hand.`,''],
-     ['lvIS','+2 SDRs','fixes Bottleneck 1',2*num(g.isCost)*1000,`Each screens ~${n0(g.isCalls)} conversations a month.`,'lvISfrom'],
+     ['lvIS','+2 SDRs','fixes Bottleneck 1',2*num(g.isCost)*1000,`+~${n0(2*num(g.isCalls))} screens a month (${n0(g.isCalls)} each).`,'lvISfrom'],
      ['lvAE','+1 AE','fixes Bottleneck 2',num(g.aeHireCost)*1000,`+${n0(g.maxDeals)} open deals, +${n1(g.aeCap)} logos a quarter from the quarter after hire. Plus commission.`,'lvAEfrom']];
    const mi=document.getElementById('mits');
    if(!mi.contains(document.activeElement))mi.innerHTML=M.map(([k,n,fx,cost,why,qk])=>{const d=one({[k]:true})-base;const sel=qk?` · from <select data-p="global.${qk}">${[1,2,3,4].map(q=>`<option value="${q}" ${+g[qk]===q?'selected':''}>Q${q}</option>`).join('')}</select>`:'';
      return `<label class="mit${g[k]?' on':''}"><input type="checkbox" data-p="global.${k}" ${g[k]?'checked':''}><span class="mn"><b>${n}</b><em>${fx}${sel}</em><span>${why}</span></span><span class="mv"><b>${d>=0?'+':'−'}${n1(Math.abs(d))}</b><span>logos</span></span><span class="mv"><b>${cost?k$(cost):'$0'}</b><span>a year</span></span><span class="mv"><b>${cost&&d>0.05?k$(cost/d):'—'}</b><span>per extra logo</span></span></label>`;}).join('');}
   // Model tab: what the fixes cost
-  {const ft=document.getElementById('fixTable');if(ft){const base=D0.closes,gm=num(g.acv)*1000*num(g.gm)/100,one=o=>goalPlanV(R,sc,{...LV0,...o}).closes-base;
+  {const ft=document.getElementById('fixTable');if(ft){const base=goalPlanV(R,sc,{...LV0}).closes,gm=num(g.acv)*1000*num(g.gm)/100,one=o=>goalPlanV(R,sc,{...LV0,...o}).closes-base;
    const rows=[['Handoff & scoring in Attio',0,one({lvHO:true})],['+2 SDRs',2*num(g.isCost)*1000,one({lvIS:true})],['+1 AE',num(g.aeHireCost)*1000,one({lvAE:true})],['All three',2*num(g.isCost)*1000+num(g.aeHireCost)*1000,one({lvHO:true,lvIS:true,lvAE:true})]];
    ft.innerHTML=`<thead><tr><th>Fix</th><th class="num">Cost a year</th><th class="num">Extra logos in 2027</th><th class="num">Cost per extra logo</th><th class="num">Break-even logos</th></tr></thead><tbody>${rows.map(([n,c,d])=>`<tr><td>${n}</td><td class="num">${c?k$(c):'$0'}</td><td class="num">${d>=0?'+':'−'}${n1(Math.abs(d))}</td><td class="num">${c&&d>0.05?k$(c/d):'—'}</td><td class="num">${c?n1(c/gm):'0'}</td></tr>`).join('')}</tbody>`;
    document.getElementById('fixWhy').innerHTML=`<li>Break-even logos = cost ÷ (ACV × gross margin) = cost ÷ ${k$(gm)} a logo a year.</li><li>Start with handoff and scoring: free, and it fixes part of Bottleneck 1.</li><li>SDRs pay back if they add more than ~${n1(2*num(g.isCost)*1000/gm)} logos. Hire when screening stays above capacity for 2 months.</li><li>The +1 AE is a trigger, not a day-one ask: add when open deals per AE pass ${n0(g.maxDeals)} or the US needs more than ${n1(g.aeCap)} logos a quarter.</li>`;}}
