@@ -592,6 +592,25 @@ section.page{padding:36px 0 64px;border-top:0}
 .pathsum{margin:10px 0 0;font-size:13px;color:var(--ink);max-width:none}.pathsum b.bad{color:var(--red)}
 .flowcall.ok{background:var(--surface-2);color:var(--ink)}
 @media (max-width:900px){.paths{grid-template-columns:1fr}}
+.pans{background:var(--white);padding:16px 18px;margin-bottom:8px}
+.pans-top{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;margin-bottom:12px}
+.pans-n{font-family:'Inter Tight';font-size:clamp(36px,4vw,52px);font-weight:700;letter-spacing:-0.03em;color:var(--ink);line-height:1}
+.pans-l{font-family:'Inter Tight';font-size:22px;font-weight:600;color:var(--ink);letter-spacing:-0.02em}
+.pans-p{font-size:15px;font-weight:600;color:var(--green-deep);background:var(--green);padding:3px 10px}
+.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;align-items:stretch}
+.tier{padding:12px 14px;display:flex;flex-direction:column;gap:2px;color:var(--ink)}
+.tier.t1{background:var(--blue)}.tier.t2{background:var(--blue-light)}.tier.t3{background:var(--surface)}
+.tier .k{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em}
+.tier b{font-family:'Inter Tight';font-size:26px;font-weight:700;letter-spacing:-0.03em;display:flex;align-items:center;gap:2px}
+.tier b input{font:inherit;width:84px;border:1px solid var(--line);background:var(--white);padding:0 4px}
+.tier>span:last-child{font-size:12.5px;color:var(--text)}
+.pans-note{margin:10px 0 0;font-size:12.5px;color:var(--text);max-width:none}
+.pans-note .pill{font-size:10px;padding:1px 7px}
+/* aligned path cards: every box sits on the same row across the three cards */
+.paths{grid-template-rows:repeat(8,auto)}
+.path{display:grid;grid-template-rows:subgrid;grid-row:span 8;row-gap:6px;align-content:stretch}
+.path-ar{align-self:start}
+@media (max-width:900px){.paths{grid-template-rows:none}.path{grid-template-rows:none;grid-row:auto}.tiers{grid-template-columns:1fr}}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -736,6 +755,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
       <p class="gx-cap" id="ansBackCap"></p>
       <div class="flowseg"><button data-seg="total">Total</button><button data-seg="ent">Enterprise</button><button data-seg="mid">Mid-market</button></div>
       <p class="flowctx" id="flowCtx"></p>
+      <div class="pans" id="pathAns"></div>
       <div class="paths" id="paths"></div>
       <p class="pathsum" id="pathSum"></p>
       <p class="gx-cap">Bars show how many people each path needs at the top. Shares and rates are my starting assumptions, to replace with Attio data by day 30.</p>
@@ -1317,7 +1337,7 @@ function renderGlobals(){
 function renderTabs(){
   document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===view?'true':'false'));
 }
-function renderInputs(){{const pe=document.getElementById('paths');if(pe)delete pe.dataset.built;}renderRegIn();renderBudgetTable();renderChanTable();renderGlobals();renderTabs();}
+function renderInputs(){{const pe=document.getElementById('paths');if(pe)delete pe.dataset.built;const pa=document.getElementById('pathAns');if(pa)delete pa.dataset.built;}renderRegIn();renderBudgetTable();renderChanTable();renderGlobals();renderTabs();}
 
 /* ---------- charts ---------- */
 Chart.defaults.font.family='Inter, system-ui, sans-serif';
@@ -1565,6 +1585,19 @@ function renderAnswer(R){
    const set=(k,v)=>{const x=el.querySelector(`[data-pv="${k}"]`);if(x)x.textContent=v;};
    vals.forEach((v,i)=>{set('top'+i,f(v.top));set('q'+i,f(v.q));set('l'+i,f(v.logos));const bar=el.querySelector(`[data-pv="bar${i}"]`);if(bar)bar.style.width=Math.max(1.5,v.top/mxTop*100)+'%';});
    set('acc2',`${f(acc)} accounts · ${n0(g.cpaEnt)} contacts per enterprise / ${n0(g.cpaMid)} per mid-market`);
+   {const pa=document.getElementById('pathAns'),t1=num(g.tier1),t2=num(g.tier2),many=Math.max(0,acc-t1-t2);
+    if(!pa.dataset.built||!pa.contains(document.activeElement)){
+      const ti=(k)=>`<input type="number" data-p="global.${k}" value="${g[k]}" min="0" max="2000" step="5">`;
+      pa.innerHTML=`<div class="pans-top"><b class="pans-n" data-pv="acc"></b><span class="pans-l">named accounts</span><span class="pans-p" data-pv="ptn"></span></div>
+        <div class="tiers">
+          <div class="tier t1"><span class="k">1:1</span><b>~${ti('tier1')}</b><span>All three paths</span></div>
+          <div class="tier t2"><span class="k">1:few</span><b>~${ti('tier2')}</b><span>Events + segment digital</span></div>
+          <div class="tier t3"><span class="k">1:many</span><b data-pv="many"></b><span>Digital only, moves up when engaged</span></div>
+        </div>
+        <p class="pans-note">Experiential works the same named accounts as digital, so they don't add up. Partners bring accounts outside the list. Tier sizes <span class="pill assumed">Assumed</span></p>`;
+      pa.dataset.built='1';}
+    const sv=(k,v)=>{const x=pa.querySelector(`[data-pv="${k}"]`);if(x)x.textContent=v;};
+    sv('acc',f(acc));sv('ptn',`+ ${f(vals[0].top)} from partners`);sv('many',f(many));}
    const tot=num(g.shPt)+num(g.shEx)+num(g.shDg);
    document.getElementById('pathSum').innerHTML=`Shares add up to <b class="${Math.abs(tot-100)>0.5?'bad':''}">${n0(tot)}%</b>${Math.abs(tot-100)>0.5?' · they should add up to 100%':''} · ${f(vals.reduce((a,v)=>a+v.logos,0))} logos from new outbound`;
    document.getElementById('flowCall').innerHTML=`<p class="flowcall${acc>num(g.abmAccounts)?'':' ok'}">Marketing digital needs ${f(acc)} accounts${segSel==='total'?` (${f(accE)} enterprise, ${f(accM)} mid-market)`:''}. The ABM list today: ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} named accounts.${acc>num(g.abmAccounts)?' The list needs to grow, or digital conversion needs to rise.':' That fits within the list.'}</p>`;}
