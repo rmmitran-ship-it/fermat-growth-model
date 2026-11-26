@@ -1985,7 +1985,7 @@ function renderAnswer(R){
     <div class="rfb lgs"><span class="k">Logos</span>
       <div class="lgp src"><b data-pv="bl"></b><span>sourced</span><em data-pv="blr"></em><div data-pv-html="bls"></div></div>
       <div class="lgp lift" id="liftSeg"><b data-pv="bll"></b><span>influenced</span><em>Inbound lift · not attributable deal by deal</em><em class="lin">lift from paid ${inp('inboundLift',40,50)}% ${pl('Assumed')}</em></div>
-      <span class="s" data-pv="blt"></span></div>`);
+      <span class="s" data-pv="blt"></span><span class="s muted" data-pv="blu"></span></div>`);
   svh(rB,'bn',`${f(accT)}<small> accounts</small>`);sv(rB,'bp',`${f(D.N)} named + ${f(D.paths[0].top)} via partners`);
   [D.tiers[0].acc,D.tiers[1].acc,D.tiers[2].acc,D.paths[0].top].forEach((v,i)=>sv(rB,'tm'+i,f(v).replace('~','')));
   svh(rB,'bc',`${f(D.C)}<small> contacts</small>`);svh(rB,'bq',`${f(D.newQL/12)}<small> a month</small>`);sv(rB,'bqy',f(D.newQL)+' a year');
@@ -1994,7 +1994,7 @@ function renderAnswer(R){
   {const e=rB.querySelector('[data-pv="bsum"]');const bad=Math.abs(D.shTot-100)>0.5;if(e){e.textContent=bad?`Shares add up to ${n0(D.shTot)}%, not 100%`:'';e.className='s'+(bad?' bad':'');}}
   sv(rB,'blift',`+ ${f(lift)} a month inbound lift from paid (influenced)`);
   svh(rB,'bo',`${f(D.newOpp)}<small> a year</small>`);sv(rB,'bor',`at ${n0(D.l2o*100)}% of MQLs`);
-  sv(rB,'bl',f(srcLogo));sv(rB,'blr',`at ${n0(D.o2w*100)}% of opportunities`);sv(rB,'bll',f(liftLogo));sv(rB,'blt',`= ${f(newWork)} logos from new work`);
+  sv(rB,'bl',f(srcLogo));sv(rB,'blr',`at ${n0(D.o2w*100)}% of opportunities`);sv(rB,'bll',f(liftLogo));{const fr=liftLogo-Math.floor(liftLogo),rg=fr>0.15&&fr<0.85?`~${Math.floor(liftLogo)}–${Math.ceil(liftLogo)}`:f(liftLogo);sv(rB,'blt',`${f(srcLogo)} sourced + ${rg} influenced = ${f(newWork)} logos from new work`);sv(rB,'blu',`${srcLogo.toFixed(1)} + ${liftLogo.toFixed(1)} = ${newWork.toFixed(1)}`);}
   {const e=rB.querySelector('[data-pv-html="bls"]');if(e)e.innerHTML=legend(D.paths.map((x,i)=>[PC3[i],['Partners','Exp.','Digital'][i],f(x.logos)]));}
   {const over=accT>num(g.abmAccounts);document.getElementById('rowBcheck').innerHTML=`<b style="color:var(--ink)">${f(accT)} of ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} planned accounts</b> ${pl('Assumed')} · ${over?'the list needs to grow, or conversion needs to rise':'room to spare'} · I'll check this in month 1`;}
   // Row C: the total (no capacity, no timing)
@@ -2071,7 +2071,7 @@ function renderAnswer(R){
    const tot=[0,1,2,3,4,5].map(i=>CH.reduce((a,c)=>a+c.st[i],0));
    const cold=D2.unscreened,slip=Math.min(D2.lagSlip,Math.max(0,D2.potWins-D2.closes)),lost2=Math.max(0,D2.potWins-D2.closes-slip),need2=D2.potWins-slip;
    const mqlM=(D2.inQL+D2.newQL)/12;
-   document.getElementById('dgSub').innerHTML=`Marketing can deliver <b>${f(mqlM)} MQLs a month</b>. AEs only have time to hand off ${f(D2.qualCap)}, and to close ${f(D2.ceiling)} logos a year.`;
+   const coldM=cold/12;document.getElementById('dgSub').innerHTML=`Marketing can deliver <b>${f(mqlM)} MQLs a month</b>. ${g.lvIS?'AEs and SDRs have':'AEs only have'} time to hand off ${f(D2.qualCap)}${coldM>0.5?`, so ${f(coldM)} a month go cold`:''}. They can close ${f(D2.ceiling)} logos a year.`;
    document.getElementById('dgLand').innerHTML=anyOn0?`With ${onNames0.join(', ')}: <b>${f(D2.closes)} logos</b> in 2027.`:`If nothing changes: <b>${f(D2.closes)} logos</b> in 2027.`;
    const H=200,mx2=Math.sqrt(Math.max(...tot,cold,1)),hh=v=>v>0.05?Math.max(4,Math.sqrt(v)/mx2*H):0;
    const bar=(i,lab,sub)=>{let segs='';CH.forEach(c=>{const v=c.st[i];if(v<0.05)return;const prev=i>0?c.st[i-1]:0;segs+=`<i style="flex:${v};background:${c.c}" title="${c.n} · ${f(v)}${prev>0?` · ${n0(v/prev*100)}% of previous stage`:''}"></i>`;});
@@ -2080,7 +2080,7 @@ function renderAnswer(R){
    const r1=D2.screens/D2.qualCap,b1=r1>1.0001?'red':r1>0.85?'amb':'ok';
    const over2=D2.deals>num(g.maxDeals)+0.5,b2=lost2>0.5||over2?'red':b1==='red'?'idle':'ok';
    const hM=hh(tot[2]),hS=hh(tot[3]),hN=Math.max(4,hM*Math.min(1,1/Math.max(r1,0.0001))),W=100;
-   const neck=`<div class="pn ${b1}"><div class="pcold" style="height:${cold>0.5?Math.max(52,hh(cold)):0}px">${cold>0.5?`<span>Waiting · going cold<b>−${f(cold)} a year</b></span>`:''}</div>
+   const neck=`<div class="pn ${b1}"><div class="pcold" style="height:${cold>0.5?Math.max(52,hh(cold)):0}px">${cold>0.5?`<span>Waiting · going cold<b>−${f(cold/12)} a month</b>${f(cold)} a year</span>`:''}</div>
      <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="height:${H}px"><path d="M0 ${H-hM} L38 ${H-hN} L62 ${H-hN} L${W} ${H-hS} L${W} ${H} L0 ${H} Z"/></svg>
      <span class="pl">Hand-off</span><span class="ps">${f(D2.qualCap)} a month</span><div class="parr ${b1}" aria-hidden="true"></div></div>`;
    const accNow=D2.N+D2.paths[0].top;
@@ -2090,7 +2090,7 @@ function renderAnswer(R){
    const html=`${top}<div class="pzs"><div class="pz mk"><span class="pzl">Marketing</span><div class="pzc">${bar(0,'Contacts')}${ar}${bar(1,'Engaged')}${ar}${bar(2,'MQL','handed to sales')}</div></div>
      ${neck}
      <div class="pz sl"><span class="pzl">Sales</span><div class="pzc">${bar(3,'SQL','accepted by sales')}${ar.replace('class="pa"',`class="pa b2 ${b2}"`)}${bar(4,'Opportunity')}${ar.replace('class="pa"',`class="pa b2 ${b2}"`)}<div class="pwon">${bar(5,'Won','in 2027')}${lost2>0.5?`<div class="pover">−${f(lost2)} wait for an AE</div>`:''}</div></div></div></div>
-     <div class="pbns"><div class="pbn ${b1}"><b>Break 1 · Hand-off:</b> ${f(D2.screens)} leads a month${g.lvHO?' after scoring':''}. ${g.lvIS?'AEs and SDRs have':'AEs have'} time for ${f(D2.qualCap)}. ${r1>1.0001?'The rest wait and go cold.':'They keep up.'}</div>
+     <div class="pbns"><div class="pbn ${b1}"><b>Break 1 · Hand-off:</b> ${f(D2.screens)} MQLs a month ${g.lvHO?`after scoring (from ${f(mqlM)})`:`(${f(num(g.baseLeads))} today + ${f(D2.inQL/12-num(g.baseLeads))} inbound lift + ${f(D2.newQL/12)} new)`}. ${(()=>{const qc=num(g.qualCalls),aeP=(num(g.aesEU)+num(g.aesUS))*qc+(g.lvAE?qc*(4-(+g.lvAEfrom||1))/4:0),sdP=D2.qualCap-aeP;return g.lvIS?`AEs have time for ${f(aeP)} and SDRs for ${f(sdP)}: ${f(D2.qualCap)} a month.`:`AEs have time for ${f(D2.qualCap)} a month.`;})()} ${r1>1.0001?`~${n0(cold/12)} a month wait and go cold.`:'They keep up.'}</div>
        <div class="pbn ${b2}"><b>Break 2 · Closing:</b> each AE has ${f(D2.deals)} open deals (limit ${n0(g.maxDeals)}). ${f(need2)} logos to close, AEs can close ${f(D2.ceiling)}. ${b2==='idle'?'This breaks next, once the hand-off is fixed.':lost2>0.5?`Europe's ${n0(g.aesEU)} AEs are full: ${f(lost2)} deals wait.`:over2?'Too many deals each, so they slow down.':'They keep up.'}</div></div>
      <div class="legend">${CH.map(c=>`<span><span class="dot" style="background:${c.c}"></span>${c.n}</span>`).join('')}</div>`;
    if(!keepFocus)pp.innerHTML=html;else{const v=pp.querySelector('.pval');if(v)v.textContent=f(accNow);const rest=document.createElement('div');rest.innerHTML=html;pp.querySelector('.pzs').replaceWith(rest.querySelector('.pzs'));pp.querySelector('.pbns').replaceWith(rest.querySelector('.pbns'));}
