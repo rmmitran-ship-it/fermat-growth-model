@@ -818,6 +818,47 @@ button.play[hidden]{display:none}
 .asc{display:flex;align-items:center;gap:6px;white-space:nowrap}
 .asr input,.asr select{font:600 13px Inter;border:1px solid var(--line);padding:3px 5px;background:var(--white)}
 @media (max-width:900px){.brks{grid-template-columns:1fr}.lev{grid-template-columns:1fr;gap:2px}.asm{grid-template-columns:1fr}.wfplot{height:170px}.wfplot,.wflabs{gap:5px}.wfl{font-size:10.5px}.wfp em{font-size:12px}}
+.dg-sub{font-family:'Inter Tight';font-size:clamp(22px,2.6vw,32px);font-weight:600;letter-spacing:-0.024em;color:var(--ink);margin:4px 0 18px;max-width:none}
+.dg-sub b{background:var(--magenta-light);padding:0 6px}
+.casc{background:var(--surface);padding:16px 16px 12px}
+.cacc{margin:0 0 6px;font-size:12.5px;font-weight:600;color:var(--ink);max-width:none}.cacc .pill{font-size:10px;padding:1px 7px}
+.crow,.cbn{display:grid;grid-template-columns:repeat(6,minmax(0,1fr) 22px) minmax(0,1fr);align-items:end}
+.cc{display:flex;flex-direction:column;align-items:stretch;gap:3px;min-width:0}
+.ct{font-family:'Inter Tight';font-size:18px;font-weight:700;color:var(--ink);text-align:center}
+.cb{display:flex;flex-direction:column-reverse;background:var(--white)}.cb i{display:block;min-height:1px;border-top:1px solid var(--white)}
+.lk{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%23ffd6d6'/%3E%3Cpath d='M-2 2l4-4M0 8l8-8M6 10l4-4' stroke='%23d23b3b' stroke-width='1.5'/%3E%3C/svg%3E");color:#a32020;font-size:10.5px;font-weight:700;text-align:center;padding:4px 2px;line-height:1.2}
+.lkdot{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%23ffd6d6'/%3E%3Cpath d='M-2 2l4-4M0 8l8-8M6 10l4-4' stroke='%23d23b3b' stroke-width='1.5'/%3E%3C/svg%3E")!important}
+.cl{font-size:12.5px;font-weight:700;color:var(--ink);text-align:center;margin-top:2px}.cs{font-size:10.5px;color:var(--muted);text-align:center;min-height:13px}
+.ca{align-self:center;display:flex;align-items:center;height:2px;margin-bottom:40px}.ca i{display:block;width:100%;height:2px;background:var(--ink);position:relative}
+.ca i::after{content:'';position:absolute;right:-1px;top:-4px;border-left:7px solid var(--ink);border-top:5px solid transparent;border-bottom:5px solid transparent}
+.ca.red i{background:var(--red);height:4px}.ca.red i::after{border-left-color:var(--red);top:-3px}
+.ca.amb i{background:#f2b84b;height:4px}.ca.amb i::after{border-left-color:#f2b84b;top:-3px}
+.ca.ok i{background:#5cc96b;height:4px}.ca.ok i::after{border-left-color:#5cc96b;top:-3px}
+.cbn{margin-top:10px;align-items:start;gap:6px 0}
+.bn{padding:10px 12px;font-size:13px;color:var(--ink);background:var(--white);border-left:5px solid}
+.bn.red{border-color:var(--red)}.bn.amb{border-color:#f2b84b}.bn.ok{border-color:#5cc96b}
+.bn.red b{color:var(--red)}
+.casc .legend{margin-top:10px}
+.dg-line{font-family:'Inter Tight';font-size:20px;font-weight:700;letter-spacing:-0.02em;color:var(--ink);margin:14px 0 0;max-width:none}
+.mits{display:flex;flex-direction:column;gap:6px}
+.mit{display:grid;grid-template-columns:24px minmax(0,1fr) 90px 90px 110px;gap:12px;align-items:center;background:var(--white);padding:12px 14px;cursor:pointer;border-left:5px solid var(--surface-2)}
+.mit.on{border-left-color:#5cc96b;background:#f3fff4}
+.mit input[type=checkbox]{width:18px;height:18px}
+.mn{display:flex;flex-direction:column;gap:2px}.mn b{font-family:'Inter Tight';font-size:16px}.mn em{font-style:normal;font-size:12px;font-weight:700;color:var(--magenta-deep)}.mn span{font-size:12.5px;color:var(--text)}
+.mn select{font:600 12px Inter;border:1px solid var(--line);padding:1px 4px;background:var(--white)}
+.mv{display:flex;flex-direction:column;text-align:right}.mv b{font-family:'Inter Tight';font-size:18px}.mv span{font-size:11px;color:var(--muted)}
+@media (max-width:900px){
+  .crow{grid-template-columns:1fr;align-items:stretch}
+  .cc{flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px}
+  .cc .ct{order:2;font-size:16px;min-width:64px;text-align:left}.cc .cl{order:1;min-width:92px;text-align:left}.cc .cs{order:4;flex-basis:100%;text-align:left}
+  .cc .cb{order:3;flex:1;height:18px!important;flex-direction:row}.cc .cb i{border-top:0;border-right:1px solid var(--white)}
+  .cc .lk{order:5;flex-basis:100%}
+  .ca{height:20px;margin:0 0 0 30px;align-self:start}.ca i{width:2px!important;height:100%!important}
+  .ca i::after{right:-4px!important;top:auto!important;bottom:-2px;border-left:5px solid transparent!important;border-right:5px solid transparent;border-top:7px solid var(--ink);border-bottom:0}
+  .ca.red i::after{border-top-color:var(--red)}.ca.amb i::after{border-top-color:#f2b84b}.ca.ok i::after{border-top-color:#5cc96b}
+  .cbn{grid-template-columns:1fr}.bn{grid-column:auto!important}
+  .mit{grid-template-columns:24px 1fr;}.mv{grid-column:2;text-align:left;flex-direction:row;gap:6px;align-items:baseline}
+}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -976,36 +1017,22 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
         <div class="paths mt" id="paths"></div>
         <details class="more mt" id="tierBox"><summary>By ABM tier (digital)</summary><div class="abm mt" id="abmFlow"></div><p class="tiercheck" id="tierCheck"></p></details>
       </details></div>
-    <div class="lv-sec"><span class="lv-k">Step 3 · What gets us back</span>
-      <div class="wf" id="wf"></div>
-      <div class="levs" id="levs"></div>
-      <p class="s4bot" id="s4bot"></p>
-      <details class="more mt" id="asmBox"><summary>Assumptions</summary><div class="asm" id="s4"></div></details></div>
   </div>
   <p class="watch"><b>What I'd watch:</b> lead → opportunity conversion after the handoff is fixed. If it rises, 60 is in reach. If it doesn't, the limit is sales capacity, and we'd talk about an extra AE or an SDR in Q2.</p>
 </div></section>
 
 <!-- DIAGNOSIS -->
 <section class="page" data-page="diagnosis"><div class="wrap">
-  <h2>Three things stand between today and <span style="white-space:nowrap"><span class="hl hl-g">60 logos</span>.</span></h2>
-  <p class="lede">Today: <b id="dToday"></b> logos a year. The real gap isn't more leads. It's turning them into conversations AEs can close.</p>
-  <div class="card b weight">
-    <div class="eyebrow" style="color:var(--blue-deep)">Where I'd put the weight</div>
-    <h3>Europe is the base, the US is the bet.</h3>
-    <p>Q1 runs about 50/50 while we learn. From Q2, I'd shift new-channel budget toward the US (around 60/40) if US signals convert, because Europe already has inbound, events, partners and 2 AEs feeding it.</p>
-    <p class="mt"><b>Flag:</b> 1 US AE closes ~4–5 logos a quarter. When US pipeline needs more than that, add a second US AE or an SDR, as a trigger based on data, not an upfront ask.</p>
-  </div>
-  <div class="grid g3 mt">
-    <div class="card m"><div class="eyebrow" style="color:var(--magenta-deep)">The biggest gap · qualification and handoff</div><h3>Leads come in. Not all of them reach sales ready.</h3><p class="small">AEs are used to hot leads. Warmer leads from events, partners and content need qualifying, nurturing and a clean handoff, or they go cold.</p></div>
-    <div class="card b"><div class="eyebrow" style="color:var(--blue-deep)">Capacity risk</div><h3>3 AEs × 5 = 60. Zero slack.</h3><p class="small">One slow quarter and we miss. So AEs need air cover: marketing qualifies, researches the account and warms the buying group before the first call.</p></div>
+  <h2>If nothing changes, where does the <span class="hl hl-m">model break</span>?</h2>
+  <p class="dg-sub" id="dgSub"></p>
+  <div class="casc" id="casc"></div>
+  <p class="dg-line">Leads aren't the problem. Screening and closing are.</p>
+  <h3 class="mt2">Mitigations</h3>
+  <div class="mits" id="mits"></div>
+  <p class="s1muted">Headcount isn't in the $310k growth budget. <button class="linkbtn" data-go="model" data-fixjump>Cost and payback on the next page →</button></p>
+  <details class="more mt" id="asmBox"><summary>Assumptions</summary><div class="asm" id="s4"></div></details>
+  <div class="grid g2 mt2">
     <div class="card g"><div class="eyebrow" style="color:var(--green-deep)">Timing</div><h3>Q4 leads close in 2028.</h3><p class="small">At a 4.5-month cycle, a lead from October closes next year. Spend early and fill Q1–Q2.</p></div>
-  </div>
-  <div class="grid g2 mt">
-    <div class="card">
-      <h3>Today's funnel vs. what 60 logos needs</h3>
-      <p class="small mt" id="dFunNote"></p>
-      <div class="tw mt"><table id="dFunnel"></table></div>
-    </div>
     <div class="card">
       <h3>How I'd confirm it in 30 days</h3>
       <ul class="clean">
@@ -1017,11 +1044,12 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
       </ul>
     </div>
   </div>
-  <h3 class="mt3">Where does the model break?</h3>
-  <div class="lv-sec mt">
-    <p class="brk-h" id="brkH"></p>
-    <div class="brks" id="s3"></div>
-    <p class="s1muted mt">From the Goal setting plan, with nothing new in place. Goal setting · Step 3 shows what fixes each one.</p></div>
+  <div class="card b weight mt">
+    <div class="eyebrow" style="color:var(--blue-deep)">Where I'd put the weight</div>
+    <h3>Europe is the base, the US is the bet.</h3>
+    <p>Q1 runs about 50/50 while we learn. From Q2, I'd shift new-channel budget toward the US (around 60/40) if US signals convert, because Europe already has inbound, events, partners and 2 AEs feeding it.</p>
+    <p class="mt"><b>Flag:</b> 1 US AE closes ~4–5 logos a quarter. When US pipeline needs more than that, add a second US AE or an SDR, as a trigger based on data, not an upfront ask.</p>
+  </div>
 </div></section>
 
 <!-- MODEL -->
@@ -1049,6 +1077,8 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
   <div id="pcBody"></div>
   <h3 class="mt2">Compare A / B / C</h3>
   <div class="tw mt"><table id="cmpTable"></table></div>
+  <div class="card mt2" id="fixBox"><h3>What the fixes cost, and when they pay back</h3><p class="small muted">Not part of the growth budget. Extra logos from the Goal setting plan, one fix at a time.</p>
+    <div class="tw mt"><table id="fixTable"></table></div><ul class="clean mt" id="fixWhy"></ul></div>
   <details class="more big mt2"><summary>Assumptions</summary>
     <h3 class="mt2">By channel</h3>
     <div class="tw"><table id="chanTable"></table></div>
@@ -1259,7 +1289,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:12,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:40,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:15,tc2:10,tc3:6,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
+  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:15,tc2:10,tc3:6,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -1377,6 +1407,7 @@ function migrate(o){
   if(o.global.baseL2O===45&&!o.global.cal40){o.global.baseL2O=40;}o.global.cal40=true;
   const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
   if(!o.channels.some(c=>c.id==='activations')){const i=o.channels.findIndex(c=>c.id==='partners');o.channels.splice(i<0?o.channels.length:i,0,clone(DEFAULTS.channels.find(c=>c.id==='activations')));}
+  if(!o.global.sdrV){o.global.isLeads=0;o.global.isCalls=50;o.global.lvCS=false;o.global.sdrV=true;}
   if(!o.global.tierV2){Object.assign(o.global,{ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15});o.global.tierV2=true;}
   if(!o.global.tier20){if(o.global.tier1===50)o.global.tier1=20;o.global.tier20=true;}
   if(!o.global.cSdr1){if(o.scenarios.C)o.scenarios.C.sdr=2;o.global.cSdr1=true;}
@@ -1737,6 +1768,7 @@ function renderBudgetTotals(){
     pe.innerHTML=even?'<span class="small muted">Even phasing: 25% a quarter</span>':(Math.abs(p.sum-100)>0.5?`<span class="warn">Sums to ${Math.round(p.sum)}%. Scaled to 100%.</span>`:'<span class="small muted">Sums to 100%</span>');});
 }
 function renderDiagnosis(R){
+  if(!document.getElementById('dToday'))return;
   const g=S.global,conv=g.baseL2O/100*g.baseO2W/100,baseQ=g.baseLeads*3*conv,baseYear=baseQ*4;
   const lifted=g.baseLeads*(1+num(g.inboundLift)/100),gap=Math.max(0,g.targetLogos-lifted*12*conv);
   document.getElementById('dToday').textContent=n0(baseYear);
@@ -1754,6 +1786,7 @@ const PATHS=[
   {k:'dg',name:'Marketing digital',sub:'ABM ads, webinars, lead magnets, search',cls:'b',share:'shDg',top:'Contacts reached',mid:'Engaged',ra:['dgEng','engage'],rb:['dgQual','qualify']}];
 document.addEventListener('click',e=>{if(!e.target.closest('[data-toA]'))return;const r=document.getElementById('liftSeg');if(!r)return;r.scrollIntoView({behavior:'smooth',block:'center'});r.classList.add('flash');setTimeout(()=>r.classList.remove('flash'),1600);});
 document.addEventListener('click',e=>{const t=e.target.closest('[data-fliptog]');let c=t?t.closest('[data-flip]'):null;if(!c){const f=e.target.closest('[data-flip]');if(!f||e.target.closest('button,a,input,select'))return;c=f;}const i=c.dataset.flip,st=window.__flip||(window.__flip={});st[i]=!st[i];c.classList.toggle('on',st[i]);c.querySelectorAll('[data-fliptog]').forEach(b=>b.setAttribute('aria-expanded',st[i]));const face=c.querySelector(st[i]?'.back .fbtn':'.front .fbtn');if(t&&face)setTimeout(()=>face.focus(),st.noAnim?0:350);});
+document.addEventListener('click',e=>{if(e.target.closest('[data-fixjump]'))setTimeout(()=>{const b=document.getElementById('fixBox');if(b)b.scrollIntoView({block:'start'});},60);});
 function runV(sc,v){const prev=HIRE;HIRE=v;try{return run(sc);}finally{HIRE=prev;}}
 // Target-driven plan: works back from the logo target, then runs the result through the model's own
 // engine (simulate): sales-cycle lag, Q1 ramp, EU/US AE capacity, 2028 spillover.
@@ -1773,9 +1806,16 @@ function goalPlan(R,sc){
     const con=acc*num(g[tc]),eng=con*num(g[e])/100,q=eng*num(g[m])/100,opp=q*l2o;return {key,name,acc,tc,e,m,how,con,eng,q,opp,pipe:opp*acv};});
   // run it through the engine
   const [f1,f2]=lagSplit(),rq=rampQ(),rs=rq.reduce((a,b)=>a+b,0)||1,u=usSplit(),uIn=num(g.usInbound)/100;
-  const bq=inLogo/4,LEU={base:[0,1,2,3].map(()=>bq*(1-uIn)).concat([0,0])},LUS={base:[0,1,2,3].map(()=>bq*uIn).concat([0,0])};
+  // screening: SQLs = min(MQLs, what AEs (+SDRs, +the new AE) can screen) each quarter
+  const hCut=g.lvHO?1-num(g.hoCut)/100:1,aeFrom=+g.lvAEfrom||1,isFrom=+g.lvISfrom||1;
+  const inMQ=[0,1,2,3].map(()=>bl*3),nwMQ=[0,1,2,3].map(q=>newQL*rq[q]/rs);
+  const capQ=[0,1,2,3].map(q=>3*((num(g.aesEU)+num(g.aesUS))*num(g.qualCalls)+(g.lvAE&&q+1>aeFrom?num(g.qualCalls):0)+(g.lvIS?2*num(g.isCalls)*share(q,isFrom):0)));
+  const sfQ=[0,1,2,3].map(q=>{const d=(inMQ[q]+nwMQ[q])*hCut;return d>0?Math.min(1,capQ[q]/d):1;});
+  const inSQL=inMQ.reduce((a,v,q)=>a+v*sfQ[q],0),nwSQL=nwMQ.reduce((a,v,q)=>a+v*sfQ[q],0),unscreened=inQL+newQL-inSQL-nwSQL;
+  const bqQ=[0,1,2,3].map(q=>inMQ[q]*inL2O*inO2W*sfQ[q]);
+  const LEU={base:bqQ.map(v=>v*(1-uIn)).concat([0,0])},LUS={base:bqQ.map(v=>v*uIn).concat([0,0])};
   const nE=[0,0,0,0,0,0],nU=[0,0,0,0,0,0];
-  [0,1,2,3].forEach(q=>{const w=newQL*rq[q]/rs*l2o*o2w;nE[q+1]+=w*f1*(1-u[q]);nE[q+2]+=w*f2*(1-u[q]);nU[q+1]+=w*f1*u[q];nU[q+2]+=w*f2*u[q];});
+  [0,1,2,3].forEach(q=>{const w=nwMQ[q]*sfQ[q]*l2o*o2w;nE[q+1]+=w*f1*(1-u[q]);nE[q+2]+=w*f2*(1-u[q]);nU[q+1]+=w*f1*u[q];nU[q+2]+=w*f2*u[q];});
   LEU.nw=nE;LUS.nw=nU;
   let isQL=0;
   if(g.lvIS){const a=[0,0,0,0,0,0],from=+g.lvISfrom||1;[0,1,2,3].forEach(q=>{const ql=2*num(g.isLeads)*3*share(q,from);isQL+=ql;const w=ql*l2o*o2w;a[q+1]+=w*f1;a[q+2]+=w*f2;});LUS.is=a;LEU.is=[0,0,0,0,0,0];}
@@ -1786,12 +1826,12 @@ function goalPlan(R,sc){
   const spill=['base','nw','is'].reduce((a,k)=>a+(simEU.spillBy[k]||0)+(simUS.spillBy[k]||0),0);
   // capacity checks
   const aes=num(g.aesEU)+num(g.aesUS)+(g.lvAE?1:0);
-  const screens=(bl*num(g.inRaw)+(paths[0].top+paths[1].mid+paths[2].mid)/12)*(g.lvHO?1-num(g.hoCut)/100:1);
-  const qualCap=(num(g.aesEU)+num(g.aesUS))*num(g.qualCalls)+(g.lvIS?2*num(g.isCalls):0);
-  const opps=inOpp+newOpp+isQL*l2o,deals=opps/12*num(g.cycle)/aes;
+  const screens=(inQL+newQL)*hCut/12,qualCap=capQ.reduce((a,b)=>a+b,0)/12;
+  const opps=inSQL*inL2O+nwSQL*l2o+isQL*l2o,deals=opps/12*num(g.cycle)/aes;
+  const potWins=inSQL*inL2O*inO2W+(nwSQL+isQL)*l2o*o2w;
   const euLoad=simEU.demand.reduce((a,b)=>a+b,0)/capEU.reduce((a,b)=>a+b,0),usLoad=simUS.demand.reduce((a,b)=>a+b,0)/capUS.reduce((a,b)=>a+b,0);
   return {g,tg,bl,acv,l2o,o2w,inL2O,inO2W,inQL,inOpp,inLogo,gap,newQL,newOpp,newLogo,paths,C,N,tiers,closes,ceiling,spill,simEU,simUS,capEU,capUS,
-    screens,qualCap,handover:(inQL+newQL+isQL)/12,opps,deals,aes,euLoad,usLoad,shTot:paths.reduce((a,x)=>a+x.sh,0)*100};
+    screens,qualCap,sfQ,inSQL,nwSQL,unscreened,potWins,hCut,handover:(inSQL+nwSQL+isQL)/12,opps,deals,aes,euLoad,usLoad,shTot:paths.reduce((a,x)=>a+x.sh,0)*100};
 }
 function renderAnswer(R){
   if(!document.getElementById('goal'))return;
@@ -1911,49 +1951,61 @@ function renderAnswer(R){
   D.tiers.forEach((t,i)=>{sv(ab,'a'+i,f(t.acc));sv(ab,'c'+i,f(t.con));sv(ab,'e'+i,f(t.eng));sv(ab,'q'+i,f(t.q));sv(ab,'o'+i,'~'+n1(t.opp));sv(ab,'p'+i,K(t.pipe));sv(ab,'ar'+i,`${n0(D.l2o*100)}% → opp`);});
   const tOpp=D.tiers.reduce((a,t)=>a+t.opp,0),dOpp=D.paths[2].opp,ok=Math.abs(tOpp-dOpp)<=0.1*Math.max(dOpp,0.001);
   document.getElementById('tierCheck').innerHTML=`<span class="tc ${ok?'ok':'amb'}">Tier flow ${f(tOpp)} opps · Digital path ${f(dOpp)}</span>`;
-  // STEP 3 · where it breaks (all levers off)
-  document.getElementById('brkH').innerHTML=`If nothing changes, we land at <span class="${D.closes>=D.tg-0.5?'ok':'no'}">${f(D.closes)}</span>, not ${n0(D.tg)}.`;
-  const tone=r=>r<0.85?'ok':r<=1.0001?'amb':'red';
-  const euL=D.euLoad,usL=D.usLoad,aesN=num(g.aesEU)+num(g.aesUS);
-  const brk=(name,big,dem,cap,barTxt,line)=>{const r=cap>0?dem/cap:9,c=tone(r);return `<div class="brk ${c}"><span class="k">${name}</span><b class="bbig">${big}</b><div class="gmt"><i class="${c}" style="width:${Math.min(100,r*100)}%"></i></div><span class="bbar">${barTxt}</span><p>${line}</p></div>`;};
-  document.getElementById('s3').innerHTML=
-    brk('Qualifying',`${(D.screens/D.qualCap).toFixed(1)}×`,D.screens,D.qualCap,`${f(D.screens)} to screen vs ${f(D.qualCap)} AEs can screen a month`,'AEs qualify their own leads. Qualifying eats closing time.')+
-    brk('Deals in flight',`${n0(D.deals)} vs ${n0(g.maxDeals)}`,D.deals,num(g.maxDeals),'open deals per AE vs what one AE can handle','Too many deals at once, so some go cold.')+
-    brk('Closing',`${n0(D.tg)} of ${n0(D.ceiling)}`,D.tg,D.ceiling,`logos needed vs ${aesN} AEs × ${n1(g.aeCap)} × 4`,`${D.tg>D.ceiling+0.5?`Short by ${f(D.tg-D.ceiling)}.`:'Zero slack.'} Europe is ${euL>1?'over':'at'} ${n0(euL*100)}%, the US ${usL<0.85?'has room':'is at'} ${n0(usL*100)}%.`);
-  // STEP 4 · waterfall, levers added cumulatively
-  const W=[['Nothing in place',{}],['Handoff & scoring',{lvHO:true},'$0',['Qualifying']],['2 inside sales',{lvHO:true,lvIS:true},k$(2*num(g.isCost)*1000*(5-(+g.lvISfrom||1))/4),['Qualifying','Deals in flight']],['US partner co-selling',{lvHO:true,lvIS:true,lvCS:true},'',['Closing']]]
-    .map(([n,o,cost,fix])=>({n,cost,fix,v:goalPlanV(R,sc,{...LV0,...o}).closes}));
-  const end=W[W.length-1].v,lo=Math.max(0,Math.floor((Math.min(...W.map(x=>x.v))-6)/5)*5),hi=Math.max(D.tg,D.ceiling,end)+3,y=v=>(v-lo)/(hi-lo)*100;
-  const bars=[],labs=[];const col=(lab,from,to,cls,top,tag)=>{bars.push(`<div class="wfp"><i class="${cls}" style="bottom:${y(Math.min(from,to))}%;height:${Math.max(0.8,Math.abs(y(to)-y(from)))}%"><em>${top}</em></i></div>`);labs.push(`<div class="wfc"><span class="wfl">${lab}</span>${tag||''}</div>`);};
-  W.forEach((x,i)=>{if(i===0){col(x.n,lo,x.v,'base',f(x.v),'');return;}const d=x.v-W[i-1].v;col(`+ ${x.n}${x.cost?` · ${x.cost}`:''}`,W[i-1].v,x.v,'step',`${d>=0?'+':''}${n1(d)} logos`,`<span class="wft">${x.fix.map(t=>`<i>${t}</i>`).join('')}</span>`);});
-  col('= with all three',lo,end,'end',f(end),'');
-  const h=`<div class="wfplot">${bars.join('')}</div><div class="wflabs">${labs.join('')}</div>`;
-  document.getElementById('wf').innerHTML=`<div class="wfg">${h.replace('<div class="wfplot">',`<div class="wfplot"><span class="wfline" style="bottom:${y(D.tg)}%"><em>${n0(D.tg)} target</em></span><span class="wfline c" style="bottom:${y(D.ceiling)}%"><em>ceiling: ${aesN} AEs × ${n1(g.aeCap)} × 4 = ${f(D.ceiling)}</em></span>`)}</div><p class="wfax">Axis starts at ${lo} logos. Values are the model's 2027 landing point with each lever added on top of the last.</p>`;
-  const ae=goalPlanV(R,sc,{...LV0,lvHO:true,lvIS:true,lvCS:true,lvAE:true}).closes;
-  const lev=(n,cost,fix,line)=>`<div class="lev"><b>${n}</b><span class="lc">${cost}</span><span class="lf">${fix}</span><span class="ll">${line}</span></div>`;
-  document.getElementById('levs').innerHTML=
-    lev('Handoff & scoring','$0','fixes Qualifying','AEs only get scored, qualified leads.')+
-    lev('+2 inside sales',W[2].cost,'fixes Qualifying + Deals in flight','They screen, AEs close.')+
-    lev('US partner co-selling','—','fixes Closing (US)','Partners help the one US AE on late-stage deals.')+
-    lev('+1 AE',`trigger, not in the ${f(end)}`,`would take it to ${f(ae)}`,`Add when open deals per AE pass ${n0(g.maxDeals)} or the US needs more than ${n1(g.aeCap)} logos a quarter. Hired in Q${n0(g.lvAEfrom)}, it closes from the quarter after.`);
-  document.getElementById('s4bot').innerHTML=`<b>${f(end)} is the realistic top.</b> ${n0(D.tg)} needs every AE at full speed every quarter${D.ceiling<D.tg?`, and with ${aesN} AEs at ${n1(g.aeCap)} a quarter the ceiling is ${f(D.ceiling)}`:''}.`;
+  // DIAGNOSIS · cascading pipeline (current mitigations applied)
+  const D2=goalPlanV(R,sc,{lvCS:false}),D0=goalPlanV(R,sc,{...LV0});
+  const anyOn=g.lvHO||g.lvIS||g.lvAE,onNames=[g.lvHO&&'handoff and scoring',g.lvIS&&'2 SDRs',g.lvAE&&'+1 AE'].filter(Boolean);
+  document.getElementById('dgSub').innerHTML=anyOn?`With ${onNames.join(', ')}: <b>${f(D2.closes)} logos</b>.`:`We land at <b>${f(D2.closes)} logos</b>, not ${n0(D2.tg)}. It breaks in two places.`;
+  {const T=D2.tiers,tq=T.reduce((a,t)=>a+t.q,0)||1,dq=D2.paths[2].q,abmM=dq*(T[0].q+T[1].q)/tq,aoM=dq*T[2].q/tq;
+   const sfN=D2.newQL>0?D2.nwSQL/D2.newQL:1,sfI=D2.inQL>0?D2.inSQL/D2.inQL:1;
+   const CH=[
+     {n:'Targeted ABM',c:'--blue',st:[T[0].acc+T[1].acc,T[0].con+T[1].con,T[0].eng+T[1].eng,abmM],sf:sfN,r1:D2.l2o,r2:D2.o2w},
+     {n:'Always-on',c:'#9db4f5',st:[T[2].acc,T[2].con,T[2].eng,aoM],sf:sfN,r1:D2.l2o,r2:D2.o2w},
+     {n:'Experiential',c:'--magenta',st:[0,D2.paths[1].top,D2.paths[1].mid,D2.paths[1].q],sf:sfN,r1:D2.l2o,r2:D2.o2w},
+     {n:'Partners',c:'--green',st:[D2.paths[0].top,0,D2.paths[0].top,D2.paths[0].q],sf:sfN,r1:D2.l2o,r2:D2.o2w},
+     {n:"Today's inbound",c:'--surface-2',st:[0,0,0,D2.inQL],sf:sfI,r1:D2.inL2O,r2:D2.inO2W}];
+   CH.forEach(c=>{const sql=c.st[3]*c.sf,opp=sql*c.r1,pot=opp*c.r2;c.st.push(sql,opp,pot);});
+   const pot=CH.reduce((a,c)=>a+c.st[6],0)||1,won=D2.closes;CH.forEach(c=>c.st[6]=c.st[6]*won/pot);
+   const leak2=Math.max(0,D2.potWins-won),leak1=D2.unscreened;
+   const STG=['Accounts','Contacts','Engaged','MQL','SQL','Opportunity','Won'],SUB=['','','','needs screening','qualified, accepted by AE','',''];
+   const tot=STG.map((_,i)=>CH.reduce((a,c)=>a+c.st[i],0)),mx=Math.sqrt(Math.max(...tot)),H=220;
+   const r1=D2.screens/D2.qualCap,r2=Math.max(D2.deals/num(g.maxDeals),(D2.potWins)/D2.ceiling),tone=r=>r<0.85?'ok':r<=1.0001?'amb':'red';
+   const t1=tone(r1),t2=tone(r2),cv=x=>x.startsWith('--')?`var(${x})`:x;
+   const col=i=>{const h=Math.max(6,Math.sqrt(tot[i])/mx*H);let segs='';CH.forEach(c=>{const v=c.st[i];if(v<0.05)return;const prev=i>0?c.st[i-1]:0;const conv=prev>0&&i>0?` · ${n0(v/prev*100)}% of ${STG[i-1].toLowerCase()}`:'';segs+=`<i style="flex:${v};background:${cv(c.c)}" title="${c.n} · ${f(v)} ${STG[i].toLowerCase()}${conv}"></i>`;});
+     const leak=i===4&&leak1>0.5?`<div class="lk" title="MQLs never screened">−${f(leak1)} never screened</div>`:i===6&&leak2>0.5?`<div class="lk" title="Wins that wait for an AE or slip to 2028">−${f(leak2)} wait or slip to 2028</div>`:'';
+     return `<div class="cc"><span class="ct">${f(tot[i])}</span><div class="cb" style="height:${h}px">${segs}</div>${leak}<span class="cl">${STG[i]}</span><span class="cs">${SUB[i]}</span></div>`;};
+   const arr=i=>{const cls=i===3?t1:(i===4||i===5)?t2:'';return `<div class="ca ${cls}"><i></i></div>`;};
+   let row='';STG.forEach((_,i)=>{row+=col(i);if(i<6)row+=arr(i);});
+   const accN=CH[0].st[0]+CH[1].st[0]+CH[3].st[0];
+   document.getElementById('casc').innerHTML=`<p class="cacc">${f(accN)} accounts engaged · ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} planned ${pl('Assumed')}</p>
+     <div class="crow">${row}</div>
+     <div class="cbn"><div class="bn ${t1}" style="grid-column:7/10"><b>Bottleneck 1 · Qualifying.</b> ${f(D2.screens)} MQLs a month to screen${g.lvHO?' after scoring':''}, ${g.lvIS?'AEs and SDRs':'AEs'} can screen ${f(D2.qualCap)}. ${r1>1?'The rest wait and go cold.':'Screening keeps up.'}</div>
+       <div class="bn ${t2}" style="grid-column:9/14"><b>Bottleneck 2 · AE capacity.</b> ${n0(D2.deals)} open deals per AE vs ${n0(g.maxDeals)} they can handle, and ${f(D2.potWins)} closes ready vs ${f(D2.ceiling)} capacity. ${D2.potWins>D2.ceiling+0.5?'Short.':D2.potWins>D2.ceiling*0.85?'Zero slack.':'Room to spare.'}</div></div>
+     <div class="legend">${CH.map(c=>`<span><span class="dot" style="background:${cv(c.c)}"></span>${c.n}</span>`).join('')}<span><span class="dot lkdot"></span>Leaks</span></div>`;}
+  // mitigations
+  {const base=D0.closes,one=o=>goalPlanV(R,sc,{...LV0,...o}).closes;
+   const M=[['lvHO','Handoff & lead scoring in Attio','fixes Bottleneck 1 partly',0,`AEs only see scored MQLs; ${n0(g.hoCut)}% fewer conversations to screen by hand.`,''],
+     ['lvIS','+2 SDRs','fixes Bottleneck 1',2*num(g.isCost)*1000,`Each screens ~${n0(g.isCalls)} conversations a month.`,'lvISfrom'],
+     ['lvAE','+1 AE','fixes Bottleneck 2',num(g.aeHireCost)*1000,`+${n0(g.maxDeals)} open deals, +${n1(g.aeCap)} logos a quarter from the quarter after hire. Plus commission.`,'lvAEfrom']];
+   const mi=document.getElementById('mits');
+   if(!mi.contains(document.activeElement))mi.innerHTML=M.map(([k,n,fx,cost,why,qk])=>{const d=one({[k]:true})-base;const sel=qk?` · from <select data-p="global.${qk}">${[1,2,3,4].map(q=>`<option value="${q}" ${+g[qk]===q?'selected':''}>Q${q}</option>`).join('')}</select>`:'';
+     return `<label class="mit${g[k]?' on':''}"><input type="checkbox" data-p="global.${k}" ${g[k]?'checked':''}><span class="mn"><b>${n}</b><em>${fx}${sel}</em><span>${why}</span></span><span class="mv"><b>${d>=0?'+':'−'}${n1(Math.abs(d))}</b><span>logos</span></span><span class="mv"><b>${cost?k$(cost):'$0'}</b><span>a year</span></span><span class="mv"><b>${cost&&d>0.05?k$(cost/d):'—'}</b><span>per extra logo</span></span></label>`;}).join('');}
+  // Model tab: what the fixes cost
+  {const ft=document.getElementById('fixTable');if(ft){const base=D0.closes,gm=num(g.acv)*1000*num(g.gm)/100,one=o=>goalPlanV(R,sc,{...LV0,...o}).closes-base;
+   const rows=[['Handoff & scoring in Attio',0,one({lvHO:true})],['+2 SDRs',2*num(g.isCost)*1000,one({lvIS:true})],['+1 AE',num(g.aeHireCost)*1000,one({lvAE:true})],['All three',2*num(g.isCost)*1000+num(g.aeHireCost)*1000,one({lvHO:true,lvIS:true,lvAE:true})]];
+   ft.innerHTML=`<thead><tr><th>Fix</th><th class="num">Cost a year</th><th class="num">Extra logos in 2027</th><th class="num">Cost per extra logo</th><th class="num">Break-even logos</th></tr></thead><tbody>${rows.map(([n,c,d])=>`<tr><td>${n}</td><td class="num">${c?k$(c):'$0'}</td><td class="num">${d>=0?'+':'−'}${n1(Math.abs(d))}</td><td class="num">${c&&d>0.05?k$(c/d):'—'}</td><td class="num">${c?n1(c/gm):'0'}</td></tr>`).join('')}</tbody>`;
+   document.getElementById('fixWhy').innerHTML=`<li>Break-even logos = cost ÷ (ACV × gross margin) = cost ÷ ${k$(gm)} a logo a year.</li><li>Start with handoff and scoring: free, and it fixes part of Bottleneck 1.</li><li>SDRs pay back if they add more than ~${n1(2*num(g.isCost)*1000/gm)} logos. Hire when screening stays above capacity for 2 months.</li><li>The +1 AE is a trigger, not a day-one ask: add when open deals per AE pass ${n0(g.maxDeals)} or the US needs more than ${n1(g.aeCap)} logos a quarter.</li>`;}}
   // assumptions (all inputs for steps 3–4)
   const s4=document.getElementById('s4');
   if(!s4.contains(document.activeElement)){
     const sel=k=>`<select data-p="global.${k}">${[1,2,3,4].map(q=>`<option value="${q}" ${+g[k]===q?'selected':''}>Q${q}</option>`).join('')}</select>`;
     const row=(lab,ctl)=>`<label class="asr"><span>${lab}</span><span class="asc">${ctl} ${pl('Assumed')}</span></label>`;
     s4.innerHTML=
-      row('Qualification calls per AE a month',inp('qualCalls',52,80))+
-      row('Inbound conversations to screen per qualified lead',inp('inRaw',52,5))+
+      row('Conversations each AE can screen a month',inp('qualCalls',52,80))+
       row('Max open deals per AE',inp('maxDeals',52,60))+
       row('Handoff & scoring: lift on inbound lead → opp (pts)',inp('hoLift',52,20))+
       row('Handoff & scoring: fewer conversations screened by hand (%)',inp('hoCut',52,80))+
-      row('Inside sales: calls per rep a month',inp('isCalls',52,200))+
-      row('Inside sales: qualified leads per rep a month',inp('isLeads',52,40))+
-      row('Inside sales: loaded cost per rep ($k a year)',inp('isCost',52,150))+
-      row('Inside sales: start quarter',sel('lvISfrom'))+
-      row('US partner co-selling: extra US closing capacity (%)',inp('csLift',52,50))+
-      row('+1 AE: hire quarter',sel('lvAEfrom'))+
+      row('SDRs: conversations each screens a month',inp('isCalls',52,200))+
+      row('SDRs: loaded cost per SDR ($k a year)',inp('isCost',52,150))+
       row('+1 AE: loaded cost ($k a year)',inp('aeHireCost',52,250));}
 }
 const BRIEF={l2o:[30,40,50],o2w:[15,20,25]};
