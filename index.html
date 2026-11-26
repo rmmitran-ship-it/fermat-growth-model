@@ -533,6 +533,19 @@ section.page{padding:36px 0 64px;border-top:0}
 .gbars.capd{position:relative}
 .capline{position:absolute;left:0;right:0;border-top:2px dashed var(--ink);z-index:2;pointer-events:none}
 .capline em{position:absolute;left:0;top:-18px;white-space:nowrap;font-style:normal;font-size:11px;font-weight:600;background:var(--white);padding:0 4px;color:var(--ink)}
+.rb{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;height:150px}
+.rb-col{display:flex;flex-direction:column;gap:4px;min-width:0}
+.rb-bar{position:relative;flex:1;display:flex;flex-direction:column;justify-content:flex-end}
+.rb-seg{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--ink);overflow:hidden;flex:none}
+.rb-seg.out{background:var(--blue)}.rb-seg.in{background:var(--surface-2)}
+.rb-cap{position:absolute;left:0;right:0;border-top:2px dashed var(--ink);z-index:2;pointer-events:none}
+.rb-cap em{position:absolute;left:0;top:-17px;font-style:normal;font-size:11px;font-weight:600;white-space:nowrap;background:var(--white);padding:0 4px;color:var(--ink)}
+.rb-col>em{font-style:normal;font-size:11px;color:#6b6b6b;text-align:center;white-space:nowrap}
+.segt{background:var(--white)}
+.segt td,.segt th{padding:8px 12px}
+.segt tr.rowhl td{background:var(--magenta-light);color:var(--ink);font-weight:600}
+.segt tr.big td{font-weight:600;color:var(--ink)}
+.segt tr.big td.num{font-family:'Inter Tight';font-size:18px;letter-spacing:-0.02em}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -651,7 +664,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 
 <nav class="tabbar" aria-label="Sections">
   <div class="wrap ptabs" role="tablist">
-    <button class="ptab" role="tab" data-go="answer">The answer</button>
+    <button class="ptab" role="tab" data-go="answer">Goal setting</button>
     <button class="ptab" role="tab" data-go="diagnosis">Diagnosis</button>
     <button class="ptab" role="tab" data-go="model">Model</button>
     <button class="ptab" role="tab" data-go="channels">Channels</button>
@@ -670,15 +683,13 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
   </header>
   <h2 class="ansh">Is <span class="hl hl-g">60 logos</span> reachable?</h2>
   <p class="lede"><b>Yes, but only if every AE closes at full capacity, every quarter.</b> 3 AEs × 5 logos × 4 quarters = 60, with zero slack. So the plan isn't about buying more leads. It's about making every AE hour count.</p>
-  <div class="ansbox">
-    <div class="planswitch"><span class="small muted" style="align-self:center;margin-right:4px">Plan</span><button class="tab tA" data-act="view" data-v="A">A · My plan</button><button class="tab tB" data-act="view" data-v="B">B · $310k</button><button class="tab tC" data-act="view" data-v="C">C · $550k</button></div>
-    <p class="small muted" id="ansPlan"></p>
-  </div>
   <h3 class="mt2">Is 60 logos reachable? Pull the levers.</h3>
   <div class="lv">
     <div class="lv-sec"><span class="lv-k">1 · Work it backwards</span>
       <div class="lv4" id="ansBack"></div>
-      <p class="gx-cap" id="ansBackCap"></p></div>
+      <p class="gx-cap" id="ansBackCap"></p>
+      <div class="tw mt"><table class="segt" id="ansSeg"></table></div>
+      <p class="gx-cap" id="ansSegCap"></p></div>
     <div class="lv-sec"><span class="lv-k">2 · Outbound ramp</span>
       <div class="lvramp"><div class="lvin" id="ansRampIn"></div><div class="lvbars" id="ansRampBars"></div></div>
       <p class="gx-cap">New outbound ramps up. Most of it lands from Q2.</p></div>
@@ -686,6 +697,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
       <div class="lvl" id="ansLevers"></div></div>
     <div class="lv-sec"><span class="lv-k">4 · Results, 2027</span>
       <div class="lv4" id="ansCards"></div>
+      <p class="gx-cap" id="ansPlan"></p>
       <div id="ansMsg"></div></div>
   </div>
   <p class="watch"><b>What I'd watch:</b> lead → opportunity conversion after the handoff is fixed. If it rises, 60 is in reach. If it doesn't, the limit is sales capacity, and we'd talk about an extra AE or an SDR in Q2.</p>
@@ -1450,17 +1462,31 @@ function renderAnswer(R){
   if(!document.getElementById('ansCards'))return;
   renderAnsIn();
   const g=S.global,sc=SC.includes(view)?view:'B';
-  document.getElementById('ansPlan').textContent=R[sc].has?'':'Plan A is empty. Build it in the Model tab.';
+  document.getElementById('ansPlan').textContent=R[sc].has?`Results use plan ${sc}'s budget (${PLABEL[sc].replace(/^[ABC] · /,'')}). Pick a plan in the Model tab.`:'Plan A is empty. Build it in the Model tab.';
   // 1. work back
   const opp=num(g.targetLogos)/(num(g.wbO2W)/100||1),lead=opp/(num(g.wbL2O)/100||1),mo=lead/12,bl=R[sc].bl||num(g.baseLeads),gap=Math.max(0,mo-bl);
   document.getElementById('bkOpp').textContent='~'+n0(opp);document.getElementById('bkLead').textContent='~'+n0(lead);
   document.getElementById('bkMo').textContent='~'+n0(mo)+' a month';
   document.getElementById('bkGap').textContent='~'+n0(gap)+' more';document.getElementById('bkGapS').textContent=`qualified leads a month, vs today's ~${n0(bl)} (incl. ${n0(g.inboundLift)}% inbound lift)`;
   document.getElementById('ansBackCap').textContent=`Working backwards from ${n0(g.targetLogos)}, at today's conversion rates.`;
+  {const tg=num(g.targetLogos),es=num(g.entLogoShare)/100,o2w=num(g.wbO2W)/100||1,l2o=num(g.wbL2O)/100||1;
+   const toNew=num(g.lead2mql)/100*num(g.mql2sql)/100||1,c2l=num(g.contact2lead)/100||1;
+   const seg=(logos,inb,cpa)=>{const ld=logos/o2w/l2o,inn=Math.min(ld,inb),out=ld-inn,con=out/toNew/c2l,acc=con/Math.max(1,cpa);return {logos,ld,inn,out,con,acc};};
+   const E=seg(tg*es,0,num(g.cpaEnt)),M=seg(tg*(1-es),bl*12,num(g.cpaMid));
+   const f=x=>Math.round(x).toLocaleString('en-US'),row=(k,a,b,t,cls)=>`<tr${cls?` class="${cls}"`:''}><td>${k}</td><td class="num">${a}</td><td class="num">${b}</td><td class="num">${t}</td></tr>`;
+   document.getElementById('ansSeg').innerHTML=`<thead><tr><th></th><th class="num">Enterprise</th><th class="num">Mid-market</th><th class="num">Total</th></tr></thead><tbody>
+     ${row('Logos',f(E.logos),f(M.logos),f(E.logos+M.logos))}
+     ${row('Qualified leads needed',f(E.ld),f(M.ld),f(E.ld+M.ld))}
+     ${row('Covered by inbound today',f(E.inn),f(M.inn),f(E.inn+M.inn))}
+     ${row('From new outbound',f(E.out),f(M.out),f(E.out+M.out),'rowhl')}
+     ${row('Contacts to engage in the year',f(E.con),f(M.con),f(E.con+M.con),'big')}
+     ${row('Accounts to engage in the year',f(E.acc),f(M.acc),f(E.acc+M.acc),'big')}
+     ${row('Accounts a month',f(E.acc/12),f(M.acc/12),f((E.acc+M.acc)/12))}</tbody>`;
+   document.getElementById('ansSegCap').innerHTML=`Enterprise is ${n0(es*100)}% of logos <span class="pill assumed">Assumed</span>. Today's inbound (~${n0(bl)} a month) counted as mid-market. New outbound: ${n0(g.contact2lead)}% of contacts become leads, ${n0(num(g.lead2mql)*num(g.mql2sql)/100)}% of those qualify; ${n0(g.cpaEnt)} contacts per enterprise account, ${n0(g.cpaMid)} per mid-market <span class="pill assumed">Assumed</span>. The ABM list today: ${f(g.abmAccounts)} named accounts.`;}
   // 2. ramp bars
   const raw=rawLeadsQ(sc).map(x=>x/3),lc=num(g.leadCap),per=raw.map(x=>lc>0?Math.min(x,lc):x);
   const mx=Math.max(...raw.map(x=>x+bl),lc>0?lc+bl:0,1)*1.05;
-  document.getElementById('ansRampBars').innerHTML=`<div class="gbars capd">${per.map((x,q)=>`<div><span class="gb" style="position:relative" title="${n0(bl)} inbound + ${n0(x)} new outbound a month${raw[q]>x+0.5?` (capped from ${n0(raw[q])})`:''}">${lc>0?`<span class="capline" style="bottom:${(lc+bl)/mx*100}%">${q===0?`<em>Cap: ${n0(lc)} new a month</em>`:''}</span>`:''}<i style="flex:none;width:100%;height:100%;display:flex;flex-direction:column;justify-content:flex-end;background:none"><i style="display:block;height:${x/mx*100}%;background:${cssv('--blue')}"></i><i style="display:block;height:${bl/mx*100}%;background:${cssv('--surface-2')}"></i></i></span><em>Q${q+1} · ${n0(bl+x)}/mo</em></div>`).join('')}</div><div class="legend" style="margin-top:4px"><span><span class="dot" style="background:var(--blue)"></span>New outbound</span><span><span class="dot" style="background:var(--surface-2)"></span>Inbound</span></div>`;
+  document.getElementById('ansRampBars').innerHTML=`<div class="rb">${per.map((x,q)=>`<div class="rb-col" title="${n0(bl)} inbound + ${n0(x)} new outbound a month${raw[q]>x+0.5?` (capped from ${n0(raw[q])})`:''}"><div class="rb-bar">${lc>0?`<span class="rb-cap" style="bottom:${(lc+bl)/mx*100}%">${q===0?`<em>Cap: ${n0(lc)} new a month</em>`:''}</span>`:''}<span class="rb-seg out" style="height:${x/mx*100}%">${x/mx>0.12?n0(x):''}</span><span class="rb-seg in" style="height:${bl/mx*100}%">${n0(bl)}</span></div><em>Q${q+1} · ${n0(bl+x)}/mo</em></div>`).join('')}</div><div class="legend" style="margin-top:4px"><span><span class="dot" style="background:var(--blue)"></span>New outbound</span><span><span class="dot" style="background:var(--surface-2)"></span>Inbound</span></div>`;
   // 3-4. cards
   const aF=+g.lvAEfrom||1,iF=+g.lvISfrom||1;
   const V=[['Today\'s team',{}],['+ 2 IS',{is:iF}],['+ 1 AE',{ae:aF}],['+ 1 AE + 2 IS',{ae:aF,is:iF}]].map(([name,h])=>{const r=runV(sc,h);
