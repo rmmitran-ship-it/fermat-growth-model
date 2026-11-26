@@ -859,6 +859,17 @@ button.play[hidden]{display:none}
   .cbn{grid-template-columns:1fr}.bn{grid-column:auto!important}
   .mit{grid-template-columns:24px 1fr;}.mv{grid-column:2;text-align:left;flex-direction:row;gap:6px;align-items:baseline}
 }
+.bridge{background:var(--surface);padding:30px 16px 12px}
+.bridge .wfp i.base{background:var(--blue-light)}.bridge .wfp i.end{background:var(--green)}.bridge .wfplot{background:var(--white)}
+.wfp i.lose{background:var(--white)}.wfp i.lose.red{background:#ffd6d6;border:2px solid var(--red)}.wfp i.lose.amb{background:#ffe3b3;border:2px solid #f2b84b}
+.wfp i.lose em{color:var(--red)}.wfp i.lose.amb em{color:#8a5a00}
+.bns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.bnc{background:var(--white);padding:14px 16px;border-left:6px solid;color:var(--ink)}.bnc.red{border-color:var(--red)}.bnc.amb{border-color:#f2b84b}.bnc.ok{border-color:#5cc96b}
+.bnc .k{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.bnc b{display:block;font-family:'Inter Tight';font-size:19px;margin:4px 0}.bnc.red b{color:var(--red)}
+.bnc p{margin:0;font-size:13.5px;max-width:none}
+.mitsum{margin:10px 0 0;font-size:14px;color:var(--ink);background:var(--white);padding:10px 14px;border-left:5px solid var(--ink);max-width:none}
+@media (max-width:900px){.bns{grid-template-columns:1fr}}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -1025,10 +1036,13 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 <section class="page" data-page="diagnosis"><div class="wrap">
   <h2>If nothing changes, where does the <span class="hl hl-m">model break</span>?</h2>
   <p class="dg-sub" id="dgSub"></p>
-  <div class="casc" id="casc"></div>
+  <div class="bridge" id="bridge"></div>
+  <div class="bns" id="bns"></div>
   <p class="dg-line">Leads aren't the problem. Screening and closing are.</p>
+  <details class="more mt" id="cascBox"><summary>Show the full pipeline by channel</summary><div class="casc mt" id="casc"></div></details>
   <h3 class="mt2">Mitigations</h3>
   <div class="mits" id="mits"></div>
+  <p class="mitsum" id="mitSum"></p>
   <p class="s1muted">Headcount isn't in the $310k growth budget. <button class="linkbtn" data-go="model" data-fixjump>Cost and payback on the next page →</button></p>
   <details class="more mt" id="asmBox"><summary>Assumptions</summary><div class="asm" id="s4"></div></details>
   <div class="grid g2 mt2">
@@ -1829,9 +1843,11 @@ function goalPlan(R,sc){
   const screens=(inQL+newQL)*hCut/12,qualCap=capQ.reduce((a,b)=>a+b,0)/12;
   const opps=inSQL*inL2O+nwSQL*l2o+isQL*l2o,deals=opps/12*num(g.cycle)/aes;
   const potWins=inSQL*inL2O*inO2W+(nwSQL+isQL)*l2o*o2w;
+  const lagSlip=[LEU,LUS].reduce((a,L)=>a+Object.values(L).reduce((x,arr)=>x+(arr[4]||0)+(arr[5]||0),0),0);
+  const euReady=simEU.demand.reduce((a,b)=>a+b,0),usReady=simUS.demand.reduce((a,b)=>a+b,0),euCap=capEU.reduce((a,b)=>a+b,0),usCap=capUS.reduce((a,b)=>a+b,0);
   const euLoad=simEU.demand.reduce((a,b)=>a+b,0)/capEU.reduce((a,b)=>a+b,0),usLoad=simUS.demand.reduce((a,b)=>a+b,0)/capUS.reduce((a,b)=>a+b,0);
   return {g,tg,bl,acv,l2o,o2w,inL2O,inO2W,inQL,inOpp,inLogo,gap,newQL,newOpp,newLogo,paths,C,N,tiers,closes,ceiling,spill,simEU,simUS,capEU,capUS,
-    screens,qualCap,sfQ,inSQL,nwSQL,unscreened,potWins,hCut,handover:(inSQL+nwSQL+isQL)/12,opps,deals,aes,euLoad,usLoad,shTot:paths.reduce((a,x)=>a+x.sh,0)*100};
+    lagSlip,euReady,usReady,euCap,usCap,screens,qualCap,sfQ,inSQL,nwSQL,unscreened,potWins,hCut,handover:(inSQL+nwSQL+isQL)/12,opps,deals,aes,euLoad,usLoad,shTot:paths.reduce((a,x)=>a+x.sh,0)*100};
 }
 function renderAnswer(R){
   if(!document.getElementById('goal'))return;
@@ -1953,8 +1969,21 @@ function renderAnswer(R){
   document.getElementById('tierCheck').innerHTML=`<span class="tc ${ok?'ok':'amb'}">Tier flow ${f(tOpp)} opps · Digital path ${f(dOpp)}</span>`;
   // DIAGNOSIS · cascading pipeline (current mitigations applied)
   const D2=goalPlanV(R,sc,{lvCS:false}),D0=goalPlanV(R,sc,{...LV0});
+  const anyOn0=g.lvHO||g.lvIS||g.lvAE,onNames0=[g.lvHO&&'handoff and scoring',g.lvIS&&'2 SDRs',g.lvAE&&'+1 AE'].filter(Boolean);
+  {// the bridge: from the 60 the plan sources to what lands in 2027
+   const plan=D2.inLogo+D2.newLogo+(D2.potWins-(D2.inSQL*D2.inL2O*D2.inO2W+D2.nwSQL*D2.l2o*D2.o2w)),lost1=Math.max(0,plan-D2.potWins);
+   const slip=Math.min(D2.lagSlip,Math.max(0,D2.potWins-D2.closes)),lost2=Math.max(0,D2.potWins-D2.closes-slip),land=D2.closes;
+   const mxv=Math.max(plan,D2.tg)*1.08,y=v=>v/mxv*100;
+   const B=[['Planned',0,plan,'base',f(plan),'what the plan sources'],['Never screened',plan-lost1,plan,'red',`−${n1(lost1)}`,'Bottleneck 1 · qualifying'],['AEs full',plan-lost1-lost2,plan-lost1,'red',`−${n1(lost2)}`,'Bottleneck 2 · Europe'],['Close in 2028',land,land+slip,'amb',`−${n1(slip)}`,'Timing · sales cycle'],['We land at',0,land,'end',f(land),'logos in 2027']];
+   const bars=B.map(([,a,b,c,t])=>`<div class="wfp"><i class="${c==='base'?'base':c==='end'?'end':'lose '+c}" style="bottom:${y(a)}%;height:${Math.max(0.8,y(b)-y(a))}%"><em>${t}</em></i></div>`).join('');
+   const labs=B.map(([n,,,,,sub])=>`<div class="wfc"><span class="wfl">${n}</span><span class="wft"><i>${sub}</i></span></div>`).join('');
+   {const parts=[lost1>0.5&&`${f(lost1)} lost to screening`,lost2>0.5&&`${f(lost2)} wait for a Europe AE`,slip>0.5&&`${f(slip)} close in 2028`].filter(Boolean);document.getElementById('dgSub').innerHTML=`${anyOn0?`With ${onNames0.join(', ')}: we`:'We'} land at <b>${f(land)} logos</b>, not ${n0(D2.tg)}${parts.length?`: ${parts.join(', ')}`:''}.`;}
+   document.getElementById('bridge').innerHTML=`<div class="wfg"><div class="wfplot"><span class="wfline" style="bottom:${y(D2.tg)}%"><em>${n0(D2.tg)} target</em></span>${bars}</div><div class="wflabs">${labs}</div></div>`;
+   const sc1=D2.screens/D2.qualCap,euL=D2.euReady/D2.euCap,usL=D2.usReady/D2.usCap,tone=r=>r<0.85?'ok':r<=1.0001?'amb':'red';
+   document.getElementById('bns').innerHTML=`
+     <div class="bnc ${tone(sc1)}"><span class="k">Bottleneck 1 · Qualifying</span><b>${f(D2.screens)} to screen a month vs ${f(D2.qualCap)}</b><p>${sc1>1?`AEs qualify their own leads and can't keep up, so ${f(lost1)} logos' worth of leads go cold.`:'Screening keeps up. No leads go cold.'}</p></div>
+     <div class="bnc ${tone(euL)}"><span class="k">Bottleneck 2 · Closing in Europe</span><b>${f(D2.euReady)} deals ready vs ${f(D2.euCap)} that ${n0(g.aesEU)} AEs can close</b><p>${euL>1?`Europe is full: ${f(lost2)} wait for an AE.`:euL>0.85?`Europe is nearly full (${n0(euL*100)}%). Fix screening and it tips over.`:'Europe keeps up.'} The US has ${f(D2.usReady)} ready vs ${f(D2.usCap)} capacity${usL<1?', so it has room':''}.</p></div>`;}
   const anyOn=g.lvHO||g.lvIS||g.lvAE,onNames=[g.lvHO&&'handoff and scoring',g.lvIS&&'2 SDRs',g.lvAE&&'+1 AE'].filter(Boolean);
-  document.getElementById('dgSub').innerHTML=anyOn?`With ${onNames.join(', ')}: <b>${f(D2.closes)} logos</b>.`:`We land at <b>${f(D2.closes)} logos</b>, not ${n0(D2.tg)}. It breaks in two places.`;
   {const T=D2.tiers,tq=T.reduce((a,t)=>a+t.q,0)||1,dq=D2.paths[2].q,abmM=dq*(T[0].q+T[1].q)/tq,aoM=dq*T[2].q/tq;
    const sfN=D2.newQL>0?D2.nwSQL/D2.newQL:1,sfI=D2.inQL>0?D2.inSQL/D2.inQL:1;
    const CH=[
@@ -1981,6 +2010,7 @@ function renderAnswer(R){
      <div class="cbn"><div class="bn ${t1}" style="grid-column:7/10"><b>Bottleneck 1 · Qualifying.</b> ${f(D2.screens)} MQLs a month to screen${g.lvHO?' after scoring':''}, ${g.lvIS?'AEs and SDRs':'AEs'} can screen ${f(D2.qualCap)}. ${r1>1?'The rest wait and go cold.':'Screening keeps up.'}</div>
        <div class="bn ${t2}" style="grid-column:9/14"><b>Bottleneck 2 · AE capacity.</b> ${n0(D2.deals)} open deals per AE vs ${n0(g.maxDeals)} they can handle, and ${f(D2.potWins)} closes ready vs ${f(D2.ceiling)} capacity. ${D2.potWins>D2.ceiling+0.5?'Short.':D2.potWins>D2.ceiling*0.85?'Zero slack.':'Room to spare.'}</div></div>
      <div class="legend">${CH.map(c=>`<span><span class="dot" style="background:${cv(c.c)}"></span>${c.n}</span>`).join('')}<span><span class="dot lkdot"></span>Leaks</span></div>`;}
+  {const st=document.getElementById('mitSum');if(st){const b1=goalPlanV(R,sc,{...LV0}).closes;st.innerHTML=`<b>Now: ${f(D2.closes)} logos</b> (${D2.closes-b1>=0?'+':'−'}${n1(Math.abs(D2.closes-b1))} vs nothing in place). Fixes don't stack past ${f(goalPlanV(R,sc,{...LV0,lvHO:true,lvIS:true,lvAE:true}).closes)}: once screening is fixed, Europe's ${n0(g.aesEU)} AEs are the limit, and the +1 AE sits in the US.`;}}
   // mitigations
   {const base=D0.closes,one=o=>goalPlanV(R,sc,{...LV0,...o}).closes;
    const M=[['lvHO','Handoff & lead scoring in Attio','fixes Bottleneck 1 partly',0,`AEs only see scored MQLs; ${n0(g.hoCut)}% fewer conversations to screen by hand.`,''],
