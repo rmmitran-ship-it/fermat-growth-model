@@ -445,6 +445,45 @@ section.page{padding:36px 0 64px;border-top:0}
 .ph-t{display:inline-block;font-size:11px;font-weight:700;background:var(--ink);color:var(--white);padding:1px 6px;margin-bottom:2px}
 .ptnout{background:var(--surface);padding:12px 16px;max-width:none}
 @media (max-width:900px){.phases{grid-template-columns:1fr}}
+.pill.target{background:var(--ink);color:var(--white)}
+.tlside{display:flex;flex-direction:column;align-items:flex-end;gap:10px;width:300px;max-width:100%}
+.tlgraph{width:100%;background:var(--surface);padding:12px 14px}
+.ph-graph{background:var(--white);padding:10px 12px;margin-bottom:6px}
+.gx-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.gx-n{font-family:'Inter Tight';font-size:22px;font-weight:700;letter-spacing:-0.024em;color:var(--ink);line-height:1.05}
+.gx-body{min-height:60px}
+.gx-cap{font-size:12px;color:var(--text);margin-top:8px;line-height:1.35}
+.prog{height:16px;background:var(--surface-2)}.prog i{display:block;height:100%;background:var(--magenta)}
+.prog-ax{display:flex;justify-content:space-between;font-size:10px;color:#6b6b6b;margin-top:4px}
+.hb{display:grid;grid-template-columns:64px 1fr auto;gap:8px;align-items:center;font-size:12px;margin:4px 0;color:var(--ink)}
+.hb-l{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hb-t{display:flex;height:16px;background:var(--surface-2)}.hb-t i{display:block;height:100%}
+.hb-t.stack i{font-style:normal;font-size:10.5px;font-weight:600;color:var(--ink);display:flex;align-items:center;padding-left:4px;overflow:hidden;white-space:nowrap}
+.hb-v{font-weight:600;font-size:12px;min-width:30px;text-align:right}
+.dots{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.dots span{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10.5px;color:var(--ink);text-align:center}
+.dots i{display:block;width:18px;height:18px;background:var(--ink)}
+.pyr{display:flex;flex-direction:column;align-items:center;gap:3px}
+.pyr div{font-size:12px;color:var(--ink);text-align:center;padding:4px 0}
+.gbars{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;height:90px}
+.gbars>div{display:flex;flex-direction:column;align-items:center;gap:3px}
+.gb{flex:1;width:100%;display:flex;align-items:flex-end;gap:3px}.gb i{flex:1;display:block}
+.gbars em{font-style:normal;font-size:10px;color:#6b6b6b}
+.narrq{margin-bottom:16px}
+.narrq-row{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:stretch}
+.narrq-row>.pl,.narrq-row>.fl{padding:14px 16px;font-family:'Inter Tight';font-weight:700;font-size:18px;letter-spacing:-0.024em;color:var(--ink)}
+.narrq-row>.pl{background:var(--green)}.narrq-row>.fl{background:var(--magenta-light)}
+.narrq-row .k{display:block;font-family:Inter;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px}
+.linkbtn{all:unset;cursor:pointer;margin-top:10px;font-size:13px;font-weight:600;color:var(--ink);border-bottom:1px solid var(--ink)}
+.kit-h{font-family:'Inter Tight';font-size:24px;font-weight:700;letter-spacing:-0.024em;color:var(--ink);margin:24px 0 12px;scroll-margin-top:80px}
+.ba{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center}
+.ba1{aspect-ratio:4/3}.ba-arr{font-weight:700;font-size:20px;color:var(--ink)}
+.vid.portrait{aspect-ratio:12/5}.vid.portrait img{object-position:center 25%}
+.vid.pol{margin-top:0}
+.kitdl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13.5px;margin:4px 0 0;background:var(--white);padding:12px 14px}
+.kitdl dt{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding-top:2px}
+.kitdl dd{margin:0;color:var(--ink)}
+@media (max-width:800px){.tlside{width:100%;align-items:stretch}.narrq-row{grid-template-columns:1fr}.narrq-row .narr-or{justify-self:center}.kitdl{grid-template-columns:1fr}}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -781,9 +820,9 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
   <h3 class="mt2">The plan, by phase</h3>
   <div class="princ"><span>Marketing is always on. Tactics change; the presence doesn't.</span><span>A small, cheap decision beats no decision.</span><span>Measure before we spend; scale only what converts.</span></div>
   <div class="phases">
-    <div class="phase ph-m"><h4>Q1 · Learn and set up</h4><div class="ph-row"><span class="k">Questions</span><ul><li>Why do we win, and why are some conversations hard?</li><li>Do buyers not know the product, or not trust the founder?</li><li>What can Attio track today, and how long can it carry us?</li><li>In the US, do we build partners to find deals or to help close them?</li></ul></div><div class="ph-row"><span class="k">Big bets</span><ul><li>Decide the story: product-led or founder-led</li><li>Every channel measurable by day 30</li><li>Partnership value map by day 30</li></ul></div><div class="ph-row"><span class="k">Tactics</span><div class="ph-tg"><span class="ph-t">Both</span><ul><li>Interviews with sales, AMs and 3–5 clients</li><li>Inbound workflow and scoring in Attio</li><li>1–2 outbound tests (email + LinkedIn) on a 20-account cohort</li><li>Claude dashboard over Attio and paid channels (via MCP)</li></ul></div><div class="ph-tg"><span class="ph-t">Europe</span><ul><li>Pre- and post-event plays on committed events</li><li>Talk to partners who already refer</li></ul></div><div class="ph-tg"><span class="ph-t">US</span><ul><li>Target account list</li><li>Google on competitor terms (e.g. "Raspberry AI")</li><li>First "how we're different" blog</li></ul></div></div><div class="ph-row"><span class="k">Who helps</span><ul><li>Sales, AMs, founders (interviews)</li><li>Product experts (demo content)</li></ul></div></div>
-    <div class="phase ph-b"><h4>Q2 · Launch always-on</h4><div class="ph-row"><span class="k">Questions</span><ul><li>Which narrative won?</li><li>Which ABM plays can we measure?</li></ul></div><div class="ph-row"><span class="k">Big bets</span><ul><li>One always-on campaign in the winning story, in both markets</li><li>ABM strategy per segment, agreed with sales</li><li>Partner pilots: EU sourcing + US co-selling</li></ul></div><div class="ph-row"><span class="k">Tactics</span><div class="ph-tg"><span class="ph-t">Europe</span><ul><li>Events with activations</li><li>ABM 1:few on mid-size brands</li></ul></div><div class="ph-tg"><span class="ph-t">US</span><ul><li>Physical activations and dinners around the New York office</li><li>LinkedIn ABM on named accounts</li><li>Competitor search + comparison content</li></ul></div><div class="ph-tg"><span class="ph-t">Both</span><ul><li>Case studies</li><li>Podcast</li><li>First ABM tools (Clay, signals)</li></ul></div></div><div class="ph-row"><span class="k">Who helps</span><ul><li>Brand and comms: PR, analyst reports, third-party voice, media kit</li><li>Agency for paid at scale, if needed</li><li>Product experts at events</li></ul></div></div>
-    <div class="phase ph-g"><h4>H2 → 2028 · Scale and centralize</h4><div class="ph-row"><span class="k">Questions</span><ul><li>Can the current setup carry us?</li><li>When do we need a fuller CRM setup?</li><li>Does the US need more sales cover?</li></ul></div><div class="ph-row"><span class="k">Big bets</span><ul><li>One central marketing and sales data system</li><li>US sales capacity in line with pipeline</li></ul></div><div class="ph-row"><span class="k">Tactics</span><div class="ph-tg"><span class="ph-t">Both</span><ul><li>Monthly budget moves to the cheapest opportunities</li><li>Full account score in Attio</li><li>Expand the best plays to the next tier</li></ul></div></div><div class="ph-row"><span class="k">Who helps</span><ul><li>Founders (hiring decisions)</li><li>GTM engineer or ops (systems)</li></ul></div></div>
+    <div class="phase ph-m"><h4>Q1 · Learn and set up</h4><div class="ph-graph" data-graph="q1"></div><div class="ph-row"><span class="k">Questions</span><ul><li>Why do we win, and why are some conversations hard?</li><li>Do buyers not know the product, or not trust the founder?</li><li>What can Attio track today, and how long can it carry us?</li><li>In the US, do we build partners to find deals or to help close them?</li></ul></div><div class="ph-row"><span class="k">Big bets</span><ul><li>Decide the story: product-led or founder-led</li><li>Every channel measurable by day 30</li><li>Partnership value map by day 30</li></ul></div><div class="ph-row"><span class="k">Tactics</span><div class="ph-tg"><span class="ph-t">Both</span><ul><li>Interviews with sales, AMs and 3–5 clients</li><li>Inbound workflow and scoring in Attio</li><li>1–2 outbound tests (email + LinkedIn) on a 20-account cohort</li><li>Claude dashboard over Attio and paid channels (via MCP)</li></ul></div><div class="ph-tg"><span class="ph-t">Europe</span><ul><li>Pre- and post-event plays on committed events</li><li>Talk to partners who already refer</li></ul></div><div class="ph-tg"><span class="ph-t">US</span><ul><li>Target account list</li><li>Google on competitor terms (e.g. "Raspberry AI")</li><li>First "how we're different" blog</li></ul></div></div><div class="ph-row"><span class="k">Who helps</span><ul><li>Sales, AMs, founders (interviews)</li><li>Product experts (demo content)</li></ul></div></div>
+    <div class="phase ph-b"><h4>Q2 · Launch always-on</h4><div class="ph-graph" data-graph="q2"></div><div class="ph-row"><span class="k">Questions</span><ul><li>Which narrative won?</li><li>Which ABM plays can we measure?</li></ul></div><div class="ph-row"><span class="k">Big bets</span><ul><li>One always-on campaign in the winning story, in both markets</li><li>ABM strategy per segment, agreed with sales</li><li>Partner pilots: EU sourcing + US co-selling</li></ul></div><div class="ph-row"><span class="k">Tactics</span><div class="ph-tg"><span class="ph-t">Europe</span><ul><li>Events with activations</li><li>ABM 1:few on mid-size brands</li></ul></div><div class="ph-tg"><span class="ph-t">US</span><ul><li>Physical activations and dinners around the New York office</li><li>LinkedIn ABM on named accounts</li><li>Competitor search + comparison content</li></ul></div><div class="ph-tg"><span class="ph-t">Both</span><ul><li>Case studies</li><li>Podcast</li><li>First ABM tools (Clay, signals)</li></ul></div></div><div class="ph-row"><span class="k">Who helps</span><ul><li>Brand and comms: PR, analyst reports, third-party voice, media kit</li><li>Agency for paid at scale, if needed</li><li>Product experts at events</li></ul></div></div>
+    <div class="phase ph-g"><h4>H2 → 2028 · Scale and centralize</h4><div class="ph-graph" data-graph="h2"></div><div class="ph-row"><span class="k">Questions</span><ul><li>Can the current setup carry us?</li><li>When do we need a fuller CRM setup?</li><li>Does the US need more sales cover?</li></ul></div><div class="ph-row"><span class="k">Big bets</span><ul><li>One central marketing and sales data system</li><li>US sales capacity in line with pipeline</li></ul></div><div class="ph-row"><span class="k">Tactics</span><div class="ph-tg"><span class="ph-t">Both</span><ul><li>Monthly budget moves to the cheapest opportunities</li><li>Full account score in Attio</li><li>Expand the best plays to the next tier</li></ul></div></div><div class="ph-row"><span class="k">Who helps</span><ul><li>Founders (hiring decisions)</li><li>GTM engineer or ops (systems)</li></ul></div></div>
   </div>
   <h3 class="mt3">The first 90 days, step by step</h3>
   <p class="small muted">Click a step, or use Next.</p>
@@ -817,25 +856,45 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
   <p class="mt">Built with Claude Code. The reasoning and assumptions are mine, from running ABM and events at Foundever. Fermat figures come from the case brief, plus the enterprise split from the intro call. Everything else is marked Assumed.</p>
   <p class="small muted mt">The model turns spend into leads, opportunities and wins per channel and quarter, lands wins after the sales cycle, caps closes at AE capacity and carries the overflow forward. Single HTML file, no backend. Your edits stay in this browser.</p>
 </div></section>
-<template id="narrTpl">
-  <div class="narr">
+<template id="kitTpl">
+  <h4 class="kit-h" id="kit">The media kit, two ways</h4>
+  <div class="narr kit">
     <div class="narr-col pl">
-      <span class="k">Product-led</span><b class="nq">"They don't know what it does."</b>
-      <div class="vids">
-        <a class="vid tt" href="" target="_blank" rel="noopener"><!-- TIKTOK 1 URL --><span class="ph">TikTok 1</span><img src="assets/tiktok-1.jpg" alt="TikTok 1" loading="lazy"></a>
-        <a class="vid tt" href="" target="_blank" rel="noopener"><!-- TIKTOK 2 URL --><span class="ph">TikTok 2</span><img src="assets/tiktok-2.jpg" alt="TikTok 2" loading="lazy"></a>
-        <a class="vid tt" href="" target="_blank" rel="noopener"><!-- TIKTOK 3 URL --><span class="ph">TikTok 3</span><img src="assets/tiktok-3.jpg" alt="TikTok 3" loading="lazy"></a>
+      <span class="k">Product-led</span><b class="nq">"Show the work"</b>
+      <div class="ba">
+        <div class="vid ba1"><span class="ph">Sketch</span><img src="assets/pl-sketch.jpg" alt="Sketch"></div>
+        <span class="ba-arr">→</span>
+        <div class="vid ba1"><span class="ph">Render</span><img src="assets/pl-render.jpg" alt="Render"></div>
       </div>
-      <p class="cap">Champions inside brands: creators, designers, students.</p>
+      <div class="vids">
+        <a class="vid tt" href="" target="_blank" rel="noopener"><!-- TIKTOK 1 URL --><span class="ph">TikTok 1</span><img src="assets/tiktok-1.jpg" alt="TikTok 1"></a>
+        <a class="vid tt" href="" target="_blank" rel="noopener"><!-- TIKTOK 2 URL --><span class="ph">TikTok 2</span><img src="assets/tiktok-2.jpg" alt="TikTok 2"></a>
+        <a class="vid tt" href="" target="_blank" rel="noopener"><!-- TIKTOK 3 URL --><span class="ph">TikTok 3</span><img src="assets/tiktok-3.jpg" alt="TikTok 3"></a>
+      </div>
+      <dl class="kitdl">
+        <dt>Formats</dt><dd>Sketch → render reels · designer and student spotlights · "design a drop in a day" challenges · podcast with designers</dd>
+        <dt>Channels</dt><dd>TikTok, Instagram, Reddit, paid ChatGPT, podcast</dd>
+        <dt>Cadence</dt><dd>2 short videos a week, 1 podcast a month</dd>
+        <dt>Measure</dt><dd>ICP sign-ups by company domain, champions who reach a buyer</dd>
+      </dl>
+      <p class="cap">"See your design in fabric before the first sample."</p>
     </div>
     <div class="narr-or">or</div>
     <div class="narr-col fl">
-      <span class="k">Founder-led</span><b class="nq">"They don't know why to trust it."</b>
-      <a class="vid pol" href="" target="_blank" rel="noopener"><!-- POL VIDEO URL --><span class="ph">Pol video</span><img src="assets/pol-thumbnail.jpg" alt="Pol video" loading="lazy"><i class="play" aria-hidden="true"></i></a>
-      <p class="cap">Pol opens doors, AEs walk through.</p>
+      <span class="k">Founder-led</span><b class="nq">"Meet the person behind it"</b>
+      <div class="vid portrait"><span class="ph">Pol portrait</span><img src="assets/pol-portrait.jpg" alt="Pol portrait"></div>
+      <a class="vid pol" href="" target="_blank" rel="noopener"><!-- POL VIDEO URL --><span class="ph">Pol video</span><img src="assets/pol-thumbnail.jpg" alt="Pol video"><i class="play" aria-hidden="true"></i></a>
+      <dl class="kitdl">
+        <dt>Formats</dt><dd>"Why I started Fermat" short series · point of view on AI in fashion · customer conversations · dinners with heads of design</dd>
+        <dt>Channels</dt><dd>LinkedIn (Pol + company), podcast (Pol as host), events, PR with brand and comms</dd>
+        <dt>Cadence</dt><dd>2 Pol posts a week, 1 video a month, 1 dinner a quarter</dd>
+        <dt>Measure</dt><dd>Engagement from ICP accounts, inbound mentioning Pol, meetings Pol's content opens</dd>
+      </dl>
+      <p class="cap">"Idea to delivery in weeks, not months."</p>
     </div>
   </div>
   <p class="narr-foot">Both keep the podcast. What changes is who's on it.</p>
+  <p class="small muted">Assets: Fermat's own content and creators' public posts, credited.</p>
 </template>
 </main>
 <footer><div class="wrap">Fermat 2027 growth model · illustrative figures from the case brief and my assumptions.</div></footer>
@@ -850,7 +909,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
+  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,tier1:50,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -880,6 +939,9 @@ const GMETA=[
   {k:'usInbound',label:"Today's inbound from the US",unit:'%',min:0,max:100,step:5,badge:'Assumed',note:'Europe is the base market, so most of today\'s inbound lands there.'},
   {k:'usQ1',label:'Share of new-channel budget to US, Q1',unit:'%',min:0,max:100,step:5,badge:'Assumed',note:'Q1 runs about 50/50 while we learn.',grid:false},
   {k:'usFrom2',label:'Share of new-channel budget to US, from Q2',unit:'%',min:0,max:100,step:5,badge:'Assumed',note:'Preset "Shift to US from Q2" sets 60%.',grid:false},
+  {k:'tier1',label:'ABM tier 1:1 accounts',unit:'accounts',min:0,max:300,step:5,badge:'Assumed',note:'',grid:false},
+  {k:'tier2',label:'ABM tier 1:few accounts',unit:'accounts',min:0,max:600,step:10,badge:'Assumed',note:'',grid:false},
+  {k:'tier3',label:'ABM tier 1:many accounts',unit:'accounts',min:0,max:2000,step:50,badge:'Assumed',note:'',grid:false},
   {k:'ptnPer',label:'Partners per territory',unit:'partners',min:1,max:10,step:1,badge:'Assumed',note:'Pilot size: 3–5 per territory.'},
   {k:'ptnOpps',label:'Referred opportunities per partner, first 2 quarters',unit:'opps',min:0,max:10,step:0.5,badge:'Assumed',note:'2–3 each.'},
   {k:'ptnWin',label:'Win rate on referred opportunities',unit:'%',min:5,max:60,step:1,badge:'Assumed',note:''},
@@ -1371,36 +1433,34 @@ function update(){
   renderAnswer(R);renderDiagnosis(R);renderPies(R);renderBudgetTotals();renderTiles(R);renderFlags(R);renderPtn();renderRegIn();renderWins(R);renderPipeByChannel(R);renderCompareTable(R);renderKnown();
   const tq=document.getElementById('tgtQ');if(tq)tq.textContent=n1(S.global.targetLogos/4);
   window.__fermat=R;
+  if(typeof renderGraphs==='function')renderGraphs();
 }
 
 /* ---------- 90-day timeline ---------- */
 const TL=[
-  {when:'Days 1–30',title:'Listen and set up',c:'--surface-2',goal:'Learn what wins today before spending on anything new.',
-   own:[['Measurement in Attio','Tracking dashboard','Partnership value map','ICP check + best 20 deals','Handoff rules with AEs',"Take over Martí's webinar",'First prospecting lists'],['Case-study needs, with sales'],['Closing deals (AEs)']],
+  {when:'Days 1–30',title:'Listen and set up',c:'--surface-2',g:'s1',goal:'Learn what wins today before spending on anything new.',
+   own:[['Tracking dashboard over Attio + paid channels','Partnership value map','ICP check + best 20 deals','Handoff rules with AEs',"Take over Martí's webinar",'First prospecting lists'],['Interviews with sales, AMs and founders','Case-study needs, with sales','Demo content, with product experts'],['Closing deals (AEs)']],
    groups:[
-    ['Questions to answer',["What's our pitch?",'Who is sales targeting?']],
+    ['Questions to answer',['Why do we win, and why do we lose?','Do buyers not know the product, or not trust the founder?','Who is sales targeting, and with what pitch?','What can Attio track today?']],
     ['Strategy',['Analyse the best 20 deals and find 2–3 narratives to test in ads','Review inbound and scoring: what can be qualified today, and what needs more engagement','Review the events already committed to','Set up basic scoring in Attio','Partnership value map: who refers today, why, and who to pilot first.','AE air cover: qualified-lead definition, scoring, follow-up time, and an account brief before every first call']],
-    ['Tactics',['A simple email workflow with a cohort of 20 companies, for 2 months','Account-based targeting on LinkedIn, for 2 months','Build a temporary marketing dashboard with Claude, connected to Attio and the paid channels, tracking every activity up to the engaged lead']],
+    ['Tactics',['Set up a 20-company cohort and its email + LinkedIn workflows','Build a temporary marketing dashboard with Claude, connected to Attio and the paid channels, tracking every activity up to the engaged lead']],
     ["What I won't do",['Switch on 5 channels at the same time','Put money into paid before inbound has a proper handoff'],'no']]},
-  {when:'Days 31–60',title:'Test the story',c:'--magenta-light',goal:'Test two stories lightly and start ABM with sales.',
-   own:[['20-account ABM cohort (email + LinkedIn)','Small paid tests','First case study'],['Narrative tests with brand and comms: 2 Pol videos, 1 creator or student pilot, podcast guests'],['Event production (brand team)']],
+  {when:'Days 31–60',title:'Test the story',c:'--magenta-light',g:'s2',goal:'Test two stories lightly and launch the cohort with sales.',
+   own:[['Launch the 20-company cohort','Small paid tests','First case study'],['Story tests with brand and comms: Pol videos, a creator or student pilot, podcast guests'],['Event production (brand team)']],
    groups:[
-    ['Strategy',['Explore founder-led sales: build a universe around Pol, with brand and comms','Kick off ABM with sales: define the obsession logos']],
-    ['Tactics',['Narrative tests: two Pol videos and one designer creator pilot','First case study from the best 20 deals']]]},
-  {when:'Days 61–90',title:'Decide',c:'--blue-light',goal:'Sign off how marketing and sales work the named accounts.',
-   own:[['Read results','First budget move','ABM strategy: handoff, pitches, tools, SDR?'],['Narrative recommendation: product-led or founder-led'],['Product roadmap']],
-   groups:[['Milestone',['ABM strategy signed off: handoff, pitches per account type, tools, SDR decision']]]},
-  {when:'Month 3',title:'The ABM strategy',c:'--blue',flag:true,goal:'Four questions, answered and signed off with sales.',
-   own:[['The ABM strategy, written and signed off'],['Sales: handoff rules and pitches per account type'],['Headcount decisions']],
-   groups:[['Questions',['How do we define the handoff between marketing and sales?','How do we build a pitch for each type of account?','Which tools do we need, and which ones do we skip?','Do we need an in-house SDR, or can the AEs cover it?']]]},
-  {when:'Months 4–5',title:'Run and read',c:'--surface',goal:'Run what worked and move budget every month.',
-   own:[['Run the chosen motion','Monthly budget moves'],['Paid scaled with an agency, if needed'],['Brand identity and PR (brand and comms)']],
-   groups:[['Focus',['Run the motion that worked in Q1','Move budget monthly, from highest to lowest cost per opportunity','Read lead → opportunity conversion after the handoff fix']]]},
-  {when:'Month 6',title:'The narrative',c:'--magenta',flag:true,narr:true,goal:'Do buyers not know what Fermat does, or not know why to trust it? Commit to one story, built with brand and comms.',
-   own:[['Narrative recommendation'],['Media kit and podcast with brand'],['Brand identity and PR (brand and comms)']],
-   opts:[
-    ['Product-led',"They don't know what it does.",'Build a community around designers, so champions bring Fermat into their companies.',['Creators who make their own clothes, design-school students (e.g. Elisava)','Champions inside brands','Podcast guests: designers'],'Sign-ups from ICP companies, champions who reach a buyer'],
-    ['Founder-led',"They don't know why to trust it.",'Build an ecosystem around Pol, so buyers know the person behind Fermat before sales calls.',["Pol's story in short videos, LinkedIn, dinners",'Pol opens doors, AEs walk through','Podcast guests: heads of design and leaders'],"Engagement from ICP accounts, meetings Pol's content opens"]]}
+    ['Strategy',["Test both stories lightly: Pol's videos (founder-led) vs a designer creator pilot (product-led)",'Launch the 20-company cohort with sales: define the obsession logos']],
+    ['Tactics',['Small paid tests on the named list','First case study from the best 20 deals']]]},
+  {when:'Days 61–90',title:'Decide',c:'--blue-light',g:'s3',goal:'Read the results and move the money.',
+   own:[['Read results','First budget move','Partner pilot: kit + 3–5 partners (commission from revenue)'],['Story recommendation, with brand and comms'],['Product roadmap']],
+   groups:[['Focus',['Read the cohort and the paid tests','Move budget toward the lowest cost per opportunity','Start the partner pilot: kit, 3–5 partners, intros tracked in Attio']]]},
+  {when:'Month 3',title:'Story + ABM strategy',c:'--blue',flag:true,narr:true,g:'s4',goal:'Two decisions, signed off: which story we tell, and how marketing and sales work the named accounts.',
+   own:[['The story recommendation','The ABM strategy, written and signed off'],['Sales: handoff rules and pitches per account type','Brand and comms: the media kit'],['Headcount decisions']],
+   groups:[['ABM questions',['How do we define the handoff between marketing and sales?','How do we build a pitch for each type of account?','Which tools do we need, and which ones do we skip?','Do we need an in-house SDR, or can the AEs cover it?']]]},
+  {when:'Months 4–5',title:'Launch and run',c:'--surface',g:'s5',goal:'Always-on in the winning story, in both markets.',
+   own:[['Always-on campaign','Monthly budget moves'],['Partners: EU sourcing, US co-selling','Paid scaled with an agency, if needed'],['Brand identity and PR (brand and comms)']],
+   groups:[['Focus',['Launch the always-on campaign in the winning story','Partner pilots: EU sourcing + US co-selling','US activations and dinners around the New York office','Monthly budget moves to the lowest cost per opportunity']]]},
+  {when:'Month 6',title:'Always-on, both markets',c:'--magenta',flag:true,g:'s6',goal:'One story, running every week in Europe and the US.',
+   own:[['Always-on campaign and reporting'],['Brand and comms (media kit, podcast)','Agency for paid at scale'],['Brand identity and PR']]}
 ];
 const tlIdx=TL.map((t,i)=>i);
 let tlSel=0;
@@ -1410,15 +1470,20 @@ function renderTL(){
   const t=TL[tlSel],pos=tlIdx.indexOf(tlSel);
   const own=t.own?`<div class="own">${['I own','With others','Not mine'].map((k,i)=>`<div class="o${i+1}"><span class="k">${k}</span><ul>${t.own[i].map(x=>`<li>${x}</li>`).join('')}</ul></div>`).join('')}</div>`:'';
   const groups=t.groups?`<div class="tlgroups">${t.groups.map(([k,items,cls])=>`<div class="tlg ${cls||''}"><div class="k">${k}</div><ul>${items.map(x=>`<li>${x}</li>`).join('')}</ul></div>`).join('')}</div>`:'';
+  const narrCard=t.narr?`<div class="narrq"><p class="tlgoal" style="margin:0 0 10px"><b>The story:</b> do buyers not know what Fermat does, or not know why to trust it?</p><div class="narrq-row"><div class="pl"><span class="k">Product-led</span>"They don't know what it does."</div><div class="narr-or">or</div><div class="fl"><span class="k">Founder-led</span>"They don't know why to trust it."</div></div><button class="linkbtn" data-kit>See the media kit, two ways ↓</button></div>`:'';
   const opts=t.narr?'<div id="narrSlot"></div>':t.opts?`<div class="tlopts">${t.opts.map(([k,name,why,items,m])=>`<div class="tlopt"><span class="k">${k}</span><span class="nm">"${name}"</span><p>${why}</p><ul>${items.map(x=>`<li>${x}</li>`).join('')}</ul><p class="m"><b>Measure:</b> ${m}</p></div>`).join('')}</div><p class="small" style="margin-top:12px;font-weight:600;color:var(--ink)">Both keep the podcast. What changes is who's on it.</p>`:'';
   const panel=document.getElementById('tlPanel');
   panel.style.borderTop=`6px solid var(${t.c})`;
-  panel.innerHTML=`<div class="tlhead"><div><div class="w">${t.flag?'Milestone · ':''}${t.when}</div><h3>${t.title}</h3><p class="tlgoal">${t.goal}</p></div><div class="tlnav"><button data-tlnav="-1" ${pos<=0?'disabled':''}>← Back</button><button data-tlnav="1" ${pos>=tlIdx.length-1?'disabled':''}>Next →</button></div></div>${own}${groups}${opts}`;
+  panel.innerHTML=`<div class="tlhead"><div><div class="w">${t.flag?'Milestone · ':''}${t.when}</div><h3>${t.title}</h3><p class="tlgoal">${t.goal}</p></div><div class="tlside">${t.g?`<div class="tlgraph" data-graph="${t.g}"></div>`:''}<div class="tlnav"><button data-tlnav="-1" ${pos<=0?'disabled':''}>← Back</button><button data-tlnav="1" ${pos>=tlIdx.length-1?'disabled':''}>Next →</button></div></div></div>${own}${narrCard}${groups}${opts}`;
   const slot=document.getElementById('narrSlot');
-  if(slot){slot.appendChild(document.getElementById('narrTpl').content.cloneNode(true));
-    slot.querySelectorAll('img').forEach(im=>{const gone=()=>im.remove();if(im.complete&&!im.naturalWidth)gone();else im.addEventListener('error',gone);});
-    slot.querySelectorAll('a.vid').forEach(a=>{if(!a.getAttribute('href')){a.removeAttribute('target');a.setAttribute('aria-disabled','true');a.addEventListener('click',e=>e.preventDefault());}});}
+  if(slot){slot.appendChild(document.getElementById('kitTpl').content.cloneNode(true));wireMedia(slot);}
+  renderGraphs();
 }
+function wireMedia(root){
+  root.querySelectorAll('.vid img').forEach(im=>{const gone=()=>im.remove();if(!im.getAttribute('src'))gone();else if(im.complete&&!im.naturalWidth)gone();else im.addEventListener('error',gone);});
+  root.querySelectorAll('a.vid').forEach(a=>{if(!a.getAttribute('href')){a.removeAttribute('target');a.setAttribute('aria-disabled','true');a.addEventListener('click',e=>e.preventDefault());}});
+}
+document.addEventListener('click',e=>{if(e.target.closest('[data-kit]')){const k=document.getElementById('kit');if(k)k.scrollIntoView({behavior:'smooth',block:'start'});}});
 document.addEventListener('click',e=>{
   const st=e.target.closest('[data-tl]'),nv=e.target.closest('[data-tlnav]');
   if(!st&&!nv)return;
@@ -1428,6 +1493,46 @@ document.addEventListener('click',e=>{
   renderTL();
 });
 renderTL();
+
+/* ---------- small graphs ---------- */
+const wbSel=()=>SC.includes(view)?view:'B';
+const BADGE={t:'<span class="pill target">Target</span>',a:'<span class="pill assumed">Assumed</span>',m:'<span class="pill given">From the model</span>'};
+const gbox=(big,badge,body,cap)=>`<div class="gx"><div class="gx-top"><b class="gx-n">${big}</b>${BADGE[badge]}</div><div class="gx-body">${body}</div><p class="gx-cap">${cap}</p></div>`;
+const hbars=(rows,max,fmtv)=>rows.map(([l,v,c])=>`<div class="hb"><span class="hb-l">${l}</span><span class="hb-t"><i style="width:${max>0?Math.max(2,v/max*100):0}%;background:${c}"></i></span><span class="hb-v">${fmtv(v)}</span></div>`).join('');
+function qClosed(sim){return [0,1,2,3].map(q=>Object.values(sim.closed[q]).reduce((a,b)=>a+b,0));}
+function lineSvg(w,h,series,labels){
+  const all=series.flatMap(s=>s.d),mx=Math.max(1,...all)*1.12,px=i=>14+i*(w-28)/(labels.length-1),py=v=>h-16-(v/mx)*(h-24);
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img">${series.map(s=>`<polyline fill="none" stroke="${s.c}" stroke-width="${s.dash?1.5:2.5}" ${s.dash?'stroke-dasharray="4 3"':''} points="${s.d.map((v,i)=>px(i)+','+py(v)).join(' ')}"/>${s.dash?'':s.d.map((v,i)=>`<rect x="${px(i)-3}" y="${py(v)-3}" width="6" height="6" fill="${s.c}"/>`).join('')}`).join('')}${labels.map((l,i)=>`<text x="${px(i)}" y="${h-2}" font-size="10" text-anchor="middle" fill="#6b6b6b">${l}</text>`).join('')}</svg>`;
+}
+const GRAPHS={
+  q1:w=>gbox('100% by day 30','t',`<div class="prog"><i style="width:100%"></i></div><div class="prog-ax"><span>Day 0</span><span>Day 15</span><span>Day 30</span></div>`,'Channels measurable in the tracking dashboard.'),
+  q2:(w,R,sel)=>{const r=R[sel],{w:ph}=phasing(sel);let L=0;S.channels.forEach(c=>{if(c.kind==='lead'&&c.cpl>0)L+=budget(sel,c.id)*1000*ph[1]/c.cpl;});const m=L/3,mx=Math.max(m,r.bl)*1.05;
+    return gbox(`${n0(m)} a month`,'m',hbars([['Apr',m,cssv('--blue')],['May',m,cssv('--blue')],['Jun',m,cssv('--blue')]],mx,v=>n0(v)),`New qualified leads in Q2, plan ${sel}. Inbound adds ~${n0(r.bl)} a month on top.`);},
+  h2:(w,R,sel)=>{const r=R[sel],eu=r.simEU.demand,us=r.simUS.demand;
+    return gbox(`US Q4: ${n1(us[3])} vs ${n1(r.capUS[3])}`,'m',lineSvg(w,90,[{d:r.capEU,c:cssv('--magenta-deep'),dash:true},{d:r.capUS,c:cssv('--blue-deep'),dash:true},{d:eu,c:cssv('--magenta-deep')},{d:us,c:cssv('--blue-deep')}],['Q1','Q2','Q3','Q4']),`Wins ready to close vs AE capacity (dashed): <b style="color:var(--magenta-deep)">Europe</b>, <b style="color:var(--blue-deep)">US</b>.`);},
+  s1:()=>gbox('5 of 5','t',`<div class="dots">${['Tracking','Scoring','Handoff','Value map','Best 20'].map(x=>`<span><i></i>${x}</span>`).join('')}</div>`,'Foundations in place by day 30.'),
+  s2:()=>{const st=[['Accounts',20],['Engaged',8],['Meetings',4],['Opps',2]];return gbox('20 → 2','t',hbars(st.map(([l,v],i)=>[l,v,cssv(['--magenta-light','--magenta','--magenta','--magenta-deep'][i])]),20,v=>v),'The 20-company cohort, by day 60.');},
+  s3:(w,R,sel)=>{const r=R[sel],rows=S.channels.filter(c=>c.kind==='lead'&&r.ch[c.id]&&fin(r.ch[c.id].cpo)).map(c=>[c.name.replace('Additional events','Events'),r.ch[c.id].cpo,chColor(c)]).sort((a,b)=>a[1]-b[1]).slice(0,5);
+    if(!rows.length)return gbox('—','m','<p class="small muted">Plan A has no budget yet.</p>','Cost per opportunity by channel.');
+    return gbox(`${k$(rows[0][1])}`,'m',hbars(rows,Math.max(...rows.map(x=>x[1])),k$),`Cheapest opportunity: ${esc(rows[0][0])}, plan ${sel}. Money moves here first.`);},
+  s4:()=>{const g=S.global,t=[['1:1',num(g.tier1),58],['1:few',num(g.tier2),78],['1:many',num(g.tier3),100]];
+    return gbox(`${n0(t[0][1]+t[1][1]+t[2][1])} accounts`,'a',`<div class="pyr">${t.map(([l,v,wd],i)=>`<div style="width:${wd}%;background:${cssv(['--blue','--blue-light','--surface-2'][i])}"><b>${l}</b> ${n0(v)}</div>`).join('')}</div>`,'Account tiers for the ABM strategy.');},
+  s5:()=>{const g=S.global,q=[['Q1',num(g.usQ1)],['Q2+',num(g.usFrom2)]];
+    return gbox(`US ${n0(q[1][1])}% from Q2`,'m',q.map(([l,u])=>`<div class="hb"><span class="hb-l">${l}</span><span class="hb-t stack"><i style="width:${100-u}%;background:${cssv('--magenta')}">EU ${n0(100-u)}</i><i style="width:${u}%;background:${cssv('--blue')}">US ${n0(u)}</i></span></div>`).join(''),'New-channel budget, Europe vs US. Linked to the region input in Model.');},
+  s6:(w,R,sel)=>{const base=qClosed(R[sel].sim),st=qClosed(runCap(sel,5).sim),mx=Math.max(...base,...st)*1.08;
+    return gbox(`${n0(R[sel].wins2027)} → ${n0(st.reduce((a,b)=>a+b,0))}`,'m',`<div class="gbars">${[0,1,2,3].map(q=>`<div><span class="gb"><i style="height:${base[q]/mx*100}%;background:${cssv('--blue-light')}"></i><i style="height:${st[q]/mx*100}%;background:${cssv('--blue')}"></i></span><em>Q${q+1}</em></div>`).join('')}</div>`,`Wins a quarter, plan ${sel}: base (AEs at ${S.global.aeCap}) vs stretch (at 5).`);}
+};
+function drawGraph(el){
+  const w=el.clientWidth,R=window.__fermat;if(!w||!R)return;
+  const sel=wbSel();el._w=w;
+  try{el.innerHTML=GRAPHS[el.dataset.graph](w,R,sel);}catch(e){el.innerHTML='';}
+}
+function renderGraphs(){
+  document.querySelectorAll('[data-graph]').forEach(el=>{
+    if(!el._ro){el._ro=new ResizeObserver(()=>{if(el.clientWidth&&el.clientWidth!==el._w)drawGraph(el);});el._ro.observe(el);}
+    drawGraph(el);
+  });
+}
 
 /* ---------- page tabs ---------- */
 const PAGES=['answer','diagnosis','model','channels','ninety','appendix'];
