@@ -946,6 +946,14 @@ button.play[hidden]{display:none}
 .rcsum{display:flex;flex-direction:column;gap:4px;margin:10px 0 0;font-size:14px;color:var(--ink);max-width:none}
 .lgp.src{background:var(--magenta)}
 .fstats.f3{grid-template-columns:repeat(3,minmax(0,1fr))}.fstats.f3 .fstat b{font-size:20px}
+.acs-h{font-size:18px;margin:18px 0 10px}
+.acs{display:grid;grid-template-columns:1fr 64px 1fr 64px 1fr 64px 1fr;align-items:stretch}
+.acb{background:var(--surface);padding:14px;display:flex;flex-direction:column;gap:2px}.acb .k{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.acb b{font-family:'Inter Tight';font-size:28px;font-weight:600;color:var(--ink)}.acb .s{font-size:13px;color:var(--ink)}.acb .t{font-size:12px;color:var(--muted);margin-top:4px}
+.acb.eng{background:var(--magenta-light)}.acb.eng .t{color:var(--ink);font-weight:600}.acb.won{background:var(--green-light,#d9f5d0)}
+.aca{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:12px;color:var(--ink);text-align:center}.aca i{display:block;width:40px;height:2px;background:var(--ink);position:relative}.aca i::after{content:'';position:absolute;right:-1px;top:-4px;border:5px solid transparent;border-left:7px solid var(--ink);border-right:0}
+.acsup{border:1px solid var(--magenta);border-top:4px solid var(--magenta);padding:14px 16px;margin:10px 0 22px;font-size:14px}.acsup p{margin:0 0 6px;max-width:none}.acsup ul{margin:0 0 8px 18px;padding:0}.acsup .who .bad{color:var(--red,#d13b3b);font-weight:600}
+@media (max-width:760px){.acs{grid-template-columns:1fr}.aca{flex-direction:row;padding:6px 0}.aca i{width:2px;height:20px}.aca i::after{display:none}}
 .dg-land{font-size:17px;color:var(--ink);margin:0 0 14px;max-width:none}.dg-land b{background:var(--magenta-light);padding:0 6px}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
@@ -1118,6 +1126,9 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
   <h2>Where does the <span class="hl hl-m">model break</span> today?</h2>
   <p class="dg-sub" id="dgSub"></p>
   <p class="dg-land" id="dgLand"></p>
+  <h3 class="acs-h" id="acsH"></h3>
+  <div class="acs" id="acs"></div>
+  <div class="acsup" id="acsup"></div>
   <div class="pp" id="pp"></div>
   <h3 class="mt2">Fixes, in this order</h3>
   <div class="mits" id="mits"></div>
@@ -1372,7 +1383,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,aeRegion:'EU',lvWR:false,wrUp:2,m2s:60,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:15,tc2:10,tc3:6,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
+  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,aeRegion:'EU',lvWR:false,wrUp:2,m2s:60,acReach:80,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:15,tc2:10,tc3:6,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -1492,6 +1503,7 @@ function migrate(o){
   if(o.global.baseL2O===45&&!o.global.cal40){o.global.baseL2O=40;}o.global.cal40=true;
   const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
   if(!o.channels.some(c=>c.id==='activations')){const i=o.channels.findIndex(c=>c.id==='partners');o.channels.splice(i<0?o.channels.length:i,0,clone(DEFAULTS.channels.find(c=>c.id==='activations')));}
+  if(o.global.acReach==null)o.global.acReach=80;
   if(!o.global.finalV){o.global.aeRegion='EU';o.global.lvWR=false;o.global.finalV=true;}
   if(!o.global.sdrV){o.global.isLeads=0;o.global.isCalls=50;o.global.lvCS=false;o.global.sdrV=true;}
   if(!o.global.tierV2){Object.assign(o.global,{ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15});o.global.tierV2=true;}
@@ -2088,7 +2100,7 @@ function renderAnswer(R){
    const pp=document.getElementById('pp');
    const sl=pp.querySelector('.pslider input[type=range]');const keepFocus=sl&&document.activeElement===sl;
    const top=`<div class="pz-head"><div class="pslider"><label><b>Marketing push</b> · accounts engaged <span class="pval">${f(accNow)}</span></label><input type="range" min="200" max="800" step="10" value="${Math.round(accNow)}" data-p="global.mktPush" aria-label="Accounts engaged by new work">${num(g.mktPush)?`<button class="linkbtn" data-pushreset>Back to the plan (${f(autoAcc0)})</button>`:''}<span class="ps">Marketing can fill the top. Without hand-off and closing capacity, more MQLs just go cold.</span></div></div>`;
-   const html=`${top}<div class="pzs"><div class="pz mk"><span class="pzl">Marketing</span><div class="pzc">${bar(0,'Contacts')}${ar}${bar(1,'Engaged')}${ar}${bar(2,'MQL','handed to sales')}</div></div>
+   const html=`${top}<div class="pzs"><div class="pz mk"><span class="pzl">Marketing</span><div class="pzc">${bar(0,'Contacts','reached')}${ar}${bar(1,'Contacts','engaged')}${ar}${bar(2,'MQL','handed to sales')}</div></div>
      ${neck}
      <div class="pz sl"><span class="pzl">Sales</span><div class="pzc">${bar(3,'SQL','accepted by sales')}${ar.replace('class="pa"',`class="pa b2 ${b2}"`)}${bar(4,'Opportunity')}${ar.replace('class="pa"',`class="pa b2 ${b2}"`)}<div class="pwon">${bar(5,'Won','in 2027')}${lost2>0.5?`<div class="pover">−${f(lost2)} wait for an AE</div>`:''}</div></div></div></div>
      <div class="pbns"><div class="pbn ${b1}"><b>Break 1 · Hand-off:</b> ${f(D2.screens)} MQLs a month ${g.lvHO?`after scoring (from ${f(mqlM)})`:`(${f(num(g.baseLeads))} today + ${f(D2.inQL/12-num(g.baseLeads))} inbound lift + ${f(D2.newQL/12)} new)`}. ${(()=>{const qc=num(g.qualCalls),aeP=(num(g.aesEU)+num(g.aesUS))*qc+(g.lvAE?qc*(4-(+g.lvAEfrom||1))/4:0),sdP=D2.qualCap-aeP;return g.lvIS?`AEs have time for ${f(aeP)} and SDRs for ${f(sdP)}: ${f(D2.qualCap)} a month.`:`AEs have time for ${f(D2.qualCap)} a month.`;})()} ${r1>1.0001?`~${n0(cold/12)} a month wait and go cold.`:'They keep up.'}</div>
@@ -2096,6 +2108,25 @@ function renderAnswer(R){
      <div class="legend">${CH.map(c=>`<span><span class="dot" style="background:${c.c}"></span>${c.n}</span>`).join('')}</div>`;
    if(!keepFocus)pp.innerHTML=html;else{const v=pp.querySelector('.pval');if(v)v.textContent=f(accNow);const rest=document.createElement('div');rest.innerHTML=html;pp.querySelector('.pzs').replaceWith(rest.querySelector('.pzs'));pp.querySelector('.pbns').replaceWith(rest.querySelector('.pbns'));}
   }
+  // target accounts: reached → engaged → pipeline (named list, digital)
+  {const T=D2.tiers,N=T.reduce((a,t)=>a+t.acc,0),rp=Math.min(100,Math.max(0,num(g.acReach)))/100,rch=N*rp,
+     eng=Math.min(rch,T.reduce((a,t)=>a+Math.min(t.acc,t.eng/2),0)*rp),opp=T.reduce((a,t)=>a+t.opp,0),pct=(a,b)=>b>0?n0(a/b*100)+'%':'—';
+   const tl=k=>T.map(t=>`${t.name} ${f(k(t)).replace('~','')}`).join(' · ');
+   document.getElementById('acsH').textContent=`Of our ${f(N)} target accounts: how many did we reach, how many engaged, how many are in pipeline?`;
+   const blk=(cls,k,v,s,sub)=>`<div class="acb ${cls}"><span class="k">${k}</span><b>${v}</b><span class="s">${s}</span>${sub?`<span class="t">${sub}</span>`:''}</div>`;
+   const arr=t=>`<div class="aca"><span>${t}</span><i></i></div>`;
+   document.getElementById('acs').innerHTML=
+     blk('','Target accounts',f(N),'the named list',tl(t=>t.acc))+arr(`${n0(rp*100)}% ${pl('Assumed')}`)+
+     blk('','Reached',f(rch),'see our ads')+arr(pct(eng,rch))+
+     blk('eng','Engaged',f(eng),'2+ people engage','needs people, not just ads ↓')+arr(pct(opp,eng))+
+     blk('won','In pipeline',f(opp),'opportunities from digital',M(opp*D2.acv)+' pipeline');
+   const coldM=D2.unscreened/12,spare=D2.qualCap-D2.screens;
+   const who=coldM>0.5?`<span class="bad">Nobody has time today.</span> AEs are full: ~${n0(coldM)} MQLs a month already go cold. ${g.lvIS?'':'The 2 SDRs would own this.'}`
+     :g.lvIS?'The 2 SDRs own it, alongside hand-off calls.'
+     :`AEs, in the time the hand-off fix frees up (~${n0(Math.max(0,spare))} calls a month). If that's not enough, the 2 SDRs.`;
+   document.getElementById('acsup').innerHTML=`<p><b>Ads get an account to notice us. A person turns that into a conversation.</b></p>
+     <ul><li>Follow up within 48 hours when 2+ people from an account engage</li><li>Invite engaged accounts to a dinner or event nearby</li><li>Ask a partner who already works with them for an intro</li><li>A short note from Martí or Pol for the ${f(T[0].acc).replace('~','')} accounts in the 1:1 group</li></ul>
+     <p class="who"><b>Who does it:</b> ${who}</p>`;}
   // fixes, in order
   {const base=D0.closes,one=o=>goalPlanV(R,sc,{...LV0,...PU,...o}).closes;
    const qsel=k=>` · from <select data-p="global.${k}">${[1,2,3,4].map(q=>`<option value="${q}" ${+g[k]===q?'selected':''}>Q${q}</option>`).join('')}</select>`;
@@ -2119,6 +2150,7 @@ function renderAnswer(R){
     s4.innerHTML=
       row('Hand-off calls per AE a month',inp('qualCalls',52,80))+
       row('MQL → SQL (%)',inp('m2s',52,100))+
+      row('Target accounts that see our ads (%)',inp('acReach',52,100))+
       row('Max open opportunities per AE',inp('maxDeals',52,60))+
       row('Hand-off fix: extra inbound leads that become deals (pts)',inp('hoLift',52,20))+
       row('Hand-off fix: fewer calls for AEs (%)',inp('hoCut',52,80))+
