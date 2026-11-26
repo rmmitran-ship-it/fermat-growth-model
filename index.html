@@ -1975,7 +1975,7 @@ function renderAnswer(R){
     <div class="lvc gap"><span class="k">So we need</span><b class="lvn" data-pv="need"></b><span class="lvs"><span data-pv="needS"></span>, at ${inp('wbL2O',44)}% → opp, ${inp('wbO2W',44)}% → won ${pl('Assumed')}</span></div>`);
   sv(s1,'in',f(baseLogo));sv(s1,'inS',`${n0(b0)} MQLs a month (Given) × ${n0(D.inL2O*100)}% → opp × ${n0(D.inO2W*100)}% → won (Assumed), no new spend`);
   sv(s1,'gap',f(newWork));sv(s1,'gapS',`logos from new work: ${f(srcLogo)} sourced + ${fL} influenced (inbound lift)`);
-  sv(s1,'need',f(D.newQL/12)+' a month');sv(s1,'needS',`more MQLs (${f(D.newQL)} a year)`);
+  sv(s1,'need',f(D.newQL/12)+' a month');sv(s1,'needS',`more leads to be qualified (MQLs), ${f(D.newQL)} a year`);
   document.getElementById('s1line').textContent=`${f(b0*12+lift*12+D.newQL)} MQLs a year: ${f(b0*12)} today, ${f(lift*12)} inbound lift, ${f(D.newQL)} new. ${f(allOpp)} opportunities, ${M(pipeAll)} pipeline.`;
   document.getElementById('s1arr').textContent=`≈ ${M((baseLogo+newWork)*D.acv).replace('~','')} new ARR at ~${n0((baseLogo+newWork)/allOpp*100)}% blended win rate.`;
   // STEP 2 · Row A: today's motion (baseline only, no new spend)
@@ -1986,7 +1986,7 @@ function renderAnswer(R){
   const stk=(vals,cols,lab)=>{const t=vals.reduce((a,b)=>a+b,0)||1;return `<div class="rstk">${vals.map((v,i)=>`<i style="width:${v/t*100}%;background:var(${cols[i]})">${v/t>0.14?lab(v,i):''}</i>`).join('')}</div>`;};
   const rA=once('rowA',()=>`
     <div class="rfb src"><span class="k">Sources ${pl('Given')} · split ${pl('Assumed')}</span>${SRC.map(([k,l],i)=>`<div class="srow"><span class="sl">${l}</span><span class="sbar"><i data-pv="sb${i}" style="background:var(${SC3[i]})"></i></span><span class="sv" data-pv="sm${i}"></span><span class="si">${inp(k,40)}%</span></div>`).join('')}<span class="s" data-pv="ssum"></span></div>${arw}
-    <div class="rfb"><span class="k">MQLs</span><b data-pv="aq"></b><span class="s" data-pv="aqy"></span><span class="s">${n0(g.baseLeads)} a month ${pl('Given')}</span></div>${arw}
+    <div class="rfb"><span class="k">Leads to be qualified (MQLs)</span><b data-pv="aq"></b><span class="s" data-pv="aqy"></span><span class="s">${n0(g.baseLeads)} a month ${pl('Given')}</span></div>${arw}
     <div class="rfb"><span class="k">Opportunities</span><b data-pv="ao"></b><span class="s"><span data-pv="aor"></span> ${pl('Assumed')}</span></div>${arw}
     <div class="rfb won"><span class="k">Logos</span><b data-pv="al"></b><span class="s" data-pv="alr"></span><div data-pv-html="als"></div></div>`);
   srcM.forEach((m,i)=>{sv(rA,'sm'+i,f(m)+'/mo');const b=rA.querySelector(`[data-pv="sb${i}"]`);if(b)b.style.width=Math.max(4,m/Math.max(...srcM)*100)+'%';});
@@ -2001,7 +2001,7 @@ function renderAnswer(R){
     <div class="rfb acc"><span class="k">Accounts</span><b data-pv="bn"></b><span class="s" data-pv="bp"></span>
       <div class="tmini">${['1:1','1:few','1:many','partners'].map((l,i)=>`<span><em>${l}</em><b data-pv="tm${i}"></b></span>`).join('')}</div></div>${arw}
     <div class="rfb"><span class="k">Contacts</span><b data-pv="bc"></b><span class="s">reached across buying groups</span></div>${arw}
-    <div class="rfb nql"><span class="k">New MQLs</span><b data-pv="bq"></b><span class="s" data-pv="bqy"></span><div data-pv-html="bqs"></div>
+    <div class="rfb nql"><span class="k">New leads to be qualified (MQLs)</span><b data-pv="bq"></b><span class="s" data-pv="bqy"></span><div data-pv-html="bqs"></div>
       <details class="shz" ${window.__shOpen?'open':''} ontoggle="window.__shOpen=this.open"><summary aria-label="Show the split by path"><span class="shzb" aria-hidden="true"></span>By path</summary>
       <div class="shrows">${D.paths.map(({P},i)=>`<label class="shr"><i style="background:var(${['--green','--magenta','--blue'][i]})"></i><span class="shn">${['Partners','Experiential','Digital'][i]}</span><span class="shi">${inp(P.share,42)}%</span><b data-pv="sv${i}"></b></label>`).join('')}</div><span class="s" data-pv="blift"></span></details><span class="s" data-pv="bsum"></span></div>${arw}
     <div class="rfb"><span class="k">Opportunities</span><b data-pv="bo"></b><span class="s" data-pv="bor"></span></div>${arw}
@@ -2094,7 +2094,7 @@ function renderAnswer(R){
    const tot=[0,1,2,3,4,5].map(i=>CH.reduce((a,c)=>a+c.st[i],0));
    const cold=D2.unscreened,slip=Math.min(D2.lagSlip,Math.max(0,D2.potWins-D2.closes)),lost2=Math.max(0,D2.potWins-D2.closes-slip),need2=D2.potWins-slip;
    const mqlM=(D2.inQL+D2.newQL)/12;
-   const coldM=cold/12;document.getElementById('dgSub').innerHTML=`Marketing can deliver <b>${f(mqlM)} MQLs a month</b>. ${g.lvIS?'AEs and SDRs have':'AEs only have'} time to hand off ${f(D2.qualCap)}${coldM>0.5?`, so ${f(coldM)} a month go cold`:''}. They can close ${f(D2.ceiling)} logos a year.`;
+   const coldM=cold/12;document.getElementById('dgSub').innerHTML=`Marketing can deliver <b>${f(mqlM)} leads to be qualified (MQLs) a month</b>. ${g.lvIS?'AEs and SDRs have':'AEs only have'} time to hand off ${f(D2.qualCap)}${coldM>0.5?`, so ${f(coldM)} a month go cold`:''}. They can close ${f(D2.ceiling)} logos a year.`;
    document.getElementById('dgLand').innerHTML=anyOn0?`With ${onNames0.join(', ')}: <b>${f(D2.closes)} logos</b> in 2027.`:`If nothing changes: <b>${f(D2.closes)} logos</b> in 2027.`;
    const H=200,mx2=Math.sqrt(Math.max(...tot,cold,1)),hh=v=>v>0.05?Math.max(4,Math.sqrt(v)/mx2*H):0;
    const bar=(i,lab,sub)=>{let segs='';CH.forEach(c=>{const v=c.st[i];if(v<0.05)return;const prev=i>0?c.st[i-1]:0;segs+=`<i style="flex:${v};background:${c.c}" title="${c.n} · ${f(v)}${prev>0?` · ${n0(v/prev*100)}% of previous stage`:''}"></i>`;});
@@ -2110,7 +2110,7 @@ function renderAnswer(R){
    const pp=document.getElementById('pp');
    const sl=pp.querySelector('.pslider input[type=range]');const keepFocus=sl&&document.activeElement===sl;
    const top=`<div class="pz-head"><div class="pslider"><label><b>Marketing push</b> · accounts engaged <span class="pval">${f(accNow)}</span></label><input type="range" min="200" max="800" step="10" value="${Math.round(accNow)}" data-p="global.mktPush" aria-label="Accounts engaged by new work">${num(g.mktPush)?`<button class="linkbtn" data-pushreset>Back to the plan (${f(autoAcc0)})</button>`:''}<span class="ps">Marketing can fill the top. Without hand-off and closing capacity, more MQLs just go cold.</span></div></div>`;
-   const html=`${top}<div class="pzs"><div class="pz mk"><span class="pzl">Marketing</span><div class="pzc">${bar(0,'Contacts','reached')}${ar}${bar(1,'Contacts','engaged')}${ar}${bar(2,'MQL','handed to sales')}</div></div>
+   const html=`${top}<div class="pzs"><div class="pz mk"><span class="pzl">Marketing</span><div class="pzc">${bar(0,'Contacts','reached')}${ar}${bar(1,'Contacts','engaged')}${ar}${bar(2,'MQLs','leads to be qualified')}</div></div>
      ${neck}
      <div class="pz sl"><span class="pzl">Sales</span><div class="pzc">${bar(3,'SQL','accepted by sales')}${ar.replace('class="pa"',`class="pa b2 ${b2}"`)}${bar(4,'Opportunity')}${ar.replace('class="pa"',`class="pa b2 ${b2}"`)}<div class="pwon">${bar(5,'Won','in 2027')}${lost2>0.5?`<div class="pover">−${f(lost2)} wait for an AE</div>`:''}</div></div></div></div>
      <div class="pbns"><div class="pbn ${b1}"><b>Break 1 · Hand-off:</b> ${f(D2.screens)} MQLs a month ${g.lvHO?`after scoring (from ${f(mqlM)})`:`(${f(num(g.baseLeads))} today + ${f(D2.inQL/12-num(g.baseLeads))} inbound lift + ${f(D2.newQL/12)} new)`}. ${(()=>{const qc=num(g.qualCalls),aeP=(num(g.aesEU)+num(g.aesUS))*qc+(g.lvAE?qc*(4-(+g.lvAEfrom||1))/4:0),sdP=D2.qualCap-aeP;return g.lvIS?`AEs have time for ${f(aeP)} and SDRs for ${f(sdP)}: ${f(D2.qualCap)} a month.`:`AEs have time for ${f(D2.qualCap)} a month.`;})()} ${r1>1.0001?`~${n0(cold/12)} a month wait and go cold.`:'They keep up.'}</div>
