@@ -1388,7 +1388,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,aeRegion:'EU',lvWR:false,wrUp:2,m2s:60,acReach:80,sdMeet:30,sdOpp:50,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:15,tc2:10,tc3:6,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
+  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,aeRegion:'EU',lvWR:false,wrUp:2,m2s:60,acReach:80,sdMeet:30,sdOpp:50,sdTouch:6,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:15,tc2:10,tc3:6,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -1509,7 +1509,7 @@ function migrate(o){
   const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
   if(!o.channels.some(c=>c.id==='activations')){const i=o.channels.findIndex(c=>c.id==='partners');o.channels.splice(i<0?o.channels.length:i,0,clone(DEFAULTS.channels.find(c=>c.id==='activations')));}
   if(o.global.acReach==null)o.global.acReach=80;
-  if(o.global.sdMeet==null)o.global.sdMeet=30;if(o.global.sdOpp==null)o.global.sdOpp=50;
+  if(o.global.sdMeet==null)o.global.sdMeet=30;if(o.global.sdTouch==null)o.global.sdTouch=6;if(o.global.sdOpp==null)o.global.sdOpp=50;
   if(!o.global.finalV){o.global.aeRegion='EU';o.global.lvWR=false;o.global.finalV=true;}
   if(!o.global.sdrV){o.global.isLeads=0;o.global.isCalls=50;o.global.lvCS=false;o.global.sdrV=true;}
   if(!o.global.tierV2){Object.assign(o.global,{ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15});o.global.tierV2=true;}
@@ -1921,7 +1921,11 @@ function goalPlan(R,sc){
   // screening: SQLs = min(MQLs, what AEs (+SDRs, +the new AE) can screen) each quarter
   const hCut=g.lvHO?1-num(g.hoCut)/100:1,aeFrom=+g.lvAEfrom||1,isFrom=+g.lvISfrom||1;
   const inMQ=[0,1,2,3].map(()=>bl*3),nwMQ=[0,1,2,3].map(q=>newQL*rq[q]/rs);
-  const capQ=[0,1,2,3].map(q=>3*((num(g.aesEU)+num(g.aesUS))*num(g.qualCalls)+(g.lvAE&&q+1>aeFrom?num(g.qualCalls):0)+(g.lvIS?2*num(g.isCalls)*share(q,isFrom):0)));
+  // engaged target accounts the SDRs follow up; their calls come out of SDR hand-off time
+  const rpA=Math.min(100,Math.max(0,num(g.acReach)))/100,engA=Math.min(N*rpA,tiers.reduce((a,t)=>a+Math.min(t.acc,t.eng/2),0)*rpA),adsOpp=tiers.reduce((a,t)=>a+t.opp,0);
+  const fu={eng:engA,adsOpp,open:Math.max(0,engA-adsOpp),acc:0,meet:0,opp:0,meetR:num(g.sdMeet)/100,oppR:num(g.sdOpp)/100,touch:num(g.sdTouch)};
+  const fuLoadQ=[0,1,2,3].map(q=>g.lvIS?fu.open*rq[q]/rs*share(q,isFrom)*fu.touch:0);fu.load=fuLoadQ.reduce((a,b)=>a+b,0)/12;
+  const capQ=[0,1,2,3].map(q=>3*((num(g.aesEU)+num(g.aesUS))*num(g.qualCalls)+(g.lvAE&&q+1>aeFrom?num(g.qualCalls):0)+(g.lvIS?Math.max(0,2*num(g.isCalls)*share(q,isFrom)-fuLoadQ[q]/3):0)));
   const sfQ=[0,1,2,3].map(q=>{const d=(inMQ[q]+nwMQ[q])*hCut;return d>0?Math.min(1,capQ[q]/d):1;});
   const inSQL=inMQ.reduce((a,v,q)=>a+v*sfQ[q],0),nwSQL=nwMQ.reduce((a,v,q)=>a+v*sfQ[q],0),unscreened=inQL+newQL-inSQL-nwSQL;
   const bqQ=[0,1,2,3].map(q=>inMQ[q]*inL2O*inO2W*sfQ[q]);
@@ -1930,8 +1934,7 @@ function goalPlan(R,sc){
   [0,1,2,3].forEach(q=>{const w=nwMQ[q]*sfQ[q]*l2o*o2w;nE[q+1]+=w*f1*(1-u[q]);nE[q+2]+=w*f2*(1-u[q]);nU[q+1]+=w*f1*u[q];nU[q+2]+=w*f2*u[q];});
   LEU.nw=nE;LUS.nw=nU;
   // SDR follow-up flow: engaged target accounts not yet in pipeline → followed up → meetings → opportunities
-  let isQL=0;const rpA=Math.min(100,Math.max(0,num(g.acReach)))/100,engA=Math.min(N*rpA,tiers.reduce((a,t)=>a+Math.min(t.acc,t.eng/2),0)*rpA),adsOpp=tiers.reduce((a,t)=>a+t.opp,0);
-  const fu={eng:engA,adsOpp,open:Math.max(0,engA-adsOpp),acc:0,meet:0,opp:0,meetR:num(g.sdMeet)/100,oppR:num(g.sdOpp)/100};
+  let isQL=0;
   if(g.lvIS){const a=[0,0,0,0,0,0],b=[0,0,0,0,0,0],from=+g.lvISfrom||1;[0,1,2,3].forEach(q=>{const ql=2*num(g.isLeads)*3*share(q,from);isQL+=ql;const w=ql*l2o*o2w;a[q+1]+=w*f1;a[q+2]+=w*f2;
       const acc=fu.open*rq[q]/rs*share(q,from),m=acc*fu.meetR,o=m*fu.oppR,w2=o*o2w;fu.acc+=acc;fu.meet+=m;fu.opp+=o;
       b[q+1]+=w2*f1*(1-u[q]);b[q+2]+=w2*f2*(1-u[q]);a[q+1]+=w2*f1*u[q];a[q+2]+=w2*f2*u[q];});LUS.is=a;LEU.is=b;}
@@ -2094,7 +2097,7 @@ function renderAnswer(R){
    const tot=[0,1,2,3,4,5].map(i=>CH.reduce((a,c)=>a+c.st[i],0));
    const cold=D2.unscreened,slip=Math.min(D2.lagSlip,Math.max(0,D2.potWins-D2.closes)),lost2=Math.max(0,D2.potWins-D2.closes-slip),need2=D2.potWins-slip;
    const mqlM=(D2.inQL+D2.newQL)/12;
-   const coldM=cold/12;document.getElementById('dgSub').innerHTML=`Marketing can deliver <b>${f(mqlM)} leads to be qualified (MQLs) a month</b>. ${g.lvIS?'AEs and SDRs have':'AEs only have'} time to hand off ${f(D2.qualCap)}${coldM>0.5?`, so ${f(coldM)} a month go cold`:''}. They can close ${f(D2.ceiling)} logos a year.`;
+   const coldM=cold/12,cold0=D0.unscreened/12;document.getElementById('dgSub').innerHTML=`Marketing can deliver <b>${f((D0.inQL+D0.newQL)/12)} leads to be qualified (MQLs) a month</b>. AEs only have time to hand off ${f(D0.qualCap)}${cold0>0.5?`, so ${f(cold0)} a month go cold`:''}. They can close ${f(D0.ceiling)} logos a year.`;
    document.getElementById('dgLand').innerHTML=anyOn0?`With ${onNames0.join(', ')}: <b>${f(D2.closes)} logos</b> in 2027.`:`If nothing changes: <b>${f(D2.closes)} logos</b> in 2027.`;
    const H=200,mx2=Math.sqrt(Math.max(...tot,cold,1)),hh=v=>v>0.05?Math.max(4,Math.sqrt(v)/mx2*H):0;
    const bar=(i,lab,sub)=>{let segs='';CH.forEach(c=>{const v=c.st[i];if(v<0.05)return;const prev=i>0?c.st[i-1]:0;segs+=`<i style="flex:${v};background:${c.c}" title="${c.n} · ${f(v)}${prev>0?` · ${n0(v/prev*100)}% of previous stage`:''}"></i>`;});
@@ -2113,7 +2116,7 @@ function renderAnswer(R){
    const html=`${top}<div class="pzs"><div class="pz mk"><span class="pzl">Marketing</span><div class="pzc">${bar(0,'Contacts','reached')}${ar}${bar(1,'Contacts','engaged')}${ar}${bar(2,'MQLs','leads to be qualified')}</div></div>
      ${neck}
      <div class="pz sl"><span class="pzl">Sales</span><div class="pzc">${bar(3,'SQL','accepted by sales')}${ar.replace('class="pa"',`class="pa b2 ${b2}"`)}${bar(4,'Opportunity')}${ar.replace('class="pa"',`class="pa b2 ${b2}"`)}<div class="pwon">${bar(5,'Won','in 2027')}${lost2>0.5?`<div class="pover">−${f(lost2)} wait for an AE</div>`:''}</div></div></div></div>
-     <div class="pbns"><div class="pbn ${b1}"><b>Break 1 · Hand-off:</b> ${f(D2.screens)} MQLs a month ${g.lvHO?`after scoring (from ${f(mqlM)})`:`(${f(num(g.baseLeads))} today + ${f(D2.inQL/12-num(g.baseLeads))} inbound lift + ${f(D2.newQL/12)} new)`}. ${(()=>{const qc=num(g.qualCalls),aeP=(num(g.aesEU)+num(g.aesUS))*qc+(g.lvAE?qc*(4-(+g.lvAEfrom||1))/4:0),sdP=D2.qualCap-aeP;return g.lvIS?`AEs have time for ${f(aeP)} and SDRs for ${f(sdP)}: ${f(D2.qualCap)} a month.`:`AEs have time for ${f(D2.qualCap)} a month.`;})()} ${r1>1.0001?`~${n0(cold/12)} a month wait and go cold.`:'They keep up.'}</div>
+     <div class="pbns"><div class="pbn ${b1}"><b>Break 1 · Hand-off:</b> ${f(D2.screens)} MQLs a month ${g.lvHO?`after scoring (from ${f(mqlM)})`:`(${f(num(g.baseLeads))} today + ${f(D2.inQL/12-num(g.baseLeads))} inbound lift + ${f(D2.newQL/12)} new)`}. ${(()=>{const qc=num(g.qualCalls),aeP=(num(g.aesEU)+num(g.aesUS))*qc+(g.lvAE?qc*(4-(+g.lvAEfrom||1))/4:0),sdP=D2.qualCap-aeP;return g.lvIS?`AEs have time for ${f(aeP)} and SDRs for ${f(sdP)} (after ${f(D2.fu.load)} follow-up calls on engaged accounts): ${f(D2.qualCap)} a month.`:`AEs have time for ${f(D2.qualCap)} a month.`;})()} ${r1>1.0001?`~${n0(cold/12)} a month wait and go cold.`:'They keep up.'}</div>
        <div class="pbn ${b2}"><b>Break 2 · Closing:</b> each AE has ${f(D2.deals)} open deals (limit ${n0(g.maxDeals)}). ${f(need2)} logos to close, AEs can close ${f(D2.ceiling)}. ${b2==='idle'?'This breaks next, once the hand-off is fixed.':lost2>0.5?`Europe's ${n0(g.aesEU)} AEs are full: ${f(lost2)} deals wait.`:over2?'Too many deals each, so they slow down.':'They keep up.'}</div></div>
      <div class="legend">${CH.map(c=>`<span><span class="dot" style="background:${c.c}"></span>${c.n}</span>`).join('')}</div>`;
    if(!keepFocus)pp.innerHTML=html;else{const v=pp.querySelector('.pval');if(v)v.textContent=f(accNow);const rest=document.createElement('div');rest.innerHTML=html;pp.querySelector('.pzs').replaceWith(rest.querySelector('.pzs'));pp.querySelector('.pbns').replaceWith(rest.querySelector('.pbns'));}
@@ -2168,6 +2171,7 @@ function renderAnswer(R){
       row('Hand-off calls per AE a month',inp('qualCalls',52,80))+
       row('MQL → SQL (%)',inp('m2s',52,100))+
       row('Target accounts that see our ads (%)',inp('acReach',52,100))+
+      row('SDR follow-up: calls and emails per engaged account',inp('sdTouch',52,30))+
       row('SDR follow-up: engaged accounts that take a meeting (%)',inp('sdMeet',52,100))+
       row('SDR follow-up: meetings that become an opportunity (%)',inp('sdOpp',52,100))+
       row('Max open opportunities per AE',inp('maxDeals',52,60))+
