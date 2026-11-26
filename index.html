@@ -508,6 +508,7 @@ button.play[hidden]{display:none}
 @media (max-width:560px){.tl4{grid-template-columns:1fr}}
 .lv{display:flex;flex-direction:column;gap:10px;margin-top:10px}
 .lv-sec{background:var(--surface);padding:16px 18px}
+#goal .lv-k{font-family:'Inter Tight',Inter,sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.024em;text-transform:none;color:var(--ink);line-height:1.05;margin-bottom:14px}
 .lv-k{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:10px}
 .lv4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 .lvc{background:var(--white);padding:14px 16px;display:flex;flex-direction:column;gap:4px;color:var(--ink);border:2px solid transparent}
@@ -781,6 +782,8 @@ button.play[hidden]{display:none}
 .face.back .fbtn{margin-top:auto}
 @media (prefers-reduced-motion:reduce){.flip-in{transition:none}}
 @media (max-width:1000px){.betc{grid-template-columns:1fr}.face{min-height:0}}
+.vid.jacket{aspect-ratio:698/396;background:#efefef}.vid.jacket img{object-fit:cover}
+.vids.two{grid-template-columns:repeat(2,minmax(0,1fr))}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -927,7 +930,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
     <div class="lv-sec"><span class="lv-k">Step 2 · Where the 60 come from</span>
       <h5 class="pv-s">Fermat's motion today <span class="pill given">Given sources</span> <span class="pill assumed">Assumed split</span></h5>
       <div class="rflow flowa" id="rowA"></div>
-      <p class="s1muted">They told us: mostly events, partners and brand. No paid or outbound yet. No split shared, so it's even until Attio confirms it by day 30.</p>
+      <p class="s1muted"><span class="pill given">Given</span> Fermat's qualified leads come mostly from events, partners and brand, with no paid or outbound engine yet. <span class="pill assumed">Assumed</span> An even split until Attio confirms it by day 30, and conversion calibrated so today ≈ 44 logos a year.</p>
       <h5 class="pv-s">New work, on top <span class="pill assumed">Assumed</span></h5>
       <div class="rflow flowb" id="rowB"></div>
       <p class="s1muted" id="rowBcheck"></p>
@@ -1175,15 +1178,10 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
   <div class="narr kit">
     <div class="narr-col pl">
       <span class="k">Product-led</span><b class="nq">"Show the work"</b>
-      <div class="ba">
-        <div class="vid ba1"><span class="ph">Sketch</span><img src="assets/pl-sketch.jpg" alt="Sketch"></div>
-        <span class="ba-arr">→</span>
-        <div class="vid ba1"><span class="ph">Render</span><img src="assets/pl-render.jpg" alt="Render"></div>
-      </div>
-      <div class="vids">
-        <a class="vid tt" href="" target="_blank" rel="noopener"><!-- TIKTOK 1 URL --><span class="ph">TikTok 1</span><img src="assets/tiktok-1.jpg" alt="TikTok 1"></a>
-        <a class="vid tt" href="" target="_blank" rel="noopener"><!-- TIKTOK 2 URL --><span class="ph">TikTok 2</span><img src="assets/tiktok-2.jpg" alt="TikTok 2"></a>
-        <a class="vid tt" href="" target="_blank" rel="noopener"><!-- TIKTOK 3 URL --><span class="ph">TikTok 3</span><img src="assets/tiktok-3.jpg" alt="TikTok 3"></a>
+      <div class="vid jacket"><span class="ph">Jacket render</span><img src="assets/pl-jacket.jpg" alt="Fermat render of a brown canvas work jacket, front and back, with tech-pack callouts"></div>
+      <div class="vids two">
+        <div class="vid tt" data-video><span class="ph">TikTok 1</span><video src="assets/tiktok-1.mp4#t=0.1" playsinline muted loop preload="metadata" aria-label="Fermat TikTok 1"></video><button type="button" class="play" aria-label="Play TikTok 1"></button></div>
+        <div class="vid tt" data-video><span class="ph">TikTok 2</span><video src="assets/tiktok-2.mp4#t=0.1" playsinline muted loop preload="metadata" aria-label="Fermat TikTok 2"></video><button type="button" class="play" aria-label="Play TikTok 2"></button></div>
       </div>
       <dl class="kitdl">
         <dt>Formats</dt><dd>Sketch → render reels · designer and student spotlights · "design a drop in a day" challenges · podcast with designers</dd>
@@ -1780,9 +1778,9 @@ function renderAnswer(R){
   const arw='<div class="rfa" aria-hidden="true"><i></i></div>';
   const stk=(vals,cols,lab)=>{const t=vals.reduce((a,b)=>a+b,0)||1;return `<div class="rstk">${vals.map((v,i)=>`<i style="width:${v/t*100}%;background:var(${cols[i]})">${v/t>0.14?lab(v,i):''}</i>`).join('')}</div>`;};
   const rA=once('rowA',()=>`
-    <div class="rfb src"><span class="k">Sources</span>${SRC.map(([k,l],i)=>`<div class="srow"><span class="sl">${l}</span><span class="sbar"><i data-pv="sb${i}" style="background:var(${SC3[i]})"></i></span><span class="sv" data-pv="sm${i}"></span><span class="si">${inp(k,40)}%</span></div>`).join('')}<span class="s" data-pv="slift"></span><span class="s" data-pv="ssum"></span></div>${arw}
-    <div class="rfb"><span class="k">Qualified leads</span><b data-pv="aq"></b><span class="s" data-pv="aqy"></span></div>${arw}
-    <div class="rfb"><span class="k">Opportunities</span><b data-pv="ao"></b><span class="s" data-pv="aor"></span></div>${arw}
+    <div class="rfb src"><span class="k">Sources ${pl('Given')} · split ${pl('Assumed')}</span>${SRC.map(([k,l],i)=>`<div class="srow"><span class="sl">${l}</span><span class="sbar"><i data-pv="sb${i}" style="background:var(${SC3[i]})"></i></span><span class="sv" data-pv="sm${i}"></span><span class="si">${inp(k,40)}%</span></div>`).join('')}<span class="s" data-pv="slift"></span><span class="s" data-pv="ssum"></span></div>${arw}
+    <div class="rfb"><span class="k">Qualified leads</span><b data-pv="aq"></b><span class="s" data-pv="aqy"></span><span class="s">${n0(g.baseLeads)} a month ${pl('Given')} + ${n0(g.inboundLift)}% lift ${pl('Assumed')}</span></div>${arw}
+    <div class="rfb"><span class="k">Opportunities</span><b data-pv="ao"></b><span class="s"><span data-pv="aor"></span> ${pl('Assumed')}</span></div>${arw}
     <div class="rfb lgs"><span class="k">Logos</span>
       <div class="lgp base"><b data-pv="alb"></b><span>baseline</span><em data-pv="albs"></em></div>
       <div class="lgp lift" id="liftSeg"><b data-pv="all"></b><span>inbound lift</span><em>Influenced · not attributable deal by deal</em><em class="lin">lift from paid ${inp('inboundLift',40,50)}% ${pl('Assumed')}</em></div>
@@ -1792,7 +1790,7 @@ function renderAnswer(R){
   {const e=rA.querySelector('[data-pv="ssum"]');if(e){e.textContent=`Split adds up to ${n0(tt)}%`;e.className='s'+(Math.abs(tt-100)>0.5?' bad':'');}}
   sv(rA,'aq',f(D.bl)+' a month');sv(rA,'aqy',f(D.inQL)+' a year');sv(rA,'ao',f(D.inOpp)+' a year');sv(rA,'aor',`at ${n0(D.inL2O*100)}%`);
   const rate=12*D.inL2O*D.inO2W,baseLogo=b0*rate,liftLogo=lift*rate;
-  sv(rA,'alb',f(baseLogo));sv(rA,'albs',`${n0(b0)} leads a month × ${n0(D.inL2O*100)}% × ${n0(D.inO2W*100)}%, no new spend`);sv(rA,'all',f(liftLogo));
+  sv(rA,'alb',f(baseLogo));sv(rA,'albs',`${n0(b0)} leads a month (Given) × ${n0(D.inL2O*100)}% × ${n0(D.inO2W*100)}% (Assumed), no new spend`);sv(rA,'all',f(liftLogo));
   sv(rA,'alr',`= ${f(D.inLogo)} a year at ${n0(D.inO2W*100)}% · by source:`);
   {const e=rA.querySelector('[data-pv-html="als"]');if(e)e.innerHTML=stk(srcL,SC3,v=>f(v));}
   // Row B: new work
