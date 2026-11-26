@@ -546,6 +546,32 @@ section.page{padding:36px 0 64px;border-top:0}
 .segt tr.rowhl td{background:var(--magenta-light);color:var(--ink);font-weight:600}
 .segt tr.big td{font-weight:600;color:var(--ink)}
 .segt tr.big td.num{font-family:'Inter Tight';font-size:18px;letter-spacing:-0.02em}
+.flowseg{display:flex;gap:4px;margin:16px 0 10px}
+.flowseg button{font:600 13px Inter;border:0;background:var(--white);color:var(--ink);padding:8px 14px;border-radius:0;cursor:pointer}
+.flowseg button[aria-pressed="true"]{background:var(--ink);color:var(--white)}
+.flowctx{font-size:15px;color:var(--ink);margin:0 0 12px;max-width:none}
+.flow6{display:grid;grid-template-columns:1fr 104px 1fr 104px 1fr 104px 1fr 104px 1fr 104px 1fr;align-items:stretch}
+.fb{background:var(--white);padding:14px 12px;display:flex;flex-direction:column;justify-content:center;gap:2px;min-width:0}
+.fb.gap{background:var(--magenta)} .fb.won{background:var(--green)}
+.fbn{font-family:'Inter Tight';font-size:clamp(22px,2.4vw,32px);font-weight:700;letter-spacing:-0.03em;color:var(--ink);line-height:1.05;white-space:nowrap}
+.fbl{font-size:13px;font-weight:600;color:var(--ink)}
+.fbs{font-size:11.5px;color:var(--text)}
+.fa{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:2px;padding:0 4px;position:relative}
+.fa b{font-family:'Inter Tight';font-size:15px;font-weight:700;color:var(--ink);white-space:nowrap}
+.fa span{font-size:10.5px;color:#6b6b6b;line-height:1.25}
+.fa .pill{font-size:9.5px;padding:1px 6px;margin-top:2px}
+.fa i{display:block;width:100%;height:2px;background:var(--ink);margin-top:6px;position:relative}
+.fa i::after{content:'';position:absolute;right:-1px;top:-4px;border-left:7px solid var(--ink);border-top:5px solid transparent;border-bottom:5px solid transparent}
+.flowas{margin-top:12px}
+.flowas p{margin:2px 0;font-size:12px;color:#6b6b6b;max-width:none}
+.flowas .pill{font-size:10px;padding:1px 7px}
+.flowcall{margin:12px 0 0;background:var(--ink);color:var(--white);padding:12px 16px;font-size:14px;font-weight:600;max-width:none}
+@media (max-width:900px){
+  .flow6{grid-template-columns:1fr}
+  .fa{padding:8px 0;flex-direction:row;flex-wrap:wrap;gap:6px;justify-content:flex-start;padding-left:16px}
+  .fa i{width:2px;height:16px;margin:0;order:-1}
+  .fa i::after{right:-4px;top:auto;bottom:-6px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid var(--ink);border-bottom:0}
+}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -688,8 +714,11 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
     <div class="lv-sec"><span class="lv-k">1 · Work it backwards</span>
       <div class="lv4" id="ansBack"></div>
       <p class="gx-cap" id="ansBackCap"></p>
-      <div class="tw mt"><table class="segt" id="ansSeg"></table></div>
-      <p class="gx-cap" id="ansSegCap"></p></div>
+      <div class="flowseg"><button data-seg="total">Total</button><button data-seg="ent">Enterprise</button><button data-seg="mid">Mid-market</button></div>
+      <p class="flowctx" id="flowCtx"></p>
+      <div class="flow6" id="flow6"></div>
+      <div class="flowas" id="flowAs"></div>
+      <div id="flowCall"></div></div>
     <div class="lv-sec"><span class="lv-k">2 · Outbound ramp</span>
       <div class="lvramp"><div class="lvin" id="ansRampIn"></div><div class="lvbars" id="ansRampBars"></div></div>
       <p class="gx-cap">New outbound ramps up. Most of it lands from Q2.</p></div>
@@ -1437,6 +1466,8 @@ function renderDiagnosis(R){
     ${r('Wins / quarter',n1(baseQ),n1(needQ))}${r('Logos / year',n0(baseYear),n0(g.targetLogos))}</tbody>`;
 }
 function runCap(sc,cap){const o=S.global.aeCap;S.global.aeCap=cap;try{return run(sc);}finally{S.global.aeCap=o;}}
+let segSel='total';
+document.addEventListener('click',e=>{const b=e.target.closest('[data-seg]');if(!b)return;segSel=b.dataset.seg;if(window.__fermat)renderAnswer(window.__fermat);});
 function runV(sc,v){const prev=HIRE;HIRE=v;try{return run(sc);}finally{HIRE=prev;}}
 const Q=q=>'Q'+q;
 function renderAnsIn(){
@@ -1471,18 +1502,30 @@ function renderAnswer(R){
   document.getElementById('ansBackCap').textContent=`Working backwards from ${n0(g.targetLogos)}, at today's conversion rates.`;
   {const tg=num(g.targetLogos),es=num(g.entLogoShare)/100,o2w=num(g.wbO2W)/100||1,l2o=num(g.wbL2O)/100||1;
    const toNew=num(g.lead2mql)/100*num(g.mql2sql)/100||1,c2l=num(g.contact2lead)/100||1;
-   const seg=(logos,inb,cpa)=>{const ld=logos/o2w/l2o,inn=Math.min(ld,inb),out=ld-inn,con=out/toNew/c2l,acc=con/Math.max(1,cpa);return {logos,ld,inn,out,con,acc};};
+   const seg=(logos,inb,cpa)=>{const ld=logos/o2w/l2o,inn=Math.min(ld,inb),out=ld-inn,leads=out/toNew,con=leads/c2l,acc=con/Math.max(1,cpa);return {ld,inn,out,leads,con,acc,opp:out*l2o,won:out*l2o*o2w};};
    const E=seg(tg*es,0,num(g.cpaEnt)),M=seg(tg*(1-es),bl*12,num(g.cpaMid));
-   const f=x=>Math.round(x).toLocaleString('en-US'),row=(k,a,b,t,cls)=>`<tr${cls?` class="${cls}"`:''}><td>${k}</td><td class="num">${a}</td><td class="num">${b}</td><td class="num">${t}</td></tr>`;
-   document.getElementById('ansSeg').innerHTML=`<thead><tr><th></th><th class="num">Enterprise</th><th class="num">Mid-market</th><th class="num">Total</th></tr></thead><tbody>
-     ${row('Logos',f(E.logos),f(M.logos),f(E.logos+M.logos))}
-     ${row('Qualified leads needed',f(E.ld),f(M.ld),f(E.ld+M.ld))}
-     ${row('Covered by inbound today',f(E.inn),f(M.inn),f(E.inn+M.inn))}
-     ${row('From new outbound',f(E.out),f(M.out),f(E.out+M.out),'rowhl')}
-     ${row('Contacts to engage in the year',f(E.con),f(M.con),f(E.con+M.con),'big')}
-     ${row('Accounts to engage in the year',f(E.acc),f(M.acc),f(E.acc+M.acc),'big')}
-     ${row('Accounts a month',f(E.acc/12),f(M.acc/12),f((E.acc+M.acc)/12))}</tbody>`;
-   document.getElementById('ansSegCap').innerHTML=`Enterprise is ${n0(es*100)}% of logos <span class="pill assumed">Assumed</span>. Today's inbound (~${n0(bl)} a month) counted as mid-market. New outbound: ${n0(g.contact2lead)}% of contacts become leads, ${n0(num(g.lead2mql)*num(g.mql2sql)/100)}% of those qualify; ${n0(g.cpaEnt)} contacts per enterprise account, ${n0(g.cpaMid)} per mid-market <span class="pill assumed">Assumed</span>. The ABM list today: ${f(g.abmAccounts)} named accounts.`;}
+   const T={};Object.keys(E).forEach(k=>T[k]=E[k]+M[k]);
+   const X={total:T,ent:E,mid:M}[segSel]||T;
+   const f=x=>'~'+Math.round(x).toLocaleString('en-US'),pl=b=>`<span class="pill ${b.toLowerCase()}">${b}</span>`;
+   document.querySelectorAll('[data-seg]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.seg===segSel?'true':'false'));
+   document.getElementById('flowCtx').textContent=`${n0(tg)} logos need ${f(T.ld)} qualified leads a year. Today's inbound covers ${f(T.inn)}. New outbound fills the other ${f(T.out)}.`;
+   const cpaTxt=segSel==='ent'?`× ${n0(g.cpaEnt)} contacts`:segSel==='mid'?`× ${n0(g.cpaMid)} contacts`:`× ${n0(g.cpaEnt)} / × ${n0(g.cpaMid)}`;
+   const cpaSub=segSel==='total'?'contacts per account, enterprise / mid-market':'per account';
+   const blk=(v,l,cls,sub)=>`<div class="fb ${cls||''}"><b class="fbn">${f(v)}</b><span class="fbl">${l}</span>${sub?`<span class="fbs">${sub}</span>`:''}</div>`;
+   const arr=(top,sub,b)=>`<div class="fa"><b>${top}</b><span>${sub}</span>${pl(b)}<i aria-hidden="true"></i></div>`;
+   document.getElementById('flow6').innerHTML=
+     blk(X.acc,'Accounts','',`${f(X.acc/12)} a month`)+arr(cpaTxt,cpaSub,'Assumed')+
+     blk(X.con,'Contacts')+arr(n0(g.contact2lead)+'%','become leads','Assumed')+
+     blk(X.leads,'Leads')+arr(n0(toNew*100)+'%','qualify','Assumed')+
+     blk(X.out,'Qualified leads','gap','from new outbound')+arr(n0(l2o*100)+'%','lead → opp (30–50%)','Given')+
+     blk(X.opp,'Opportunities')+arr(n0(o2w*100)+'%','opp → won (15–25%)','Given')+
+     blk(X.won,'Logos','won','from new outbound');
+   document.getElementById('flowAs').innerHTML=[
+     `Enterprise is ${n0(es*100)}% of logos ${pl('Assumed')}`,
+     `Today's inbound (~${n0(bl)} a month) is counted as mid-market`,
+     `New outbound: ${n0(g.contact2lead)}% of contacts become leads, ${n0(toNew*100)}% of those qualify ${pl('Assumed')}`,
+     `${n0(g.cpaEnt)} contacts per enterprise account, ${n0(g.cpaMid)} per mid-market ${pl('Assumed')}`].map(x=>`<p>${x}</p>`).join('');
+   document.getElementById('flowCall').innerHTML=T.acc>num(g.abmAccounts)?`<p class="flowcall">Accounts to engage: ${f(T.acc)}. The ABM list today: ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} named accounts. The list needs to double, or conversion needs to rise.</p>`:'';}
   // 2. ramp bars
   const raw=rawLeadsQ(sc).map(x=>x/3),lc=num(g.leadCap),per=raw.map(x=>lc>0?Math.min(x,lc):x);
   const mx=Math.max(...raw.map(x=>x+bl),lc>0?lc+bl:0,1)*1.05;
