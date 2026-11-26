@@ -572,6 +572,26 @@ section.page{padding:36px 0 64px;border-top:0}
   .fa i{width:2px;height:16px;margin:0;order:-1}
   .fa i::after{right:-4px;top:auto;bottom:-6px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid var(--ink);border-bottom:0}
 }
+.paths{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.path{padding:16px;display:flex;flex-direction:column;gap:6px;color:var(--ink)}
+.path.p-g{background:var(--green)}.path.p-m{background:var(--magenta-light)}.path.p-b{background:var(--blue-light)}
+.path-h b{display:block;font-family:'Inter Tight';font-size:19px;font-weight:700;letter-spacing:-0.024em}
+.path-h span{display:block;font-size:12px;color:var(--text);min-height:16px}
+.path-sh{display:flex;align-items:center;gap:6px;font-size:12.5px;flex-wrap:wrap}
+.path input{font:600 13px Inter;border:1px solid var(--line);padding:3px 5px;background:var(--white)}
+.path-bar{height:8px;background:rgba(255,255,255,.7);margin:4px 0 2px}.path-bar i{display:block;height:100%;background:var(--ink)}
+.path-st{background:var(--white);padding:10px 12px;display:flex;flex-direction:column}
+.path-st b{font-family:'Inter Tight';font-size:28px;font-weight:700;letter-spacing:-0.03em;line-height:1.05}
+.path-st span{font-size:12.5px;font-weight:600}
+.path-st em{font-style:normal;font-size:11.5px;color:var(--text);margin-top:2px}
+.path-st.won{background:var(--ink);color:var(--white)}.path-st.won span{color:#ddd}
+.path-ar{font-size:11.5px;color:var(--text);display:flex;flex-wrap:wrap;align-items:center;gap:4px;padding-left:10px;border-left:2px solid var(--ink);margin-left:12px}
+.path-ar .sep{color:#9a9a9a}
+.path-ar .pill{font-size:9.5px;padding:1px 6px}
+.path-sh .pill{font-size:10px;padding:1px 7px}
+.pathsum{margin:10px 0 0;font-size:13px;color:var(--ink);max-width:none}.pathsum b.bad{color:var(--red)}
+.flowcall.ok{background:var(--surface-2);color:var(--ink)}
+@media (max-width:900px){.paths{grid-template-columns:1fr}}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -716,8 +736,9 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
       <p class="gx-cap" id="ansBackCap"></p>
       <div class="flowseg"><button data-seg="total">Total</button><button data-seg="ent">Enterprise</button><button data-seg="mid">Mid-market</button></div>
       <p class="flowctx" id="flowCtx"></p>
-      <div class="flow6" id="flow6"></div>
-      <div class="flowas" id="flowAs"></div>
+      <div class="paths" id="paths"></div>
+      <p class="pathsum" id="pathSum"></p>
+      <p class="gx-cap">Bars show how many people each path needs at the top. Shares and rates are my starting assumptions, to replace with Attio data by day 30.</p>
       <div id="flowCall"></div></div>
     <div class="lv-sec"><span class="lv-k">2 · Outbound ramp</span>
       <div class="lvramp"><div class="lvin" id="ansRampIn"></div><div class="lvbars" id="ansRampBars"></div></div>
@@ -1006,7 +1027,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:12,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,tier1:50,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
+  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:12,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,tier1:50,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -1037,6 +1058,14 @@ const GMETA=[
   {k:'usQ1',label:'Share of new-channel budget to US, Q1',unit:'%',min:0,max:100,step:5,badge:'Assumed',note:'Q1 runs about 50/50 while we learn.',grid:false},
   {k:'usFrom2',label:'Share of new-channel budget to US, from Q2',unit:'%',min:0,max:100,step:5,badge:'Assumed',note:'Preset "Shift to US from Q2" sets 60%.',grid:false},
   {k:'leadCap',label:'Max new qualified leads marketing can generate a month',unit:'leads',min:0,max:200,step:1,badge:'Assumed',note:'What I can run well with the team and audiences we have. Past this, more budget buys no more leads. 0 = no cap.'},
+  {k:'shPt',label:'Partners: share of new qualified leads',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:'Starting assumption, to replace with Attio data by day 30.'},
+  {k:'shEx',label:'Marketing experiential: share of new qualified leads',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:'Events, dinners, high-touch engagements.'},
+  {k:'shDg',label:'Marketing digital: share of new qualified leads',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:'ABM ads, webinars, lead magnets, search.'},
+  {k:'ptQual',label:'Partners: intros that qualify',unit:'%',min:1,max:100,step:1,badge:'Assumed',note:''},
+  {k:'exMeet',label:'Experiential: people met who book a meeting',unit:'%',min:1,max:100,step:1,badge:'Assumed',note:''},
+  {k:'exQual',label:'Experiential: meetings that qualify',unit:'%',min:1,max:100,step:1,badge:'Assumed',note:''},
+  {k:'dgEng',label:'Digital: contacts reached who engage',unit:'%',min:1,max:100,step:1,badge:'Assumed',note:''},
+  {k:'dgQual',label:'Digital: engaged contacts who qualify',unit:'%',min:1,max:100,step:1,badge:'Assumed',note:''},
   {k:'out1',label:'Share of qualified leads from new outbound, Q1',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:'The one ramp in the model: its shape sets how fast new channels ramp; the budget sets the volume.'},
   {k:'out2',label:'Share of qualified leads from new outbound, Q2',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:''},
   {k:'out3',label:'Share of qualified leads from new outbound, Q3',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:''},
@@ -1288,7 +1317,7 @@ function renderGlobals(){
 function renderTabs(){
   document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===view?'true':'false'));
 }
-function renderInputs(){renderRegIn();renderBudgetTable();renderChanTable();renderGlobals();renderTabs();}
+function renderInputs(){{const pe=document.getElementById('paths');if(pe)delete pe.dataset.built;}renderRegIn();renderBudgetTable();renderChanTable();renderGlobals();renderTabs();}
 
 /* ---------- charts ---------- */
 Chart.defaults.font.family='Inter, system-ui, sans-serif';
@@ -1509,23 +1538,36 @@ function renderAnswer(R){
    const f=x=>'~'+Math.round(x).toLocaleString('en-US'),pl=b=>`<span class="pill ${b.toLowerCase()}">${b}</span>`;
    document.querySelectorAll('[data-seg]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.seg===segSel?'true':'false'));
    document.getElementById('flowCtx').textContent=`${n0(tg)} logos need ${f(T.ld)} qualified leads a year. Today's inbound covers ${f(T.inn)}. New outbound fills the other ${f(T.out)}.`;
-   const cpaTxt=segSel==='ent'?`× ${n0(g.cpaEnt)} contacts`:segSel==='mid'?`× ${n0(g.cpaMid)} contacts`:`× ${n0(g.cpaEnt)} / × ${n0(g.cpaMid)}`;
-   const cpaSub=segSel==='total'?'contacts per account, enterprise / mid-market':'per account';
-   const blk=(v,l,cls,sub)=>`<div class="fb ${cls||''}"><b class="fbn">${f(v)}</b><span class="fbl">${l}</span>${sub?`<span class="fbs">${sub}</span>`:''}</div>`;
-   const arr=(top,sub,b)=>`<div class="fa"><b>${top}</b><span>${sub}</span>${pl(b)}<i aria-hidden="true"></i></div>`;
-   document.getElementById('flow6').innerHTML=
-     blk(X.acc,'Accounts','',`${f(X.acc/12)} a month`)+arr(cpaTxt,cpaSub,'Assumed')+
-     blk(X.con,'Contacts')+arr(n0(g.contact2lead)+'%','become leads','Assumed')+
-     blk(X.leads,'Leads')+arr(n0(toNew*100)+'%','qualify','Assumed')+
-     blk(X.out,'Qualified leads','gap','from new outbound')+arr(n0(l2o*100)+'%','lead → opp (30–50%)','Given')+
-     blk(X.opp,'Opportunities')+arr(n0(o2w*100)+'%','opp → won (15–25%)','Given')+
-     blk(X.won,'Logos','won','from new outbound');
-   document.getElementById('flowAs').innerHTML=[
-     `Enterprise is ${n0(es*100)}% of logos ${pl('Assumed')}`,
-     `Today's inbound (~${n0(bl)} a month) is counted as mid-market`,
-     `New outbound: ${n0(g.contact2lead)}% of contacts become leads, ${n0(toNew*100)}% of those qualify ${pl('Assumed')}`,
-     `${n0(g.cpaEnt)} contacts per enterprise account, ${n0(g.cpaMid)} per mid-market ${pl('Assumed')}`].map(x=>`<p>${x}</p>`).join('');
-   document.getElementById('flowCall').innerHTML=T.acc>num(g.abmAccounts)?`<p class="flowcall">Accounts to engage: ${f(T.acc)}. The ABM list today: ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} named accounts. The list needs to double, or conversion needs to rise.</p>`:'';}
+   const PATHS=[
+     {k:'pt',name:'Partners',sub:'',cls:'g',share:'shPt',top:'Partner intros',rates:[['ptQual','qualify']]},
+     {k:'ex',name:'Marketing experiential',sub:'Events, dinners, high-touch engagements',cls:'m',share:'shEx',top:'People met',rates:[['exMeet','book a meeting'],['exQual','qualify']]},
+     {k:'dg',name:'Marketing digital',sub:'ABM ads, webinars, lead magnets, search',cls:'b',share:'shDg',top:'Contacts reached',rates:[['dgEng','engage'],['dgQual','qualify']]}];
+   const conv=P=>P.rates.reduce((a,[k])=>a*(num(g[k])/100||0.0001),1);
+   const vals=PATHS.map(P=>{const sh=num(g[P.share])/100,q=X.out*sh;return {q,top:q/conv(P),logos:q*l2o*o2w,qE:E.out*sh,qM:M.out*sh};});
+   const mxTop=Math.max(1,...vals.map(v=>v.top));
+   const dg=vals[2],cv=conv(PATHS[2]),accE=dg.qE/cv/Math.max(1,num(g.cpaEnt)),accM=dg.qM/cv/Math.max(1,num(g.cpaMid));
+   const acc=segSel==='ent'?accE:segSel==='mid'?accM:accE+accM;
+   const el=document.getElementById('paths');
+   if(!el.dataset.built||!el.contains(document.activeElement)){
+     const inp=(k,w)=>`<input type="number" data-p="global.${k}" value="${g[k]}" min="0" max="100" step="1" style="width:${w||52}px">`;
+     el.innerHTML=PATHS.map((P,i)=>`<div class="path p-${P.cls}">
+       <div class="path-h"><b>${P.name}</b>${P.sub?`<span>${P.sub}</span>`:''}</div>
+       <label class="path-sh">${inp(P.share)}<span>% of new qualified leads</span>${pl('Assumed')}</label>
+       <div class="path-bar"><i data-pv="bar${i}"></i></div>
+       <div class="path-st top"><b data-pv="top${i}"></b><span>${P.top}</span>${P.k==='dg'?`<em data-pv="acc${i}"></em>`:''}</div>
+       <div class="path-ar">${P.rates.map(([k,l])=>`<span>${inp(k,46)}% ${l}</span>`).join('<span class="sep">·</span>')} ${pl('Assumed')}</div>
+       <div class="path-st"><b data-pv="q${i}"></b><span>Qualified leads</span></div>
+       <div class="path-ar"><span>${n0(l2o*100)}% → opp · ${n0(o2w*100)}% → won</span> ${pl('Given')}</div>
+       <div class="path-st won"><b data-pv="l${i}"></b><span>Logos</span></div>
+     </div>`).join('');
+     el.dataset.built='1';
+   }
+   const set=(k,v)=>{const x=el.querySelector(`[data-pv="${k}"]`);if(x)x.textContent=v;};
+   vals.forEach((v,i)=>{set('top'+i,f(v.top));set('q'+i,f(v.q));set('l'+i,f(v.logos));const bar=el.querySelector(`[data-pv="bar${i}"]`);if(bar)bar.style.width=Math.max(1.5,v.top/mxTop*100)+'%';});
+   set('acc2',`${f(acc)} accounts · ${n0(g.cpaEnt)} contacts per enterprise / ${n0(g.cpaMid)} per mid-market`);
+   const tot=num(g.shPt)+num(g.shEx)+num(g.shDg);
+   document.getElementById('pathSum').innerHTML=`Shares add up to <b class="${Math.abs(tot-100)>0.5?'bad':''}">${n0(tot)}%</b>${Math.abs(tot-100)>0.5?' · they should add up to 100%':''} · ${f(vals.reduce((a,v)=>a+v.logos,0))} logos from new outbound`;
+   document.getElementById('flowCall').innerHTML=`<p class="flowcall${acc>num(g.abmAccounts)?'':' ok'}">Marketing digital needs ${f(acc)} accounts${segSel==='total'?` (${f(accE)} enterprise, ${f(accM)} mid-market)`:''}. The ABM list today: ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} named accounts.${acc>num(g.abmAccounts)?' The list needs to grow, or digital conversion needs to rise.':' That fits within the list.'}</p>`;}
   // 2. ramp bars
   const raw=rawLeadsQ(sc).map(x=>x/3),lc=num(g.leadCap),per=raw.map(x=>lc>0?Math.min(x,lc):x);
   const mx=Math.max(...raw.map(x=>x+bl),lc>0?lc+bl:0,1)*1.05;
