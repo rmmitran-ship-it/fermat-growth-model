@@ -486,6 +486,22 @@ section.page{padding:36px 0 64px;border-top:0}
 .kitdl dt{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding-top:2px}
 .kitdl dd{margin:0;color:var(--ink)}
 @media (max-width:800px){.tlside{width:100%;align-items:stretch}.narrq-row{grid-template-columns:1fr}.narrq-row .narr-or{justify-self:center}.kitdl{grid-template-columns:1fr}}
+.tlhead{display:grid;grid-template-columns:minmax(0,1fr) 300px;align-items:start}
+.tlgraph{width:300px;height:172px;overflow:hidden;box-sizing:border-box}
+.tlq{background:var(--surface);padding:14px 16px;margin-bottom:8px}
+.tlq ul,.tlc ul{margin:0;padding-left:16px;font-size:14px;line-height:1.45;color:var(--ink)}
+.tlq li,.tlc li{margin:3px 0}
+.tlq .k,.tlc .k,.tlno .k,.own .k{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:6px}
+.tl4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:8px}
+.tlc{background:var(--surface);padding:14px 16px}
+.tlnone{margin:0;font-size:14px;color:var(--muted)}
+.own p{margin:0;font-size:14px;line-height:1.45}
+.own{margin-bottom:8px}
+.tlno{background:var(--ink);color:#ddd;padding:12px 16px;font-size:14px}
+.tlno .k{color:#9a9a9a;display:inline;margin:0 12px 0 0}
+#narrSlot{margin-top:8px}
+@media (max-width:900px){.tl4{grid-template-columns:1fr 1fr}.tlhead{grid-template-columns:1fr}.tlgraph{width:100%}}
+@media (max-width:560px){.tl4{grid-template-columns:1fr}}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -824,7 +840,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
   <div class="princ"><span>Marketing is always on. Tactics change; the presence doesn't.</span><span>A small, cheap decision beats no decision.</span><span>Measure before we spend; scale only what converts.</span></div>
   <div class="phases">
     <div class="phase ph-m"><h4>Q1 · Learn and set up</h4><div class="ph-graph" data-graph="q1"></div><div class="ph-row"><span class="k">Questions</span><ul><li>Why do we win, and why are some conversations hard?</li><li>Do buyers not know the product, or not trust the founder?</li><li>What can Attio track today, and how long can it carry us?</li><li>In the US, do we build partners to find deals or to help close them?</li></ul></div><div class="ph-row"><span class="k">Big bets</span><ul><li>Decide the story: product-led or founder-led</li><li>Every channel measurable by day 30</li><li>Partnership value map by day 30</li><li>Partner value prop + US lookalikes</li></ul></div><div class="ph-row"><span class="k">Tactics</span><div class="ph-tg"><span class="ph-t">Both</span><ul><li>Interviews with sales, AMs and 3–5 clients</li><li>Inbound workflow and scoring in Attio</li><li>Email cohorts: 10 companies in the US, 10 in Europe</li><li>$5k LinkedIn story test, lead-gen form, one ad per narrative</li><li>A digital marketing plan for every committed event</li><li>Claude dashboard over Attio and paid channels (via MCP)</li></ul></div><div class="ph-tg"><span class="ph-t">Europe</span><ul><li>Pre- and post-event plays on committed events</li><li>Talk to partners who already refer</li></ul></div><div class="ph-tg"><span class="ph-t">US</span><ul><li>Target account list</li><li>Google on competitor terms (e.g. "Raspberry AI")</li><li>First "how we're different" blog</li></ul></div></div><div class="ph-row"><span class="k">Who helps</span><ul><li>Sales, AMs, founders (interviews)</li><li>Product experts (demo content)</li></ul></div></div>
-    <div class="phase ph-b"><h4>Q2 · Launch always-on</h4><div class="ph-graph" data-graph="q2"></div><div class="ph-row"><span class="k">Questions</span><ul><li>Which narrative won?</li><li>Which ABM plays can we measure?</li></ul></div><div class="ph-row"><span class="k">Big bets</span><ul><li>One always-on campaign in the winning story, in both markets</li><li>ABM strategy per segment, agreed with sales</li><li>Partner pilots: EU sourcing + US co-selling</li></ul></div><div class="ph-row"><span class="k">Tactics</span><div class="ph-tg"><span class="ph-t">Europe</span><ul><li>Events with activations</li><li>ABM 1:few on mid-size brands</li></ul></div><div class="ph-tg"><span class="ph-t">US</span><ul><li>Physical activations and dinners around the New York office</li><li>LinkedIn ABM on named accounts</li><li>Competitor search + comparison content</li></ul></div><div class="ph-tg"><span class="ph-t">Both</span><ul><li>Case studies</li><li>Podcast</li><li>First ABM tools (Clay, signals)</li></ul></div></div><div class="ph-row"><span class="k">Who helps</span><ul><li>Brand and comms: PR, analyst reports, third-party voice, media kit</li><li>Agency for paid at scale, if needed</li><li>Product experts at events</li></ul></div></div>
+    <div class="phase ph-b"><h4>Q2 · Launch always-on</h4><div class="ph-graph" data-graph="q2"></div><div class="ph-row"><span class="k">Questions</span><ul><li>Which narrative won?</li><li>Which ABM plays can we measure?</li></ul></div><div class="ph-row"><span class="k">Big bets</span><ul><li>Always-on campaign live from month 4, in the winning story, both markets</li><li>ABM strategy per segment, agreed with sales</li><li>Partner pilots: EU sourcing + US co-selling</li></ul></div><div class="ph-row"><span class="k">Tactics</span><div class="ph-tg"><span class="ph-t">Europe</span><ul><li>Events with activations</li><li>ABM 1:few on mid-size brands</li></ul></div><div class="ph-tg"><span class="ph-t">US</span><ul><li>Physical activations and dinners around the New York office</li><li>LinkedIn ABM on named accounts</li><li>Competitor search + comparison content</li></ul></div><div class="ph-tg"><span class="ph-t">Both</span><ul><li>Case studies</li><li>Podcast</li><li>First ABM tools (Clay, signals)</li></ul></div></div><div class="ph-row"><span class="k">Who helps</span><ul><li>Brand and comms: PR, analyst reports, third-party voice, media kit</li><li>Agency for paid at scale, if needed</li><li>Product experts at events</li></ul></div></div>
     <div class="phase ph-g"><h4>H2 → 2028 · Scale and centralize</h4><div class="ph-graph" data-graph="h2"></div><div class="ph-row"><span class="k">Questions</span><ul><li>Can the current setup carry us?</li><li>When do we need a fuller CRM setup?</li><li>Does the US need more sales cover?</li></ul></div><div class="ph-row"><span class="k">Big bets</span><ul><li>One central marketing and sales data system</li><li>US sales capacity in line with pipeline</li></ul></div><div class="ph-row"><span class="k">Tactics</span><div class="ph-tg"><span class="ph-t">Both</span><ul><li>Monthly budget moves to the cheapest opportunities</li><li>Full account score in Attio</li><li>Expand the best plays to the next tier</li></ul></div></div><div class="ph-row"><span class="k">Who helps</span><ul><li>Founders (hiring decisions)</li><li>GTM engineer or ops (systems)</li></ul></div></div>
   </div>
   <h3 class="mt3">The first 90 days, step by step</h3>
@@ -1447,32 +1463,42 @@ function update(){
 
 /* ---------- 90-day timeline ---------- */
 const TL=[
-  {when:'Stage 1 · Days 1–30',title:'Workflows and activation',c:'--surface-2',g:'s1',goal:'Set up the basics and get the first campaigns live.',
-   own:[['Dashboard','Scoring','Cohorts','LinkedIn test','Case studies','Event plans','Handoff rules with AEs','Review committed events, webinars etc.','First prospecting lists'],['Sales, AMs and founders (interviews)','Product experts (demo content)'],['Closing deals (AEs)']],
-   groups:[
-    ['Questions to answer',['Why do we win, and why do we lose?','Do buyers not know the product, or not trust the founder?','Who is sales targeting, and with what pitch?','What can Attio track today?','How much of the budget do committed events already use?']],
-    ['Strategy',['Analyse the best 20 deals and find 2–3 narratives','Review inbound and scoring','Set up basic scoring in Attio','AE air cover: qualified-lead definition, follow-up time, account brief before every first call','Partnership value map: who refers today and why']],
-    ['Tactics',['Email cohort: 10 companies in the US, 10 in Europe','Build the LinkedIn list for US and Europe, split enterprise vs mid-market','<b>The story test:</b> first LinkedIn test, $5k for 1 month with a simple lead-gen form, one ad variant per narrative','Tracking dashboard over Attio and paid channels']],
-    ['Outputs',['1–2 case studies','Email flows for both cohorts','LinkedIn ads for Europe and US','A digital marketing plan for every committed event, with its share of the budget','Tracking dashboard live'],'out'],
-    ["What I won't do",['Switch on 5 channels at once','Scale paid before inbound has a proper handoff'],'no']]},
-  {when:'Stage 2 · Days 31–60',title:'Partners and scale test',c:'--magenta-light',g:'s2',goal:'Build the partner value prop, and learn if paid can scale.',
-   own:[['Partner value prop','Lookalike list','Audience review','Tool shortlist'],['US AE (co-sell)','Founders (warm intros)'],['Partner contracts and commission approval']],
-   groups:[
-    ['Questions to answer',['Which narrative won the LinkedIn test?','Can we scale the audiences, and how?','In the US, do partners find deals or help close them?','Which ABM tools do we need?']],
-    ['Strategy',['Partner value prop: three-way value (Fermat, partner, brand), expected outcome by territory with the math, internal and external sell, exit criteria','Lookalikes: from EU partners that refer to a US partner profile','Review audience structure and setup: what to scale, what to cut']],
-    ['Tactics',['US partner recruitment: 20–30 lookalikes → warm intros (investors, US customers, EU partners) → 3–5 conversations → 2–3 pilots as co-sellers with the US AE','Scale the winning LinkedIn audience and narrative with more budget if cost per qualified lead holds','Shortlist ABM tools (Clay, intent, website signals) and test one']],
-    ['Outputs',['Partner value prop one-pager','US lookalike list','Scale decision with a budget number','ABM tool shortlist'],'out'],
-    ["What I won't do",["Sign partners sales can't sell with",'Scale an audience before it converts to meetings'],'no']]},
-  {when:'Stage 3 · Days 61–90',title:'ABM strategy',c:'--blue-light',g:'s4',goal:'Turn what we learned into one ABM motion, signed off with sales.',
-   own:[['ABM strategy','Narrative recommendation','Q2 plan'],['AEs and founders (sign-off)','Brand and comms (media kit)'],['Headcount decisions']],
-   groups:[
-    ['Questions to answer',['How do we define the handoff between marketing and sales?','How do we build a pitch per account type?','Which tools do we keep?','Do we need an in-house SDR, or can the AEs cover it?']],
-    ['Strategy',['Account tiers: 1:1 / 1:few / 1:many','Playbook per segment','Narrative decision: product-led or founder-led, from the Stage 1 test','First budget move toward the cheapest opportunities']],
-    ['Tactics',['Partner pilot live: kit + 2–3 US co-sellers + EU sourcing partners','Plan Q2: always-on campaign in the winning story, both markets']],
-    ['Outputs',['ABM strategy, signed off','Narrative decision + media kit brief','Q2 budget plan by region'],'out'],
-    ["What I won't do",["Add a channel the AEs can't follow up","Commit to a story the data didn't support"],'no']]},
-  {when:'Month 6',title:'Always-on, both markets',c:'--magenta',flag:true,narr:true,g:'s6',goal:'One story, running every week in Europe and the US.',
-   own:[['Always-on campaign and reporting'],['Brand and comms (media kit, podcast)','Agency for paid at scale'],['Brand identity and PR']]}
+  {when:'Days 1–30',title:'Workflows and fast start',c:'--surface-2',g:'d1',goal:'Get the basics running and the first campaigns live in month one.',
+   q:['Why do we win, and why do we lose?','Do buyers not know the product, or not trust the founder?','What can Attio track today?','How much budget do committed events already use?'],
+   cols:[
+    ['1–2 narratives to test in ads, from conversations with sales, AMs, founders and clients'],
+    ['Inbound, events, partners','Handoff to AEs: qualified-lead definition, follow-up time, account brief','Budget commitments for digital and high-touch activations'],
+    ['Claude dashboard over Attio and paid channels, up to the engaged lead'],
+    ['LinkedIn fast start on EU + US lists, lead-gen form','Outreach to 10 US + 10 EU companies','US: Google on Raspberry AI and category terms, with a comparison page']],
+   own:['Narratives, workflows, dashboard, LinkedIn, outreach, search','Sales, AMs, founders (conversations), product experts (demo content)','Closing deals (AEs)'],
+   no:['Switch on 5 channels at once','Scale paid before handoff works']},
+  {when:'Days 31–60',title:'Partners and first read',c:'--magenta-light',g:'d2',goal:'Build the partner motion and read what the first campaigns tell us.',
+   q:['Which narrative is winning?','Did the targeting and prospect lists work?','In the US, do partners find deals or help close them?'],
+   cols:[
+    ['Partner value map: three-way value, outcome by territory, exit criteria','US partner lookalikes to support the 1 US AE','Review the narrative'],
+    ['Partner referral tracking in Attio','Partner kit: deck, demo account, case studies, commission terms'],
+    ['Targeting: right accounts and roles?','Prospect list: replies and meetings','Cost per qualified lead by audience and search term'],
+    ['Scale the winning audience and narrative',"Cut what doesn't convert",'Test one ABM tool']],
+   own:['Partner value map, lookalikes, reporting, scale decision','US AE (co-sell), founders (warm intros)','Partner contracts and commission approval'],
+   no:["Sign partners sales can't sell with",'Scale an audience before it books meetings']},
+  {when:'Days 61–90',title:'ABM strategy',c:'--blue-light',g:'s4',goal:'Turn what we learned into one ABM motion, signed off with sales.',
+   q:['How do we define the handoff?','How do we pitch each account type?','Which tools do we keep?','Do we need an SDR, or can the AEs cover it?'],
+   cols:[
+    ['Tiers 1:1 / 1:few / 1:many','Playbook per segment','Narrative decision: product-led or founder-led'],
+    ['Contact-based marketing: ads to named contacts in 1:1 and 1:few accounts, one message per role, engagement feeding Attio scoring and AE alerts','Partner pilots live: EU sourcing + US co-selling'],
+    ['Engaged accounts, meetings and first opportunities by channel','Buying-group coverage per account','First budget move toward the cheapest opportunities'],
+    ['Pre- and post-event plays on the next event','Always-on campaign built and ready for month 4']],
+   own:['ABM strategy, contact-based campaigns, narrative recommendation','AEs and founders (sign-off), brand and comms (media kit)','Headcount decisions'],
+   no:["Add a channel the AEs can't follow up","Commit to a story the data didn't support"]},
+  {when:'Month 4 (Q2)',title:'Always-on launch',c:'--magenta',flag:true,narr:true,g:'s6',goal:'One story, running every week in Europe and the US.',
+   q:['Is the always-on campaign reaching the right accounts?','Is pipeline growing toward the quarterly target?'],
+   cols:[
+    ['Always-on in the winning story','Budget split by region: shift toward the US if signals convert'],
+    ['Media kit and podcast with brand and comms','Monthly budget review'],
+    ['Pipeline vs quarterly target','Cost per opportunity by channel and region'],
+    ['Always-on campaign live in both markets','US activations and dinners around the New York office','Paid scaled with an agency, if needed']],
+   own:['Always-on campaign, budget moves, reporting','Brand and comms (media kit, podcast), agency (paid at scale)','Brand identity and PR'],
+   no:['Change the story every month',"Scale a region the AEs can't cover"]}
 ];
 const tlIdx=TL.map((t,i)=>i);
 let tlSel=0;
@@ -1480,13 +1506,15 @@ try{const v=+localStorage.getItem('fermat-tl');if(tlIdx.includes(v))tlSel=v;}cat
 function renderTL(){
   document.getElementById('tl').innerHTML=TL.map((t,i)=>`<button class="tlstep${t.flag?' flag':''}" style="--c:var(${t.c})" data-tl="${i}" aria-pressed="${i===tlSel}"><span class="w">${t.flag?'Milestone · ':''}${t.when}</span><b>${t.title}</b></button>`).join('');
   const t=TL[tlSel],pos=tlIdx.indexOf(tlSel);
-  const own=t.own?`<div class="own">${['I own','With others','Not mine'].map((k,i)=>`<div class="o${i+1}"><span class="k">${k}</span><ul>${t.own[i].map(x=>`<li>${x}</li>`).join('')}</ul></div>`).join('')}</div>`:'';
-  const groups=t.groups?`<div class="tlgroups">${t.groups.map(([k,items,cls])=>`<div class="tlg ${cls||''}"><div class="k">${k}</div><ul>${items.map(x=>`<li>${x}</li>`).join('')}</ul></div>`).join('')}</div>`:'';
-  const narrCard=t.story?`<div class="narrq"><p class="tlgoal" style="margin:0 0 10px"><b>The story:</b> do buyers not know what Fermat does, or not know why to trust it?</p><div class="narrq-row"><div class="pl"><span class="k">Product-led</span>"They don't know what it does."</div><div class="narr-or">or</div><div class="fl"><span class="k">Founder-led</span>"They don't know why to trust it."</div></div><button class="linkbtn" data-kit>See the media kit, two ways ↓</button></div>`:'';
-  const opts=t.narr?'<div id="narrSlot"></div>':t.opts?`<div class="tlopts">${t.opts.map(([k,name,why,items,m])=>`<div class="tlopt"><span class="k">${k}</span><span class="nm">"${name}"</span><p>${why}</p><ul>${items.map(x=>`<li>${x}</li>`).join('')}</ul><p class="m"><b>Measure:</b> ${m}</p></div>`).join('')}</div><p class="small" style="margin-top:12px;font-weight:600;color:var(--ink)">Both keep the podcast. What changes is who's on it.</p>`:'';
+  const li=a=>a&&a.length?`<ul>${a.map(x=>`<li>${x}</li>`).join('')}</ul>`:'<p class="tlnone">—</p>';
   const panel=document.getElementById('tlPanel');
-  panel.style.borderTop=`6px solid var(${t.c})`;
-  panel.innerHTML=`<div class="tlhead"><div><div class="w">${t.flag?'Milestone · ':''}${t.when}</div><h3>${t.title}</h3><p class="tlgoal">${t.goal}</p></div><div class="tlside">${t.g?`<div class="tlgraph" data-graph="${t.g}"></div>`:''}<div class="tlnav"><button data-tlnav="-1" ${pos<=0?'disabled':''}>← Back</button><button data-tlnav="1" ${pos>=tlIdx.length-1?'disabled':''}>Next →</button></div></div></div>${own}${narrCard}${groups}${opts}`;
+  panel.style.borderTop=`6px ${t.flag?'dashed':'solid'} var(${t.c})`;
+  panel.innerHTML=`<div class="tlhead"><div><div class="w">${t.flag?'Milestone · ':''}${t.when}</div><h3>${t.title}</h3><p class="tlgoal">${t.goal}</p><div class="tlnav" style="margin-top:14px"><button data-tlnav="-1" ${pos<=0?'disabled':''}>← Back</button><button data-tlnav="1" ${pos>=tlIdx.length-1?'disabled':''}>Next →</button></div></div><div class="tlgraph" data-graph="${t.g}"></div></div>
+    <div class="tlq"><span class="k">Questions</span>${li(t.q)}</div>
+    <div class="tl4">${['Strategy','Workflows','Reporting','Digital'].map((k,i)=>`<div class="tlc"><span class="k">${k}</span>${li(t.cols[i])}</div>`).join('')}</div>
+    <div class="own">${['I own','With others','Not mine'].map((k,i)=>`<div class="o${i+1}"><span class="k">${k}</span><p>${t.own[i]}</p></div>`).join('')}</div>
+    <div class="tlno"><span class="k">What I won't do</span>${t.no.join(' · ')}</div>
+    ${t.narr?'<div id="narrSlot"></div>':''}`;
   const slot=document.getElementById('narrSlot');
   if(slot){slot.appendChild(document.getElementById('kitTpl').content.cloneNode(true));wireMedia(slot);}
   renderGraphs();
@@ -1517,6 +1545,8 @@ function lineSvg(w,h,series,labels){
   return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img">${series.map(s=>`<polyline fill="none" stroke="${s.c}" stroke-width="${s.dash?1.5:2.5}" ${s.dash?'stroke-dasharray="4 3"':''} points="${s.d.map((v,i)=>px(i)+','+py(v)).join(' ')}"/>${s.dash?'':s.d.map((v,i)=>`<rect x="${px(i)-3}" y="${py(v)-3}" width="6" height="6" fill="${s.c}"/>`).join('')}`).join('')}${labels.map((l,i)=>`<text x="${px(i)}" y="${h-2}" font-size="10" text-anchor="middle" fill="#6b6b6b">${l}</text>`).join('')}</svg>`;
 }
 const GRAPHS={
+  d1:()=>gbox('5 of 5','t',`<div class="dots">${['LinkedIn','Outreach','Search','Dashboard','Workflows'].map(x=>`<span><i></i>${x}</span>`).join('')}</div>`,'Live by day 30.'),
+  d2:()=>{const st=[['Companies',20],['Opened',12],['Replied',5],['Meetings',3]];return gbox('20 → 3','t',hbars(st.map(([l,v],i)=>[l,v,cssv(['--magenta-light','--magenta','--magenta','--magenta-deep'][i])]),20,v=>v),'Outreach funnel, 10 US + 10 EU companies.');},
   q1:w=>gbox('100% by day 30','t',`<div class="prog"><i style="width:100%"></i></div><div class="prog-ax"><span>Day 0</span><span>Day 15</span><span>Day 30</span></div>`,'Channels measurable in the tracking dashboard.'),
   q2:(w,R,sel)=>{const r=R[sel],{w:ph}=phasing(sel);let L=0;S.channels.forEach(c=>{if(c.kind==='lead'&&c.cpl>0)L+=budget(sel,c.id)*1000*ph[1]/c.cpl*rampQ()[1];});const m=L/3,mx=Math.max(m,r.bl)*1.05;
     return gbox(`${n0(m)} a month`,'m',hbars([['Apr',m,cssv('--blue')],['May',m,cssv('--blue')],['Jun',m,cssv('--blue')]],mx,v=>n0(v)),`New qualified leads in Q2, plan ${sel}. Inbound adds ~${n0(r.bl)} a month on top.`);},
