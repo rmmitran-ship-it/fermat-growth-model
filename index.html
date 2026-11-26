@@ -929,6 +929,12 @@ button.play[hidden]{display:none}
   .pcold{height:auto!important;padding:6px;margin:0}
   .pbns{grid-template-columns:1fr}
 }
+.jobs{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 -4px}
+.job{font-size:13px;padding:6px 10px;color:var(--ink)}.job.j1{background:var(--magenta)}.job.j2{background:var(--white);border:1px solid var(--line)}
+.rcbar i.u{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%23ffffff'/%3E%3Cpath d='M-2 2l4-4M0 8l8-8M6 10l4-4' stroke='%23d64fc9' stroke-width='1.5'/%3E%3C/svg%3E");border:1px dashed var(--magenta-deep)}.rcleg i.u{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%23ffffff'/%3E%3Cpath d='M-2 2l4-4M0 8l8-8M6 10l4-4' stroke='%23d64fc9' stroke-width='1.5'/%3E%3C/svg%3E")}
+.upside{margin:8px 0 0;font-size:13px;color:var(--muted);max-width:none}.upl{display:flex;align-items:center;gap:6px;flex-wrap:wrap;cursor:pointer}
+.upl input[type=number]{font:600 12px Inter;border:1px solid var(--line);padding:2px 4px;background:var(--white)}.upl .pill{font-size:10px;padding:1px 7px}
+.fsec.also{border-top:1px dashed var(--line);padding-top:6px}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -1079,7 +1085,9 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
       <h5 class="pv-s">New work, on top <span class="pill assumed">Assumed</span></h5>
       <div class="rflow flowb" id="rowB"></div>
       <p class="s1muted" id="rowBcheck"></p>
+      <p class="jobs" id="jobs"></p>
       <div class="rowc" id="rowC"></div>
+      <p class="upside" id="upside"></p>
       <h5 class="pv-s">My bets</h5>
       <div class="betc" id="rowD"></div>
       <p class="s1muted">Scale what already works. Test what's missing. Shares move monthly toward the lowest cost per opportunity.</p>
@@ -1360,7 +1368,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,aeRegion:'EU',lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:15,tc2:10,tc3:6,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
+  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,aeRegion:'EU',lvWR:false,wrUp:2,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:15,tc2:10,tc3:6,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -1422,6 +1430,7 @@ const GMETA=[
   {k:'isCalls',label:'Qualification calls per inside sales rep a month',unit:'calls',min:0,max:200,step:5,badge:'Assumed',note:'',grid:false},
   {k:'maxDeals',label:'Max active deals per AE',unit:'deals',min:5,max:60,step:1,badge:'Assumed',note:'',grid:false},
   {k:'csLift',label:'US partner co-selling: extra US closing capacity',unit:'%',min:0,max:50,step:1,badge:'Assumed',note:'Partners support the single US AE on late-stage deals.',grid:false},
+  {k:'wrUp',label:'Upside: extra win-rate points from moving open deals',unit:'pts',min:0,max:10,step:0.5,badge:'Assumed',note:'Not committed. Shown only when the upside toggle is on.',grid:false},
   {k:'tc1',label:'ABM 1:1: contacts per account',unit:'contacts',min:1,max:40,step:1,badge:'Assumed',note:'',grid:false},
   {k:'tc2',label:'ABM 1:few: contacts per account',unit:'contacts',min:1,max:40,step:1,badge:'Assumed',note:'',grid:false},
   {k:'tc3',label:'ABM 1:many: contacts per account',unit:'contacts',min:1,max:40,step:1,badge:'Assumed',note:'',grid:false},
@@ -1977,11 +1986,14 @@ function renderAnswer(R){
   {const e=rB.querySelector('[data-pv-html="bls"]');if(e)e.innerHTML=stk(D.paths.map(x=>x.logos),PC3,()=>'')+legend(D.paths.map((x,i)=>[PC3[i],['Partners','Exp.','Digital'][i],f(x.logos)]));}
   {const over=accT>num(g.abmAccounts);document.getElementById('rowBcheck').innerHTML=`<b style="color:var(--ink)">${f(accT)} of ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} planned accounts</b> ${pl('Assumed')} · ${over?'the list needs to grow, or conversion needs to rise':'room to spare'} · confirm in Attio by day 30`;}
   // Row C: the total
-  {const tot=D.inLogo+D.newLogo,mx=Math.max(D.tg,D.ceiling,tot)*1.06,pc=v=>v/mx*100,lab=(v,t)=>v/mx>0.07?`${f(v)} ${t}`:'';
-   document.getElementById('rowC').innerHTML=`<div class="rcbar"><i class="t" style="width:${pc(baseLogo)}%">${lab(baseLogo,'baseline')}</i><i class="h" style="width:${pc(liftLogo)}%" title="${f(liftLogo)} inbound lift">${lab(liftLogo,'lift')}</i><i class="n" style="width:${pc(D.newLogo)}%">${lab(D.newLogo,'new work')}</i>
+  const allOpp=D.inOpp+D.newOpp,upX=allOpp*num(g.wrUp)/100,upOn=!!g.lvWR;
+  document.getElementById('jobs').innerHTML=`<span class="job j1"><b>Job 1 · Create:</b> ${M(D.newOpp*D.acv)} new pipeline (~${n0(D.newOpp/allOpp*100)}%)</span><span class="job j2"><b>Job 2 · Move:</b> help all ${M(allOpp*D.acv)} convert faster</span>`;
+  {const up=once('upside',()=>`<label class="upl"><input type="checkbox" data-p="global.lvWR" ${g.lvWR?'checked':''}> Upside, not committed: +${inp('wrUp',44,10)} pts win rate ${pl('Assumed')} = <b data-pv="upx"></b> logos from the same pipeline.</label>`);sv(up,'upx','+'+f(upX).replace('~','~'));}
+  {const tot=D.inLogo+D.newLogo,mx=Math.max(D.tg,D.ceiling,tot+(upOn?upX:0))*1.06,pc=v=>v/mx*100,lab=(v,t)=>v/mx>0.07?`${f(v)} ${t}`:'';
+   document.getElementById('rowC').innerHTML=`<div class="rcbar"><i class="t" style="width:${pc(baseLogo)}%">${lab(baseLogo,'baseline')}</i><i class="h" style="width:${pc(liftLogo)}%" title="${f(liftLogo)} inbound lift">${lab(liftLogo,'lift')}</i><i class="n" style="width:${pc(D.newLogo)}%">${lab(D.newLogo,'new work')}</i>${upOn?`<i class="u" style="width:${pc(upX)}%" title="Upside, not committed">${lab(upX,'upside')}</i>`:''}
      <span class="mk" style="left:${pc(D.tg)}%"><em>${n0(D.tg)} target</em></span><span class="mk c" style="left:${pc(D.ceiling)}%"><em>${f(D.ceiling)} AE ceiling</em></span></div>
-     <div class="rcleg"><span><i class="t"></i>${f(baseLogo)} baseline</span><span><i class="h"></i>${f(liftLogo)} inbound lift</span><span><i class="n"></i>${f(D.newLogo)} new work</span><span class="rcsi"><b>Sourced:</b> what I commit to · <b>Influenced:</b> measured as a trend, not by deal</span></div>
-     <p class="rctxt">${f(baseLogo)} baseline + ${f(liftLogo)} lift + ${f(D.newLogo)} new = <b>${f(tot)}</b>. The model lands at <b class="${D.closes>=D.tg-0.5?'ok':'no'}">${f(D.closes)}</b>: Q1 can't fill${D.ceiling<D.tg?`, and ${n0(num(g.aesEU)+num(g.aesUS))} AEs at ${n1(g.aeCap)} a quarter can close ${f(D.ceiling)}`:''}.</p>
+     <div class="rcleg"><span><i class="t"></i>${f(baseLogo)} baseline</span><span><i class="h"></i>${f(liftLogo)} inbound lift</span><span><i class="n"></i>${f(D.newLogo)} new work</span>${upOn?`<span><i class="u"></i>+${f(upX)} upside, not committed</span>`:''}<span class="rcsi"><b>Sourced:</b> what I commit to · <b>Influenced:</b> measured as a trend, not by deal</span></div>
+     <p class="rctxt">${f(baseLogo)} baseline + ${f(liftLogo)} lift + ${f(D.newLogo)} new = <b>${f(tot)}</b>${upOn?` (+${f(upX)} upside)`:''}. The model lands at <b class="${D.closes>=D.tg-0.5?'ok':'no'}">${f(D.closes)}</b>: Q1 can't fill${D.ceiling<D.tg?`, and ${n0(num(g.aesEU)+num(g.aesUS))} AEs at ${n1(g.aeCap)} a quarter can close ${f(D.ceiling)}`:''}.</p>
      <div class="measure"><b>How I'll measure what I can't attribute</b><ul><li>Inbound volume vs the Q4 2026 baseline</li><li>Share of inbound from named ABM accounts (matched by company in Attio)</li><li>"How did you hear about us?" on the demo form</li><li>Branded search trend</li></ul><p>If inbound stays flat after 2 quarters of always-on, the lift is zero and I cut it.</p></div>`;}
   // Row D: bets as flip cards
   const tAcc=D.tiers[0].acc+D.tiers[1].acc,aAcc=D.tiers[2].acc;
@@ -1998,13 +2010,14 @@ function renderAnswer(R){
       `<div class="fsec"><span>My bet</span>A structured program (value map, 10–20% commission from revenue) gets more intros from the same partners, plus US co-sellers.</div><div class="fsec"><span>I'll know by day 90</span><ul><li>Intros a month from pilot partners</li><li>${n0(g.ptQual)}% qualify</li></ul></div>`)+
     card(1,'p1','Experiential',n0(ex.sh*100)+'%','High','hi',
       `<div class="fstats">${stat(f(ex.q/12),'qualified leads a month')}${stat(f(ex.logos),'logos in 2027')}</div>`,
-      `<div class="fsec"><span>My bet</span>Turn events into ABM moments: meetings booked before, dinners around them, follow-up within 48h.</div><div class="fsec"><span>I'll know by day 90</span><ul><li>Meetings per event</li><li>${n0(g.exMeet)}% meet, ${n0(g.exQual)}% qualify</li></ul></div>`)+
+      `<div class="fsec"><span>My bet</span>Turn events into ABM moments: meetings booked before, dinners around them, follow-up within 48h.</div><div class="fsec"><span>I'll know by day 90</span><ul><li>Meetings per event</li><li>${n0(g.exMeet)}% meet, ${n0(g.exQual)}% qualify</li></ul></div><div class="fsec also"><span>Also moves open deals</span>Geofenced ads at the events we attend (US-first, GDPR limits it in Europe), and dinner invites for accounts with an open opportunity.</div>`)+
     card(2,'p2','Digital',n0(dg.sh*100)+'%','Blend','mix',
       `<div class="fmot"><div class="fmrow"><span class="fml">Targeted ABM</span><span class="conf med">Medium</span><b>${f(tgtM)}/mo</b></div><span class="fms">1:1 + 1:few · ${f(tAcc)} named accounts</span>
         <div class="fmrow"><span class="fml">Always-on</span><span class="conf lo">Staged</span><b>${f(aoM)}/mo</b></div><span class="fms">1:many + search · ${f(aAcc)} accounts, + ${f(lift)}/mo inbound lift</span>
         <div class="fmbar"><i style="flex:${tgtM}"></i><i class="ao" style="flex:${aoM}"></i><i class="lf" style="flex:${lift}"></i></div><span class="fms">new ABM · new always-on · lift on today's inbound</span></div>`,
       `<div class="fsec"><span>Targeted ABM · my bet</span>Personal outreach, account-based LinkedIn ads, signals (sign-ups by domain, job changes, hiring).</div>
        <div class="fsec"><span>Always-on · my bet</span>One LinkedIn always-on on the ICP list (story from the LinkedIn test, live in month 4), competitor search in the US. <button class="toA" data-toA>↑ inbound lift</button></div>
+       <div class="fsec also"><span>Also moves open deals</span>Ads to the buying committee of every opportunity in Attio, plus case studies and security proof by stage.</div>
        <div class="fsec"><span>I'll know by day 90</span><ul><li>% of ${f(tAcc).replace('~','')} accounts engaged, ${n0(g.ab2M)}–${n0(g.ab1M)}% qualify</li><li>Cost per qualified lead, inbound trend vs Q4; cut after 2 quarters if flat</li></ul></div>`);
   // STEP 2c: path cards
   const el=once('paths',()=>{const rate=r=>r?`<div class="path-ar"><span>${inp(r[0],46)}% ${r[1]}</span>${pl('Assumed')}</div>`:'<div class="path-ph"></div>';
