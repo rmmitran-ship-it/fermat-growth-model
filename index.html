@@ -607,8 +607,8 @@ section.page{padding:36px 0 64px;border-top:0}
 .pans-note{margin:10px 0 0;font-size:12.5px;color:var(--text);max-width:none}
 .pans-note .pill{font-size:10px;padding:1px 7px}
 /* aligned path cards: every box sits on the same row across the three cards */
-.paths{grid-template-rows:repeat(9,auto)}
-.path{display:grid;grid-template-rows:subgrid;grid-row:span 9;row-gap:6px;align-content:stretch}
+.paths{grid-template-rows:repeat(14,auto)}
+.path{display:grid;grid-template-rows:subgrid;grid-row:span 14;row-gap:6px;align-content:stretch}
 .path-ar{align-self:start}
 @media (max-width:900px){.paths{grid-template-rows:none}.path{grid-template-rows:none;grid-row:auto}.tiers{grid-template-columns:1fr}}
 .today{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;background:var(--surface-2);padding:14px 18px;margin-bottom:8px;color:var(--ink)}
@@ -620,6 +620,45 @@ section.page{padding:36px 0 64px;border-top:0}
 .paths-h{font-family:'Inter Tight';font-size:18px;font-weight:700;letter-spacing:-0.024em;color:var(--ink);margin:16px 0 8px}
 .path-x{margin:0;font-size:12px;color:var(--text);font-style:italic}
 .pathsum{font-size:16px}.pathsum b.ok{background:var(--green);color:var(--green-deep);padding:1px 6px}.pathsum .bad{color:var(--red);font-weight:600}
+.pvt{display:flex;gap:4px;margin:18px 0 12px}
+.pvt button{font:600 14px Inter;border:0;background:var(--white);color:var(--ink);padding:9px 16px;border-radius:0;cursor:pointer}
+.pvt button[aria-pressed="true"]{background:var(--ink);color:var(--white)}
+.pv-h{font-family:'Inter Tight';font-size:22px;font-weight:700;letter-spacing:-0.024em;color:var(--ink);margin:0 0 12px}
+.pv-s{font-family:'Inter Tight';font-size:17px;font-weight:700;letter-spacing:-0.02em;color:var(--ink);margin:18px 0 8px}
+.pv-s span{font-family:Inter;font-size:12px;font-weight:600;color:var(--magenta-deep);background:var(--magenta-light);padding:2px 8px;margin-left:6px;vertical-align:middle;letter-spacing:0}
+.ov4{display:grid;grid-template-columns:1fr 28px 1fr 28px 1fr 28px 1fr;align-items:stretch}
+.ovt{background:var(--white);padding:18px 18px 16px;display:flex;flex-direction:column;gap:2px;color:var(--ink)}
+.ovt.won{background:var(--green)}
+.ovt .k{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:4px}
+.ovt b{font-family:'Inter Tight';font-size:clamp(28px,3.2vw,40px);font-weight:700;letter-spacing:-0.03em;line-height:1.05}
+.ovt .l{font-size:14px;font-weight:600}.ovt .s{font-size:12.5px;color:var(--green-deep);font-weight:600;margin-top:4px}
+.ova{display:flex;align-items:center;justify-content:center}.ova i{display:block;width:100%;height:2px;background:var(--ink);position:relative}
+.ova i::after{content:'';position:absolute;right:-1px;top:-4px;border-left:7px solid var(--ink);border-top:5px solid transparent;border-bottom:5px solid transparent}
+.ovbar{background:var(--white);padding:14px 16px;margin-top:8px}
+.ovb{display:grid;grid-template-columns:110px 1fr;gap:10px;align-items:center;margin-bottom:6px}
+.ovb-l{font-size:13px;font-weight:600;color:var(--ink)}
+.ovb-t{display:flex;height:26px}.ovb-t i{display:flex;align-items:center;justify-content:center;font-style:normal;font-size:12px;font-weight:700;color:var(--ink);overflow:hidden;white-space:nowrap}
+.ovb-t i.in{background:var(--surface-2)}.ovb-t i.nw{background:var(--magenta)}
+.ovcap{margin:10px 0 0;font-size:15px;font-weight:600;color:var(--ink);max-width:none}
+.ovline{margin:4px 0 0;font-size:13px;color:var(--muted);max-width:none}
+.path-ph{min-height:0}
+.path-pipe{font-size:13px;color:var(--ink)}.path-pipe b{font-family:'Inter Tight';font-size:18px}
+.abm{display:flex;flex-direction:column;gap:6px}
+.abr{display:grid;grid-template-columns:150px 1fr 112px 1fr 112px 1fr 112px 1fr 96px 1fr 96px;align-items:stretch;padding:10px;gap:0}
+.abr.t1{background:var(--blue)}.abr.t2{background:var(--blue-light)}.abr.t3{background:var(--surface-2)}
+.abh{display:flex;flex-direction:column;gap:3px;padding-right:8px;color:var(--ink)}
+.abh b{font-family:'Inter Tight';font-size:20px;font-weight:700}.abh span{font-size:12px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}.abh em{font-style:normal;font-size:11.5px;color:var(--text)}
+.abh .pill,.aba .pill{font-size:9.5px;padding:1px 6px}
+.abb{background:var(--white);padding:8px 10px;display:flex;flex-direction:column;justify-content:center;min-width:0}
+.abb b{font-family:'Inter Tight';font-size:20px;font-weight:700;letter-spacing:-0.02em;color:var(--ink)}.abb span{font-size:11.5px;font-weight:600;color:var(--ink)}
+.aba{display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10.5px;color:var(--ink);text-align:center;padding:0 4px;gap:4px}
+.aba i{display:block;width:100%;height:2px;background:var(--ink);position:relative}
+.aba i::after{content:'';position:absolute;right:-1px;top:-4px;border-left:7px solid var(--ink);border-top:5px solid transparent;border-bottom:5px solid transparent}
+.aba input,.abh input{font:600 12px Inter;border:1px solid var(--line);padding:2px 4px;background:var(--white)}
+.abp{background:var(--ink);color:var(--white);padding:8px 10px;display:flex;flex-direction:column;justify-content:center;margin-left:8px}
+.abp b{font-family:'Inter Tight';font-size:18px}.abp span{font-size:11px;color:#ddd}
+@media (max-width:1000px){.abr{grid-template-columns:1fr;gap:4px}.aba{flex-direction:row;justify-content:flex-start;padding:2px 0 2px 12px}.aba i{width:2px;height:14px;order:-1}.aba i::after{right:-4px;top:auto;bottom:-6px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid var(--ink);border-bottom:0}.abp{margin:4px 0 0}}
+@media (max-width:900px){.ov4{grid-template-columns:1fr}.ova{height:22px}.ova i{width:2px;height:100%}.ova i::after{right:-4px;top:auto;bottom:-2px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid var(--ink);border-bottom:0}}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -762,15 +801,24 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
     <div class="lv-sec"><span class="lv-k">1 · Work it backwards</span>
       <div class="lv4" id="ansBack"></div>
       <p class="gx-cap" id="ansBackCap"></p>
-      <div class="flowseg"><button data-seg="total">Total</button><button data-seg="ent">Enterprise</button><button data-seg="mid">Mid-market</button></div>
-      <p class="flowctx" id="flowCtx"></p>
-      <div class="pans" id="pathAns"></div>
-      <div class="today" id="pathToday"></div>
-      <h4 class="paths-h">New on top of today: three paths</h4>
-      <div class="paths" id="paths"></div>
-      <p class="pathsum" id="pathSum"></p>
-      <p class="gx-cap">Bars show how many people each path needs at the top. Shares and rates are my starting assumptions, to replace with Attio data by day 30.</p>
-      <div id="flowCall"></div></div>
+      <div class="pvt"><button data-pv2="ov">Overview</button><button data-pv2="zm">Zoom in</button></div>
+      <div class="pv" id="pvOv">
+        <h4 class="pv-h">What we work, and what it brings</h4>
+        <div class="ov4" id="ov4"></div>
+        <div class="ovbar" id="ovBar"></div>
+        <p class="ovcap" id="ovCap"></p>
+        <p class="ovline">Inbound converts better than new outbound, so today's engine has its own rate. All shares and rates: see Zoom in.</p>
+      </div>
+      <div class="pv" id="pvZm" hidden>
+        <h4 class="pv-h">Where it comes from</h4>
+        <h5 class="pv-s">Split by path <span>new, on top of today</span></h5>
+        <div class="paths" id="paths"></div>
+        <p class="pathsum" id="pathSum"></p>
+        <h5 class="pv-s">The ABM flow, by tier</h5>
+        <div class="abm" id="abmFlow"></div>
+        <div id="flowCall"></div>
+        <div class="flowas" id="zmAs"></div>
+      </div></div>
     <div class="lv-sec"><span class="lv-k">2 · Outbound ramp</span>
       <div class="lvramp"><div class="lvin" id="ansRampIn"></div><div class="lvbars" id="ansRampBars"></div></div>
       <p class="gx-cap">New outbound ramps up. Most of it lands from Q2.</p></div>
@@ -1058,7 +1106,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:12,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,tier1:50,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
+  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:12,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,tier1:20,tc1:15,tc2:10,tc3:6,ab1E:30,ab2E:15,ab3E:8,ab1M:25,ab2M:15,ab3M:10,abOpp:60,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -1110,6 +1158,16 @@ const GMETA=[
   {k:'tier1',label:'ABM tier 1:1 accounts',unit:'accounts',min:0,max:300,step:5,badge:'Assumed',note:'',grid:false},
   {k:'tier2',label:'ABM tier 1:few accounts',unit:'accounts',min:0,max:600,step:10,badge:'Assumed',note:'',grid:false},
   {k:'tier3',label:'ABM tier 1:many accounts',unit:'accounts',min:0,max:2000,step:50,badge:'Assumed',note:'',grid:false},
+  {k:'tc1',label:'ABM 1:1: contacts per account',unit:'contacts',min:1,max:40,step:1,badge:'Assumed',note:'',grid:false},
+  {k:'tc2',label:'ABM 1:few: contacts per account',unit:'contacts',min:1,max:40,step:1,badge:'Assumed',note:'',grid:false},
+  {k:'tc3',label:'ABM 1:many: contacts per account',unit:'contacts',min:1,max:40,step:1,badge:'Assumed',note:'',grid:false},
+  {k:'ab1E',label:'ABM 1:1: accounts that engage',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:'',grid:false},
+  {k:'ab2E',label:'ABM 1:few: accounts that engage',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:'',grid:false},
+  {k:'ab3E',label:'ABM 1:many: accounts that engage',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:'',grid:false},
+  {k:'ab1M',label:'ABM 1:1: engaged accounts that book a meeting',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:'',grid:false},
+  {k:'ab2M',label:'ABM 1:few: engaged accounts that book a meeting',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:'',grid:false},
+  {k:'ab3M',label:'ABM 1:many: engaged accounts that book a meeting',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:'',grid:false},
+  {k:'abOpp',label:'ABM: meetings that become opportunities',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:'',grid:false},
   {k:'ptnPer',label:'Partners per territory',unit:'partners',min:1,max:10,step:1,badge:'Assumed',note:'Pilot size: 3–5 per territory.'},
   {k:'ptnOpps',label:'Referred opportunities per partner, first 2 quarters',unit:'opps',min:0,max:10,step:0.5,badge:'Assumed',note:'2–3 each.'},
   {k:'ptnWin',label:'Win rate on referred opportunities',unit:'%',min:5,max:60,step:1,badge:'Assumed',note:''},
@@ -1157,6 +1215,7 @@ function migrate(o){
   if(o.global.baseL2O===45&&!o.global.cal40){o.global.baseL2O=40;}o.global.cal40=true;
   const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
   if(!o.channels.some(c=>c.id==='activations')){const i=o.channels.findIndex(c=>c.id==='partners');o.channels.splice(i<0?o.channels.length:i,0,clone(DEFAULTS.channels.find(c=>c.id==='activations')));}
+  if(!o.global.tier20){if(o.global.tier1===50)o.global.tier1=20;o.global.tier20=true;}
   if(!o.global.cSdr1){if(o.scenarios.C)o.scenarios.C.sdr=2;o.global.cSdr1=true;}
   if(!o.global.aMix1){const A=o.scenarios.A;if(!A||!Object.values(A.budget||{}).some(v=>+v>0))o.scenarios.A=clone(DEFAULTS.scenarios.A);o.global.aMix1=true;}
   if(!o.global.v2){o.global.baseLeads=35;o.global.baseL2O=46;o.scenarios.A=clone(DEFAULTS.scenarios.A);Object.values(o.scenarios).forEach(x=>{delete x.ae4;delete x.ae4Start;});o.global.v2=true;}
@@ -1348,7 +1407,7 @@ function renderGlobals(){
 function renderTabs(){
   document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===view?'true':'false'));
 }
-function renderInputs(){{const pe=document.getElementById('paths');if(pe)delete pe.dataset.built;const pa=document.getElementById('pathAns');if(pa)delete pa.dataset.built;}renderRegIn();renderBudgetTable();renderChanTable();renderGlobals();renderTabs();}
+function renderInputs(){{['paths','abmFlow'].forEach(id=>{const e=document.getElementById(id);if(e)delete e.dataset.built;});}renderRegIn();renderBudgetTable();renderChanTable();renderGlobals();renderTabs();}
 
 /* ---------- charts ---------- */
 Chart.defaults.font.family='Inter, system-ui, sans-serif';
@@ -1526,8 +1585,91 @@ function renderDiagnosis(R){
     ${r('Wins / quarter',n1(baseQ),n1(needQ))}${r('Logos / year',n0(baseYear),n0(g.targetLogos))}</tbody>`;
 }
 function runCap(sc,cap){const o=S.global.aeCap;S.global.aeCap=cap;try{return run(sc);}finally{S.global.aeCap=o;}}
-let segSel='total';
-document.addEventListener('click',e=>{const b=e.target.closest('[data-seg]');if(!b)return;segSel=b.dataset.seg;if(window.__fermat)renderAnswer(window.__fermat);});
+let pvSel='ov';try{if(localStorage.getItem('fermat-pv')==='zm')pvSel='zm';}catch(e){}
+function showPv(){document.getElementById('pvOv').hidden=pvSel!=='ov';document.getElementById('pvZm').hidden=pvSel!=='zm';document.querySelectorAll('[data-pv2]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.pv2===pvSel?'true':'false'));}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-pv2]');if(!b)return;pvSel=b.dataset.pv2;try{localStorage.setItem('fermat-pv',pvSel);}catch(x){}showPv();});
+const PATHS=[
+  {k:'pt',name:'Partners',sub:'',cls:'g',share:'shPt',top:'Partner intros',mid:null,ra:null,rb:['ptQual','qualify']},
+  {k:'ex',name:'Marketing experiential',sub:'Events, dinners, high-touch',cls:'m',share:'shEx',top:'People met',mid:'Meetings',ra:['exMeet','book a meeting'],rb:['exQual','qualify']},
+  {k:'dg',name:'Marketing digital',sub:'ABM ads, webinars, lead magnets, search',cls:'b',share:'shDg',top:'Contacts reached',mid:'Engaged',ra:['dgEng','engage'],rb:['dgQual','qualify']}];
+function pipe2(R,sc){
+  const g=S.global,tg=num(g.targetLogos),bl=(R[sc]&&R[sc].bl)||num(g.baseLeads);
+  const l2o=num(g.wbL2O)/100||0.0001,o2w=num(g.wbO2W)/100||0.0001,acv=num(g.acv)*1000;
+  const inQL=bl*12,inOpp=inQL*num(g.baseL2O)/100,inLogo=inOpp*num(g.baseO2W)/100;
+  const newLogoNeed=Math.max(0,tg-inLogo),newQL=newLogoNeed/(l2o*o2w);
+  const paths=PATHS.map(P=>{const sh=num(g[P.share])/100,q=newQL*sh,ra=P.ra?num(g[P.ra[0]])/100||0.0001:1,rb=num(g[P.rb[0]])/100||0.0001;
+    const mid=q/rb,top=P.ra?mid/ra:mid,opp=q*l2o;return {P,sh,q,top,mid,opp,logos:opp*o2w,pipe:opp*acv};});
+  const newOpp=paths.reduce((a,x)=>a+x.opp,0),newLogo=paths.reduce((a,x)=>a+x.logos,0);
+  const C=paths[2].top,t1=num(g.tier1),t2=num(g.tier2),rem=C-t1*num(g.tc1)-t2*num(g.tc2),t3=Math.max(0,rem/(num(g.tc3)||1)),N=t1+t2+t3;
+  const tiers=[[ 'tier1','1:1',t1,'tc1','ab1E','ab1M','All three paths'],['tier2','1:few',t2,'tc2','ab2E','ab2M','Events + segment digital'],[null,'1:many',t3,'tc3','ab3E','ab3M','Digital only']].map(([key,name,acc,tc,e,m,how])=>{
+    const con=acc*num(g[tc]),eng=acc*num(g[e])/100,meet=eng*num(g[m])/100,opp=meet*num(g.abOpp)/100;return {key,name,acc,tc,e,m,how,con,eng,meet,opp,pipe:opp*acv};});
+  return {g,tg,bl,l2o,o2w,acv,inQL,inOpp,inLogo,newQL,newOpp,newLogo,paths,C,N,tiers,shTot:paths.reduce((a,x)=>a+x.sh,0)*100};
+}
+function renderPipe2(D){
+  showPv();
+  const {g}=D,f=x=>'~'+Math.round(x).toLocaleString('en-US'),M=x=>'~$'+(x/1e6).toFixed(1)+'M',K=x=>x>=1e6?M(x):'~$'+Math.round(x/1000)+'k',pl=b=>`<span class="pill ${b.toLowerCase()}">${b}</span>`;
+  const opps=D.inOpp+D.newOpp,logos=D.inLogo+D.newLogo;
+  // Overview
+  const tile=(k,v,l,sub,cls)=>`<div class="ovt ${cls||''}"><span class="k">${k}</span><b>${v}</b><span class="l">${l}</span>${sub?`<span class="s">${sub}</span>`:''}</div>`;
+  const ar='<div class="ova" aria-hidden="true"><i></i></div>';
+  document.getElementById('ov4').innerHTML=tile('Accounts we approach',f(D.N),'named accounts',`+ ${f(D.paths[0].top)} from partners`)+ar+
+    tile('Contacts we engage',f(D.C),'across all buying groups')+ar+
+    tile('Expected pipeline',M(opps*D.acv),`from ${f(opps)} opportunities`)+ar+
+    tile('Logos 2027',f(logos),`of ${n0(D.tg)}`,'',logos>=D.tg-0.5?'won':'');
+  const bar=(lab,a,b)=>{const t=Math.max(a+b,0.001);return `<div class="ovb"><span class="ovb-l">${lab}</span><div class="ovb-t"><i class="in" style="width:${a/t*100}%">${f(a)}</i><i class="nw" style="width:${b/t*100}%">${b/t>0.06?f(b):''}</i></div></div>`;};
+  document.getElementById('ovBar').innerHTML=bar('Opportunities',D.inOpp,D.newOpp)+bar('Logos',D.inLogo,D.newLogo)+`<div class="legend"><span><span class="dot" style="background:var(--surface-2)"></span>Today's engine</span><span><span class="dot" style="background:var(--magenta)"></span>New</span></div>`;
+  document.getElementById('ovCap').textContent=`Today's engine makes ${f(D.inLogo)} logos. New work adds ${f(D.newLogo)}.`;
+  // Zoom A: path cards
+  const el=document.getElementById('paths');
+  if(!el.dataset.built||!el.contains(document.activeElement)){
+    const inp=(k,w)=>`<input type="number" data-p="global.${k}" value="${g[k]}" min="0" max="100" step="1" style="width:${w||50}px">`;
+    const rate=r=>r?`<div class="path-ar"><span>${inp(r[0],46)}% ${r[1]}</span>${pl('Assumed')}</div>`:'<div class="path-ph"></div>';
+    el.innerHTML=D.paths.map(({P},i)=>`<div class="path p-${P.cls}">
+      <div class="path-h"><b>${P.name}</b><span>${P.sub||'&nbsp;'}</span></div>
+      <label class="path-sh">${inp(P.share)}<span>% of new qualified leads</span>${pl('Assumed')}</label>
+      <div class="path-bar"><i data-pv="bar${i}"></i></div>
+      <div class="path-st top"><b data-pv="top${i}"></b><span>${P.top}</span></div>
+      ${rate(P.ra)}
+      ${P.mid?`<div class="path-st"><b data-pv="mid${i}"></b><span>${P.mid}</span></div>`:'<div class="path-ph"></div>'}
+      ${rate(P.rb)}
+      <div class="path-st"><b data-pv="q${i}"></b><span>Qualified leads</span></div>
+      <div class="path-ar"><span>${n0(D.l2o*100)}% → opp</span>${pl('Given')}</div>
+      <div class="path-st"><b data-pv="o${i}"></b><span>Opportunities</span></div>
+      <div class="path-ar"><span>${n0(D.o2w*100)}% → won</span>${pl('Given')}</div>
+      <div class="path-st won"><b data-pv="l${i}"></b><span>Logos</span></div>
+      <div class="path-pipe"><b data-pv="p${i}"></b> pipeline</div>
+      <p class="path-x">${P.k==='dg'?'':'Extra, on top of what already comes in today.'}</p>
+    </div>`).join('');
+    el.dataset.built='1';}
+  const mx=Math.max(1,...D.paths.map(x=>x.top));
+  const sv=(root,k,v)=>{const x=root.querySelector(`[data-pv="${k}"]`);if(x)x.textContent=v;};
+  D.paths.forEach((x,i)=>{sv(el,'top'+i,f(x.top));sv(el,'mid'+i,f(x.mid));sv(el,'q'+i,f(x.q));sv(el,'o'+i,f(x.opp));sv(el,'l'+i,f(x.logos));sv(el,'p'+i,K(x.pipe));const b=el.querySelector(`[data-pv="bar${i}"]`);if(b)b.style.width=Math.max(1.5,x.top/mx*100)+'%';});
+  const bad=Math.abs(D.shTot-100)>0.5;
+  document.getElementById('pathSum').innerHTML=`Today ${f(D.inLogo)} + new ${f(D.newLogo)} = <b class="${logos>=D.tg-0.5?'ok':''}">${f(logos)} logos</b> · shares add up to <b class="${bad?'bad':''}">${n0(D.shTot)}%</b>${bad?' (should be 100%)':''}`;
+  // Zoom B: ABM tiers
+  const ab=document.getElementById('abmFlow');
+  if(!ab.dataset.built||!ab.contains(document.activeElement)){
+    const inp=(k,w)=>`<input type="number" data-p="global.${k}" value="${g[k]}" min="0" max="2000" step="1" style="width:${w||46}px">`;
+    const blk=(k,l)=>`<div class="abb"><b data-pv="${k}"></b><span>${l}</span></div>`;
+    const arw=h=>`<div class="aba">${h}<i></i></div>`;
+    ab.innerHTML=D.tiers.map((t,i)=>`<div class="abr t${i+1}">
+      <div class="abh"><b>${t.name}</b>${t.key?`<span>${inp(t.key,62)} accounts ${pl('Assumed')}</span>`:'<span>rest of the named accounts</span>'}<em>${t.how}</em></div>
+      ${blk('a'+i,'Accounts')}${arw(`× ${inp(t.tc)} contacts`)}${blk('c'+i,'Contacts')}${arw(`${inp(t.e)}% of accounts engage`)}${blk('e'+i,'Engaged')}${arw(`${inp(t.m)}% book a meeting`)}${blk('m'+i,'Meetings')}${arw(`${inp('abOpp')}% → opp`)}${blk('o'+i,'Opportunities')}
+      <div class="abp"><b data-pv="p${i}"></b><span>pipeline</span></div>
+    </div>`).join('');
+    ab.dataset.built='1';}
+  D.tiers.forEach((t,i)=>{sv(ab,'a'+i,f(t.acc));sv(ab,'c'+i,f(t.con));sv(ab,'e'+i,f(t.eng));sv(ab,'m'+i,f(t.meet));sv(ab,'o'+i,'~'+n1(t.opp));sv(ab,'p'+i,K(t.pipe));});
+  // Zoom C: account check
+  const over=D.N>num(g.abmAccounts);
+  document.getElementById('flowCall').innerHTML=`<p class="flowcall${over?'':' ok'}">Named accounts needed: ${f(D.N)}. The ABM list today: ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')}.${over?' The list needs to grow, or conversion needs to rise.':''}</p>`;
+  // Zoom D: assumptions
+  document.getElementById('zmAs').innerHTML=[
+    `Enterprise is ${n0(g.entLogoShare)}% of logos ${pl('Assumed')}`,
+    `${n0(g.cpaEnt)} contacts per enterprise account, ${n0(g.cpaMid)} per mid-market ${pl('Assumed')}`,
+    `Path shares and rates are starting assumptions, replaced with Attio data by day 30 ${pl('Assumed')}`,
+    `Experiential works the same named accounts as digital, so they don't add up ${pl('Assumed')}`,
+    `Partners bring accounts outside the list ${pl('Assumed')}`].map(x=>`<p>${x}</p>`).join('');
+}
 function runV(sc,v){const prev=HIRE;HIRE=v;try{return run(sc);}finally{HIRE=prev;}}
 const Q=q=>'Q'+q;
 function renderAnsIn(){
@@ -1554,67 +1696,13 @@ function renderAnswer(R){
   renderAnsIn();
   const g=S.global,sc=SC.includes(view)?view:'B';
   document.getElementById('ansPlan').textContent=R[sc].has?`Results use plan ${sc}'s budget (${PLABEL[sc].replace(/^[ABC] · /,'')}). Pick a plan in the Model tab.`:'Plan A is empty. Build it in the Model tab.';
-  // 1. work back
-  const opp=num(g.targetLogos)/(num(g.wbO2W)/100||1),lead=opp/(num(g.wbL2O)/100||1),mo=lead/12,bl=R[sc].bl||num(g.baseLeads),gap=Math.max(0,mo-bl);
-  document.getElementById('bkOpp').textContent='~'+n0(opp);document.getElementById('bkLead').textContent='~'+n0(lead);
-  document.getElementById('bkMo').textContent='~'+n0(mo)+' a month';
-  document.getElementById('bkGap').textContent='~'+n0(gap)+' more';document.getElementById('bkGapS').textContent=`qualified leads a month, vs today's ~${n0(bl)} (incl. ${n0(g.inboundLift)}% inbound lift)`;
-  document.getElementById('ansBackCap').textContent=`Working backwards from ${n0(g.targetLogos)}, at today's conversion rates.`;
-  {const tg=num(g.targetLogos),es=num(g.entLogoShare)/100,o2w=num(g.wbO2W)/100||1,l2o=num(g.wbL2O)/100||1;
-   const toNew=num(g.lead2mql)/100*num(g.mql2sql)/100||1,c2l=num(g.contact2lead)/100||1;
-   const seg=(logos,inb,cpa)=>{const ld=logos/o2w/l2o,inn=Math.min(ld,inb),out=ld-inn,leads=out/toNew,con=leads/c2l,acc=con/Math.max(1,cpa);return {ld,inn,out,leads,con,acc,opp:out*l2o,won:out*l2o*o2w};};
-   const E=seg(tg*es,0,num(g.cpaEnt)),M=seg(tg*(1-es),bl*12,num(g.cpaMid));
-   const T={};Object.keys(E).forEach(k=>T[k]=E[k]+M[k]);
-   const X={total:T,ent:E,mid:M}[segSel]||T;
-   const f=x=>'~'+Math.round(x).toLocaleString('en-US'),pl=b=>`<span class="pill ${b.toLowerCase()}">${b}</span>`;
-   document.querySelectorAll('[data-seg]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.seg===segSel?'true':'false'));
-   document.getElementById('flowCtx').textContent=`${n0(tg)} logos need ${f(T.ld)} qualified leads a year. Today's inbound covers ${f(T.inn)}. New outbound fills the other ${f(T.out)}.`;
-   const PATHS=[
-     {k:'pt',name:'Partners',sub:'',cls:'g',share:'shPt',top:'Partner intros',rates:[['ptQual','qualify']]},
-     {k:'ex',name:'Marketing experiential',sub:'Events, dinners, high-touch engagements',cls:'m',share:'shEx',top:'People met',rates:[['exMeet','book a meeting'],['exQual','qualify']]},
-     {k:'dg',name:'Marketing digital',sub:'ABM ads, webinars, lead magnets, search',cls:'b',share:'shDg',top:'Contacts reached',rates:[['dgEng','engage'],['dgQual','qualify']]}];
-   const conv=P=>P.rates.reduce((a,[k])=>a*(num(g[k])/100||0.0001),1);
-   const vals=PATHS.map(P=>{const sh=num(g[P.share])/100,q=X.out*sh;return {q,top:q/conv(P),logos:q*l2o*o2w,qE:E.out*sh,qM:M.out*sh};});
-   const mxTop=Math.max(1,...vals.map(v=>v.top));
-   const dg=vals[2],cv=conv(PATHS[2]),accE=dg.qE/cv/Math.max(1,num(g.cpaEnt)),accM=dg.qM/cv/Math.max(1,num(g.cpaMid));
-   const acc=segSel==='ent'?accE:segSel==='mid'?accM:accE+accM;
-   const el=document.getElementById('paths');
-   if(!el.dataset.built||!el.contains(document.activeElement)){
-     const inp=(k,w)=>`<input type="number" data-p="global.${k}" value="${g[k]}" min="0" max="100" step="1" style="width:${w||52}px">`;
-     el.innerHTML=PATHS.map((P,i)=>`<div class="path p-${P.cls}">
-       <div class="path-h"><b>${P.name}</b>${P.sub?`<span>${P.sub}</span>`:''}</div>
-       <label class="path-sh">${inp(P.share)}<span>% of new qualified leads</span>${pl('Assumed')}</label>
-       <div class="path-bar"><i data-pv="bar${i}"></i></div>
-       <div class="path-st top"><b data-pv="top${i}"></b><span>${P.top}</span>${P.k==='dg'?`<em data-pv="acc${i}"></em>`:''}</div>
-       <div class="path-ar">${P.rates.map(([k,l])=>`<span>${inp(k,46)}% ${l}</span>`).join('<span class="sep">·</span>')} ${pl('Assumed')}</div>
-       <div class="path-st"><b data-pv="q${i}"></b><span>Qualified leads</span></div>
-       <div class="path-ar"><span>${n0(l2o*100)}% → opp · ${n0(o2w*100)}% → won</span> ${pl('Given')}</div>
-       <div class="path-st won"><b data-pv="l${i}"></b><span>Logos</span></div>
-       <p class="path-x">${P.k==='dg'?'':'Extra, on top of what already comes in today.'}</p>
-     </div>`).join('');
-     el.dataset.built='1';
-   }
-   const set=(k,v)=>{const x=el.querySelector(`[data-pv="${k}"]`);if(x)x.textContent=v;};
-   vals.forEach((v,i)=>{set('top'+i,f(v.top));set('q'+i,f(v.q));set('l'+i,f(v.logos));const bar=el.querySelector(`[data-pv="bar${i}"]`);if(bar)bar.style.width=Math.max(1.5,v.top/mxTop*100)+'%';});
-   set('acc2',`${f(acc)} accounts · ${n0(g.cpaEnt)} contacts per enterprise / ${n0(g.cpaMid)} per mid-market`);
-   {const pa=document.getElementById('pathAns'),t1=num(g.tier1),t2=num(g.tier2),many=Math.max(0,acc-t1-t2);
-    if(!pa.dataset.built||!pa.contains(document.activeElement)){
-      const ti=(k)=>`<input type="number" data-p="global.${k}" value="${g[k]}" min="0" max="2000" step="5">`;
-      pa.innerHTML=`<div class="pans-top"><b class="pans-n" data-pv="acc"></b><span class="pans-l">named accounts</span><span class="pans-p" data-pv="ptn"></span></div>
-        <div class="tiers">
-          <div class="tier t1"><span class="k">1:1</span><b>~${ti('tier1')}</b><span>All three paths</span></div>
-          <div class="tier t2"><span class="k">1:few</span><b>~${ti('tier2')}</b><span>Events + segment digital</span></div>
-          <div class="tier t3"><span class="k">1:many</span><b data-pv="many"></b><span>Digital only, moves up when engaged</span></div>
-        </div>
-        <p class="pans-note">Experiential works the same named accounts as digital, so they don't add up. Partners bring accounts outside the list. Tier sizes <span class="pill assumed">Assumed</span></p><p class="pans-note">Named accounts are what the new digital path needs. Inbound arrives from accounts we don't pick.</p>`;
-      pa.dataset.built='1';}
-    const sv=(k,v)=>{const x=pa.querySelector(`[data-pv="${k}"]`);if(x)x.textContent=v;};
-    sv('acc',f(acc));sv('ptn',`+ ${f(vals[0].top)} from partners`);sv('many',f(many));}
-   const tot=num(g.shPt)+num(g.shEx)+num(g.shDg);
-   const tIn=X.inn,tLogo=X.inn*l2o*o2w,nLogo=vals.reduce((a,v)=>a+v.logos,0),all=tLogo+nLogo,goal=segSel==='total'?tg:segSel==='ent'?tg*es:tg*(1-es);
-   document.getElementById('pathToday').innerHTML=`<span class="k">Today's engine</span><b>${f(tIn)}</b><span>qualified leads</span><span class="arr">→</span><b>${f(tLogo)}</b><span>logos</span><em>Inbound: today's events, partners and brand.</em>`;
-   document.getElementById('pathSum').innerHTML=`Today ${f(tLogo)} + new ${f(nLogo)} = <b class="${all>=goal-0.5?'ok':''}">${f(all)} logos</b>${Math.abs(tot-100)>0.5?` · <span class="bad">shares add up to ${n0(tot)}%, not 100%</span>`:''}`;
-   document.getElementById('flowCall').innerHTML=`<p class="flowcall${acc>num(g.abmAccounts)?'':' ok'}">Marketing digital needs ${f(acc)} accounts${segSel==='total'?` (${f(accE)} enterprise, ${f(accM)} mid-market)`:''}. The ABM list today: ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} named accounts.${acc>num(g.abmAccounts)?' The list needs to grow, or digital conversion needs to rise.':' That fits within the list.'}</p>`;}
+  // 1. work back: today's engine at its own rate, new work at the brief's midpoints
+  const P2=pipe2(R,sc),bl=P2.bl;
+  document.getElementById('bkOpp').textContent='~'+n0(P2.inOpp+P2.newOpp);document.getElementById('bkLead').textContent='~'+n0(P2.inQL+P2.newQL);
+  document.getElementById('bkMo').textContent='~'+n0((P2.inQL+P2.newQL)/12)+' a month';
+  document.getElementById('bkGap').textContent='~'+n0(P2.newQL/12)+' more';document.getElementById('bkGapS').textContent=`qualified leads a month from new work, on top of today's ~${n0(bl)} (incl. ${n0(g.inboundLift)}% inbound lift)`;
+  document.getElementById('ansBackCap').textContent=`Working backwards from ${n0(g.targetLogos)}: today's engine at its own rate (${n0(g.baseL2O)}% / ${n0(g.baseO2W)}%), new work at ${n0(g.wbL2O)}% / ${n0(g.wbO2W)}%.`;
+  renderPipe2(P2);
   // 2. ramp bars
   const raw=rawLeadsQ(sc).map(x=>x/3),lc=num(g.leadCap),per=raw.map(x=>lc>0?Math.min(x,lc):x);
   const mx=Math.max(...raw.map(x=>x+bl),lc>0?lc+bl:0,1)*1.05;
