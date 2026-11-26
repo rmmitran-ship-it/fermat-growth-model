@@ -684,6 +684,45 @@ section.page{padding:36px 0 64px;border-top:0}
 .pathsum b.ok{background:var(--green);color:var(--green-deep);padding:1px 6px}
 #goal .lvrow{grid-template-columns:280px 1fr}
 @media (max-width:900px){.told3{grid-template-columns:1fr}.meters{grid-template-columns:1fr}#goal .lvrow{grid-template-columns:1fr}.bets thead{display:none}.bets tr{display:block;border-bottom:1px solid var(--line);padding:8px 0}.bets td{display:block;border:0;padding:3px 10px;text-align:left}}
+.pv-s .pill.given{background:var(--green);color:var(--green-deep)}.pv-s .pill.assumed{background:var(--magenta-light);color:var(--magenta-deep)}.pv-s .pill{font-size:11px;padding:2px 9px;margin-left:4px}
+.rflow{display:grid;align-items:stretch}
+.rflow.flowa{grid-template-columns:minmax(0,1.6fr) 30px minmax(0,1fr) 30px minmax(0,1fr) 30px minmax(0,1.1fr)}
+.rflow.flowb{grid-template-columns:minmax(0,1.3fr) 30px minmax(0,0.9fr) 30px minmax(0,1.6fr) 30px minmax(0,0.9fr) 30px minmax(0,1fr)}
+.rfb{background:var(--white);padding:14px 14px 12px;display:flex;flex-direction:column;gap:3px;color:var(--ink);min-width:0}
+.rfb.won{background:var(--green)}.rfb.new{background:var(--magenta)}
+.rfb .k{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:2px}
+.rfb.won .k,.rfb.new .k{color:var(--ink)}
+.rfb b{font-family:'Inter Tight';font-size:clamp(22px,2.3vw,30px);font-weight:700;letter-spacing:-0.03em;line-height:1.05}
+.rfb .s{font-size:12.5px;color:var(--text)}.rfb .s.strong{color:var(--ink);font-weight:700}.rfb .s.bad{color:var(--red);font-weight:600}
+.rfa{display:flex;align-items:center;justify-content:center}.rfa i{display:block;width:100%;height:2px;background:var(--ink);position:relative}
+.rfa i::after{content:'';position:absolute;right:-1px;top:-4px;border-left:7px solid var(--ink);border-top:5px solid transparent;border-bottom:5px solid transparent}
+.srow{display:grid;grid-template-columns:96px 1fr 48px auto;gap:6px;align-items:center;font-size:12.5px}
+.sl{font-weight:600}.sbar{height:12px;background:var(--surface)}.sbar i{display:block;height:100%}
+.sv{font-weight:700;text-align:right}.si{display:flex;align-items:center;gap:2px}
+.rfb input{font:600 12px Inter;border:1px solid var(--line);padding:2px 4px;background:var(--white)}
+.rstk{display:flex;height:20px;margin-top:6px;background:rgba(255,255,255,.6)}.rstk i{display:flex;align-items:center;justify-content:center;font-style:normal;font-size:10.5px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;border-right:1px solid var(--white)}
+.rfb.nql .rstk{height:26px}
+.shin{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:6px;font-size:11.5px}.shin label{display:flex;align-items:center;gap:3px}.shin span{font-weight:600}
+.tmini{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;margin-top:6px}
+.tmini span{background:var(--surface);padding:4px 5px;display:flex;flex-direction:column}.tmini em{font-style:normal;font-size:10px;font-weight:700;text-transform:uppercase;color:var(--muted)}.tmini b{font-size:15px}
+.rowc{background:var(--white);padding:16px 18px 14px;margin-top:12px}
+.rcbar{position:relative;display:flex;height:40px;background:var(--surface);margin-top:18px}
+.rcbar i{display:flex;align-items:center;padding-left:8px;font-style:normal;font-family:'Inter Tight';font-size:15px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden}
+.rcbar i.t{background:var(--green)}.rcbar i.n{background:var(--magenta)}
+.rcbar .mk{position:absolute;top:-6px;bottom:-6px;border-left:2px solid var(--ink)}.rcbar .mk.c{border-left-style:dashed}
+.rcbar .mk em{position:absolute;top:-18px;left:-1px;transform:translateX(-50%);font-style:normal;font-size:11px;font-weight:700;white-space:nowrap;color:var(--ink);background:var(--white);padding:0 3px}
+.rcbar .mk.c em{top:auto;bottom:-18px}
+.rctxt{margin:22px 0 0;font-size:clamp(16px,1.7vw,20px);font-family:'Inter Tight';font-weight:600;letter-spacing:-0.02em;color:var(--ink);max-width:none}
+.rctxt b.ok{background:var(--green);color:var(--green-deep);padding:0 6px}.rctxt b.no{background:var(--magenta-light);padding:0 6px}
+.betc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.bc{background:var(--white);padding:14px 16px;border-top:6px solid;color:var(--ink)}.bc.p0{border-color:var(--green)}.bc.p1{border-color:var(--magenta)}.bc.p2{border-color:var(--blue)}
+.bch{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}.bch b{font-family:'Inter Tight';font-size:19px;font-weight:700}.bcs{font-family:'Inter Tight';font-size:19px;font-weight:700;color:var(--muted)}
+.bc p{margin:6px 0 0;font-size:13px;line-height:1.45;max-width:none}.bc p span{display:block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+@media (max-width:1000px){
+  .rflow.flowa,.rflow.flowb{grid-template-columns:1fr}
+  .rfa{height:24px}.rfa i{width:2px;height:100%}.rfa i::after{right:-4px;top:auto;bottom:-2px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid var(--ink);border-bottom:0}
+  .betc{grid-template-columns:1fr}
+}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -827,17 +866,21 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
       <div class="lv4" id="s1"></div>
       <p class="s1line" id="s1line"></p>
       <p class="s1muted" id="s1arr"></p></div>
-    <div class="lv-sec"><span class="lv-k">Step 2 · Where they come from: what we know, and my bets</span>
-      <h5 class="pv-s">2a · What Fermat told us <span class="pill given">Given</span></h5>
-      <div class="told" id="s2a"></div>
-      <h5 class="pv-s">2b · My bets for the new leads</h5>
-      <div class="tw"><table class="bets" id="s2b"></table></div>
-      <p class="s1muted">Scale what already works (partners, events). Test what's missing (digital). Shares move monthly toward the lowest cost per opportunity.</p>
-      <h5 class="pv-s">2c · The funnel per path <span>new, on top of today</span></h5>
-      <div class="paths" id="paths"></div>
-      <details class="more mt" id="tierBox"><summary>By ABM tier (digital)</summary><div class="abm mt" id="abmFlow"></div><p class="tiercheck" id="tierCheck"></p></details>
-      <p class="pathsum" id="pathSum"></p>
-      <div id="flowCall"></div></div>
+    <div class="lv-sec"><span class="lv-k">Step 2 · Where the 60 come from</span>
+      <h5 class="pv-s">Fermat's motion today <span class="pill given">Given sources</span> <span class="pill assumed">Assumed split</span></h5>
+      <div class="rflow flowa" id="rowA"></div>
+      <p class="s1muted">They told us: mostly events, partners and brand. No paid or outbound yet. No split shared, so it's even until Attio confirms it by day 30.</p>
+      <h5 class="pv-s">New work, on top <span class="pill assumed">Assumed</span></h5>
+      <div class="rflow flowb" id="rowB"></div>
+      <p class="s1muted" id="rowBcheck"></p>
+      <div class="rowc" id="rowC"></div>
+      <h5 class="pv-s">My bets</h5>
+      <div class="betc" id="rowD"></div>
+      <p class="s1muted">Scale what already works. Test what's missing. Shares move monthly toward the lowest cost per opportunity.</p>
+      <details class="more mt" id="funnelBox"><summary>Show the funnel per path</summary>
+        <div class="paths mt" id="paths"></div>
+        <details class="more mt" id="tierBox"><summary>By ABM tier (digital)</summary><div class="abm mt" id="abmFlow"></div><p class="tiercheck" id="tierCheck"></p></details>
+      </details></div>
     <div class="lv-sec"><span class="lv-k">Step 3 · Where it breaks</span>
       <div class="meters" id="s3"></div></div>
     <div class="lv-sec"><span class="lv-k">Step 4 · What we need in place</span>
@@ -1433,7 +1476,7 @@ function renderGlobals(){
 function renderTabs(){
   document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===view?'true':'false'));
 }
-function renderInputs(){{['paths','abmFlow','s1','s2a','s2b'].forEach(id=>{const e=document.getElementById(id);if(e)delete e.dataset.built;});}renderRegIn();renderBudgetTable();renderChanTable();renderGlobals();renderTabs();}
+function renderInputs(){{['paths','abmFlow','s1','rowA','rowB'].forEach(id=>{const e=document.getElementById(id);if(e)delete e.dataset.built;});}renderRegIn();renderBudgetTable();renderChanTable();renderGlobals();renderTabs();}
 
 /* ---------- charts ---------- */
 Chart.defaults.font.family='Inter, system-ui, sans-serif';
@@ -1670,19 +1713,53 @@ function renderAnswer(R){
   const opps=D.inOpp+D.newOpp,logos=D.inLogo+D.newLogo;
   document.getElementById('s1line').textContent=`${f(D.inQL+D.newQL)} qualified leads a year in total: ${f(D.inQL)} today, ${f(D.newQL)} new. ${f(opps)} opportunities, ${M(opps*D.acv)} pipeline.`;
   document.getElementById('s1arr').textContent=`≈ ${M(logos*D.acv).replace('~','')} new ARR at ~${n0(logos/opps*100)}% blended win rate.`;
-  // STEP 2a
-  const s2a=once('s2a',()=>`<p>"Qualified leads come mostly from events, partners and brand."</p><p>"No paid or outbound engine yet."</p><p>"No split shared." So today's ${f(D.bl)} a month is shown as an even split ${pl('Assumed')} until confirmed in Attio by day 30:</p>
-    <div class="told3">${[['inEv','Events'],['inPt','Partners and referrals'],['inBr','Brand and inbound']].map(([k,l],i)=>`<div><span class="k">${l}</span><span>${inp(k,46)}%</span><b data-pv="ti${i}"></b></div>`).join('')}</div><p class="s1muted" data-pv="tsum"></p>`);
-  const b0=num(g.baseLeads),lift=D.bl-b0,ts=[num(g.inEv),num(g.inPt),num(g.inBr)],tt=ts[0]+ts[1]+ts[2];
-  ts.forEach((v,i)=>sv(s2a,'ti'+i,`${f(b0*v/100+(i===2?lift:0))} a month`));
-  const tsEl=s2a.querySelector('[data-pv="tsum"]');if(tsEl)tsEl.innerHTML=`Adds up to <b class="${Math.abs(tt-100)>0.5?'bad':''}">${n0(tt)}%</b>. The ${n0(g.inboundLift)}% inbound lift from paid (${f(lift)} a month) lands on brand and inbound only.`;
-  // STEP 2b
+  // STEP 2 · Row A: today's motion
+  const b0=num(g.baseLeads),lift=D.bl-b0,SRC=[['inEv','Events'],['inPt','Partners'],['inBr','Brand + inbound']];
+  const srcM=SRC.map(([k],i)=>b0*num(g[k])/100+(i===2?lift:0)),srcL=srcM.map(m=>m*12*D.inL2O*D.inO2W),tt=SRC.reduce((a,[k])=>a+num(g[k]),0);
+  const SC3=['--surface-2','--blue-light','--magenta-light'],PC3=['--green','--magenta','--blue'];
+  const arw='<div class="rfa" aria-hidden="true"><i></i></div>';
+  const stk=(vals,cols,lab)=>{const t=vals.reduce((a,b)=>a+b,0)||1;return `<div class="rstk">${vals.map((v,i)=>`<i style="width:${v/t*100}%;background:var(${cols[i]})">${v/t>0.14?lab(v,i):''}</i>`).join('')}</div>`;};
+  const rA=once('rowA',()=>`
+    <div class="rfb src"><span class="k">Sources</span>${SRC.map(([k,l],i)=>`<div class="srow"><span class="sl">${l}</span><span class="sbar"><i data-pv="sb${i}" style="background:var(${SC3[i]})"></i></span><span class="sv" data-pv="sm${i}"></span><span class="si">${inp(k,40)}%</span></div>`).join('')}<span class="s" data-pv="slift"></span><span class="s" data-pv="ssum"></span></div>${arw}
+    <div class="rfb"><span class="k">Qualified leads</span><b data-pv="aq"></b><span class="s" data-pv="aqy"></span></div>${arw}
+    <div class="rfb"><span class="k">Opportunities</span><b data-pv="ao"></b><span class="s" data-pv="aor"></span></div>${arw}
+    <div class="rfb won"><span class="k">Logos</span><b data-pv="al"></b><span class="s" data-pv="alr"></span><div data-pv-html="als"></div></div>`);
+  srcM.forEach((m,i)=>{sv(rA,'sm'+i,f(m)+'/mo');const b=rA.querySelector(`[data-pv="sb${i}"]`);if(b)b.style.width=Math.max(4,m/Math.max(...srcM)*100)+'%';});
+  sv(rA,'slift',`incl. ${f(lift)} a month from the paid lift`);
+  {const e=rA.querySelector('[data-pv="ssum"]');if(e){e.textContent=`Split adds up to ${n0(tt)}%`;e.className='s'+(Math.abs(tt-100)>0.5?' bad':'');}}
+  sv(rA,'aq',f(D.bl)+' a month');sv(rA,'aqy',f(D.inQL)+' a year');sv(rA,'ao',f(D.inOpp)+' a year');sv(rA,'aor',`at ${n0(D.inL2O*100)}%`);
+  sv(rA,'al',f(D.inLogo)+' a year');sv(rA,'alr',`at ${n0(D.inO2W*100)}%`);
+  {const e=rA.querySelector('[data-pv-html="als"]');if(e)e.innerHTML=stk(srcL,SC3,v=>f(v));}
+  // Row B: new work
+  const accT=D.N+D.paths[0].top,newM=D.paths.map(x=>x.q/12);
+  const rB=once('rowB',()=>`
+    <div class="rfb acc"><span class="k">Accounts I work</span><b data-pv="bn"></b><span class="s">named (ABM list)</span><span class="s" data-pv="bp"></span><span class="s strong" data-pv="bt"></span>
+      <div class="tmini">${['1:1','1:few','1:many','partners'].map((l,i)=>`<span><em>${l}</em><b data-pv="tm${i}"></b></span>`).join('')}</div></div>${arw}
+    <div class="rfb"><span class="k">Contacts</span><b data-pv="bc"></b><span class="s">across all buying groups</span></div>${arw}
+    <div class="rfb nql"><span class="k">New qualified leads</span><b data-pv="bq"></b><span class="s" data-pv="bqy"></span><div data-pv-html="bqs"></div>
+      <div class="shin">${D.paths.map(({P},i)=>`<label><span>${['Partners','Experiential','Digital'][i]}</span>${inp(P.share,40)}%</label>`).join('')}</div><span class="s" data-pv="bsum"></span></div>${arw}
+    <div class="rfb"><span class="k">Opportunities</span><b data-pv="bo"></b><span class="s" data-pv="bor"></span></div>${arw}
+    <div class="rfb new"><span class="k">Logos</span><b data-pv="bl"></b><span class="s" data-pv="blr"></span><div data-pv-html="bls"></div></div>`);
+  sv(rB,'bn',f(D.N));sv(rB,'bp',`+ ${f(D.paths[0].top)} via partners`);sv(rB,'bt',`= ${f(accT)} accounts (of ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} planned)`);
+  [D.tiers[0].acc,D.tiers[1].acc,D.tiers[2].acc,D.paths[0].top].forEach((v,i)=>sv(rB,'tm'+i,f(v).replace('~','')));
+  sv(rB,'bc',f(D.C));sv(rB,'bq',f(D.newQL/12)+' a month');sv(rB,'bqy',f(D.newQL)+' a year');
+  {const e=rB.querySelector('[data-pv-html="bqs"]');if(e)e.innerHTML=stk(newM,PC3,(v,i)=>`${['Partners','Exp.','Digital'][i]} ${n0(D.paths[i].sh*100)}% (${f(v)}/mo)`);}
+  {const e=rB.querySelector('[data-pv="bsum"]');const bad=Math.abs(D.shTot-100)>0.5;if(e){e.textContent=bad?`Shares add up to ${n0(D.shTot)}%, not 100%`:'';e.className='s'+(bad?' bad':'');}}
+  sv(rB,'bo',f(D.newOpp)+' a year');sv(rB,'bor',`at ${n0(D.l2o*100)}%`);sv(rB,'bl',f(D.newLogo)+' a year');sv(rB,'blr',`at ${n0(D.o2w*100)}%`);
+  {const e=rB.querySelector('[data-pv-html="bls"]');if(e)e.innerHTML=stk(D.paths.map(x=>x.logos),PC3,v=>f(v));}
+  {const over=accT>num(g.abmAccounts);document.getElementById('rowBcheck').innerHTML=`<b style="color:var(--ink)">${f(accT)} of ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} accounts used</b> ${pl('Assumed')} · ${over?'the list needs to grow, or conversion needs to rise':'room to spare if response comes in lower'} · confirm in Attio by day 30`;}
+  // Row C: the total
+  {const tot=D.inLogo+D.newLogo,mx=Math.max(D.tg,D.ceiling,tot)*1.06,pc=v=>v/mx*100;
+   document.getElementById('rowC').innerHTML=`<div class="rcbar"><i class="t" style="width:${pc(D.inLogo)}%">${f(D.inLogo)} today</i><i class="n" style="width:${pc(D.newLogo)}%">${D.newLogo/mx>0.08?f(D.newLogo)+' new':''}</i>
+     <span class="mk" style="left:${pc(D.tg)}%"><em>${n0(D.tg)} target</em></span><span class="mk c" style="left:${pc(D.ceiling)}%"><em>${f(D.ceiling)} AE ceiling</em></span></div>
+     <p class="rctxt">Today ${f(D.inLogo)} + new ${f(D.newLogo)} = <b>${f(tot)}</b>. The model lands at <b class="${D.closes>=D.tg-0.5?'ok':'no'}">${f(D.closes)}</b>: Q1 can't fill${D.ceiling<D.tg?`, and ${n0(num(g.aesEU)+num(g.aesUS))} AEs at ${n1(g.aeCap)} a quarter can close ${f(D.ceiling)}`:''}.</p>`;}
+  // Row D: bets
   const BETS=[
-    ['Partners','shPt','High','Partners already refer.','A structured program (value map, commission 10–20% from revenue, not budget) gets more intros from the same partners, plus US co-sellers.',`Intros a month from pilot partners; % that qualify (bar: ${n0(g.ptQual)}%).`],
-    ['Experiential','shEx','High','Events already bring leads.','Turn events into ABM moments: meetings booked before, dinners and side events around them, follow-up within 48h.',`Meetings per event; % that qualify (bar: ${n0(g.exMeet)}% meeting, ${n0(g.exQual)}% qualify).`],
-    ['Digital','shDg','Low, so it\'s staged','Brand works, but there\'s no paid or outbound engine.','LinkedIn on named accounts, outreach and competitor search capture demand brand already creates. The only path that scales without more events or partners, so it carries the biggest share, with budget released in stages.',`Engaged accounts and qualified leads a month (bar: ${n0(g.dgEng)}% engage, ${n0(g.dgQual)}% qualify), or cut after 2 quarters.`]];
-  const s2b=once('s2b',()=>`<thead><tr><th>Path</th><th>What they told us</th><th>My bet</th><th class="num">Share ${pl('Assumed')}</th><th>Confidence</th><th>How I'll know by day 90</th></tr></thead><tbody>${BETS.map(([n,k,c,t,b,h],i)=>`<tr><td><b>${n}</b></td><td>${t}</td><td>${b}</td><td class="num">${inp(k,46)}%<div class="small muted" data-pv="bq${i}"></div></td><td><span class="conf ${c.startsWith('High')?'hi':'lo'}">${c}</span></td><td data-pv="bh${i}">${h}</td></tr>`).join('')}</tbody>`);
-  D.paths.forEach((x,i)=>{sv(s2b,'bq'+i,`${f(x.q/12)} a month`);sv(s2b,'bh'+i,BETS[i][5]);});
+    ['Partners','High','hi','Partners already refer.','A structured program (value map, 10–20% commission from revenue) gets more intros, plus US co-sellers.',`Intros a month, ${n0(g.ptQual)}% qualify.`],
+    ['Experiential','High','hi','Events already bring leads.','Meetings booked before events, dinners around them, follow-up within 48h.',`Meetings per event, ${n0(g.exMeet)}% meet, ${n0(g.exQual)}% qualify.`],
+    ['Digital',"Low, so it's staged",'lo',"Brand works, no paid or outbound yet.",'LinkedIn on named accounts, outreach and competitor search capture demand brand creates. Only path that scales, so biggest share, budget in stages.',`${n0(g.dgEng)}% engage, ${n0(g.dgQual)}% qualify, or cut after 2 quarters.`]];
+  document.getElementById('rowD').innerHTML=BETS.map(([n,c,cc,t,b,h],i)=>`<div class="bc p${i}"><div class="bch"><b>${n}</b><span class="bcs">${n0(D.paths[i].sh*100)}%</span><span class="conf ${cc}">${c}</span></div>
+    <p><span>They told us</span>${t}</p><p><span>My bet</span>${b}</p><p><span>I'll know by day 90</span>${h}</p></div>`).join('');
   // STEP 2c: path cards
   const el=once('paths',()=>{const rate=r=>r?`<div class="path-ar"><span>${inp(r[0],46)}% ${r[1]}</span>${pl('Assumed')}</div>`:'<div class="path-ph"></div>';
     return D.paths.map(({P},i)=>`<div class="path p-${P.cls}">
@@ -1712,10 +1789,6 @@ function renderAnswer(R){
   D.tiers.forEach((t,i)=>{sv(ab,'a'+i,f(t.acc));sv(ab,'c'+i,f(t.con));sv(ab,'e'+i,f(t.eng));sv(ab,'q'+i,f(t.q));sv(ab,'o'+i,'~'+n1(t.opp));sv(ab,'p'+i,K(t.pipe));sv(ab,'ar'+i,`${n0(D.l2o*100)}% → opp`);});
   const tOpp=D.tiers.reduce((a,t)=>a+t.opp,0),dOpp=D.paths[2].opp,ok=Math.abs(tOpp-dOpp)<=0.1*Math.max(dOpp,0.001);
   document.getElementById('tierCheck').innerHTML=`<span class="tc ${ok?'ok':'amb'}">Tier flow ${f(tOpp)} opps · Digital path ${f(dOpp)}</span>`;
-  const bad=Math.abs(D.shTot-100)>0.5;
-  document.getElementById('pathSum').innerHTML=`Today ${f(D.inLogo)} + new ${f(D.newLogo)} = <b>${f(logos)} logos</b>. The model lands at <b class="${D.closes>=D.tg-0.5?'ok':''}">${f(D.closes)}</b>: ${D.closes<logos-0.5?`Q1 can't fill, and ${f(D.spill)} slip to 2028. `:''}Ceiling is ${n0(num(g.aesEU)+num(g.aesUS))} AEs × ${n1(g.aeCap)} × 4 = ${f(D.ceiling)}.${bad?` <span class="bad">Shares add up to ${n0(D.shTot)}%, not 100%.</span>`:''}`;
-  const over=D.N>num(g.abmAccounts);
-  document.getElementById('flowCall').innerHTML=`<p class="flowcall${over?'':' ok'}">Named accounts needed ${f(D.N)} · Planned list ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} ${pl('Assumed')} · ${over?'the list needs to grow, or conversion needs to rise':'room to spare if response rates come in lower'} · confirm in Attio by day 30</p>`;
   // STEP 3
   const meter=(lab,dem,cap,unit,txt)=>{const r=cap>0?dem/cap:9,c=r<0.85?'ok':r<=1.0001?'amb':'red';return `<div class="gm"><div class="gmh"><b>${lab}</b><span class="gmp ${c}">${n0(r*100)}%</span></div><div class="gmt"><i class="${c}" style="width:${Math.min(100,r*100)}%"></i></div><p class="gms">${f(dem)} ${unit} vs ${f(cap)} capacity</p>${txt?`<p class="gmx">${txt}</p>`:''}</div>`;};
   const closeNeed=D.tg,closeCap=D.ceiling;
