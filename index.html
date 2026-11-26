@@ -1941,6 +1941,7 @@ function renderAnswer(R){
   const legend=(items)=>`<div class="rleg">${items.map(([c,n,v])=>`<span><i style="background:var(${c})"></i>${n}${v!=null?` <b>${v}</b>`:''}</span>`).join('')}</div>`;
   // ONE SET OF NUMBERS (plan sc, nothing new in place)
   const b0=num(g.baseLeads),lift=D.bl-b0,rIn=D.inL2O*D.inO2W,baseLogo=b0*12*rIn,liftLogo=lift*12*rIn,srcLogo=D.newLogo,newWork=liftLogo+srcLogo;
+  const fL=(()=>{const fr=liftLogo-Math.floor(liftLogo);return fr>0.15&&fr<0.85?`~${Math.floor(liftLogo)}–${Math.ceil(liftLogo)}`:f(liftLogo);})();
   const pipeToday=b0*12*D.inL2O*D.acv,pipeLift=lift*12*D.inL2O*D.acv,pipeNew=D.newOpp*D.acv,pipeAll=pipeToday+pipeLift+pipeNew,allOpp=D.inOpp+D.newOpp;
   const land0=D.closes,REC={...LV0,lvHO:true,lvAE:true,aeRegion:'EU',fixNewQL:Math.max(0.01,D.newQL)},landRec=goalPlanV(R,sc,REC).closes;
   document.getElementById('recT').innerHTML=`I recommend plan B: fix the hand-off in month 1, and hire an EMEA AE once each AE has ${n0(g.maxDeals)}+ open deals. That gets us <b>${f(landRec)} of ${n0(D.tg)} logos</b>.`;
@@ -1951,7 +1952,7 @@ function renderAnswer(R){
     <div class="lvc"><span class="k">Gap</span><b class="lvn" data-pv="gap"></b><span class="lvs" data-pv="gapS"></span></div>
     <div class="lvc gap"><span class="k">So we need</span><b class="lvn" data-pv="need"></b><span class="lvs"><span data-pv="needS"></span>, at ${inp('wbL2O',44)}% → opp, ${inp('wbO2W',44)}% → won ${pl('Assumed')}</span></div>`);
   sv(s1,'in',f(baseLogo));sv(s1,'inS',`${n0(b0)} MQLs a month (Given) × ${n0(D.inL2O*100)}% → opp × ${n0(D.inO2W*100)}% → won (Assumed), no new spend`);
-  sv(s1,'gap',f(newWork));sv(s1,'gapS',`logos from new work: ${f(srcLogo)} sourced + ${f(liftLogo)} influenced (inbound lift)`);
+  sv(s1,'gap',f(newWork));sv(s1,'gapS',`logos from new work: ${f(srcLogo)} sourced + ${fL} influenced (inbound lift)`);
   sv(s1,'need',f(D.newQL/12)+' a month');sv(s1,'needS',`more MQLs (${f(D.newQL)} a year)`);
   document.getElementById('s1line').textContent=`${f(b0*12+lift*12+D.newQL)} MQLs a year: ${f(b0*12)} today, ${f(lift*12)} inbound lift, ${f(D.newQL)} new. ${f(allOpp)} opportunities, ${M(pipeAll)} pipeline.`;
   document.getElementById('s1arr').textContent=`≈ ${M((baseLogo+newWork)*D.acv).replace('~','')} new ARR at ~${n0((baseLogo+newWork)/allOpp*100)}% blended win rate.`;
@@ -1994,14 +1995,14 @@ function renderAnswer(R){
   {const e=rB.querySelector('[data-pv="bsum"]');const bad=Math.abs(D.shTot-100)>0.5;if(e){e.textContent=bad?`Shares add up to ${n0(D.shTot)}%, not 100%`:'';e.className='s'+(bad?' bad':'');}}
   sv(rB,'blift',`+ ${f(lift)} a month inbound lift from paid (influenced)`);
   svh(rB,'bo',`${f(D.newOpp)}<small> a year</small>`);sv(rB,'bor',`at ${n0(D.l2o*100)}% of MQLs`);
-  sv(rB,'bl',f(srcLogo));sv(rB,'blr',`at ${n0(D.o2w*100)}% of opportunities`);sv(rB,'bll',f(liftLogo));{const fr=liftLogo-Math.floor(liftLogo),rg=fr>0.15&&fr<0.85?`~${Math.floor(liftLogo)}–${Math.ceil(liftLogo)}`:f(liftLogo);sv(rB,'blt',`${f(srcLogo)} sourced + ${rg} influenced = ${f(newWork)} logos from new work`);sv(rB,'blu',`${srcLogo.toFixed(1)} + ${liftLogo.toFixed(1)} = ${newWork.toFixed(1)}`);}
+  sv(rB,'bl',f(srcLogo));sv(rB,'blr',`at ${n0(D.o2w*100)}% of opportunities`);sv(rB,'bll',fL);{sv(rB,'blt',`${f(srcLogo)} sourced + ${fL} influenced = ${f(newWork)} logos from new work`);sv(rB,'blu',`${srcLogo.toFixed(1)} + ${liftLogo.toFixed(1)} = ${newWork.toFixed(1)}`);}
   {const e=rB.querySelector('[data-pv-html="bls"]');if(e)e.innerHTML=legend(D.paths.map((x,i)=>[PC3[i],['Partners','Exp.','Digital'][i],f(x.logos)]));}
   {const over=accT>num(g.abmAccounts);document.getElementById('rowBcheck').innerHTML=`<b style="color:var(--ink)">${f(accT)} of ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} planned accounts</b> ${pl('Assumed')} · ${over?'the list needs to grow, or conversion needs to rise':'room to spare'} · I'll check this in month 1`;}
   // Row C: the total (no capacity, no timing)
   {const tot=baseLogo+newWork,mx=Math.max(D.tg,tot)*1.06,pc=v=>v/mx*100,lab=(v,t)=>v/mx>0.07?`${f(v)} ${t}`:'';
-   document.getElementById('rowC').innerHTML=`<div class="rcbar"><i class="t" style="width:${pc(baseLogo)}%">${lab(baseLogo,'today')}</i><i class="h" style="width:${pc(liftLogo)}%" title="${f(liftLogo)} influenced">${lab(liftLogo,'lift')}</i><i class="n" style="width:${pc(srcLogo)}%">${lab(srcLogo,'sourced')}</i>
+   document.getElementById('rowC').innerHTML=`<div class="rcbar"><i class="t" style="width:${pc(baseLogo)}%">${lab(baseLogo,'today')}</i><i class="h" style="width:${pc(liftLogo)}%" title="${fL} influenced">${liftLogo/mx>0.07?`${fL} lift`:''}</i><i class="n" style="width:${pc(srcLogo)}%">${lab(srcLogo,'sourced')}</i>
      <span class="mk" style="left:${pc(D.tg)}%"><em>${n0(D.tg)} target</em></span></div>
-     <div class="rcleg"><span><i class="t"></i>${f(baseLogo)} today</span><span><i class="h"></i>${f(liftLogo)} influenced (inbound lift)</span><span><i class="n"></i>${f(srcLogo)} sourced</span><span class="rcsi"><b>Sourced:</b> what I commit to · <b>Influenced:</b> measured as a trend, not by deal</span></div>
+     <div class="rcleg"><span><i class="t"></i>${f(baseLogo)} today</span><span><i class="h"></i>${fL} influenced (inbound lift)</span><span><i class="n"></i>${f(srcLogo)} sourced</span><span class="rcsi"><b>Sourced:</b> what I commit to · <b>Influenced:</b> measured as a trend, not by deal</span></div>
      <p class="rctxt">${f(baseLogo)} today + ${f(newWork)} new work = <b>${f(tot)} logos</b> the pipeline supports.</p>`;
    document.getElementById('rcSum').innerHTML=`<span><b>New work:</b> ${M(pipeNew)} sourced pipeline · ${f(srcLogo)} logos · ${M(srcLogo*D.acv)} new ARR. Plus ${M(pipeLift)} influenced from the inbound lift.</span><span><b>All of 2027:</b> ${M(pipeAll)} pipeline · ${f(tot)} logos the pipeline supports · ${M(tot*D.acv)} new ARR.</span>`;}
   document.getElementById('jobs').innerHTML=`<span class="job j1"><b>Job 1 · Create:</b> ${M(pipeNew)} new pipeline (~${n0(D.newOpp/allOpp*100)}%)</span><span class="job j2"><b>Job 2 · Move:</b> help all ${M(pipeAll)} convert faster</span>`;
