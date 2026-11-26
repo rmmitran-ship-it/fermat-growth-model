@@ -946,6 +946,11 @@ button.play[hidden]{display:none}
 .rcsum{display:flex;flex-direction:column;gap:4px;margin:10px 0 0;font-size:14px;color:var(--ink);max-width:none}
 .lgp.src{background:var(--magenta)}
 .fstats.f3{grid-template-columns:repeat(3,minmax(0,1fr))}.fstats.f3 .fstat b{font-size:20px}
+.fuh{font-weight:600;color:var(--ink);margin:14px 0 8px;font-size:14px}
+.fuf{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}.fuf.off{opacity:.55}
+.fus{background:var(--surface);padding:10px 12px;display:flex;flex-direction:column;min-width:110px;flex:1}.fus b{font-family:'Inter Tight';font-size:22px;font-weight:600;color:var(--ink)}.fus span{font-size:12px;color:var(--ink)}.fus em{font-style:normal;font-size:11px;color:var(--muted);margin-top:2px}
+.fus:last-child{background:var(--green-light,#d9f5d0)}
+.fua{display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;color:var(--ink);padding:0 6px;gap:3px;text-align:center}.fua i{display:block;width:26px;height:2px;background:var(--ink)}
 .acs-h{font-size:18px;margin:18px 0 10px}
 .acs{display:grid;grid-template-columns:1fr 64px 1fr 64px 1fr 64px 1fr;align-items:stretch}
 .acb{background:var(--surface);padding:14px;display:flex;flex-direction:column;gap:2px}.acb .k{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
@@ -1383,7 +1388,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,aeRegion:'EU',lvWR:false,wrUp:2,m2s:60,acReach:80,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:15,tc2:10,tc3:6,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
+  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,aeRegion:'EU',lvWR:false,wrUp:2,m2s:60,acReach:80,sdMeet:30,sdOpp:50,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:15,tc2:10,tc3:6,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -1504,6 +1509,7 @@ function migrate(o){
   const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
   if(!o.channels.some(c=>c.id==='activations')){const i=o.channels.findIndex(c=>c.id==='partners');o.channels.splice(i<0?o.channels.length:i,0,clone(DEFAULTS.channels.find(c=>c.id==='activations')));}
   if(o.global.acReach==null)o.global.acReach=80;
+  if(o.global.sdMeet==null)o.global.sdMeet=30;if(o.global.sdOpp==null)o.global.sdOpp=50;
   if(!o.global.finalV){o.global.aeRegion='EU';o.global.lvWR=false;o.global.finalV=true;}
   if(!o.global.sdrV){o.global.isLeads=0;o.global.isCalls=50;o.global.lvCS=false;o.global.sdrV=true;}
   if(!o.global.tierV2){Object.assign(o.global,{ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15});o.global.tierV2=true;}
@@ -1923,8 +1929,12 @@ function goalPlan(R,sc){
   const nE=[0,0,0,0,0,0],nU=[0,0,0,0,0,0];
   [0,1,2,3].forEach(q=>{const w=nwMQ[q]*sfQ[q]*l2o*o2w;nE[q+1]+=w*f1*(1-u[q]);nE[q+2]+=w*f2*(1-u[q]);nU[q+1]+=w*f1*u[q];nU[q+2]+=w*f2*u[q];});
   LEU.nw=nE;LUS.nw=nU;
-  let isQL=0;
-  if(g.lvIS){const a=[0,0,0,0,0,0],from=+g.lvISfrom||1;[0,1,2,3].forEach(q=>{const ql=2*num(g.isLeads)*3*share(q,from);isQL+=ql;const w=ql*l2o*o2w;a[q+1]+=w*f1;a[q+2]+=w*f2;});LUS.is=a;LEU.is=[0,0,0,0,0,0];}
+  // SDR follow-up flow: engaged target accounts not yet in pipeline → followed up → meetings → opportunities
+  let isQL=0;const rpA=Math.min(100,Math.max(0,num(g.acReach)))/100,engA=Math.min(N*rpA,tiers.reduce((a,t)=>a+Math.min(t.acc,t.eng/2),0)*rpA),adsOpp=tiers.reduce((a,t)=>a+t.opp,0);
+  const fu={eng:engA,adsOpp,open:Math.max(0,engA-adsOpp),acc:0,meet:0,opp:0,meetR:num(g.sdMeet)/100,oppR:num(g.sdOpp)/100};
+  if(g.lvIS){const a=[0,0,0,0,0,0],b=[0,0,0,0,0,0],from=+g.lvISfrom||1;[0,1,2,3].forEach(q=>{const ql=2*num(g.isLeads)*3*share(q,from);isQL+=ql;const w=ql*l2o*o2w;a[q+1]+=w*f1;a[q+2]+=w*f2;
+      const acc=fu.open*rq[q]/rs*share(q,from),m=acc*fu.meetR,o=m*fu.oppR,w2=o*o2w;fu.acc+=acc;fu.meet+=m;fu.opp+=o;
+      b[q+1]+=w2*f1*(1-u[q]);b[q+2]+=w2*f2*(1-u[q]);a[q+1]+=w2*f1*u[q];a[q+2]+=w2*f2*u[q];});LUS.is=a;LEU.is=b;}
   const aeEU=g.aeRegion!=='US',aeOn=q=>g.lvAE&&q+1>(+g.lvAEfrom||1)?g.aeCap:0;
   const capEU=[0,1,2,3].map(q=>num(g.aesEU)*g.aeCap+(aeEU?aeOn(q):0));
   const capUS=[0,1,2,3].map(q=>num(g.aesUS)*g.aeCap*(1+(g.lvCS?num(g.csLift)/100:0))+(aeEU?0:aeOn(q)));
@@ -1934,13 +1944,13 @@ function goalPlan(R,sc){
   // capacity checks
   const aes=num(g.aesEU)+num(g.aesUS)+(g.lvAE?1:0);
   const screens=(inQL+newQL)*hCut/12,qualCap=capQ.reduce((a,b)=>a+b,0)/12;
-  const opps=inSQL*inL2O+nwSQL*l2o+isQL*l2o,deals=opps/12*num(g.cycle)/aes;
-  const potWins=inSQL*inL2O*inO2W+(nwSQL+isQL)*l2o*o2w;
+  const opps=inSQL*inL2O+nwSQL*l2o+isQL*l2o+fu.opp,deals=opps/12*num(g.cycle)/aes;
+  const potWins=inSQL*inL2O*inO2W+(nwSQL+isQL)*l2o*o2w+fu.opp*o2w;
   const lagSlip=[LEU,LUS].reduce((a,L)=>a+Object.values(L).reduce((x,arr)=>x+(arr[4]||0)+(arr[5]||0),0),0);
   const euReady=simEU.demand.reduce((a,b)=>a+b,0),usReady=simUS.demand.reduce((a,b)=>a+b,0),euCap=capEU.reduce((a,b)=>a+b,0),usCap=capUS.reduce((a,b)=>a+b,0);
   const euLoad=simEU.demand.reduce((a,b)=>a+b,0)/capEU.reduce((a,b)=>a+b,0),usLoad=simUS.demand.reduce((a,b)=>a+b,0)/capUS.reduce((a,b)=>a+b,0);
   return {g,tg,bl,acv,l2o,o2w,inL2O,inO2W,inQL,inOpp,inLogo,gap,newQL,newOpp,newLogo,paths,C,N,tiers,closes,ceiling,spill,simEU,simUS,capEU,capUS,
-    autoAcc,lagSlip,euReady,usReady,euCap,usCap,screens,qualCap,sfQ,inSQL,nwSQL,unscreened,potWins,hCut,handover:(inSQL+nwSQL+isQL)/12,opps,deals,aes,euLoad,usLoad,shTot:paths.reduce((a,x)=>a+x.sh,0)*100};
+    fu,autoAcc,lagSlip,euReady,usReady,euCap,usCap,screens,qualCap,sfQ,inSQL,nwSQL,unscreened,potWins,hCut,handover:(inSQL+nwSQL+isQL)/12,opps,deals,aes,euLoad,usLoad,shTot:paths.reduce((a,x)=>a+x.sh,0)*100};
 }
 function renderAnswer(R){
   if(!document.getElementById('goal'))return;
@@ -2119,14 +2129,21 @@ function renderAnswer(R){
      blk('','Target accounts',f(N),'the named list',tl(t=>t.acc))+arr(`${n0(rp*100)}% ${pl('Assumed')}`)+
      blk('','Reached',f(rch),'see our ads')+arr(pct(eng,rch))+
      blk('eng','Engaged',f(eng),'2+ people engage','needs people, not just ads ↓')+arr(pct(opp,eng))+
-     blk('won','In pipeline',f(opp),'opportunities from digital',M(opp*D2.acv)+' pipeline');
+     blk('won','In pipeline',f(opp+(g.lvIS?D2.fu.opp:0)),g.lvIS?`${f(opp)} from ads + ${f(D2.fu.opp)} from SDR follow-up`:'opportunities from digital',M((opp+(g.lvIS?D2.fu.opp:0))*D2.acv)+' pipeline');
+   const FU=g.lvIS?D2.fu:goalPlanV(R,sc,{lvCS:false,...PU,lvIS:true,lvISfrom:1}).fu,fs=(k,v,s2)=>`<div class="fus"><b>${v}</b><span>${k}</span>${s2?`<em>${s2}</em>`:''}</div>`,fa=t=>`<div class="fua">${t}<i></i></div>`;
+   const fuHTML=`<div class="fuh">${g.lvIS?'With the 2 SDRs':'What the 2 SDRs would add'} <span class="muted">· a year</span></div><div class="fuf${g.lvIS?'':' off'}">
+     ${fs('engaged, not yet in pipeline',f(FU.open),`${f(FU.eng)} engaged − ${f(FU.adsOpp)} already in pipeline`)}${fa('SDRs call')}
+     ${fs('followed up',f(FU.acc),g.lvIS&&(+g.lvISfrom||1)>1?`from Q${g.lvISfrom}`:'')}${fa(`${n0(FU.meetR*100)}% ${pl('Assumed')}`)}
+     ${fs('meetings',f(FU.meet))}${fa(`${n0(FU.oppR*100)}% ${pl('Assumed')}`)}
+     ${fs('opportunities',f(FU.opp),M(FU.opp*D2.acv)+' pipeline')}${fa(`${n0(D2.o2w*100)}%`)}
+     ${fs('logos',f(FU.opp*D2.o2w),(()=>{const ov={lvCS:false,...PU,lvIS:true,lvISfrom:g.lvIS?g.lvISfrom:1},d=goalPlanV(R,sc,ov).closes-goalPlanV(R,sc,{...ov,sdMeet:0}).closes;return `${f(Math.max(0,d))} close in 2027; the rest in 2028 or wait for an AE`;})())}</div>`;
    const coldM=D2.unscreened/12,spare=D2.qualCap-D2.screens;
    const who=coldM>0.5?`<span class="bad">Nobody has time today.</span> AEs are full: ~${n0(coldM)} MQLs a month already go cold. ${g.lvIS?'':'The 2 SDRs would own this.'}`
      :g.lvIS?'The 2 SDRs own it, alongside hand-off calls.'
      :`AEs, in the time the hand-off fix frees up (~${n0(Math.max(0,spare))} calls a month). That's not enough for this many accounts, so the 2 SDRs own it.`;
    document.getElementById('acsup').innerHTML=`<p><b>Ads get an account to notice us. A person turns that into a conversation.</b></p>
      <ul><li>Follow up within 48 hours when 2+ people from an account engage</li><li>Invite engaged accounts to a dinner or event nearby</li><li>Ask a partner who already works with them for an intro</li><li>A short note from Martí or Pol for the ${f(T[0].acc).replace('~','')} accounts in the 1:1 group</li></ul>
-     <p class="who"><b>Who does it:</b> ${who}</p>`;}
+     <p class="who"><b>Who does it:</b> ${who}</p>${fuHTML}`;}
   // fixes, in order
   {const base=D0.closes,one=o=>goalPlanV(R,sc,{...LV0,...PU,...o}).closes;
    const qsel=k=>` · from <select data-p="global.${k}">${[1,2,3,4].map(q=>`<option value="${q}" ${+g[k]===q?'selected':''}>Q${q}</option>`).join('')}</select>`;
@@ -2151,6 +2168,8 @@ function renderAnswer(R){
       row('Hand-off calls per AE a month',inp('qualCalls',52,80))+
       row('MQL → SQL (%)',inp('m2s',52,100))+
       row('Target accounts that see our ads (%)',inp('acReach',52,100))+
+      row('SDR follow-up: engaged accounts that take a meeting (%)',inp('sdMeet',52,100))+
+      row('SDR follow-up: meetings that become an opportunity (%)',inp('sdOpp',52,100))+
       row('Max open opportunities per AE',inp('maxDeals',52,60))+
       row('Hand-off fix: extra inbound leads that become deals (pts)',inp('hoLift',52,20))+
       row('Hand-off fix: fewer calls for AEs (%)',inp('hoCut',52,80))+
