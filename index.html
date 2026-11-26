@@ -480,7 +480,11 @@ section.page{padding:36px 0 64px;border-top:0}
 .kit-h{font-family:'Inter Tight';font-size:24px;font-weight:700;letter-spacing:-0.024em;color:var(--ink);margin:24px 0 12px;scroll-margin-top:80px}
 .ba{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center}
 .ba1{aspect-ratio:4/3}.ba-arr{font-weight:700;font-size:20px;color:var(--ink)}
-.vid.portrait{aspect-ratio:12/5}.vid.portrait img{object-position:center 25%}
+.vid.portrait{aspect-ratio:12/5}.vid.portrait img{object-position:30% 25%;border-radius:0}
+.vid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;border-radius:0;background:transparent}
+button.play{border:0;padding:0;cursor:pointer;z-index:2;border-radius:0}
+button.play:focus-visible{outline:3px solid var(--white);outline-offset:-7px}
+button.play[hidden]{display:none}
 .vid.pol{margin-top:0}
 .kitdl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13.5px;margin:4px 0 0;background:var(--white);padding:12px 14px}
 .kitdl dt{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding-top:2px}
@@ -723,6 +727,16 @@ section.page{padding:36px 0 64px;border-top:0}
   .rfa{height:24px}.rfa i{width:2px;height:100%}.rfa i::after{right:-4px;top:auto;bottom:-2px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid var(--ink);border-bottom:0}
   .betc{grid-template-columns:1fr}
 }
+.betc{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.6fr)}
+.conf.med{background:var(--blue-light);color:var(--blue-deep)}.conf.mix{background:var(--surface);color:var(--ink)}
+.mot{border-top:4px solid;padding:10px 0 4px;margin-top:10px}.mot.m1{border-color:var(--blue)}.mot.m2{border-color:var(--blue-light)}
+.moh{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px}.moh b{font-family:'Inter Tight';font-size:16px}.moh>span:not(.conf){font-size:12px;color:var(--text)}
+.mot p b{font-weight:700}
+.toA{all:unset;cursor:pointer;display:inline-block;margin-top:4px;font-size:11.5px;font-weight:700;background:var(--magenta-light);color:var(--ink);padding:2px 8px}
+.toA:focus-visible{outline:2px solid var(--ink)}
+.bccap{margin-top:10px!important;font-size:12.5px!important;color:var(--muted)!important;font-style:italic}
+.srow.flash{background:var(--magenta-light);transition:background .3s}
+@media (max-width:1000px){.betc{grid-template-columns:1fr}}
 /* deal mix */
 .goal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px;margin:8px 0 24px}
 .goalline{font-family:'Inter Tight';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;color:var(--ink);line-height:1.2;max-width:34ch}
@@ -1138,8 +1152,8 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
     <div class="narr-or">or</div>
     <div class="narr-col fl">
       <span class="k">Founder-led</span><b class="nq">"Meet the person behind it"</b>
-      <div class="vid portrait"><span class="ph">Pol portrait</span><img src="assets/pol-portrait.jpg" alt="Pol portrait"></div>
-      <a class="vid pol" href="" target="_blank" rel="noopener"><!-- POL VIDEO URL --><span class="ph">Pol video</span><img src="assets/pol-thumbnail.jpg" alt="Pol video"><i class="play" aria-hidden="true"></i></a>
+      <div class="vid portrait"><span class="ph">Pol portrait</span><img src="assets/pol-portrait.jpg" alt="Pol, founder of Fermat, in conversation"></div>
+      <div class="vid pol" data-video><span class="ph">Pol video</span><video src="assets/pol-clip.mp4" poster="assets/pol-clip-thumbnail.jpg" playsinline muted loop preload="metadata" aria-label="Pol on why the idea-to-product gap matters"></video><button type="button" class="play" aria-label="Play video"></button></div>
       <dl class="kitdl">
         <dt>Formats</dt><dd>"Why I started Fermat" short series · point of view on AI in fashion · customer conversations · dinners with heads of design</dd>
         <dt>Channels</dt><dd>LinkedIn (Pol + company), podcast (Pol as host), events, PR with brand and comms</dd>
@@ -1658,6 +1672,7 @@ const PATHS=[
   {k:'pt',name:'Partners',sub:'',cls:'g',share:'shPt',top:'Partner intros',mid:null,ra:null,rb:['ptQual','qualify']},
   {k:'ex',name:'Marketing experiential',sub:'Events, dinners, high-touch',cls:'m',share:'shEx',top:'People met',mid:'Meetings',ra:['exMeet','book a meeting'],rb:['exQual','qualify']},
   {k:'dg',name:'Marketing digital',sub:'ABM ads, webinars, lead magnets, search',cls:'b',share:'shDg',top:'Contacts reached',mid:'Engaged',ra:['dgEng','engage'],rb:['dgQual','qualify']}];
+document.addEventListener('click',e=>{if(!e.target.closest('[data-toA]'))return;const a=document.getElementById('rowA');if(!a)return;a.scrollIntoView({behavior:'smooth',block:'center'});const r=a.querySelectorAll('.srow')[2];if(r){r.classList.add('flash');setTimeout(()=>r.classList.remove('flash'),1600);}});
 function runV(sc,v){const prev=HIRE;HIRE=v;try{return run(sc);}finally{HIRE=prev;}}
 // Target-driven plan: works back from the logo target, then runs the result through the model's own
 // engine (simulate): sales-cycle lag, Q1 ramp, EU/US AE capacity, 2028 spillover.
@@ -1743,7 +1758,8 @@ function renderAnswer(R){
   sv(rB,'bn',f(D.N));sv(rB,'bp',`+ ${f(D.paths[0].top)} via partners`);sv(rB,'bt',`= ${f(accT)} accounts (of ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} planned)`);
   [D.tiers[0].acc,D.tiers[1].acc,D.tiers[2].acc,D.paths[0].top].forEach((v,i)=>sv(rB,'tm'+i,f(v).replace('~','')));
   sv(rB,'bc',f(D.C));sv(rB,'bq',f(D.newQL/12)+' a month');sv(rB,'bqy',f(D.newQL)+' a year');
-  {const e=rB.querySelector('[data-pv-html="bqs"]');if(e)e.innerHTML=stk(newM,PC3,(v,i)=>`${['Partners','Exp.','Digital'][i]} ${n0(D.paths[i].sh*100)}% (${f(v)}/mo)`);}
+  const tgtM=(D.tiers[0].q+D.tiers[1].q)/12,aoM=D.tiers[2].q/12;
+  {const e=rB.querySelector('[data-pv-html="bqs"]');if(e)e.innerHTML=stk([newM[0],newM[1],tgtM,aoM],['--green','--magenta','--blue','--blue-light'],(v,i)=>`${['Partners','Exp.','ABM','Always-on'][i]} (${f(v)}/mo)`)+`<span class="s">Partners ${n0(D.paths[0].sh*100)}% · Experiential ${n0(D.paths[1].sh*100)}% · Digital ${n0(D.paths[2].sh*100)}% = targeted ABM ${f(tgtM)}/mo + always-on ${f(aoM)}/mo</span>`;}
   {const e=rB.querySelector('[data-pv="bsum"]');const bad=Math.abs(D.shTot-100)>0.5;if(e){e.textContent=bad?`Shares add up to ${n0(D.shTot)}%, not 100%`:'';e.className='s'+(bad?' bad':'');}}
   sv(rB,'bo',f(D.newOpp)+' a year');sv(rB,'bor',`at ${n0(D.l2o*100)}%`);sv(rB,'bl',f(D.newLogo)+' a year');sv(rB,'blr',`at ${n0(D.o2w*100)}%`);
   {const e=rB.querySelector('[data-pv-html="bls"]');if(e)e.innerHTML=stk(D.paths.map(x=>x.logos),PC3,v=>f(v));}
@@ -1758,8 +1774,19 @@ function renderAnswer(R){
     ['Partners','High','hi','Partners already refer.','A structured program (value map, 10–20% commission from revenue) gets more intros, plus US co-sellers.',`Intros a month, ${n0(g.ptQual)}% qualify.`],
     ['Experiential','High','hi','Events already bring leads.','Meetings booked before events, dinners around them, follow-up within 48h.',`Meetings per event, ${n0(g.exMeet)}% meet, ${n0(g.exQual)}% qualify.`],
     ['Digital',"Low, so it's staged",'lo',"Brand works, no paid or outbound yet.",'LinkedIn on named accounts, outreach and competitor search capture demand brand creates. Only path that scales, so biggest share, budget in stages.',`${n0(g.dgEng)}% engage, ${n0(g.dgQual)}% qualify, or cut after 2 quarters.`]];
-  document.getElementById('rowD').innerHTML=BETS.map(([n,c,cc,t,b,h],i)=>`<div class="bc p${i}"><div class="bch"><b>${n}</b><span class="bcs">${n0(D.paths[i].sh*100)}%</span><span class="conf ${cc}">${c}</span></div>
-    <p><span>They told us</span>${t}</p><p><span>My bet</span>${b}</p><p><span>I'll know by day 90</span>${h}</p></div>`).join('');
+  const tAcc=D.tiers[0].acc+D.tiers[1].acc,aAcc=D.tiers[2].acc;
+  const dig=`<div class="bc p2"><div class="bch"><b>Digital</b><span class="bcs">${n0(D.paths[2].sh*100)}%</span><span class="conf mix">Blend: targeted ABM + always-on</span></div>
+    <div class="mot m1"><div class="moh"><b>Targeted ABM</b><span>1:1 + 1:few · ${f(tAcc)} named accounts</span><span class="conf med">Medium</span></div>
+      <p><span>What</span>Personal outreach, account-based LinkedIn ads, signals (free sign-ups by domain, job changes, hiring).</p>
+      <p><span>Brings</span><b>${f(tgtM)} qualified leads a month</b> (1:1 + 1:few qualified ÷ 12)</p>
+      <p><span>I'll know by day 90</span>% of the ${f(tAcc).replace('~','')} accounts engaged, meetings booked, ${n0(g.ab2M)}–${n0(g.ab1M)}% qualify.</p></div>
+    <div class="mot m2"><div class="moh"><b>Always-on</b><span>1:many + competitor search · ${f(aAcc)} accounts + search</span><span class="conf lo">Low, so it's staged</span></div>
+      <p><span>What</span>One LinkedIn always-on campaign on the ICP list (story picked by the LinkedIn test, live in month 4), competitor search in the US.</p>
+      <p><span>Brings</span><b>${f(aoM)} qualified lead${Math.round(aoM)===1?'':'s'} a month</b> directly (1:many qualified ÷ 12)<br>+ the ${n0(g.inboundLift)}% lift on today's inbound (${f(lift)} a month) <button class="toA" data-toA>↑ Row A · Brand + inbound</button></p>
+      <p><span>I'll know by day 90</span>Engaged accounts, cost per qualified lead, inbound trend vs Q4. Cut after 2 quarters if flat.</p></div>
+    <p class="bccap">Targeted ABM brings new leads. Always-on mostly makes today's inbound bigger.</p></div>`;
+  document.getElementById('rowD').innerHTML=BETS.slice(0,2).map(([n,c,cc,t,b,h],i)=>`<div class="bc p${i}"><div class="bch"><b>${n}</b><span class="bcs">${n0(D.paths[i].sh*100)}%</span><span class="conf ${cc}">${c}</span></div>
+    <p><span>They told us</span>${t}</p><p><span>My bet</span>${b}</p><p><span>I'll know by day 90</span>${h}</p></div>`).join('')+dig;
   // STEP 2c: path cards
   const el=once('paths',()=>{const rate=r=>r?`<div class="path-ar"><span>${inp(r[0],46)}% ${r[1]}</span>${pl('Assumed')}</div>`:'<div class="path-ph"></div>';
     return D.paths.map(({P},i)=>`<div class="path p-${P.cls}">
@@ -1955,6 +1982,11 @@ function renderTL(){
 }
 function wireMedia(root){
   root.querySelectorAll('.vid img').forEach(im=>{const gone=()=>im.remove();if(!im.getAttribute('src'))gone();else if(im.complete&&!im.naturalWidth)gone();else im.addEventListener('error',gone);});
+  root.querySelectorAll('[data-video]').forEach(w=>{const v=w.querySelector('video'),b=w.querySelector('button.play');if(!v||!b)return;
+    const gone=()=>{v.remove();b.remove();};if(v.error)return gone();v.addEventListener('error',gone);
+    const show=()=>{b.hidden=false;v.controls=false;};
+    b.addEventListener('click',()=>{b.hidden=true;v.controls=true;const pr=v.play();if(pr&&pr.catch)pr.catch(show);});
+    v.addEventListener('pause',show);v.addEventListener('ended',show);});
   root.querySelectorAll('a.vid').forEach(a=>{if(!a.getAttribute('href')){a.removeAttribute('target');a.setAttribute('aria-disabled','true');a.addEventListener('click',e=>e.preventDefault());}});
 }
 document.addEventListener('click',e=>{if(e.target.closest('[data-kit]')){const k=document.getElementById('kit');if(k)k.scrollIntoView({behavior:'smooth',block:'start'});}});
