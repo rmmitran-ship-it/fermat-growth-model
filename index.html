@@ -1360,7 +1360,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:15,tc2:10,tc3:6,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
+  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,aeRegion:'EU',lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:15,tc2:10,tc3:6,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -1897,8 +1897,9 @@ function goalPlan(R,sc){
   LEU.nw=nE;LUS.nw=nU;
   let isQL=0;
   if(g.lvIS){const a=[0,0,0,0,0,0],from=+g.lvISfrom||1;[0,1,2,3].forEach(q=>{const ql=2*num(g.isLeads)*3*share(q,from);isQL+=ql;const w=ql*l2o*o2w;a[q+1]+=w*f1;a[q+2]+=w*f2;});LUS.is=a;LEU.is=[0,0,0,0,0,0];}
-  const capEU=[0,1,2,3].map(()=>num(g.aesEU)*g.aeCap);
-  const capUS=[0,1,2,3].map(q=>num(g.aesUS)*g.aeCap*(1+(g.lvCS?num(g.csLift)/100:0))+(g.lvAE&&q+1>(+g.lvAEfrom||1)?g.aeCap:0));
+  const aeEU=g.aeRegion!=='US',aeOn=q=>g.lvAE&&q+1>(+g.lvAEfrom||1)?g.aeCap:0;
+  const capEU=[0,1,2,3].map(q=>num(g.aesEU)*g.aeCap+(aeEU?aeOn(q):0));
+  const capUS=[0,1,2,3].map(q=>num(g.aesUS)*g.aeCap*(1+(g.lvCS?num(g.csLift)/100:0))+(aeEU?0:aeOn(q)));
   const simEU=simulate(LEU,capEU),simUS=simulate(LUS,capUS);
   const closes=simEU.wins+simUS.wins,ceiling=[...capEU,...capUS].reduce((a,b)=>a+b,0);
   const spill=['base','nw','is'].reduce((a,k)=>a+(simEU.spillBy[k]||0)+(simUS.spillBy[k]||0),0);
@@ -2069,18 +2070,18 @@ function renderAnswer(R){
      ${neck}
      <div class="pz sl"><span class="pzl">Sales</span><div class="pzc">${bar(3,'SQL','accepted by an AE')}${ar.replace('class="pa"',`class="pa b2 ${b2}"`)}${bar(4,'Opportunity')}${ar.replace('class="pa"',`class="pa b2 ${b2}"`)}<div class="pwon">${bar(5,'Won','in 2027')}${lost2>0.5?`<div class="pover">−${f(lost2)} wait for an AE</div>`:''}${slip>0.5?`<span class="ps">+${f(slip)} close in 2028</span>`:''}</div></div></div></div>
      <div class="pbns"><div class="pbn ${b1}"><b>Bottleneck 1 · Qualifying.</b> ${f(D2.screens)} MQLs a month${g.lvHO?' after scoring':''}, ${g.lvIS?'AEs and SDRs':'AEs'} can screen ~${f(D2.qualCap).replace('~','')}. ${r1>1.0001?'The rest wait and go cold.':'Screening keeps up.'}</div>
-       <div class="pbn ${b2}"><b>Bottleneck 2 · AE capacity.</b> ${n0(D2.deals)} open deals per AE vs ${n0(g.maxDeals)}; ${f(D2.potWins-slip)} closes ready vs ${f(D2.ceiling)} (${n0(D2.aes)} AEs × ${n1(g.aeCap)} × 4). ${b2==='idle'?'Not hit yet: screening throttles the pipe first.':b2==='red'?`Europe's ${n0(g.aesEU)} AEs are full: ${f(lost2)} wait.${g.lvAE?' The +1 AE sits in the US, where there is room, so it can\'t clear Europe\'s queue.':''}`:'Covered.'}</div></div>
+       <div class="pbn ${b2}"><b>Bottleneck 2 · AE capacity.</b> ${n0(D2.deals)} open deals per AE vs ${n0(g.maxDeals)}; ${f(D2.potWins-slip)} closes ready vs ${f(D2.ceiling)} (${n0(D2.aes)} AEs × ${n1(g.aeCap)} × 4). ${b2==='idle'?'Not hit yet: screening throttles the pipe first.':b2==='red'?`Europe's ${n0(g.aesEU)} AEs are full: ${f(lost2)} wait.${g.lvAE&&g.aeRegion==='US'?' The +1 AE sits in the US, where there is room, so it can\'t clear Europe\'s queue.':''}`:'Covered.'}</div></div>
      <div class="legend">${CH.map(c=>`<span><span class="dot" style="background:${c.c}"></span>${c.n}</span>`).join('')}</div>`;
    if(!keepFocus)pp.innerHTML=html;else{const v=pp.querySelector('.pval');if(v)v.textContent=f(accNow);const rest=document.createElement('div');rest.innerHTML=html;pp.querySelector('.pzs').replaceWith(rest.querySelector('.pzs'));pp.querySelector('.pbns').replaceWith(rest.querySelector('.pbns'));}
   }
-  {const st=document.getElementById('mitSum');if(st){const b1=D0.closes;st.innerHTML=`<b>Now: ${f(D2.closes)} logos</b> (${D2.closes-b1>=0?'+':'−'}${n1(Math.abs(D2.closes-b1))} vs nothing in place). Fixes don't stack past ${f(goalPlanV(R,sc,{...LV0,...PU,lvHO:true,lvIS:true,lvAE:true}).closes)}: once screening is fixed, Europe's ${n0(g.aesEU)} AEs are the limit, and the +1 AE sits in the US.`;}}
+  {const st=document.getElementById('mitSum');if(st){const b1=D0.closes;st.innerHTML=`<b>Now: ${f(D2.closes)} logos</b> (${D2.closes-b1>=0?'+':'−'}${n1(Math.abs(D2.closes-b1))} vs nothing in place). ${g.aeRegion==='US'?`Fixes don't stack past ${f(goalPlanV(R,sc,{...LV0,...PU,lvHO:true,lvIS:true,lvAE:true}).closes)}: once screening is fixed, Europe's ${n0(g.aesEU)} AEs are the limit, and the +1 AE sits in the US.`:`With all three: ${f(goalPlanV(R,sc,{...LV0,...PU,lvHO:true,lvIS:true,lvAE:true}).closes)}. Fix screening first (free), then add the AE where the queue is: EMEA today, the US if its pipeline grows.`}`;}}
   // mitigations
   {const base=D0.closes,one=o=>goalPlanV(R,sc,{...LV0,...PU,...o}).closes;
    const M=[['lvHO','Handoff & lead scoring in Attio','fixes Bottleneck 1 partly',0,`AEs only see scored MQLs; ${n0(g.hoCut)}% fewer conversations to screen by hand.`,''],
      ['lvIS','+2 SDRs','fixes Bottleneck 1',2*num(g.isCost)*1000,`+~${n0(2*num(g.isCalls))} screens a month (${n0(g.isCalls)} each).`,'lvISfrom'],
-     ['lvAE','+1 AE (US)','adds US closing capacity · also screens',num(g.aeHireCost)*1000,`+${n0(g.maxDeals)} open deals, +${n1(g.aeCap)} closes a quarter in the US from the quarter after hire. Doesn't clear Europe's queue. Plus commission.`,'lvAEfrom']];
+     ['lvAE','+1 AE · extra capacity','likely EMEA, depending on how the US moves',num(g.aeHireCost)*1000,`+${n0(g.maxDeals)} open deals, +${n1(g.aeCap)} closes a quarter from the quarter after hire, and it screens too. Plus commission.`,'lvAEfrom']];
    const mi=document.getElementById('mits');
-   if(!mi.contains(document.activeElement))mi.innerHTML=M.map(([k,n,fx,cost,why,qk])=>{const d=one({[k]:true})-base;const sel=qk?` · from <select data-p="global.${qk}">${[1,2,3,4].map(q=>`<option value="${q}" ${+g[qk]===q?'selected':''}>Q${q}</option>`).join('')}</select>`:'';
+   if(!mi.contains(document.activeElement))mi.innerHTML=M.map(([k,n,fx,cost,why,qk])=>{const d=one({[k]:true})-base;const sel=(k==='lvAE'?` · in <select data-p="global.aeRegion" data-str><option value="EU" ${g.aeRegion!=='US'?'selected':''}>EMEA</option><option value="US" ${g.aeRegion==='US'?'selected':''}>US</option></select>`:'')+(qk?` · from <select data-p="global.${qk}">${[1,2,3,4].map(q=>`<option value="${q}" ${+g[qk]===q?'selected':''}>Q${q}</option>`).join('')}</select>`:'');
      return `<label class="mit${g[k]?' on':''}"><input type="checkbox" data-p="global.${k}" ${g[k]?'checked':''}><span class="mn"><b>${n}</b><em>${fx}${sel}</em><span>${why}</span></span><span class="mv"><b>${d>=0?'+':'−'}${n1(Math.abs(d))}</b><span>logos</span></span><span class="mv"><b>${cost?k$(cost):'$0'}</b><span>a year</span></span><span class="mv"><b>${cost&&d>0.05?k$(cost/d):'—'}</b><span>per extra logo</span></span></label>`;}).join('');}
   // Model tab: what the fixes cost
   {const ft=document.getElementById('fixTable');if(ft){const base=goalPlanV(R,sc,{...LV0}).closes,gm=num(g.acv)*1000*num(g.gm)/100,one=o=>goalPlanV(R,sc,{...LV0,...o}).closes-base;
@@ -2325,7 +2326,7 @@ function onInput(e){
   if(/^scenarios\.[BC]\.(budget|phasing)\./.test(p))return;
   const [o,k]=resolve(p);if(!o)return;
   let v;
-  if(t.type==='checkbox')v=t.checked;else if(t.type==='text')v=t.value;else if(t.tagName==='SELECT')v=+t.value;else v=t.value===''?null:+t.value;
+  if(t.type==='checkbox')v=t.checked;else if(t.type==='text'||t.hasAttribute('data-str'))v=t.value;else if(t.tagName==='SELECT')v=+t.value;else v=t.value===''?null:+t.value;
   o[k]=v;
   if(p.startsWith('scenarios.A.budget.'))delete S.scenarios.A.wbMix;
   document.querySelectorAll(`[data-p="${p}"]`).forEach(x=>{if(x!==t&&x.type!=='checkbox'&&x.tagName!=='SELECT'){x.value=(v==null?(x.type==='range'?x.min:''):v);}});
