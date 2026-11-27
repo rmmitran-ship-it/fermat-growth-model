@@ -1598,7 +1598,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:2,lvIS:false,lvISfrom:3,aeRegion:'EU',lvWR:false,wrUp:2,m2s:60,acReach:80,revGoal:3.1,ovPerAcc:15,calcBudget:310,ovEntSh:25,ovEntAcv:100,ovMmAcv:35,ovE2H:25,ovH2Q:40,ovE2Q:20,ovQ2O:40,ovWin:22,ovWinE:15,ovWinM:25,sdMeet:30,sdOpp:50,sdTouch:6,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:30,tc2:20,tc3:12,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:245,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:500,cpaMid:12,cpaEnt:30,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
+  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:2,lvIS:false,lvISfrom:3,aeRegion:'EU',lvWR:false,wrUp:2,m2s:60,acReach:80,revGoal:3.1,aBuffer:30,ovPerAcc:15,calcBudget:310,ovEntSh:25,ovEntAcv:100,ovMmAcv:35,ovE2H:25,ovH2Q:40,ovE2Q:20,ovQ2O:40,ovWin:22,ovWinE:15,ovWinM:25,sdMeet:30,sdOpp:50,sdTouch:6,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:30,tc2:20,tc3:12,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:245,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:500,cpaMid:12,cpaEnt:30,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -1610,7 +1610,7 @@ const DEFAULTS={
     {id:'abm',name:'ABM tools',kind:'abm',color:'--ink'}
   ],
   scenarios:{
-    A:{budget:{linkedin:95,google:90,chatgpt:10,reddit:5,events:80,partners:45,abm:25},phasing:[25,25,25,25],sdr:0,sdrStart:2},
+    A:{budget:{linkedin:65,google:90,chatgpt:10,reddit:5,events:80,partners:45,abm:25},phasing:[25,25,25,25],sdr:0,sdrStart:2},
     B:{budget:{linkedin:130,google:30,chatgpt:10,reddit:10,events:60,partners:45,abm:25},phasing:[25,25,25,25],sdr:0,sdrStart:2},
     C:{budget:{linkedin:215,google:50,chatgpt:20,reddit:15,events:150,partners:60,abm:40},phasing:[25,25,25,25],sdr:2,sdrStart:2}
   }
@@ -1719,9 +1719,10 @@ function migrate(o){
   const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
   if(!o.channels.some(c=>c.id==='activations')){const i=o.channels.findIndex(c=>c.id==='partners');o.channels.splice(i<0?o.channels.length:i,0,clone(DEFAULTS.channels.find(c=>c.id==='activations')));}
   if(o.global.acReach==null)o.global.acReach=80;if(o.global.revGoal==null||+o.global.revGoal>100)o.global.revGoal=3.1;if(o.global.ovPerAcc==null)o.global.ovPerAcc=15;
+  if(!o.global.planA4&&o.scenarios&&o.scenarios.A){o.scenarios.A.budget.linkedin=65;o.global.aBuffer=30;o.global.planA4=true;}
   if(!o.global.tam1){Object.assign(o.global,{ovPerAcc:15,tc1:30,tc2:20,tc3:12,tier3:245,abmAccounts:500,cpaMid:12,cpaEnt:30});o.global.tam1=true;}
-  if(!o.global.planA3&&o.scenarios&&o.scenarios.A){o.scenarios.A.budget={linkedin:95,google:90,chatgpt:10,reddit:5,events:80,partners:45,abm:25};o.scenarios.A.phasing=[25,25,25,25];o.scenarios.A.sdr=0;o.global.planA3=true;o.global.planA2=true;o.global.planA1=true;}
-  if(!o.global.planA1&&o.scenarios&&o.scenarios.A&&!Object.values(o.scenarios.A.budget||{}).some(v=>+v>0)){o.scenarios.A.budget={linkedin:95,google:90,chatgpt:10,reddit:5,events:80,partners:45,abm:25};o.scenarios.A.phasing=[25,25,25,25];o.global.planA1=true;}
+  if(!o.global.planA3&&o.scenarios&&o.scenarios.A){o.scenarios.A.budget={linkedin:65,google:90,chatgpt:10,reddit:5,events:80,partners:45,abm:25};o.scenarios.A.phasing=[25,25,25,25];o.scenarios.A.sdr=0;o.global.planA3=true;o.global.planA2=true;o.global.planA1=true;}
+  if(!o.global.planA1&&o.scenarios&&o.scenarios.A&&!Object.values(o.scenarios.A.budget||{}).some(v=>+v>0)){o.scenarios.A.budget={linkedin:65,google:90,chatgpt:10,reddit:5,events:80,partners:45,abm:25};o.scenarios.A.phasing=[25,25,25,25];o.global.planA1=true;}
   if(!o.global.h2hire){o.global.lvAEfrom=2;o.global.lvISfrom=3;o.global.h2hire=true;}if(o.global.calcBudget==null)o.global.calcBudget=310;
   if(o.global.ovE2H==null)o.global.ovE2H=25;if(o.global.ovH2Q==null)o.global.ovH2Q=40;if(o.global.ovWinE==null)o.global.ovWinE=15;if(o.global.ovWinM==null)o.global.ovWinM=25;
   if(!o.global.q2o40){o.global.ovQ2O=40;o.global.q2o40=true;}
@@ -2356,7 +2357,7 @@ function renderAnswer(R){
   {const el=document.getElementById('abc');if(el&&R.B){const need=D.newQL,people=(2*num(g.isCost)+num(g.aeHireCost))*1000;
     const Bb=S.scenarios.B.budget,keep={...Bb},runAt=k=>{Object.keys(keep).forEach(id=>Bb[id]=keep[id]*k);try{return run('B');}finally{Object.keys(keep).forEach(id=>Bb[id]=keep[id]);}},leadsAt=k=>runAt(k).leads;
     let lo=0.2,hi=4;for(let i=0;i<30;i++){const m=(lo+hi)/2;if(leadsAt(m)>=need)hi=m;else lo=m;}
-    const rA=R.A&&R.A.has?R.A:runAt(hi),aMk=R.A&&R.A.has?totalBudget('A')*1000:Math.round(totalBudget('B')*hi/5)*5*1000,rB=R.B,rC=R.C||{},pct=x=>n0(x/need*100)+'%';
+    const rA=R.A&&R.A.has?R.A:runAt(hi),aMk=R.A&&R.A.has?totalBudget('A')*1000+num(g.aBuffer)*1000:Math.round(totalBudget('B')*hi/5)*5*1000,rB=R.B,rC=R.C||{},pct=x=>n0(x/need*100)+'%';
     const gA=goalPlanV(R,sc,{...LV0,lvHO:true,lvIS:true,lvISfrom:3,lvAEfrom:2,lvAE:true,aeRegion:'EU',fixNewQL:Math.max(0.01,rA.leads)});
     const gB=goalPlanV(R,sc,{...LV0,fixNewQL:Math.max(0.01,rB.leads)}),gC=goalPlanV(R,sc,{...LV0,lvIS:true,lvISfrom:2,fixNewQL:Math.max(0.01,rC.leads||0.01)}),gBfix=goalPlanV(R,sc,{...LV0,lvHO:true,lvIS:true,lvISfrom:3,lvAEfrom:2,lvAE:true,aeRegion:'EU',fixNewQL:Math.max(0.01,rB.leads)});
     const slipB=Math.max(0,gB.potWins-gB.closes),cMk=(totalBudget('C')*1000)-people;
@@ -2422,21 +2423,22 @@ function renderAnswer(R){
         {n:'Experiential',tag:'Works today',c:b('events')+b('activations'),pw:ex.logos*lr,col:'--magenta'},
         {n:'Digital · Targeted ABM',tag:'New, to test',c:b('abm')+b('linkedin')*sh,pw:dg.logos*sh*lr,col:'--blue',note:'US: LinkedIn, Influ2, RB2B · EMEA: LinkedIn by company'},
         {n:'Digital · Always-on',tag:'New, to test',c:b('linkedin')*(1-sh)+b('google')+b('chatgpt')+b('reddit'),pw:dg.logos*(1-sh)*lr+inLift+aoX,col:'--blue-light',note:'LinkedIn, search, small tests · incl. the inbound lift from ads'}];
+      MK.push({n:'Extra hands & buffer',tag:'Reserve',c:num(g.aBuffer)*1000,pw:0,col:'--surface-2',note:'Freelance production or event help, or held back. Released only when a signal needs it'});
       const SL=[{n:'Hand-off fix',c:0,pw:inUp,note:'more inbound converts'}];
       if(gx.fu&&gx.fu.opp>0.3)SL.push({n:'2 SDRs, from Q3',c:hires.sdr,pw:gx.fu.opp*gx.o2w,note:'mostly 2028 pipeline; a few warm accounts close in 2027'});
       SL.push({n:'EMEA AE, from Q2',c:hires.ae,pw:0,note:`lets AEs close ~${n0(hires.aeAdds)} more deals`});
       const pot=inBase+[...MK,...SL].reduce((a,x)=>a+x.pw,0)||1,land=Math.min(1,gx.closes/pot);
       [...MK,...SL].forEach(x=>{x.won=x.pw*land;x.rev=x.won*D.acv;});
       {const cb=gx.carryBy||{},pOpp=D.pv/Math.max(0.001,gx.o2w),srcW=(pt.logos+ex.logos+dg.logos)*lr||1,srcPw=[pt.logos*lr,ex.logos*lr,dg.logos*sh*lr,dg.logos*(1-sh)*lr];
-       MK.forEach((x,i)=>x.p28=(cb.nw||0)*srcPw[i]/srcW*pOpp);SL.forEach(x=>x.p28=/SDR/.test(x.n)?(cb.is||0)*pOpp:0);}
+       MK.forEach((x,i)=>x.p28=(cb.nw||0)*(srcPw[i]||0)/srcW*pOpp);SL.forEach(x=>x.p28=/SDR/.test(x.n)?(cb.is||0)*pOpp:0);}
       {const ao=MK[3],inf=(inLift+aoX)*land*D.acv,src=Math.max(0,ao.rev-inf);ao.note=`LinkedIn, search, small tests · revenue is a blend: ${k$(src)} sourced + ${k$(inf)} influenced (inbound lift from ads)`;}
       const all=[...MK,...SL],mx=Math.max(...all.map(x=>x.rev),1),baseRev=inBase*land*D.acv,R$=v=>v>=995000?M(v):k$(v);
       const row=x=>`<tr><td>${x.col?`<i class="rcdot" style="background:var(${x.col})"></i>`:''}<b>${esc(x.n)}</b>${x.tag?` <em class="rctag">${x.tag}</em>`:''}${x.note?`<span>${x.note}</span>`:''}</td><td class="num">${x.c>500?k$(x.c):'$0'}</td><td class="rcw"><i class="rcbi" style="width:${x.rev>500?Math.max(1,x.rev/mx*70):0}%"></i><em>${x.rev>500?R$(x.rev):'—'}</em></td><td class="num p28">${x.p28>500?R$(x.p28):'—'}</td></tr>`;
-      const sum=a=>a.reduce((s,x)=>s+x,0),mkC=sum(MK.map(x=>x.c)),mkR=sum(MK.map(x=>x.rev)),slC=sum(SL.map(x=>x.c)),slR=sum(SL.map(x=>x.rev)),mkP=sum(MK.map(x=>x.p28||0)),slP=sum(SL.map(x=>x.p28||0)),tp=TP(mkC,b('abm'));
+      const sum=a=>a.reduce((s,x)=>s+x,0),mkC=sum(MK.map(x=>x.c)),mkR=sum(MK.map(x=>x.rev)),slC=sum(SL.map(x=>x.c)),slR=sum(SL.map(x=>x.rev)),mkP=sum(MK.map(x=>x.p28||0)),slP=sum(SL.map(x=>x.p28||0)),tp=TP(mkC,b('abm')),bufC=num(g.aBuffer)*1000;
       return `<div class="skh"><b>${title}</b><span>What we spend in 2027, what closes this year, and the pipeline it leaves for 2028 (deals still open at year end; the sales cycle is ~${n0(num(g.cycle))} months). Tentative attribution.</span></div>
         <table class="rc rc2"><thead><tr><th>Marketing</th><th class="num">2027 spend</th><th>2027 closed ARR</th><th class="num">Pipeline for 2028</th></tr></thead>
         <tbody>${MK.map(row).join('')}<tr class="sub"><td><b>Marketing total</b></td><td class="num">${k$(mkC)}</td><td><b>${R$(mkR)}</b></td><td class="num"><b>${R$(mkP)}</b></td></tr>
-        <tr class="tpr"><td colspan="4"><b>Inside the marketing total: tools &amp; external production, ${k$(tp.t)}</b><span>Clay, intent and ABM tools ${k$(tp.abm)} · video shoots and editing ${k$(tp.v)} · event and media-kit production ${k$(tp.e)}. The other ${k$(mkC-tp.t)} is program and channel spend.</span></td></tr></tbody>
+        <tr class="tpr"><td colspan="4"><b>Inside the marketing total: tools &amp; external production, ${k$(tp.t+bufC)}</b><span>Clay, intent and ABM tools ${k$(tp.abm)} · video shoots and editing ${k$(tp.v)} · event and media-kit production ${k$(tp.e)} · extra hands &amp; buffer ${k$(bufC)}. The other ${k$(mkC-tp.t-bufC)} is program and channel spend.</span></td></tr></tbody>
         <thead><tr><th>Sales</th><th></th><th></th><th></th></tr></thead>
         <tbody>${SL.map(row).join('')}<tr class="sub"><td><b>Sales total</b></td><td class="num">${k$(slC)}</td><td><b>${R$(slR)}</b></td><td class="num"><b>${R$(slP)}</b></td></tr>
         <tr class="tot"><td><b>Total new spend</b></td><td class="num">${k$(mkC+slC)}</td><td><b>${R$(mkR+slR)}</b> new ARR</td><td class="num"><b>${R$(mkP+slP)}</b></td></tr></tbody></table>
@@ -2448,9 +2450,9 @@ function renderAnswer(R){
     // A's mix, scaled to other budgets (for B and C "what if")
     const Ab=S.scenarios.A.budget,keepA={...Ab},runMix=k=>{Object.keys(keepA).forEach(id=>Ab[id]=keepA[id]*k);try{return run('A');}finally{Object.keys(keepA).forEach(id=>Ab[id]=keepA[id]);}};
     const FX={...LV0,aeRegion:'EU'},HO={lvHO:true},ALL={lvHO:true,lvIS:true,lvISfrom:3,lvAE:true,lvAEfrom:2};
-    const bMix=runMix(totalBudget('B')/Math.max(1,totalBudget('A'))),gBm=goalPlanV(R,sc,{...FX,fixNewQL:Math.max(0.01,bMix.leads)}),gBmh=goalPlanV(R,sc,{...FX,...HO,fixNewQL:Math.max(0.01,bMix.leads)}),gBall=goalPlanV(R,sc,{...FX,...ALL,fixNewQL:Math.max(0.01,bMix.leads)});
-    const cMkt=totalBudget('C')*1000-people,cMix=runMix(cMkt/Math.max(1,totalBudget('A')*1000)),gCm=goalPlanV(R,sc,{...FX,...ALL,fixNewQL:Math.max(0.01,cMix.leads)});
-    const bMk=b=>{const x=id=>budget('A',id)*1000;return [['Partners',x('partners')],['Experiential',x('events')+x('activations')],['Digital',x('linkedin')+x('google')+x('chatgpt')+x('reddit')+x('abm')]];};
+    const bsA=num(g.aBuffer)/Math.max(1,totalBudget('A')+num(g.aBuffer)),bMix=runMix(totalBudget('B')*(1-bsA)/Math.max(1,totalBudget('A'))),gBm=goalPlanV(R,sc,{...FX,fixNewQL:Math.max(0.01,bMix.leads)}),gBmh=goalPlanV(R,sc,{...FX,...HO,fixNewQL:Math.max(0.01,bMix.leads)}),gBall=goalPlanV(R,sc,{...FX,...ALL,fixNewQL:Math.max(0.01,bMix.leads)});
+    const cMkt=totalBudget('C')*1000-people,cMix=runMix(cMkt*(1-bsA)/Math.max(1,totalBudget('A')*1000)),gCm=goalPlanV(R,sc,{...FX,...ALL,fixNewQL:Math.max(0.01,cMix.leads)});
+    const bMk=b=>{const x=id=>budget('A',id)*1000;return [['Partners',x('partners')],['Experiential',x('events')+x('activations')],['Digital',x('linkedin')+x('google')+x('chatgpt')+x('reddit')+x('abm')],['Extra hands &amp; buffer',num(g.aBuffer)*1000]];};
     const step=(lab,v,d)=>`<div class="stp"><span>${lab}</span><b>~${n0(v)}</b>${d!=null?`<em class="${Math.round(v)-Math.round(v-d)>0?'up':Math.round(v)-Math.round(v-d)<0?'dn':'flat'}">${(x=>x>0?'+'+x:x<0?'−'+(-x):'±0')(Math.round(v)-Math.round(v-d))}</em>`:''}</div>`;
     const card=(cls,tag,verdict,vcls,spend,m,body,btn)=>`<div class="abcc ${cls}${window.__abcSel===cls?' sel':''}"><div class="abcf"><span class="abct">${tag}</span>
       <b class="abcb">${verdict}</b><span class="vrd ${vcls}"></span><b class="abch">${spend}</b>${mHTML(m)}${body}${btn?`<button type="button" class="fbtn" data-abcflip="${cls}">${window.__abcSel===cls?'Hide the receipt ↑':'See the receipt ↓'}</button>`:''}</div></div>`;
@@ -2484,21 +2486,21 @@ function renderAnswer(R){
     const rRef=runBud(REF),gl=(r,ids)=>ids.reduce((a,id)=>a+((r.ch[id]||{}).leads||0),0),DIG=['linkedin','google','chatgpt','reddit'],shA=window.__tqS||0.5;
     const fxA=(()=>{const dR=gl(rRef,DIG)||1,dN=gl(rA,DIG);return {p:gl(rA,['partners'])/(gl(rRef,['partners'])||1),e:gl(rA,['events','activations'])/(gl(rRef,['events','activations'])||1),ao:Math.max(0,1+(dN-dR)/(dR*(1-shA)))};})();
     window.__rcptA=k=>{const x=atK(k);return rcptA(x.gx,'A · My plan: the receipt',hiresA,k,x.r.leads/Math.max(1,rA.leads),fxA);};
-    const curve=[0.5,0.75,1,1.5,2,2.5].map(k=>{const x=atK(k),gx=x.gx;return {k,sp:aBase*k,c:gx.closes,arr:gx.closes*D.acv,pipe:(gx.nwSQL*gx.l2o+(gx.fu?gx.fu.opp:0))*D.pv,carry:Math.max(0,gx.potWins-gx.closes)};});
+    const curve=[0.5,0.75,1,1.5,2,2.5].map(k=>{const x=atK(k),gx=x.gx;return {k,sp:aBase*k+num(g.aBuffer)*1000,c:gx.closes,arr:gx.closes*D.acv,pipe:(gx.nwSQL*gx.l2o+(gx.fu?gx.fu.opp:0))*D.pv,carry:Math.max(0,gx.potWins-gx.closes)};});
     const kNow=window.__rk||1,curHTML=`<div class="rcv">${curve.map((p,i)=>{const prev=curve[i-1],d=prev?p.c-prev.c:null;return `<div class="${Math.abs(p.k-1)<0.01?'now':''}"><span>${k$(p.sp)}</span><b>~${n0(p.c)}</b><em>${M(p.arr)}</em><em class="pp">${M(p.pipe)} pipeline</em><em class="cy">~${n0(p.carry)} deals into 2028</em>${d!=null?`<i class="${d>=1?'up':'flat'}">${d>=0.5?'+'+n0(d):'+0'}</i>`:''}</div>`;}).join('')}</div>`;
     const sat=curve.find((p,i)=>i>2&&p.c-curve[i-1].c<1);
-    const sliderA=`<div class="rsl"><div class="rslh"><b>Try a bigger budget, same split</b><span>Marketing budget: <b id="rslv">${k$(aBase*kNow)}</b> · sales hires stay the same</span></div><p class="small" style="margin:4px 0 0">Each step: contracts and new ARR in 2027, the new pipeline it builds (marketing + SDR follow-up), and the deals that carry into 2028.</p>
+    const sliderA=`<div class="rsl"><div class="rslh"><b>Try a bigger budget, same split</b><span>Marketing budget: <b id="rslv">${k$(aBase*kNow+num(g.aBuffer)*1000)}</b> · sales hires stay the same</span></div><p class="small" style="margin:4px 0 0">Each step: contracts and new ARR in 2027, the new pipeline it builds (marketing + SDR follow-up), and the deals that carry into 2028.</p>
       <input type="range" id="rsl" min="0.5" max="2.5" step="0.05" value="${kNow}" aria-label="Marketing budget">
       ${curHTML}<p class="small">${sat?`Past ~${k$(curve[curve.indexOf(sat)-1].sp)}, more marketing adds little in 2027: the AEs are full. It still builds pipeline (${M(curve[0].pipe)} at ${k$(curve[0].sp)} → ${M(curve[curve.length-1].pipe)} at ${k$(curve[curve.length-1].sp)}), and more deals carry into 2028. To turn that into 2027 revenue, add sales capacity first.`:'Each step still adds contracts at this level.'}</p></div>`;
     window.__abcPanels={a:sliderA+`<div id="rcptBody">${window.__rcptA(kNow)}</div>`,b:rcpt(rB,gB,'B · $310k: the receipt',{}),c:rcpt(rC,gC,'C · $550k: the receipt',{sdr:cSdr,sdrName:'SDR agency (in the budget)'})};
     {const pd=document.getElementById('abcd'),sel=window.__abcSel;if(pd){pd.innerHTML=sel&&window.__abcPanels[sel]?window.__abcPanels[sel]:'';pd.style.display=sel?'block':'none';}}
     {const bb=sc0=>{const x=id=>budget(sc0,id)*1000;return {paid:x('linkedin')+x('google')+x('chatgpt')+x('reddit'),ev:x('events')+x('activations'),pt:x('partners'),abm:x('abm')};};
-     const split=(v,mk)=>{const raw=v.paid+v.ev+v.pt+v.abm||1,k=mk/raw,w={paid:v.paid*k,ev:v.ev*k,pt:v.pt*k,abm:v.abm*k},t=TP(mk,w.abm);return {pt:w.pt,ev:w.ev-t.e,paid:w.paid-t.v,tp:t.t,mk};};
+     const split=(v,mk,bs)=>{bs=bs||0;const raw=v.paid+v.ev+v.pt+v.abm||1,k=mk*(1-bs)/raw,w={paid:v.paid*k,ev:v.ev*k,pt:v.pt*k,abm:v.abm*k},t=TP(mk,w.abm);return {pt:w.pt,ev:w.ev-t.e,paid:w.paid-t.v,tp:t.t+mk*bs,mk};};
      const cMk0=totalBudget('C')*1000-cSdr;
      const cols=[
-       {h:'Scenario B',sub:'$310k envelope · reallocated',m:split(bb('A'),totalBudget('B')*1000),sales:0,sn:'none; hand-off fix is free',x:gBmh,g0:gB,cls:''},
-       {h:'Scenario C',sub:`$550k envelope · ${k$(people)} moved to sales`,m:split(bb('A'),cMkt),sales:people,sn:'EMEA AE + 2 SDRs, full year',x:gCm,g0:gC,cls:''},
-       {h:'Recommended plan',sub:`${k$(aMk+ppl27)} · best efficiency`,m:split(bb('A'),aMk),sales:ppl27,sn:'EMEA AE from Q2, 2 SDRs from Q3',x:gA,g0:null,cls:'mine'}];
+       {h:'Scenario B',sub:'$310k envelope · reallocated',m:split(bb('A'),totalBudget('B')*1000,bsA),sales:0,sn:'none; hand-off fix is free',x:gBmh,g0:gB,cls:''},
+       {h:'Scenario C',sub:`$550k envelope · ${k$(people)} moved to sales`,m:split(bb('A'),cMkt,bsA),sales:people,sn:'EMEA AE + 2 SDRs, full year',x:gCm,g0:gC,cls:''},
+       {h:'Recommended plan',sub:`${k$(aMk+ppl27)} · best efficiency`,m:split(bb('A'),aMk,bsA),sales:ppl27,sn:'EMEA AE from Q2, 2 SDRs from Q3',x:gA,g0:null,cls:'mine'}];
      const ks=v=>v>500?k$(v):'$0',gv=c=>c.g0?`<span>~${n0(c.g0.closes)} as given</span>`:'';
      const r=(lab,fn,cls)=>`<tr class="${cls||''}"><td>${lab}</td>${cols.map(c=>`<td class="num ${c.cls}">${fn(c)}</td>`).join('')}</tr>`;
      const sec=t=>`<tr class="sec"><td colspan="${cols.length+1}">${t}</td></tr>`;
