@@ -1018,6 +1018,16 @@ i.ent,i.mm{display:inline-block;width:10px;height:10px}i.ent{background:var(--in
 .whys b{font-family:'Inter Tight';font-size:17px;font-weight:600;color:var(--ink)}.whys p{margin:4px 0 0;font-size:14px;color:var(--ink);max-width:none}
 .whynote{font-size:13px;color:var(--muted);margin:4px 0 0;max-width:none}
 .ctaline{font-size:14px;color:var(--ink);margin:10px 0 0;max-width:none}
+.ex{background:var(--white);border:1px solid var(--surface);padding:20px 22px;margin:8px 0 6px}
+.exh{font-family:'Inter Tight';font-size:clamp(20px,2.2vw,26px);font-weight:600;letter-spacing:-0.02em;color:var(--ink);margin:0 0 14px;max-width:none}.exh b{color:var(--ink)}.exh b.bad{color:var(--red)}
+.exk{display:flex;gap:18px;font-size:12.5px;color:var(--ink);margin-bottom:10px}.exk span{display:flex;align-items:center;gap:6px}.exk i{display:inline-block;width:14px;height:10px}
+.exr{display:grid;grid-template-columns:170px 1fr 300px;gap:14px;align-items:center;padding:10px 0;border-top:1px solid var(--surface)}
+.exl b{display:block;font-size:15px;color:var(--ink)}.exl span{font-size:12.5px;color:var(--muted)}
+.exb{display:flex;height:30px;background:var(--surface)}.exb i{display:flex;align-items:center;height:100%}.exb em{font-style:normal;font-weight:700;font-size:13px;color:var(--white);padding-left:8px;white-space:nowrap}
+i.got{background:var(--ink)}i.gap{background:var(--red)}i.xtra{background:var(--green)}
+.exn{font-size:13.5px;color:var(--ink)}.exn b{color:var(--red);font-size:16px}.exn b.ok{color:#1a7f37}
+.exw{font-size:13.5px;color:var(--muted);margin:12px 0 0;max-width:none}
+@media (max-width:760px){.exr{grid-template-columns:1fr}}
 .rcsum{display:flex;flex-direction:column;gap:4px;margin:10px 0 0;font-size:14px;color:var(--ink);max-width:none}
 .lgp.src{background:var(--magenta)}
 .fstats.f3{grid-template-columns:repeat(3,minmax(0,1fr))}.fstats.f3 .fstat b{font-size:20px}
@@ -1188,11 +1198,14 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 <!-- DIAGNOSIS -->
 <section class="page" data-page="diagnosis"><div class="wrap">
   <h2>Where does the <span class="hl hl-m">model break</span> today?</h2>
-  <p class="dg-sub" id="dgSub"></p>
-  <p class="dg-acc" id="dgAcc"></p>
-  <div class="pp" id="pp"></div>
-  <p class="s1muted"><span class="pill assumed">Assumed</span> Today a founder, an AE or the Chief of Staff qualifies leads. From my first call with Martí and Pol: AEs only look at hot leads.</p>
-  <details class="more mt" id="pushBox"><summary>Try it: push marketing harder</summary><div class="ppush" id="ppush"></div></details>
+  <div class="ex" id="ex"></div>
+  <details class="more mt" id="ppBox"><summary>See the detailed pipeline</summary>
+    <p class="dg-sub mt" id="dgSub"></p>
+    <p class="dg-acc" id="dgAcc"></p>
+    <div class="pp" id="pp"></div>
+    <p class="s1muted"><span class="pill assumed">Assumed</span> Today a founder, an AE or the Chief of Staff qualifies leads. From my first call with Martí and Pol: AEs only look at hot leads.</p>
+    <details class="more mt" id="pushBox"><summary>Try it: push marketing harder</summary><div class="ppush" id="ppush"></div></details>
+  </details>
   <h3 class="mt2">Fixes, in this order</h3>
   <p class="dg-land" id="dgLand"></p>
   <div class="mits" id="mits"></div>
@@ -2293,6 +2306,17 @@ function renderAnswer(R){
    {const recL=goalPlanV(R,sc,{...LV0,...PU,lvHO:true,lvIS:true,lvISfrom:3,lvAEfrom:2,lvAE:true}).closes;
     document.getElementById('dgLand').innerHTML=`<b>${f(D0.closes)}</b> logos if nothing changes → <b>${f(recL)}</b> with the three fixes below.${anyOn0?` <span class="muted">With ${onNames0.join(', ')}: ${f(D2.closes)}.</span>`:''}`;
     document.getElementById('dgAcc').innerHTML=`${f(D0.fu.eng)} target accounts engage. ${cold0>0.5?'Nobody has time to follow them up.':''}`;}
+   {const W=window.__wb,ex=document.getElementById('ex');if(W&&ex){
+     const Qn=D2.inQL+D2.newQL,hr=Qn>0?Math.max(0,Math.min(1,(Qn-D2.unscreened)/Qn)):1,orr=allOpp>0?D2.opps/allOpp:1;
+     const rows=[['Qualified leads',W.Q,W.Q*hr,'go unqualified: AEs have no time to call them'],['Opportunities',W.Ot,W.Ot*Math.min(orr,1.5),'never get created'],['Contracts',W.T,Math.min(D2.closes,W.T*1.5),'are missed in 2027']];
+     const lostL=Math.max(0,W.T-D2.closes),lostR=lostL*D.acv,on=anyOn0;
+     const bar=([lab,need,got,why])=>{const mx=Math.max(need,got),gap=Math.max(0,need-got),extra=Math.max(0,got-need);
+       return `<div class="exr"><div class="exl"><b>${lab}</b><span>needed ${f(need)}</span></div><div class="exb"><i class="got" style="width:${Math.min(got,need)/mx*100}%"><em>${f(got)}</em></i>${gap>0.5?`<i class="gap" style="width:${gap/mx*100}%"></i>`:''}${extra>0.5?`<i class="xtra" style="width:${extra/mx*100}%"></i>`:''}</div><div class="exn">${gap>0.5?`<b>−${n0(gap)}</b> ${why}`:extra>0.5?`<b class="ok">+${n0(extra)}</b> more than needed`:`<b class="ok">✓</b> covered`}</div></div>`;};
+     const goalT=`$${num(g.revGoal).toFixed(1)}M`,who=on?'the fixes ticked below still miss':'today\'s team misses';
+     ex.innerHTML=`<p class="exh">${lostL>0.5?`For a <b>${goalT}</b> goal, ${who} <b class="bad">~${n0(lostL)} ${Math.round(lostL)===1?'contract':'contracts'}</b>, about <b class="bad">${M(lostR)}</b> of revenue.`:`For a <b>${goalT}</b> goal, ${on?'the fixes ticked below get':'today\'s team gets'} there.`}</p>
+       <div class="exk"><span><i class="got"></i>What ${on?'we get with these fixes':'today\'s team delivers'}</span><span><i class="gap"></i>Lost</span></div>
+       ${rows.map(bar).join('')}
+       <p class="exw">Why: ${D2.screens>D2.qualCap*1.0001?`AEs can call ${f(D2.qualCap)} leads a month and the goal brings ${f(D2.screens)}, so the rest go cold.`:`AEs now have time to call every lead.`} ${D2.deals>num(g.maxDeals)+0.5?`Each AE carries ${f(D2.deals)} open deals against a limit of ${n0(g.maxDeals)}, so deals slow down.`:`Open deals per AE stay under ${n0(g.maxDeals)}.`}</p>`;}}
    const H=200,mx2=Math.sqrt(Math.max(...tot,cold,1)),hh=v=>v>0.05?Math.max(4,Math.sqrt(v)/mx2*H):0;
    const bar=(i,lab,sub)=>{let segs='';CH.forEach(c=>{const v=c.st[i];if(v<0.05)return;const prev=i>0?c.st[i-1]:0;segs+=`<i style="flex:${v};background:${c.c}" title="${c.n} · ${f(v)}${prev>0?` · ${n0(v/prev*100)}% of previous stage`:''}"></i>`;});
      return `<div class="pc"><span class="pt">${f(tot[i])}</span><div class="pb" style="height:${hh(tot[i])}px">${segs}</div><span class="pl">${lab}</span><span class="ps">${sub||''}</span></div>`;};
