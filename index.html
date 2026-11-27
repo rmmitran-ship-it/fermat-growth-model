@@ -1363,7 +1363,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
     <article class="pjob">
       <div class="pjhead"><span class="pn">1</span><div><div class="eyebrow">LinkedIn</div><h3>Warm the whole buying group</h3></div><div class="pshare"><b>~70%</b><span>~$130k of B</span></div></div>
       <p><b>Why:</b> the ICP is a list we can name. LinkedIn targets it by account and role, so the buying group knows Fermat before sales calls.</p>
-      <p><b>Audience:</b> ~800 named accounts, 4–5 buyers each (~3,500 people)</p>
+      <p><b>Audience:</b> the <span data-acc>~1,000</span> target accounts, 4–5 buyers each</p>
       <dl><dt>Leading</dt><dd>% of target accounts reached, accounts with 2+ contacts engaged, buying-group coverage (decision maker / champion / gatekeeper)</dd><dt>Lagging</dt><dd>Opportunities from target accounts; engaged vs non-engaged conversion</dd></dl>
       <div class="keep"><b>Keep or cut</b>Keep if engaged accounts convert to opportunities at 2x the rate of non-engaged ones.</div>
     </article>
@@ -2045,7 +2045,8 @@ function goalPlan(R,sc){
   const hCut=g.lvHO?1-num(g.hoCut)/100:1,aeFrom=+g.lvAEfrom||1,isFrom=+g.lvISfrom||1;
   const inMQ=[0,1,2,3].map(()=>bl*3),nwMQ=[0,1,2,3].map(q=>newQL*rq[q]/rs);
   // engaged target accounts the SDRs follow up; their calls come out of SDR hand-off time
-  const rpA=Math.min(100,Math.max(0,num(g.acReach)))/100,engA=Math.min(N*rpA,tiers.reduce((a,t)=>a+Math.min(t.acc,t.eng/2),0)*rpA),adsOpp=tiers.reduce((a,t)=>a+t.opp,0);
+  const tAcc=(()=>{const es=Math.min(100,Math.max(0,num(g.ovEntSh)))/100,we=Math.max(0.001,num(g.ovWinE)/100),wm=Math.max(0.001,num(g.ovWinM)/100),o=tg*es/we+tg*(1-es)/wm;return o/Math.max(0.001,num(g.ovQ2O)/100)/Math.max(0.001,num(g.ovH2Q)/100)/Math.max(0.001,num(g.ovE2H)/100)/Math.max(0.1,num(g.ovPerAcc));})();
+  const rpA=Math.min(100,Math.max(0,num(g.acReach)))/100,engShare=N>0?tiers.reduce((a,t)=>a+Math.min(t.acc,t.eng/2),0)/N:0,engA=tAcc*rpA*engShare,adsOpp=tiers.reduce((a,t)=>a+t.opp,0);
   const fu={eng:engA,adsOpp,open:Math.max(0,engA-adsOpp),acc:0,meet:0,opp:0,meetR:num(g.sdMeet)/100,oppR:num(g.sdOpp)/100,touch:num(g.sdTouch)};
   const fuLoadQ=[0,1,2,3].map(q=>g.lvIS?fu.open*rq[q]/rs*share(q,isFrom)*fu.touch:0);fu.load=fuLoadQ.reduce((a,b)=>a+b,0)/12;
   const capQ=[0,1,2,3].map(q=>3*((num(g.aesEU)+num(g.aesUS))*num(g.qualCalls)+(g.lvAE&&q+1>aeFrom?num(g.qualCalls):0)+(g.lvIS?Math.max(0,2*num(g.isCalls)*share(q,isFrom)-fuLoadQ[q]/3):0)));
@@ -2076,7 +2077,7 @@ function goalPlan(R,sc){
   const euReady=simEU.demand.reduce((a,b)=>a+b,0),usReady=simUS.demand.reduce((a,b)=>a+b,0),euCap=capEU.reduce((a,b)=>a+b,0),usCap=capUS.reduce((a,b)=>a+b,0);
   const euLoad=simEU.demand.reduce((a,b)=>a+b,0)/capEU.reduce((a,b)=>a+b,0),usLoad=simUS.demand.reduce((a,b)=>a+b,0)/capUS.reduce((a,b)=>a+b,0);
   return {g,tg,bl,acv,l2o,o2w,inL2O,inO2W,inQL,inOpp,inLogo,gap,newQL,newOpp,newLogo,paths,C,N,tiers,closes,ceiling,spill,simEU,simUS,capEU,capUS,
-    fu,pv,autoAcc,lagSlip,euReady,usReady,euCap,usCap,screens,qualCap,sfQ,inSQL,nwSQL,unscreened,potWins,hCut,handover:(inSQL+nwSQL+isQL)/12,opps,deals,aes,euLoad,usLoad,shTot:paths.reduce((a,x)=>a+x.sh,0)*100};
+    fu,pv,tAcc,autoAcc,lagSlip,euReady,usReady,euCap,usCap,screens,qualCap,sfQ,inSQL,nwSQL,unscreened,potWins,hCut,handover:(inSQL+nwSQL+isQL)/12,opps,deals,aes,euLoad,usLoad,shTot:paths.reduce((a,x)=>a+x.sh,0)*100};
 }
 function renderAnswer(R){
   if(!document.getElementById('goal'))return;
@@ -2122,6 +2123,7 @@ function renderAnswer(R){
    sv(ov,'entL',`${n0(L[0])} contracts`);sv(ov,'mmL',`${n0(L[1])} contracts`);
    ['ovEntSh','ovE2H','ovH2Q','ovQ2O','ovWinE','ovWinM','ovPerAcc'].forEach(k=>sv(ov,'v'+k,n0(g[k])));sv(ov,'eAcv',k$(ea));sv(ov,'mAcv',k$(ma));
    sv(ov,'P',M(Pt));sv(ov,'R',M(rev));sv(ov,'Pm',f(Q/12));}
+  document.querySelectorAll('[data-acc]').forEach(e=>e.textContent='~'+Math.round(D.tAcc).toLocaleString('en-US'));
   // WHAT I THINK IT TAKES: the reasoning behind each number
   {const W=window.__wb,el=document.getElementById('why');if(el&&W){document.getElementById('whyH').textContent=`What I think it takes to get to ${n0(W.T)} logos`;
    const c0=v=>Math.round(v).toLocaleString('en-US'),step=(n,h,p)=>`<div class="whys"><span class="whyn">${n}</span><div><b>${h}</b><p>${p}</p></div></div>`;
@@ -2143,7 +2145,7 @@ function renderAnswer(R){
   sv(s1,'tK',`${n0(S1.T)} logos need`);sv(s1,'t',`${f(S1.Q)}`);sv(s1,'tS','qualified leads a year');
   sv(s1,'in',f(b0*12));sv(s1,'inS',`${n0(b0)} a month, with no new spend. They win ${f(baseLogo)} logos.`);
   {const gq=D.newQL+lift*12;sv(s1,'need',f(gq));svh(s1,'needS',`${f(gq/12)} a month. They win ${f(newWork)} logos:<span class="gsplit"><span><b>${f(D.newQL)}</b> new leads → ${f(srcLogo)} logos</span><span><b>+${f(lift*12)}</b> more inbound from ads → ${fL} logos</span><span class="up">Inbound grows from ${n0(b0)} to ${f(b0+lift)} a month (+${n0(num(g.inboundLift))}%)</span></span>`);
-   sv(s1,'cpl',M(pipeNew));sv(s1,'cplS',`sourced pipeline a year: ${f(D.newOpp)} opportunities from ${f(D.newQL)} new qualified leads, across ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} target accounts. Plus ${M(pipeLift)} influenced.`);}
+   sv(s1,'cpl',M(pipeNew));sv(s1,'cplS',`sourced pipeline a year: ${f(D.newOpp)} opportunities from ${f(D.newQL)} new qualified leads, across ~${Math.round(D.tAcc).toLocaleString('en-US')} target accounts. Plus ${M(pipeLift)} influenced.`);}
   document.getElementById('s1line').textContent=`${f(b0*12)} today + ${f(lift*12+D.newQL)} from growth = ${f(S1.Q)} qualified leads → ${f(allOpp)} opportunities → ${M(pipeAll)} pipeline.`;
   document.getElementById('s1arr').textContent=`${f(baseLogo+newWork)} logos, ${M((baseLogo+newWork)*D.acv)} new ARR.`;
   // STEP 2 · Row A: today's motion (baseline only, no new spend)
@@ -2177,11 +2179,11 @@ function renderAnswer(R){
       <div class="lgp src"><b data-pv="bl"></b><span>sourced</span><em data-pv="blr"></em><div data-pv-html="bls"></div></div>
       <div class="lgp lift" id="liftSeg"><b data-pv="bll"></b><span>influenced</span><em>Inbound lift · not attributable deal by deal</em><em class="lin">lift from paid ${inp('inboundLift',40,50)}% ${pl('Assumed')}</em></div>
       <span class="s" data-pv="blt"></span><span class="s muted" data-pv="blu"></span></div>`);
-  const LIST=Math.max(accT,num(g.abmAccounts)),rpA=Math.min(100,Math.max(0,num(g.acReach)))/100,engRate=D.N>0?D.fu.eng/D.N:0;
-  svh(rB,'bn',`${Math.round(LIST).toLocaleString('en-US')}<small> accounts</small>`);sv(rB,'bnN',`plan needs ~${n0(accT)}`);sv(rB,'bp',`The plan works ${f(D.N)} named accounts + ${f(D.paths[0].top)} via partners.`);
-  svh(rB,'br',`${f(LIST*rpA)}<small> accounts</small>`);sv(rB,'brN',`plan needs ~${n0(D.N*rpA+D.paths[0].top)}`);sv(rB,'brS',`${n0(rpA*100)}% see our ads or meet us (Assumed); partners bring theirs in directly. ${f(D.C)} contacts across buying groups.`);
-  svh(rB,'be',`${f(LIST*engRate)}<small> accounts</small>`);sv(rB,'beN',`plan needs ~${n0(D.fu.eng)}`);
-  [D.tiers[0].acc,D.tiers[1].acc,D.tiers[2].acc,D.paths[0].top].forEach((v,i)=>sv(rB,'tm'+i,f(v).replace('~','')));
+  const LIST=D.tAcc,rpA=Math.min(100,Math.max(0,num(g.acReach)))/100;
+  svh(rB,'bn',`${Math.round(LIST).toLocaleString('en-US')}<small> accounts</small>`);sv(rB,'bnN',`today's list: ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')}`);sv(rB,'bp','Brands we need on the list to hit the goal (Workback plan).');
+  svh(rB,'br',`${f(LIST*rpA)}<small> accounts</small>`);sv(rB,'brN','');sv(rB,'brS',`${n0(rpA*100)}% see our ads or meet us (Assumed); partners bring theirs in directly. ${f(D.C)} contacts across buying groups.`);
+  svh(rB,'be',`${f(D.fu.eng)}<small> accounts</small>`);sv(rB,'beN','');
+  [D.tiers[0].acc,D.tiers[1].acc,Math.max(0,D.tAcc-D.tiers[0].acc-D.tiers[1].acc-D.paths[0].top),D.paths[0].top].forEach((v,i)=>sv(rB,'tm'+i,f(v).replace('~','')));
   svh(rB,'bq',`${f(D.newQL/12)}<small> a month</small>`);sv(rB,'bqy',f(D.newQL)+' a year');
   sv(rB,'sv0',f(newM[0])+'/mo');sv(rB,'sv1',f(newM[1])+'/mo');svh(rB,'sv2',`${f(newM[2])}/mo<small>ABM ${f(tgtM)} · always-on ${f(aoM)}</small>`);
   {const e=rB.querySelector('[data-pv="bsum"]');const bad=Math.abs(D.shTot-100)>0.5;if(e){e.textContent=bad?`Shares add up to ${n0(D.shTot)}%, not 100%`:'';e.className='s'+(bad?' bad':'');}}
@@ -2189,7 +2191,7 @@ function renderAnswer(R){
   svh(rB,'bo',`${f(D.newOpp)}<small> a year</small>`);sv(rB,'bor',`at ${n0(D.l2o*100)}% of qualified leads`);
   sv(rB,'bl',f(srcLogo));sv(rB,'blr',`at ${n0(D.o2w*100)}% of opportunities`);sv(rB,'bll',fL);{sv(rB,'blt',`${f(srcLogo)} sourced + ${fL} influenced = ${f(newWork)} logos from new work`);sv(rB,'blu',`${srcLogo.toFixed(1)} + ${liftLogo.toFixed(1)} = ${newWork.toFixed(1)}`);}
   {const e=rB.querySelector('[data-pv-html="bls"]');if(e)e.innerHTML=legend(D.paths.map((x,i)=>[PC3[i],['Partners','Exp.','Digital'][i],f(x.logos)]));}
-  {const over=accT>num(g.abmAccounts);document.getElementById('rowBcheck').innerHTML=over?`<b style="color:var(--ink)">The plan needs ${f(accT)} accounts, more than the ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} on the list.</b> The list needs to grow, or conversion needs to rise.`:`<b style="color:var(--ink)">We go after all ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} accounts.</b> The plan only needs ~${n0(accT)} of them worked and ~${n0(D.fu.eng)} engaged. The rest is buffer if conversion comes in lower. ${pl('Assumed')} I'll check this in month 1.`;}
+  {const L0=num(g.abmAccounts),need=D.tAcc;document.getElementById('rowBcheck').innerHTML=need>L0?`<b style="color:var(--ink)">We need ~${Math.round(need).toLocaleString('en-US')} target accounts; today's list has ${Math.round(L0).toLocaleString('en-US')}.</b> The list grows by ~${n0(need-L0)} in month 1, or conversion has to rise.`:`<b style="color:var(--ink)">We need ~${Math.round(need).toLocaleString('en-US')} target accounts; today's list has ${Math.round(L0).toLocaleString('en-US')}.</b> The rest is buffer if conversion comes in lower.`;}
   // Row C: the total (no capacity, no timing)
   {const tot=baseLogo+newWork,mx=Math.max(D.tg,tot)*1.06,pc=v=>v/mx*100,lab=(v,t)=>v/mx>0.07?`${f(v)} ${t}`:'';
    document.getElementById('rowC').innerHTML=`<div class="rcbar"><i class="t" style="width:${pc(baseLogo)}%">${lab(baseLogo,'today')}</i><i class="h" style="width:${pc(liftLogo)}%" title="${fL} influenced">${liftLogo/mx>0.07?`${fL} lift`:''}</i><i class="n" style="width:${pc(srcLogo)}%">${lab(srcLogo,'sourced')}</i>
@@ -2199,7 +2201,7 @@ function renderAnswer(R){
    document.getElementById('rcSum').innerHTML=`<span><b>New work:</b> ${M(pipeNew)} sourced pipeline · ${f(srcLogo)} logos · ${M(srcLogo*D.acv)} new ARR. Plus ${M(pipeLift)} influenced from the inbound lift.</span><span><b>All of 2027:</b> ${M(pipeAll)} pipeline · ${f(tot)} logos the pipeline supports · ${M(tot*D.acv)} new ARR.</span>`;}
   document.getElementById('jobs').innerHTML=`<span class="job j1"><b>Job 1 · Create:</b> ${M(pipeNew)} new pipeline (~${n0(D.newOpp/allOpp*100)}%)</span><span class="job j2"><b>Job 2 · Move:</b> help all ${M(pipeAll)} convert faster</span>`;
   // bets (inside the collapsible)
-  const tAcc=D.tiers[0].acc+D.tiers[1].acc,aAcc=D.tiers[2].acc;
+  const tAcc=D.tiers[0].acc+D.tiers[1].acc,aAcc=Math.max(0,D.tAcc-tAcc-D.paths[0].top);
   const flipped=window.__flip||(window.__flip={});
   const card=(i,cls,name,share,chip,chipCls,front,back)=>`<div class="flip ${cls}${flipped[i]?' on':''}" data-flip="${i}"><div class="flip-in">
     <div class="face front"><div class="fh"><b class="fname">${name}</b><span class="conf ${chipCls}">${chip}</span></div><b class="fshare">${share}</b><span class="fsub">of new qualified leads</span>${front}<button type="button" class="fbtn" data-fliptog="${i}" aria-expanded="${!!flipped[i]}">See my bet ↻</button></div>
@@ -2330,24 +2332,24 @@ function renderAnswer(R){
    const accNow=D2.N+D2.paths[0].top;
    const pp=document.getElementById('pp'),pu=document.getElementById('ppush');
    const sl=pu.querySelector('.pslider input[type=range]');const keepFocus=sl&&document.activeElement===sl;
-   const top=`<div class="pz-head"><div class="pslider"><label><b>Marketing push</b> · accounts engaged <span class="pval">${f(accNow)}</span></label><input type="range" min="200" max="800" step="10" value="${Math.round(accNow)}" data-p="global.mktPush" aria-label="Accounts engaged by new work">${num(g.mktPush)?`<button class="linkbtn" data-pushreset>Back to the plan (${f(autoAcc0)})</button>`:''}<span class="ps">More marketing fills the top. Without sales time, the extra leads go cold.</span></div></div>`;
+   const top=`<div class="pz-head"><div class="pslider"><label><b>Marketing push</b> · <span class="pval">${n0(accNow/(autoAcc0||1)*100)}% of the plan</span></label><input type="range" min="200" max="800" step="10" value="${Math.round(accNow)}" data-p="global.mktPush" aria-label="Accounts engaged by new work">${num(g.mktPush)?`<button class="linkbtn" data-pushreset>Back to the plan (${f(autoAcc0)})</button>`:''}<span class="ps">More marketing fills the top. Without sales time, the extra leads go cold.</span></div></div>`;
    const html=`<div class="pzs"><div class="pz mk"><span class="pzl">Marketing</span><div class="pzc">${bar(0,'Engaged contacts','')}${ar}${bar(1,'Hot leads','MQLs')}${ar}${bar(2,'Qualified leads','SQLs')}</div></div>
      ${neck}
      <div class="pz sl"><span class="pzl">Sales</span><div class="pzc">${bar(4,'Opportunities',`need ${f(allOpp)}`)}${ar.replace('class="pa"',`class="pa b2 ${b2}"`)}<div class="pwon">${bar(5,'Logos',`target ${n0(D.tg)}`)}${lost2>0.5?`<div class="pover">${f(lost2)} wait for an AE</div>`:''}</div></div></div></div>
      <div class="pbns"><div class="pbn ${b1}"><b>Break 1 · Hand-off:</b> ${f(D2.screens)} leads a month, time for ${f(D2.qualCap)}. ${r1>1.0001?`~${n0(cold/12)} go cold.`:'Covered.'}</div>
        <div class="pbn ${b2}"><b>Break 2 · Closing:</b> ${f(D2.deals)} open deals per AE (limit ${n0(g.maxDeals)}). ${b2==='idle'?'Breaks next.':lost2>0.5?`${f(lost2)} ${lost2<1.5?'deal waits':'deals wait'} for an AE.`:over2?'Deals slow down.':'Covered.'}</div></div>
      <div class="legend">${CH.map(c=>`<span><span class="dot" style="background:${c.c}"></span>${c.n}</span>`).join('')}</div>`;
-   pp.innerHTML=html;if(!keepFocus)pu.innerHTML=top;else{const v=pu.querySelector('.pval');if(v)v.textContent=f(accNow);}
+   pp.innerHTML=html;if(!keepFocus)pu.innerHTML=top;else{const v=pu.querySelector('.pval');if(v)v.textContent=`${n0(accNow/(autoAcc0||1)*100)}% of the plan`;}
   }
   // target accounts: reached → engaged → pipeline (named list, digital)
-  {const T=D2.tiers,N=T.reduce((a,t)=>a+t.acc,0),rp=Math.min(100,Math.max(0,num(g.acReach)))/100,rch=N*rp,
-     eng=Math.min(rch,T.reduce((a,t)=>a+Math.min(t.acc,t.eng/2),0)*rp),opp=T.reduce((a,t)=>a+t.opp,0),pct=(a,b)=>b>0?n0(a/b*100)+'%':'—';
+  {const T=D2.tiers,N=D2.tAcc,rp=Math.min(100,Math.max(0,num(g.acReach)))/100,rch=N*rp,
+     eng=D2.fu.eng,opp=T.reduce((a,t)=>a+t.opp,0),pct=(a,b)=>b>0?n0(a/b*100)+'%':'—';
    const tl=k=>T.map(t=>`${t.name} ${f(k(t)).replace('~','')}`).join(' · ');
-   document.getElementById('acsH').textContent=`Of the ${f(N)} accounts digital works (out of ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')}): how many do we reach, how many engage, how many end up in pipeline?`;
+   document.getElementById('acsH').textContent=`Of our ${f(N)} target accounts: how many do we reach, how many engage, how many end up in pipeline?`;
    const blk=(cls,k,v,s,sub)=>`<div class="acb ${cls}"><span class="k">${k}</span><b>${v}</b><span class="s">${s}</span>${sub?`<span class="t">${sub}</span>`:''}</div>`;
    const arr=t=>`<div class="aca"><span>${t}</span><i></i></div>`;
    document.getElementById('acs').innerHTML=
-     blk('','Accounts worked',f(N),'the named list',tl(t=>t.acc))+arr(`${n0(rp*100)}% ${pl('Assumed')}`)+
+     blk('','Target accounts',f(N),'from the Workback plan',`today's list: ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')}`)+arr(`${n0(rp*100)}% ${pl('Assumed')}`)+
      blk('','Reached',f(rch),'see our ads')+arr(pct(eng,rch))+
      blk('eng','Engaged',f(eng),'2+ people engage','needs people, not just ads ↓')+arr(pct(opp,eng))+
      blk('won','In pipeline',f(opp+(g.lvIS?D2.fu.opp:0)),g.lvIS?`${f(opp)} from ads + ${f(D2.fu.opp)} from SDR follow-up`:'opportunities from digital',M((opp+(g.lvIS?D2.fu.opp:0))*D2.acv)+' pipeline');
