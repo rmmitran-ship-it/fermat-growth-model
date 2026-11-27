@@ -1203,7 +1203,7 @@ b.asv{font-weight:700;color:var(--ink);font-size:13.5px}
 .rgn .k{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink)}.rgn b{font-family:'Inter Tight';font-size:20px;font-weight:600;color:var(--ink)}.rgn p{font-size:13.5px;color:var(--ink);margin:0;max-width:none}
 @media (max-width:640px){.regions{grid-template-columns:1fr}}
 .wba{min-width:max-content}.wbs{min-width:0}
-.rl2 td,.rl2 th{font-size:13px}.rl2 th{text-align:right}.rl2 th:first-child{text-align:left}.rl2 td.num{text-align:right}.rl2 tr.sub td{border-top:1px solid var(--ink);font-weight:700}.rl2 tr.tot td{border-top:2px solid var(--ink);font-weight:700}.rl2 .mine{background:var(--green)}.rl2 .rea{background:var(--surface)}.rl2 td span{display:block;font-size:11px;color:var(--muted);font-weight:400}
+.rl2 td,.rl2 th{font-size:13px}.rl2 th{text-align:right}.rl2 th:first-child{text-align:left}.rl2 td.num{text-align:right}.rl2 tr.sub td{border-top:1px solid var(--ink);font-weight:700}.rl2 tr.tot td{border-top:2px solid var(--ink);font-weight:700}.rl2 .mine{background:var(--green)}.rl2 .rea{background:var(--surface)}.rl2 td span,.rl2 th span{display:block;font-size:11px;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0}.rl2 th b{display:block;font-size:14px;text-transform:none;letter-spacing:0;color:var(--ink)}.rl2 th{vertical-align:bottom;padding:10px 12px}.rl2 tr.sec td{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding-top:14px;border-top:0}.rl2 tr.big td{font-size:15px}.rl2 tr.big td b{font-family:'Inter Tight';font-size:18px}.rl2 .mine{background:var(--green)}
 
 .mm{max-width:860px}.mm p,.mm li{font-size:16px;line-height:1.55;color:var(--ink)}
 .mm-ask{background:var(--green);padding:16px 18px;font-size:18px!important}
@@ -2492,24 +2492,25 @@ function renderAnswer(R){
      const split=(v,mk)=>{const raw=v.paid+v.ev+v.pt+v.abm||1,k=mk/raw,w={paid:v.paid*k,ev:v.ev*k,pt:v.pt*k,abm:v.abm*k},t=TP(mk,w.abm);return {pt:w.pt,ev:w.ev-t.e,paid:w.paid-t.v,tp:t.t,mk};};
      const cMk0=totalBudget('C')*1000-cSdr;
      const cols=[
-       {h:'B · as given',sub:'$310k, the brief',m:split(bb('B'),totalBudget('B')*1000),sales:0,sn:'none',x:gB,cls:''},
-       {h:'B · reallocated',sub:'$310k in my mix',m:split(bb('A'),totalBudget('B')*1000),sales:0,sn:'none (+ hand-off fix, free)',x:gBmh,cls:'rea'},
-       {h:'A · my plan',sub:'2027 cost',m:split(bb('A'),aMk),sales:ppl27,sn:'EMEA AE from Q2 + 2 SDRs from Q3',x:gA,cls:'mine'},
-       {h:'C · as given',sub:'$550k, the brief',m:split(bb('C'),cMk0),sales:cSdr,sn:cSdr?'SDR agency':'none',x:gC,cls:''},
-       {h:'C · reallocated',sub:`${k$(people)} moves to sales`,m:split(bb('A'),cMkt),sales:people,sn:'EMEA AE + 2 SDRs, full year',x:gCm,cls:'rea'}];
+       {h:'Scenario B',sub:'$310k envelope · reallocated',m:split(bb('A'),totalBudget('B')*1000),sales:0,sn:'none; hand-off fix is free',x:gBmh,g0:gB,cls:''},
+       {h:'Scenario C',sub:`$550k envelope · ${k$(people)} moved to sales`,m:split(bb('A'),cMkt),sales:people,sn:'EMEA AE + 2 SDRs, full year',x:gCm,g0:gC,cls:''},
+       {h:'Recommended plan',sub:`${k$(aMk+ppl27)} · best efficiency`,m:split(bb('A'),aMk),sales:ppl27,sn:'EMEA AE from Q2, 2 SDRs from Q3',x:gA,g0:null,cls:'mine'}];
+     const ks=v=>v>500?k$(v):'$0',gv=c=>c.g0?`<span>~${n0(c.g0.closes)} as given</span>`:'';
      const r=(lab,fn,cls)=>`<tr class="${cls||''}"><td>${lab}</td>${cols.map(c=>`<td class="num ${c.cls}">${fn(c)}</td>`).join('')}</tr>`;
-     const ks=v=>v>500?k$(v):'$0';
-     const el2=document.getElementById('realloc');if(el2)el2.innerHTML=`<table class="rl2"><thead><tr><th></th>${cols.map(c=>`<th class="${c.cls}">${c.h}<span>${c.sub}</span></th>`).join('')}</tr></thead><tbody>
-       ${r('Partners <span>brief: partner program</span>',c=>ks(c.m.pt))}
-       ${r('Experiential <span>brief: additional events · dinners, activations</span>',c=>ks(c.m.ev))}
-       ${r('Paid digital <span>brief: paid enterprise · LinkedIn, search, ChatGPT, Reddit</span>',c=>ks(c.m.paid))}
-       ${r('Tools &amp; external production <span>brief: ABM tools · plus video and event production</span>',c=>ks(c.m.tp))}
-       ${r('Marketing total',c=>ks(c.m.mk),'sub')}
+     const sec=t=>`<tr class="sec"><td colspan="${cols.length+1}">${t}</td></tr>`;
+     const el2=document.getElementById('realloc');if(el2)el2.innerHTML=`<table class="rl2"><thead><tr><th></th>${cols.map(c=>`<th class="${c.cls}"><b>${c.h}</b><span>${c.sub}</span></th>`).join('')}</tr></thead><tbody>
+       ${sec('Marketing')}
+       ${r('Partners',c=>ks(c.m.pt))}
+       ${r('Experiential',c=>ks(c.m.ev))}
+       ${r('Paid digital',c=>ks(c.m.paid))}
+       ${r('Tools &amp; external production',c=>ks(c.m.tp))}
+       ${r('Marketing subtotal',c=>ks(c.m.mk),'sub')}
+       ${sec('Sales')}
        ${r('Sales hires <span>2027 cost</span>',c=>`${ks(c.sales)}<span>${c.sn}</span>`)}
-       ${r('Total',c=>ks(c.m.mk+c.sales),'tot')}
-       ${r('2027 logos',c=>`<b>~${n0(c.x.closes)}</b> of ${n0(D.tg)}`)}
-       ${r('2027 new ARR',c=>M(c.x.closes*D.acv))}</tbody></table>
-       <p class="small muted mt">Reallocated = the same envelope, spent in my bets' mix (25% partners, 30% experiential, 45% digital of new leads). Tools &amp; external production: ABM tools plus ~5% for video and ~5% for event and media-kit production (~$45–65k at $310–350k, ~$80–100k at $550k). B still needs the hires on top to reach ~${n0(gBall.closes)}; C pays for them from its own budget.</p>`;}
+       ${r('Total 2027 spend',c=>ks(c.m.mk+c.sales),'tot')}
+       ${r('2027 logos',c=>`<b>~${n0(c.x.closes)} of ${n0(D.tg)}</b>${c.g0?`<span>~${n0(c.g0.closes)} as given</span>`:''}`,'big')}
+       ${r('2027 new ARR',c=>`<b>${M(c.x.closes*D.acv)}</b>${c.g0?`<span>${M(c.g0.closes*D.acv)} as given</span>`:''}`,'big')}</tbody></table>
+       <p class="small muted mt">Reallocated = the same envelope, spent in my bets' mix. Grey: the brief's split as given. B still needs hires on top to reach ~${n0(gBall.closes)}.</p>`;}
     window.__abcM={A:{spend:aMk,hires:people,hireTxt:'EMEA AE (Q2) + 2 SDRs (Q3)',g:gA,m:mA},B:{spend:totalBudget('B')*1000,hires:0,hireTxt:'None',g:gB,m:mB},C:{spend:totalBudget('C')*1000,hires:0,hireTxt:rC.sdrCost?'SDR agency, in the budget':'None',g:gC,m:mC}};
     renderCompareTable(R);}}
   // DIAGNOSIS
