@@ -1234,11 +1234,13 @@ b.asv{font-weight:700;color:var(--ink);font-size:13.5px}
 
 .tcard{grid-template-columns:minmax(160px,0.9fr) minmax(180px,1fr) minmax(240px,1.6fr) auto}.tc-l{grid-template-columns:1fr}.tc-l li{display:flex;justify-content:space-between;gap:12px}.tc-l b{float:none}
 
-.wbb{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.wbb{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}.wbb .pbok{color:var(--green);font-size:12px;display:inline}.wbb .pbno{color:#ff8a8a;font-size:12px;display:inline}
 .wbb .wbi b{font-size:22px}.wbb .wbi input{width:64px;font-size:18px;font-weight:700;height:34px;border:2px solid var(--white);background:var(--white);color:var(--ink)}
 .wbb .wbbr{background:var(--green)}.wbb .wbbr span,.wbb .wbbr em{color:var(--ink)}.wbb .wbbr b{color:var(--ink);font-size:30px}
 .wbnote{font-size:12px;color:#aaa;margin:8px 0 0;max-width:none}
 @media (max-width:860px){.wbb{grid-template-columns:1fr}}
+
+.wbb em b{font-family:Inter,sans-serif;font-size:12px!important;display:inline!important;font-weight:700}
 </style>
 </head>
 <body>
@@ -2252,6 +2254,7 @@ function renderAnswer(R){
      <div class="wbb">
        <div class="wbi"><span>Extra logos growth adds</span><b data-pv="bX"></b><em data-pv="bXs"></em></div>
        <div class="wbi"><span>Marketing CAC per extra logo ${pl('Assumed')}</span><b>ent $${inp('cacE',64,300)}k</b><b>mm $${inp('cacM',64,300)}k</b><em>Try it: change these or the goal</em></div>
+       <div class="wbi"><span>CAC payback</span><b data-pv="pbE"></b><b data-pv="pbM"></b><em data-pv="pbS"></em></div>
        <div class="wbi wbbr"><span>Marketing budget it takes in 2027</span><b data-pv="bB"></b><em data-pv="bBs"></em></div>
      </div>
      <p class="wbnote">CAC here is marketing spend only: sales hires (EMEA AE, SDRs) come on top. It counts marketing spend against only the logos it adds on top of today's inbound, so it differs from the plan cards' CAC, which includes sales. At $3.1M it lands on Plan A's marketing budget.</p>`);
@@ -2262,6 +2265,9 @@ function renderAnswer(R){
    sv(ov,'P',M(Pt));sv(ov,'R',M(rev));sv(ov,'Pm',f(Q/12));
    {const X=Math.max(0,T-baseLogo),xE=X*es,xM=X*(1-es),cE=num(g.cacE)*1000,cM=num(g.cacM)*1000,B=xE*cE+xM*cM,mkA=(totalBudget('A')+num(g.aBuffer))*1000,slA=num(g.aeHireCost)*1000*0.75+2*num(g.isCost)*1000*0.5,mr=mkA/Math.max(1,mkA+slA);
     sv(ov,'bX',`~${n0(X)}`);sv(ov,'bXs',`~${n0(xE)} enterprise + ~${n0(xM)} mid-market, on top of ~${n0(baseLogo)} from today's inbound`);
+    const pb=(c,acv,gm)=>c/(acv*gm/12),rg=(c,acv)=>{const a=pb(c,acv,0.7),b=pb(c,acv,0.6);return Math.round(a)===Math.round(b)?`~${n0(a)}`:`~${n0(a)}–${n0(b)}`;},tgt=num(g.paybackTarget)||18,worst=Math.max(pb(cE,ea,0.6),pb(cM,ma,0.6));
+    sv(ov,'pbE',`ent ${rg(cE,ea)} mo`);sv(ov,'pbM',`mm ${rg(cM,ma)} mo`);
+    {const e=ov.querySelector('[data-pv="pbS"]');if(e)e.innerHTML=`At 60–70% gross margin. Target under ${n0(tgt)} months: <b class="${worst<tgt?'pbok':'pbno'}">${worst<tgt?'on track':'over target'}</b>`;}
     sv(ov,'bB',k$(B));sv(ov,'bBs',`Enterprise ${k$(xE*cE)} + mid-market ${k$(xM*cM)}. Plan A: ${k$(mkA)} marketing, plus ${k$(slA)} of sales hires on top`);}}
   document.querySelectorAll('[data-acc]').forEach(e=>e.textContent='~'+Math.round(D.tAcc).toLocaleString('en-US'));
   // WHAT I THINK IT TAKES: the reasoning behind each number
