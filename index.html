@@ -2351,8 +2351,8 @@ function renderAnswer(R){
    document.getElementById('acs').innerHTML=
      blk('','Target accounts',f(N),'from the Workback plan',`today's list: ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')}`)+arr(`${n0(rp*100)}% ${pl('Assumed')}`)+
      blk('','Reached',f(rch),'see our ads')+arr(pct(eng,rch))+
-     blk('eng','Engaged',f(eng),'2+ people engage','needs people, not just ads ↓')+arr(pct(opp,eng))+
-     blk('won','In pipeline',f(opp+(g.lvIS?D2.fu.opp:0)),g.lvIS?`${f(opp)} from ads + ${f(D2.fu.opp)} from SDR follow-up`:'opportunities from digital',M((opp+(g.lvIS?D2.fu.opp:0))*D2.acv)+' pipeline');
+     blk('eng','Engaged',f(eng),'accounts where 2+ people engage','needs people, not just ads ↓')+arr(pct(opp+(g.lvIS?D2.fu.opp:0),eng))+
+     blk('won','In pipeline',f(opp+(g.lvIS?D2.fu.opp:0)),`accounts with an open deal (one deal each)${g.lvIS?`: ${f(opp)} from ads + ${f(D2.fu.opp)} from SDR follow-up`:''}`,M((opp+(g.lvIS?D2.fu.opp:0))*D2.pv)+' pipeline');
    const FU=g.lvIS?D2.fu:goalPlanV(R,sc,{lvCS:false,...PU,lvIS:true,lvISfrom:3}).fu,fs=(k,v,s2)=>`<div class="fus"><b>${v}</b><span>${k}</span>${s2?`<em>${s2}</em>`:''}</div>`,fa=t=>`<div class="fua">${t}<i></i></div>`;
    const fuHTML=`<div class="fuh">${g.lvIS?'With the 2 SDRs':'What the 2 SDRs would add'} <span class="muted">· a year</span></div><div class="fuf${g.lvIS?'':' off'}">
      ${fs('engaged, not yet in pipeline',f(FU.open),`${f(FU.eng)} engaged − ${f(FU.adsOpp)} already in pipeline`)}${fa('SDRs call')}
