@@ -979,6 +979,7 @@ i.ent,i.mm{display:inline-block;width:10px;height:10px}i.ent{background:var(--in
 .flowb:not(.zoom) .rfb .s,.flowb:not(.zoom) .tmini,.flowb:not(.zoom) .shz,.flowb:not(.zoom) .lgp em,.flowb:not(.zoom) .lgp [data-pv-html]{display:none}
 .flowb:not(.zoom) .rfb{padding-bottom:12px}
 .pv-s .zhint,.zhint{font-family:Inter,sans-serif;font-size:12px;font-weight:400;color:var(--muted);margin-left:6px;background:none;padding:0;border:0;text-transform:none;letter-spacing:0}
+.gsplit{display:flex;flex-direction:column;gap:2px;margin-top:6px}.gsplit b{color:var(--ink)}.gsplit .up{margin-top:4px;padding:3px 6px;background:var(--white);color:var(--ink);font-weight:600;align-self:flex-start}
 .rcsum{display:flex;flex-direction:column;gap:4px;margin:10px 0 0;font-size:14px;color:var(--ink);max-width:none}
 .lgp.src{background:var(--magenta)}
 .fstats.f3{grid-template-columns:repeat(3,minmax(0,1fr))}.fstats.f3 .fstat b{font-size:20px}
@@ -2061,9 +2062,9 @@ function renderAnswer(R){
     <div class="lvc"><span class="k">Cost per new logo</span><b class="lvn" data-pv="cpl"></b><span class="lvs" data-pv="cplS"></span></div>`);
   sv(s1,'tK',`${n0(S1.T)} logos need`);sv(s1,'t',`${f(S1.Q)}`);sv(s1,'tS','qualified leads a year');
   sv(s1,'in',f(b0*12));sv(s1,'inS',`${n0(b0)} a month, with no new spend. They win ${f(baseLogo)} logos.`);
-  {const gq=D.newQL+lift*12;sv(s1,'need',f(gq));sv(s1,'needS',`${f(gq/12)} a month. They win ${f(newWork)} logos: ${f(D.newQL)} new leads (${f(srcLogo)} logos) + ${f(lift*12)} more inbound from ads (${fL} logos).`);
+  {const gq=D.newQL+lift*12;sv(s1,'need',f(gq));svh(s1,'needS',`${f(gq/12)} a month. They win ${f(newWork)} logos:<span class="gsplit"><span><b>${f(D.newQL)}</b> new leads → ${f(srcLogo)} logos</span><span><b>+${f(lift*12)}</b> more inbound from ads → ${fL} logos</span><span class="up">Inbound grows from ${n0(b0)} to ${f(b0+lift)} a month (+${n0(num(g.inboundLift))}%)</span></span>`);
    const bud=totalBudget(sc)*1000,cpl=newWork>0?bud/newWork:0;sv(s1,'cpl',`${k$(cpl)}`);sv(s1,'cplS',`${k$(bud)} for ${f(newWork)} logos. Each is worth ~${k$(D.acv)} a year${cpl<D.acv*num(g.gm)/100?', so it pays back within a year':''}.`);}
-  document.getElementById('s1line').textContent=`Why ${f(b0*12+lift*12+D.newQL)}, not ${f(S1.Q)}? Today's leads turn into deals more often than new ones, so we need fewer. That's ${f(allOpp)} opportunities and ${M(pipeAll)} pipeline.`;
+  document.getElementById('s1line').textContent=`Why ${f(b0*12+lift*12+D.newQL)}, not ${f(S1.Q)}? Today's leads turn into deals more often than new ones, so we need ${f(Math.max(0,S1.Q-(b0*12+lift*12+D.newQL)))} fewer. That's ${f(allOpp)} opportunities and ${M(pipeAll)} pipeline.`;
   document.getElementById('s1arr').textContent=`${f(baseLogo+newWork)} logos, ${M((baseLogo+newWork)*D.acv)} new ARR.`;
   // STEP 2 · Row A: today's motion (baseline only, no new spend)
   const SRC=[['inEv','Events'],['inPt','Partners'],['inBr','Brand + inbound']];
