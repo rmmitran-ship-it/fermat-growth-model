@@ -2261,7 +2261,7 @@ function renderAnswer(R){
   {const gq=D.newQL+lift*12;sv(s1,'need',f(gq));svh(s1,'needS',`${f(gq/12)} a month. They win ${f(newWork)} logos:<span class="gsplit"><span><b>${f(D.newQL)}</b> new leads → ${f(srcLogo)} logos</span><span><b>+${f(lift*12)}</b> more inbound from ads → ${fL} logos</span><span class="up">Inbound grows from ${n0(b0)} to ${f(b0+lift)} a month (+${n0(num(g.inboundLift))}%)</span></span>`);
    sv(s1,'cpl',M(pipeNew));sv(s1,'cplS',`sourced pipeline a year: ${f(D.newOpp)} opportunities from ${f(D.newQL)} new qualified leads, across ~${Math.round(D.tAcc).toLocaleString('en-US')} target accounts. Plus ${M(pipeLift)} influenced.`);}
   document.getElementById('s1line').textContent=`${f(b0*12)} today + ${f(lift*12+D.newQL)} from growth = ${f(S1.Q)} qualified leads → ${f(allOpp)} opportunities → ${M(pipeAll)} pipeline.`;
-  document.getElementById('s1arr').textContent=`${f(baseLogo+newWork)} logos, ${M((baseLogo+newWork)*D.acv)} new ARR.`;
+  document.getElementById('s1arr').textContent=`${f(baseLogo+newWork)} logos, ${M((baseLogo+newWork)*D.acv)} new ARR: what the pipeline supports. It needs fewer qualified leads than the Workback plan's ~700, because today's inbound converts better than new leads.`;
   // STEP 2 · Row A: today's motion (baseline only, no new spend)
   const SRC=[['inEv','Events'],['inPt','Partners'],['inBr','Brand + inbound']];
   const srcM=SRC.map(([k])=>b0*num(g[k])/100),srcL=srcM.map(m=>m*12*rIn),tt=SRC.reduce((a,[k])=>a+num(g[k]),0);
@@ -2312,7 +2312,7 @@ function renderAnswer(R){
      <span class="mk" style="left:${pc(D.tg)}%"><em>${n0(D.tg)} target</em></span></div>
      <div class="rcleg"><span><i class="t"></i>${f(baseLogo)} today</span><span><i class="h"></i>${fL} influenced (inbound lift)</span><span><i class="n"></i>${f(srcLogo)} sourced (new leads)</span><span class="rcsi"><b>Sourced:</b> what I commit to · <b>Influenced:</b> measured as a trend, not by deal</span></div>
      <p class="rctxt">${f(baseLogo)} today + ${f(newWork)} new work = <b>${f(tot)} logos</b> the pipeline supports.</p>`;
-   document.getElementById('rcSum').innerHTML=`<span><b>New work:</b> ${M(pipeNew)} sourced pipeline · ${f(srcLogo)} logos · ${M(srcLogo*D.acv)} new ARR. Plus ${M(pipeLift)} influenced from the inbound lift.</span><span><b>All of 2027:</b> ${M(pipeAll)} pipeline · ${f(tot)} logos the pipeline supports · ${M(tot*D.acv)} new ARR.</span>`;}
+   document.getElementById('rcSum').innerHTML=`<span><b>New work:</b> ${M(pipeNew)} sourced pipeline · ${f(srcLogo)} logos · ${M(srcLogo*D.acv)} new ARR. Plus ${M(pipeLift)} influenced from the inbound lift.</span><span><b>All of 2027:</b> ${M(pipeAll)} pipeline · ${f(tot)} logos the pipeline supports · ${M(tot*D.acv)} new ARR.</span><span id="rcCap"></span>`;}
   document.getElementById('jobs').innerHTML=`<span class="job j1"><b>Job 1 · Create:</b> ${M(pipeNew)} new pipeline (~${n0(D.newOpp/allOpp*100)}%)</span><span class="job j2"><b>Job 2 · Move:</b> help all ${M(pipeAll)} convert faster</span>`;
   // bets (inside the collapsible)
   const tAcc=D.tiers[0].acc+D.tiers[1].acc,aAcc=Math.max(0,D.tAcc-tAcc-D.paths[0].top);
@@ -2492,7 +2492,8 @@ function renderAnswer(R){
        ${tile('fx',"+ Plan A's channel mix",gA.closes,dl(gA.closes,s3.closes),`~${n0(rA.leads)} leads instead of ~${n0(need)}, and more from events and partners, which close better (+${n0((window.__mixQ.A-1)*100)}% win rate vs the brief's mix)`)}
        ${tile('brend','Plan A · 2027',gA.closes,null,`<b>${M(gA.closes*av)} new ARR.</b> Goal: ${n0(D.tg)}`)}</div>
        <p class="brn">The gap is <b>~${n0(gapL)} logos, ${M(gapL*av)}</b>. New channels bring ~${n0(s0.newQL)} qualified leads (~${n0(opp)} opportunities); the hand-off fix and sales capacity turn them into contracts. Each step adds only its own logos, so nothing is counted twice.</p>`;
-     ['brG','brD','brM'].forEach(id=>{const x=document.getElementById(id);if(x)x.innerHTML=window.__bridgeHTML;});}
+     ['brG','brD','brM'].forEach(id=>{const x=document.getElementById(id);if(x)x.innerHTML=window.__bridgeHTML;});
+     {const c=document.getElementById('rcCap');if(c)c.innerHTML=`<b>What closes in 2027</b> depends on sales capacity: ~${n0(s0.closes)} with today's team, ~${n0(gA.closes)} with the fixes and Plan A. <button class="linkbtn" data-go="model" data-scrollto="brM">See the bridge →</button>`;}}
     const hiresA={sdr:2*num(g.isCost)*1000*sdF,ae:num(g.aeHireCost)*1000*aeF,aeAdds:Math.max(0,aeAddsA)},aBase=totalBudget('A')*1000;
     const atK=k=>{const r=runMix(k),gx=goalPlanV(R,sc,{...FX,...ALL,fixNewQL:Math.max(0.01,r.leads),...QW(r)});return {r,gx,k};};
     const REF={linkedin:95,google:45,chatgpt:10,reddit:5,events:80,partners:45,abm:25},runBud=bud=>{const keep={...Ab};Object.keys(Ab).forEach(id=>delete Ab[id]);Object.assign(Ab,bud);try{return run('A');}finally{Object.keys(Ab).forEach(id=>delete Ab[id]);Object.assign(Ab,keep);}};
@@ -2589,18 +2590,18 @@ function renderAnswer(R){
    pp.innerHTML=html;if(!keepFocus)pu.innerHTML=top;else{const v=pu.querySelector('.pval');if(v)v.textContent=`${n0(accNow/(autoAcc0||1)*100)}% of the plan`;}
   }
   // target accounts: reached → engaged → pipeline (named list, digital)
-  {const T=D2.tiers,N=D2.tAcc,rp=Math.min(100,Math.max(0,num(g.acReach)))/100,rch=N*rp,
-     eng=D2.fu.eng,opp=T.reduce((a,t)=>a+t.opp,0),pct=(a,b)=>b>0?n0(a/b*100)+'%':'—';
+  {const T=D.tiers,N=D.tAcc,rp=Math.min(100,Math.max(0,num(g.acReach)))/100,rch=N*rp,
+     eng=D.fu.eng,opp=T.reduce((a,t)=>a+t.opp,0),pct=(a,b)=>b>0?n0(a/b*100)+'%':'—';
    const tl=k=>T.map(t=>`${t.name} ${f(k(t)).replace('~','')}`).join(' · ');
    document.getElementById('acsH').textContent=`Of our ${f(N)} target accounts: how many do we reach, how many engage, how many end up in pipeline?`;
    const blk=(cls,k,v,s,sub)=>`<div class="acb ${cls}"><span class="k">${k}</span><b>${v}</b><span class="s">${s}</span>${sub?`<span class="t">${sub}</span>`:''}</div>`;
    const arr=t=>`<div class="aca"><span>${t}</span><i></i></div>`;
    document.getElementById('acs').innerHTML=
-     blk('','Target accounts',f(N),`from the Workback plan: ${n0(num(g.tier1))} 1:1 · ${n0(num(g.tier2))} 1:few · ~${n0(Math.max(0,N-num(g.tier1)-num(g.tier2)-D2.paths[0].top))} 1:many · ~${n0(D2.paths[0].top)} via partners`,`universe: 400–500 brands`)+arr(`${n0(rp*100)}% ${pl('Assumed')}`)+
+     blk('','Target accounts',f(N),`from the Workback plan: ${n0(num(g.tier1))} 1:1 · ${n0(num(g.tier2))} 1:few · ~${n0(Math.max(0,N-num(g.tier1)-num(g.tier2)-D.paths[0].top))} 1:many · ~${n0(D.paths[0].top)} via partners`,`universe: 400–500 brands`)+arr(`${n0(rp*100)}% ${pl('Assumed')}`)+
      blk('','Reached',f(rch),'see our ads')+arr(pct(eng,rch))+
-     blk('eng','Engaged',f(eng),'accounts where 2+ people engage','needs people, not just ads ↓')+arr(pct(opp+(g.lvIS?D2.fu.opp:0),eng))+
-     blk('won','In pipeline',f(opp+(g.lvIS?D2.fu.opp:0)),`accounts with an open deal (one deal each)${g.lvIS?`: ${f(opp)} from ads + ${f(D2.fu.opp)} from SDR follow-up`:''}`,M((opp+(g.lvIS?D2.fu.opp:0))*D2.pv)+' pipeline');
-   const FU=g.lvIS?D2.fu:goalPlanV(R,sc,{lvCS:false,...PU,lvIS:true,lvISfrom:3}).fu,fs=(k,v,s2)=>`<div class="fus"><b>${v}</b><span>${k}</span>${s2?`<em>${s2}</em>`:''}</div>`,fa=t=>`<div class="fua">${t}<i></i></div>`;
+     blk('eng','Engaged',f(eng),'accounts where 2+ people engage','needs people, not just ads ↓')+arr(pct(opp+(g.lvIS?D.fu.opp:0),eng))+
+     blk('won','In pipeline',f(opp+(g.lvIS?D.fu.opp:0)),`accounts with an open deal (one deal each)${g.lvIS?`: ${f(opp)} from ads + ${f(D.fu.opp)} from SDR follow-up`:''}`,M((opp+(g.lvIS?D.fu.opp:0))*D.pv)+' pipeline');
+   const FU=g.lvIS?D.fu:goalPlanV(R,sc,{lvCS:false,...PU,lvIS:true,lvISfrom:3}).fu,fs=(k,v,s2)=>`<div class="fus"><b>${v}</b><span>${k}</span>${s2?`<em>${s2}</em>`:''}</div>`,fa=t=>`<div class="fua">${t}<i></i></div>`;
    const fuHTML=`<div class="fuh">${g.lvIS?'With the 2 SDRs':'What the 2 SDRs would add'} <span class="muted">· a year</span></div><div class="fuf${g.lvIS?'':' off'}">
      ${fs('engaged, not yet in pipeline',f(FU.open),`${f(FU.eng)} engaged − ${f(FU.adsOpp)} already in pipeline`)}${fa('SDRs call')}
      ${fs('followed up',f(FU.acc),g.lvIS&&(+g.lvISfrom||1)>1?`from Q${g.lvISfrom}`:'')}${fa(`${n0(FU.meetR*100)}% ${pl('Assumed')}`)}
