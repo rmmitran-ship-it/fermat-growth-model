@@ -1097,8 +1097,6 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
     <h1>Growth plan <span class="hl hl-m">2027</span></h1>
     <p class="sub">Fermat 2027 new-logo plan.</p>
   </header>
-  <div class="rec"><p class="rec-t" id="recT"></p><p class="rec-s">The SDRs follow up engaged accounts and take hand-off calls off the AEs.</p>
-    <div class="planswitch"><span class="small muted" style="align-self:center;margin-right:4px">Plan</span><button class="tab tA" data-act="view" data-v="A">A · My plan</button><button class="tab tB" data-act="view" data-v="B">B · $310k · Recommended</button><button class="tab tC" data-act="view" data-v="C">C · $550k</button></div></div>
   <h3 class="mt2">What do we need to get to 60 logos?</h3>
   <div class="lv" id="goal">
     <div class="lv-sec"><span class="lv-k">Step 1 · How many more leads we need</span>
@@ -1965,7 +1963,7 @@ function goalPlan(R,sc){
 }
 function renderAnswer(R){
   if(!document.getElementById('goal'))return;
-  const g=S.global,sc=SC.includes(view)?view:'B',D=goalPlanV(R,sc,LV0);
+  const g=S.global,sc='B',D=goalPlanV(R,sc,LV0);
   const f=x=>'~'+Math.round(x).toLocaleString('en-US'),M=x=>'~$'+(x/1e6).toFixed(1)+'M',K=x=>x>=1e6?M(x):'~$'+Math.round(x/1000)+'k',pl=b=>`<span class="pill ${b.toLowerCase()}">${b}</span>`;
   const inp=(k,w,max)=>`<input type="number" data-p="global.${k}" value="${g[k]}" min="0" max="${max||100}" step="${String(g[k]).includes('.')?0.1:1}" style="width:${w||50}px">`;
   const once=(id,html)=>{const e=document.getElementById(id);if(e&&(!e.dataset.built||!e.contains(document.activeElement))){e.innerHTML=html();e.dataset.built='1';}return e;};
@@ -1977,7 +1975,7 @@ function renderAnswer(R){
   const fL=(()=>{const fr=liftLogo-Math.floor(liftLogo);return fr>0.15&&fr<0.85?`~${Math.floor(liftLogo)}–${Math.ceil(liftLogo)}`:f(liftLogo);})();
   const pipeToday=b0*12*D.inL2O*D.acv,pipeLift=lift*12*D.inL2O*D.acv,pipeNew=D.newOpp*D.acv,pipeAll=pipeToday+pipeLift+pipeNew,allOpp=D.inOpp+D.newOpp;
   const land0=D.closes,REC={...LV0,lvHO:true,lvIS:true,lvISfrom:1,lvAE:true,aeRegion:'EU',fixNewQL:Math.max(0.01,D.newQL)},landRec=goalPlanV(R,sc,REC).closes;
-  document.getElementById('recT').innerHTML=`I recommend plan B: fix the hand-off and add 2 SDRs in month 1, and hire an EMEA AE once each AE has ${n0(g.maxDeals)}+ open deals. That gets us <b>${f(landRec)} of ${n0(D.tg)} logos</b>.`;
+  (document.getElementById('recT')||{}).innerHTML=`I recommend plan B: fix the hand-off and add 2 SDRs in month 1, and hire an EMEA AE once each AE has ${n0(g.maxDeals)}+ open deals. That gets us <b>${f(landRec)} of ${n0(D.tg)} logos</b>.`;
   // STEP 1
   const s1=once('s1',()=>`
     <div class="lvc"><span class="k">Target logos ${pl('Given')}</span><b class="lvn">${inp('targetLogos',90,120)}</b></div>
