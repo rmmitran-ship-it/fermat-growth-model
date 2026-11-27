@@ -1111,6 +1111,11 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
   .hbar,.funnel .row{grid-template-columns:96px 1fr 60px}
   .funnel .row{grid-template-columns:96px 1fr}
 }
+/* type scale by role: page title 51 · section 22 · sub-section 17 · card title 16 · label 11 */
+.planed h3,.chartbox h3,section[data-page="ninety"] h3{font-size:22px}
+.phase h4,.kit-h,h5.pv-s,.acs-h{font-size:17px;font-weight:600;letter-spacing:-0.01em}
+.fname,.ovh{font-size:16px;font-weight:600}
+.lvc .k,.rfb .k,.ovn{font-weight:700}
 </style>
 </head>
 <body>
@@ -1935,8 +1940,8 @@ function renderDiagnosis(R){
 function runCap(sc,cap){const o=S.global.aeCap;S.global.aeCap=cap;try{return run(sc);}finally{S.global.aeCap=o;}}
 const PATHS=[
   {k:'pt',name:'Partners',sub:'',cls:'g',share:'shPt',top:'Partner intros',mid:null,ra:null,rb:['ptQual','qualify']},
-  {k:'ex',name:'Marketing experiential',sub:'Events, dinners, high-touch',cls:'m',share:'shEx',top:'People met',mid:'Meetings',ra:['exMeet','book a meeting'],rb:['exQual','qualify']},
-  {k:'dg',name:'Marketing digital',sub:'ABM ads, webinars, lead magnets, search',cls:'b',share:'shDg',top:'Contacts reached',mid:'Engaged',ra:['dgEng','engage'],rb:['dgQual','qualify']}];
+  {k:'ex',name:'Experiential',sub:'Events and dinners',cls:'m',share:'shEx',top:'People met',mid:'Meetings',ra:['exMeet','book a meeting'],rb:['exQual','qualify']},
+  {k:'dg',name:'Digital',sub:'ABM, always-on ads, search',cls:'b',share:'shDg',top:'Contacts reached',mid:'Engaged',ra:['dgEng','engage'],rb:['dgQual','qualify']}];
 document.addEventListener('click',e=>{if(!e.target.closest('[data-toA]'))return;const r=document.getElementById('liftSeg');if(!r)return;r.scrollIntoView({behavior:'smooth',block:'center'});r.classList.add('flash');setTimeout(()=>r.classList.remove('flash'),1600);});
 document.addEventListener('click',e=>{const t=e.target.closest('[data-fliptog]');let c=t?t.closest('[data-flip]'):null;if(!c){const f=e.target.closest('[data-flip]');if(!f||e.target.closest('button,a,input,select'))return;c=f;}const i=c.dataset.flip,st=window.__flip||(window.__flip={});st[i]=!st[i];c.classList.toggle('on',st[i]);c.querySelectorAll('[data-fliptog]').forEach(b=>b.setAttribute('aria-expanded',st[i]));const face=c.querySelector(st[i]?'.back .fbtn':'.front .fbtn');if(t&&face)setTimeout(()=>face.focus(),st.noAnim?0:350);});
 (()=>{const tog=r=>{const on=!r.classList.contains('zoom');r.classList.toggle('zoom',on);r.setAttribute('aria-expanded',on);const h=document.getElementById('zHint');if(h)h.textContent=on?'Double-click to hide the detail':'Double-click the boxes for detail';};
@@ -1951,16 +1956,16 @@ function goalPlanV(R,sc,ov){const g=S.global,keep={};Object.keys(ov).forEach(k=>
 const LV0={lvHO:false,lvIS:false,lvAE:false,lvCS:false,mktPush:0,fixNewQL:0};
 window.__gp=o=>goalPlanV(window.__fermat,SC.includes(view)?view:'B',{...LV0,...(o||{})});
 function goalPlan(R,sc){
-  const g=S.global,tg=num(g.targetLogos),bl=(R[sc]&&R[sc].bl)||num(g.baseLeads),acv=num(g.acv)*1000;
+  const g=S.global,tg=num(g.targetLogos),bl=(R[sc]&&R[sc].bl)||num(g.baseLeads),acv=num(g.acv)*1000,pv=(num(g.pvo)||num(g.acv))*1000;
   const l2o=num(g.wbL2O)/100||0.0001,o2w=num(g.wbO2W)/100||0.0001;
   const inL2O=(num(g.baseL2O)+(g.lvHO?num(g.hoLift):0))/100,inO2W=num(g.baseO2W)/100;
   const inQL=bl*12,inOpp=inQL*inL2O,inLogo=inOpp*inO2W;
   const gap=Math.max(0,tg-inLogo),newQL0=gap/(l2o*o2w);
   const mk=nq=>{const paths=PATHS.map(P=>{const sh=num(g[P.share])/100,q=nq*sh,ra=P.ra?num(g[P.ra[0]])/100||0.0001:1,rb=num(g[P.rb[0]])/100||0.0001;
-      const mid=q/rb,top=P.ra?mid/ra:mid,opp=q*l2o;return {P,sh,q,top,mid,opp,logos:opp*o2w,pipe:opp*acv};});
+      const mid=q/rb,top=P.ra?mid/ra:mid,opp=q*l2o;return {P,sh,q,top,mid,opp,logos:opp*o2w,pipe:opp*pv};});
     const C=paths[2].top,t1=num(g.tier1),t2=num(g.tier2),rem=C-t1*num(g.tc1)-t2*num(g.tc2),t3=Math.max(0,rem/(num(g.tc3)||1)),N=t1+t2+t3;
     const tiers=[['tier1','1:1',t1,'tc1','ab1E','ab1M','All three paths'],['tier2','1:few',t2,'tc2','ab2E','ab2M','Events + segment digital'],[null,'1:many',t3,'tc3','ab3E','ab3M','Digital only']].map(([key,name,acc,tc,e,m,how])=>{
-      const con=acc*num(g[tc]),eng=con*num(g[e])/100,q=eng*num(g[m])/100,opp=q*l2o;return {key,name,acc,tc,e,m,how,con,eng,q,opp,pipe:opp*acv};});
+      const con=acc*num(g[tc]),eng=con*num(g[e])/100,q=eng*num(g[m])/100,opp=q*l2o;return {key,name,acc,tc,e,m,how,con,eng,q,opp,pipe:opp*pv};});
     return {paths,C,N,tiers};};
   // marketing push: accounts engaged by new work (0 = what the target needs)
   let newQL=newQL0,M0=mk(newQL0);const autoAcc=M0.N+M0.paths[0].top,push=num(g.mktPush);
@@ -2005,7 +2010,7 @@ function goalPlan(R,sc){
   const euReady=simEU.demand.reduce((a,b)=>a+b,0),usReady=simUS.demand.reduce((a,b)=>a+b,0),euCap=capEU.reduce((a,b)=>a+b,0),usCap=capUS.reduce((a,b)=>a+b,0);
   const euLoad=simEU.demand.reduce((a,b)=>a+b,0)/capEU.reduce((a,b)=>a+b,0),usLoad=simUS.demand.reduce((a,b)=>a+b,0)/capUS.reduce((a,b)=>a+b,0);
   return {g,tg,bl,acv,l2o,o2w,inL2O,inO2W,inQL,inOpp,inLogo,gap,newQL,newOpp,newLogo,paths,C,N,tiers,closes,ceiling,spill,simEU,simUS,capEU,capUS,
-    fu,autoAcc,lagSlip,euReady,usReady,euCap,usCap,screens,qualCap,sfQ,inSQL,nwSQL,unscreened,potWins,hCut,handover:(inSQL+nwSQL+isQL)/12,opps,deals,aes,euLoad,usLoad,shTot:paths.reduce((a,x)=>a+x.sh,0)*100};
+    fu,pv,autoAcc,lagSlip,euReady,usReady,euCap,usCap,screens,qualCap,sfQ,inSQL,nwSQL,unscreened,potWins,hCut,handover:(inSQL+nwSQL+isQL)/12,opps,deals,aes,euLoad,usLoad,shTot:paths.reduce((a,x)=>a+x.sh,0)*100};
 }
 function renderAnswer(R){
   if(!document.getElementById('goal'))return;
@@ -2019,13 +2024,13 @@ function renderAnswer(R){
   // ONE SET OF NUMBERS (plan sc, nothing new in place)
   const b0=num(g.baseLeads),lift=D.bl-b0,rIn=D.inL2O*D.inO2W,baseLogo=b0*12*rIn,liftLogo=lift*12*rIn,srcLogo=D.newLogo,newWork=liftLogo+srcLogo;
   const fL=(()=>{const fr=liftLogo-Math.floor(liftLogo);return fr>0.15&&fr<0.85?`~${Math.floor(liftLogo)}–${Math.ceil(liftLogo)}`:f(liftLogo);})();
-  const pipeToday=b0*12*D.inL2O*D.acv,pipeLift=lift*12*D.inL2O*D.acv,pipeNew=D.newOpp*D.acv,pipeAll=pipeToday+pipeLift+pipeNew,allOpp=D.inOpp+D.newOpp;
+  const pipeToday=b0*12*D.inL2O*D.pv,pipeLift=lift*12*D.inL2O*D.pv,pipeNew=D.newOpp*D.pv,pipeAll=pipeToday+pipeLift+pipeNew,allOpp=D.inOpp+D.newOpp;
   const land0=D.closes,REC={...LV0,lvHO:true,lvIS:true,lvISfrom:1,lvAE:true,aeRegion:'EU',fixNewQL:Math.max(0.01,D.newQL)},landRec=goalPlanV(R,sc,REC).closes;
   (document.getElementById('recT')||{}).innerHTML=`I recommend plan B: fix the hand-off and add 2 SDRs in month 1, and hire an EMEA AE once each AE has ${n0(g.maxDeals)}+ open deals. That gets us <b>${f(landRec)} of ${n0(D.tg)} logos</b>.`;
   // OVERVIEW: what the target takes, in total, by segment
   {const T=num(g.targetLogos),es=Math.min(100,Math.max(0,num(g.ovEntSh)))/100,ea=num(g.ovEntAcv)*1000,ma=num(g.ovMmAcv)*1000;
    const r0=Math.max(0.001,num(g.ovE2H)/100),r1=Math.max(0.001,num(g.ovH2Q)/100),r2=Math.max(0.001,num(g.ovQ2O)/100),r3e=Math.max(0.001,num(g.ovWinE)/100),r3m=Math.max(0.001,num(g.ovWinM)/100);
-   const L=[T*es,T*(1-es)],O=[L[0]/r3e,L[1]/r3m],Q=O.map(x=>x/r2),H=Q.map(x=>x/r1),E=H.map(x=>x/r0),P=[O[0]*ea,O[1]*ma],RV=[L[0]*ea,L[1]*ma],sm=a=>a[0]+a[1];
+   const L=[T*es,T*(1-es)],wO=[L[0]/r3e,L[1]/r3m],wS=wO[0]+wO[1]||1,Qt=D.inQL+D.newQL,O=wO.map(x=>allOpp*x/wS),Q=wO.map(x=>Qt*x/wS),H=Q.map(x=>x/r1),E=H.map(x=>x/r0),P=[O[0]*ea,O[1]*ma],RV=[L[0]*ea,L[1]*ma],sm=a=>a[0]+a[1];
    const pS=(pipeToday+pipeNew+pipeLift)||1,SH=[pipeToday/pS,pipeNew/pS,pipeLift/pS],Pt=sm(P);
    const oneIn=r=>{const n=1/r;return Math.abs(n-Math.round(n))<0.2?`About 1 in ${Math.max(1,Math.round(n))}`:`About ${Math.round(r*10)} in 10`;};
    document.getElementById('ovK').textContent=`Step 1 · What ${n0(T)} logos mean in audience and pipeline`;
@@ -2037,24 +2042,24 @@ function renderAnswer(R){
      <div class="ovtg"><div class="ovtl"><span class="ovn">01 · Target</span><b class="ovh">Logos to win in 2027 ${pl('Given')}</b><b class="ovbig">${inp('targetLogos',96,200)}</b></div>
        <div class="ovsg ent"><span class="ovsk"><i class="ent"></i>Enterprise</span><b data-pv="L0"></b><span class="ovin">${inp('ovEntSh',44,100)}% of logos · $${inp('ovEntAcv',50,500)}k a year ${pl('Assumed')}</span></div>
        <div class="ovsg mm"><span class="ovsk"><i class="mm"></i>Mid-market</span><b data-pv="L1"></b><span class="ovin"><span data-pv="mmSh"></span>% of logos · $${inp('ovMmAcv',50,500)}k a year ${pl('Assumed')}</span></div>
-       <p class="ovnote">Segments and deal sizes from the ICPs Fermat shared. Every number below works back from here. Change any input.</p></div>
+       <p class="ovnote"><b style="color:var(--ink)" data-pv="accL"></b> Segments and deal sizes from the ICPs Fermat shared. Every number below works back from here. Change any input.</p></div>
      <div class="ovf">${card('02 · Engage','Engaged contacts','visited, viewed, or their company engaged','E',nx('ovE2H','become hot leads'))}
        ${card('03 · Hot','Hot leads','MQLs · 2+ actions, or left their details','H',nx('ovH2Q','are qualified'))}
-       ${card('04 · Qualify','Qualified leads','SQLs · checked by a founder, AE or Chief of Staff','Q',nx('ovQ2O','become opportunities','Given','brief: 30–50%'))}
+       ${card('04 · Qualify','Qualified leads','SQLs · checked by a founder, AE or Chief of Staff','Q',nx('ovQ2O','become opportunities','Given','for new leads (brief: 30–50%); today\'s convert at 46%'))}
        ${card('05 · Create','Opportunities','','O',`<b data-pv="aovWin"></b> are won<span class="ovin">Enterprise ${inp('ovWinE',40,100)}%</span><span class="ovin">Mid-market ${inp('ovWinM',40,100)}% ${pl('Assumed')}</span>`)}
        <div class="ovend"><b data-pv="Lend"></b><span>logos</span></div></div>
      <div class="ovb"><div class="ovc"><span class="ovn">06 · Pipeline</span><b class="ovh">Pipeline needed</b><b class="ovbig" data-pv="P"></b>${seg('P')}
          <div class="ovbar" data-pv-html="Pbar"></div><div class="ovleg" data-pv-html="Pleg"></div></div>
        <div class="ovc rev"><span class="ovn">07 · Revenue</span><b class="ovh">New ARR from these logos</b><b class="ovbig" data-pv="R"></b>${seg('R')}<span class="ovsub" data-pv="Rs"></span></div></div>`);
-   sv(ov,'L0',n0(L[0]));sv(ov,'L1',n0(L[1]));sv(ov,'mmSh',n0((1-es)*100));sv(ov,'Lend',n0(T));
+   sv(ov,'accL',`Across ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} target accounts.`);sv(ov,'L0',n0(L[0]));sv(ov,'L1',n0(L[1]));sv(ov,'mmSh',n0((1-es)*100));sv(ov,'Lend',n0(T));
    [['E',E],['H',H],['Q',Q],['O',O]].forEach(([k,a])=>{sv(ov,k,f(sm(a)));sv(ov,k+'0',f(a[0]));sv(ov,k+'1',f(a[1]));});
-   sv(ov,'aovE2H',oneIn(r0));sv(ov,'aovH2Q',oneIn(r1));sv(ov,'aovQ2O',oneIn(r2));sv(ov,'aovWin',oneIn(T/(O[0]+O[1]||1)));
+   sv(ov,'aovE2H',oneIn(r0));sv(ov,'aovH2Q',oneIn(r1));sv(ov,'aovQ2O',oneIn(allOpp/(Qt||1)));sv(ov,'aovWin',oneIn(T/(O[0]+O[1]||1)));
    sv(ov,'P',M(Pt));sv(ov,'P0',M(P[0]));sv(ov,'P1',M(P[1]));
    sv(ov,'R',M(sm(RV)));sv(ov,'R0',M(RV[0]));sv(ov,'R1',M(RV[1]));sv(ov,'Rs',`Enterprise is ${n0(es*100)}% of logos and ${n0(RV[0]/(sm(RV)||1)*100)}% of revenue.`);
    {const e=ov.querySelector('[data-pv-html="Pbar"]');if(e)e.innerHTML=[['t',SH[0]],['n',SH[1]],['h',SH[2]]].map(([c,v])=>`<i class="${c}" style="width:${v*100}%"></i>`).join('');}
    {const e=ov.querySelector('[data-pv-html="Pleg"]');if(e)e.innerHTML=`<span><i class="t"></i>Today's motion ${M(Pt*SH[0])}</span><span><i class="n"></i>Sourced (new leads) ${M(Pt*SH[1])}</span><span><i class="h"></i>Influenced (inbound lift) ${M(Pt*SH[2])}</span>`;}}
   // STEP 1
-  const S1={};{const T=num(g.targetLogos),es=Math.min(100,Math.max(0,num(g.ovEntSh)))/100,r2=Math.max(0.001,num(g.ovQ2O)/100),we=Math.max(0.001,num(g.ovWinE)/100),wm=Math.max(0.001,num(g.ovWinM)/100);S1.T=T;S1.Q=(T*es/we+T*(1-es)/wm)/r2;}
+  const S1={T:num(g.targetLogos),Q:D.inQL+D.newQL};
   const s1=once('s1',()=>`
     <div class="lvc"><span class="k" data-pv="tK"></span><b class="lvn" data-pv="t"></b><span class="lvs" data-pv="tS"></span></div>
     <div class="lvc"><span class="k">Today brings ${pl('Given')}</span><b class="lvn" data-pv="in"></b><span class="lvs" data-pv="inS"></span></div>
@@ -2064,7 +2069,7 @@ function renderAnswer(R){
   sv(s1,'in',f(b0*12));sv(s1,'inS',`${n0(b0)} a month, with no new spend. They win ${f(baseLogo)} logos.`);
   {const gq=D.newQL+lift*12;sv(s1,'need',f(gq));svh(s1,'needS',`${f(gq/12)} a month. They win ${f(newWork)} logos:<span class="gsplit"><span><b>${f(D.newQL)}</b> new leads → ${f(srcLogo)} logos</span><span><b>+${f(lift*12)}</b> more inbound from ads → ${fL} logos</span><span class="up">Inbound grows from ${n0(b0)} to ${f(b0+lift)} a month (+${n0(num(g.inboundLift))}%)</span></span>`);
    const bud=totalBudget(sc)*1000,cpl=newWork>0?bud/newWork:0;sv(s1,'cpl',`${k$(cpl)}`);sv(s1,'cplS',`${k$(bud)} for ${f(newWork)} logos. Each is worth ~${k$(D.acv)} a year${cpl<D.acv*num(g.gm)/100?', so it pays back within a year':''}.`);}
-  document.getElementById('s1line').textContent=`Why ${f(b0*12+lift*12+D.newQL)}, not ${f(S1.Q)}? Today's leads turn into deals more often than new ones, so we need ${f(Math.max(0,S1.Q-(b0*12+lift*12+D.newQL)))} fewer. That's ${f(allOpp)} opportunities and ${M(pipeAll)} pipeline.`;
+  document.getElementById('s1line').textContent=`${f(b0*12)} today + ${f(lift*12+D.newQL)} from growth = ${f(S1.Q)} qualified leads → ${f(allOpp)} opportunities → ${M(pipeAll)} pipeline.`;
   document.getElementById('s1arr').textContent=`${f(baseLogo+newWork)} logos, ${M((baseLogo+newWork)*D.acv)} new ARR.`;
   // STEP 2 · Row A: today's motion (baseline only, no new spend)
   const SRC=[['inEv','Events'],['inPt','Partners'],['inBr','Brand + inbound']];
@@ -2126,19 +2131,21 @@ function renderAnswer(R){
     <div class="face back"><div class="fh"><b class="fname">${name}</b><span class="fshare-s">${share}</span></div>${back}<button type="button" class="fbtn" data-fliptog="${i}" aria-expanded="${!!flipped[i]}">↺ Back</button></div>
   </div></div>`;
   const stat=(v,l)=>`<div class="fstat"><b>${v}</b><span>${l}</span></div>`;
-  const pt=D.paths[0],ex=D.paths[1],dg=D.paths[2],st3=x=>`<div class="fstats f3">${stat(f(x.q/12),'qualified leads a month')}${stat(M(x.pipe),'pipeline')}${stat(f(x.logos),'logos')}</div>`;
+  const pt=D.paths[0],ex=D.paths[1],dg=D.paths[2];
+  const pR=(()=>{const v=D.paths.map(x=>x.pipe/1e5),fl=v.map(Math.floor),tot=Math.round(v.reduce((a,b)=>a+b,0));let r=tot-fl.reduce((a,b)=>a+b,0);const ord=v.map((x,i)=>[x-fl[i],i]).sort((a,b)=>b[0]-a[0]);ord.forEach(([,i])=>{if(r>0){fl[i]++;r--;}});return fl.map(x=>'~$'+(x/10).toFixed(1)+'M');})();
+  const st3=x=>`<div class="fstats f3">${stat(f(x.q/12),'qualified leads a month')}${stat(pR[D.paths.indexOf(x)],'pipeline')}${stat(f(x.logos),'logos')}</div>`;
   document.getElementById('rowD').innerHTML=
-    card(0,'p0','Partners',n0(pt.sh*100)+'%','High','hi',st3(pt),
-      `<div class="fsec"><span>My bet</span>A structured program (value map, 10–20% commission from revenue) gets more intros from the same partners, plus US co-sellers.</div><div class="fsec"><span>I'll know by day 90</span><ul><li>Intros a month from pilot partners</li><li>${n0(g.ptQual)}% qualify</li></ul></div>`)+
-    card(1,'p1','Experiential',n0(ex.sh*100)+'%','High','hi',st3(ex),
-      `<div class="fsec"><span>My bet</span>Turn events into ABM moments: meetings booked before, dinners around them, follow-up within 48h.</div><div class="fsec"><span>I'll know by day 90</span><ul><li>Meetings per event</li><li>${n0(g.exMeet)}% meet, ${n0(g.exQual)}% qualify</li></ul></div><div class="fsec also"><span>Also moves open deals</span>Geofenced ads at the events we attend (US-first, GDPR limits it in Europe), and dinner invites for accounts with an open opportunity.</div>`)+
-    card(2,'p2','Digital',n0(dg.sh*100)+'%','Blend','mix',
-      `<div class="fmot"><div class="fmrow"><span class="fml">Targeted ABM</span><span class="conf med">Medium</span><b>${f(tgtM)}/mo</b></div><span class="fms">1:1 + 1:few · ${f(tAcc)} named accounts</span>
-        <div class="fmrow"><span class="fml">Always-on</span><span class="conf lo">Staged</span><b>${f(aoM)}/mo</b></div><span class="fms">1:many + search · ${f(aAcc)} accounts, + ${f(lift)}/mo inbound lift</span></div>${st3(dg)}`,
-      `<div class="fsec"><span>Targeted ABM · my bet</span>Personal outreach, account-based LinkedIn ads, signals (sign-ups by domain, job changes, hiring).</div>
-       <div class="fsec"><span>Always-on · my bet</span>One LinkedIn always-on on the ICP list (story from the LinkedIn test, live in month 4), competitor search in the US. <button class="toA" data-toA>↑ inbound lift</button></div>
+    card(0,'p0','Partners',n0(pt.sh*100)+'%','Works today','hi',st3(pt),
+      `<div class="fsec"><span>My bet</span>Give partners a reason to refer: a clear offer and 10–20% commission. More intros from the partners we have, plus US partners who help close.</div><div class="fsec"><span>I'll know by day 90</span><ul><li>Intros a month from the first partners</li><li>${n0(g.ptQual)}% of intros qualify</li></ul></div>`)+
+    card(1,'p1','Experiential',n0(ex.sh*100)+'%','Works today','hi',st3(ex),
+      `<div class="fsec"><span>My bet</span>Use events to meet target accounts: book meetings before, host dinners around them, follow up within 48 hours.</div><div class="fsec"><span>I'll know by day 90</span><ul><li>Meetings per event</li><li>${n0(g.exMeet)}% of people met book a meeting, ${n0(g.exQual)}% of those qualify</li></ul></div><div class="fsec also"><span>Also moves open deals</span>Ads to people at the events we attend (US first; GDPR limits this in Europe), and dinner invites for accounts with an open deal.</div>`)+
+    card(2,'p2','Digital',n0(dg.sh*100)+'%','New, to test','lo',
+      `<div class="fmot"><div class="fmrow"><span class="fml">Targeted ABM</span><b>${f(tgtM)}/mo</b></div><span class="fms">${f(tAcc)} named accounts</span>
+        <div class="fmrow"><span class="fml">Always-on</span><b>${f(aoM)}/mo</b></div><span class="fms">${f(aAcc)} accounts, plus ${f(lift)}/mo more inbound</span></div>${st3(dg)}`,
+      `<div class="fsec"><span>Targeted ABM · my bet</span>Reach named accounts directly: personal outreach, LinkedIn ads by account, and signals like sign-ups, job changes and hiring.</div>
+       <div class="fsec"><span>Always-on · my bet</span>One LinkedIn campaign that always runs on our target list, live from month 4, plus competitor search in the US. <button class="toA" data-toA>↑ more inbound</button></div>
        <div class="fsec also"><span>Also moves open deals</span>Ads to everyone involved in each open deal, plus case studies and security answers.</div>
-       <div class="fsec"><span>I'll know by day 90</span><ul><li>% of ${f(tAcc).replace('~','')} accounts engaged, ${n0(g.ab2M)}–${n0(g.ab1M)}% qualify</li><li>Cost per qualified lead, inbound trend vs Q4; cut after 2 quarters if flat</li></ul></div>`);
+       <div class="fsec"><span>I'll know by day 90</span><ul><li>How many of the ${f(tAcc).replace('~','')} named accounts engage</li><li>Cost per qualified lead, and inbound vs end of 2026. I stop it if inbound is flat after 2 quarters.</li></ul></div>`);
   // path cards
   const el=once('paths',()=>{const rate=r=>r?`<div class="path-ar"><span>${inp(r[0],46)}% ${r[1]}</span>${pl('Assumed')}</div>`:'<div class="path-ph"></div>';
     return D.paths.map(({P},i)=>`<div class="path p-${P.cls}">
@@ -2158,7 +2165,7 @@ function renderAnswer(R){
       <p class="path-x">${P.k==='dg'?'':'Extra, on top of what already comes in today.'}</p>
     </div>`).join('');});
   const mx=Math.max(1,...D.paths.map(x=>x.top));
-  D.paths.forEach((x,i)=>{sv(el,'sh'+i,n0(x.sh*100)+'%');sv(el,'top'+i,f(x.top));sv(el,'mid'+i,f(x.mid));sv(el,'q'+i,f(x.q));sv(el,'o'+i,f(x.opp));sv(el,'l'+i,f(x.logos));sv(el,'p'+i,M(x.pipe));sv(el,'r1'+i,`${n0(D.l2o*100)}% → opp`);sv(el,'r2'+i,`${n0(D.o2w*100)}% → won`);const b=el.querySelector(`[data-pv="bar${i}"]`);if(b)b.style.width=Math.max(1.5,x.top/mx*100)+'%';});
+  D.paths.forEach((x,i)=>{sv(el,'sh'+i,n0(x.sh*100)+'%');sv(el,'top'+i,f(x.top));sv(el,'mid'+i,f(x.mid));sv(el,'q'+i,f(x.q));sv(el,'o'+i,f(x.opp));sv(el,'l'+i,f(x.logos));sv(el,'p'+i,pR[i]);sv(el,'r1'+i,`${n0(D.l2o*100)}% → opp`);sv(el,'r2'+i,`${n0(D.o2w*100)}% → won`);const b=el.querySelector(`[data-pv="bar${i}"]`);if(b)b.style.width=Math.max(1.5,x.top/mx*100)+'%';});
   const ab=once('abmFlow',()=>{const ti=(k,w)=>`<input type="number" data-p="global.${k}" value="${g[k]}" min="0" max="2000" step="${String(g[k]).includes('.')?0.5:1}" style="width:${w||46}px">`;
     const blk=(k,l)=>`<div class="abb"><b data-pv="${k}"></b><span>${l}</span></div>`,arw=h=>`<div class="aba">${h}<i></i></div>`;
     return D.tiers.map((t,i)=>`<div class="abr t${i+1}"><div class="abh"><b>${t.name}</b>${t.key?`<span>${ti(t.key,62)} accounts ${pl('Assumed')}</span>`:'<span>rest of the named accounts</span>'}<em>${t.how}</em></div>
@@ -2166,7 +2173,7 @@ function renderAnswer(R){
       <div class="abp"><b data-pv="p${i}"></b><span>pipeline</span></div></div>`).join('');});
   D.tiers.forEach((t,i)=>{sv(ab,'a'+i,f(t.acc));sv(ab,'c'+i,f(t.con));sv(ab,'e'+i,f(t.eng));sv(ab,'q'+i,f(t.q));sv(ab,'o'+i,f(t.opp));sv(ab,'p'+i,K(t.pipe));sv(ab,'ar'+i,`${n0(D.l2o*100)}% → opp`);});
   const tOpp=D.tiers.reduce((a,t)=>a+t.opp,0),dOpp=D.paths[2].opp,ok=Math.abs(tOpp-dOpp)<=0.1*Math.max(dOpp,0.001);
-  document.getElementById('tierCheck').innerHTML=`<span class="tc ${ok?'ok':'amb'}">Tier flow ${f(tOpp)} opps · Digital path ${f(dOpp)}</span>`;
+  document.getElementById('tierCheck').innerHTML=`<span class="tc ${ok?'ok':'amb'}">By account group: ${f(tOpp)} opportunities · Digital total: ${f(dOpp)}</span>`;
   // DIAGNOSIS
   const B0=goalPlanV(R,sc,{...LV0}),autoAcc0=B0.autoAcc,fxA=num(g.tier1)+num(g.tier2)-(num(g.tier1)*num(g.tc1)+num(g.tier2)*num(g.tc2))/(num(g.tc3)||1);
   const pushAcc=num(g.mktPush)||autoAcc0,PU={mktPush:0,aeRegion:'EU',fixNewQL:Math.max(0.01,B0.newQL*(pushAcc-fxA)/Math.max(1,autoAcc0-fxA))},D2=goalPlanV(R,sc,{lvCS:false,...PU}),D0=goalPlanV(R,sc,{...LV0,...PU});
@@ -2187,7 +2194,7 @@ function renderAnswer(R){
    const coldM=cold/12,cold0=D0.unscreened/12;document.getElementById('dgSub').innerHTML=`Marketing can deliver <b>${f((D0.inQL+D0.newQL)/12)} qualified leads (SQLs) a month</b>. AEs only have time to call ${f(D0.qualCap)}${cold0>0.5?`, so ${f(cold0)} a month go cold`:''}. They can close ${f(D0.ceiling)} logos a year.`;
    {const recL=goalPlanV(R,sc,{...LV0,...PU,lvHO:true,lvIS:true,lvISfrom:1,lvAE:true}).closes;
     document.getElementById('dgLand').innerHTML=`<b>${f(D0.closes)}</b> logos if nothing changes → <b>${f(recL)}</b> with my recommendation (hand-off fix + 2 SDRs + EMEA AE).${anyOn0?` <span class="muted">With ${onNames0.join(', ')}: ${f(D2.closes)}.</span>`:''}`;
-    document.getElementById('dgAcc').innerHTML=`Of our ${f(D0.N)} target accounts, ${f(D0.fu.eng)} engage. ${cold0>0.5?'Sales has no time to follow them all up.':''}`;}
+    document.getElementById('dgAcc').innerHTML=`Of our ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} target accounts, digital works ${f(D0.N)} and ${f(D0.fu.eng)} of them engage. ${cold0>0.5?'Sales has no time to follow them all up.':''}`;}
    const H=200,mx2=Math.sqrt(Math.max(...tot,cold,1)),hh=v=>v>0.05?Math.max(4,Math.sqrt(v)/mx2*H):0;
    const bar=(i,lab,sub)=>{let segs='';CH.forEach(c=>{const v=c.st[i];if(v<0.05)return;const prev=i>0?c.st[i-1]:0;segs+=`<i style="flex:${v};background:${c.c}" title="${c.n} · ${f(v)}${prev>0?` · ${n0(v/prev*100)}% of previous stage`:''}"></i>`;});
      return `<div class="pc"><span class="pt">${f(tot[i])}</span><div class="pb" style="height:${hh(tot[i])}px">${segs}</div><span class="pl">${lab}</span><span class="ps">${sub||''}</span></div>`;};
@@ -2214,11 +2221,11 @@ function renderAnswer(R){
   {const T=D2.tiers,N=T.reduce((a,t)=>a+t.acc,0),rp=Math.min(100,Math.max(0,num(g.acReach)))/100,rch=N*rp,
      eng=Math.min(rch,T.reduce((a,t)=>a+Math.min(t.acc,t.eng/2),0)*rp),opp=T.reduce((a,t)=>a+t.opp,0),pct=(a,b)=>b>0?n0(a/b*100)+'%':'—';
    const tl=k=>T.map(t=>`${t.name} ${f(k(t)).replace('~','')}`).join(' · ');
-   document.getElementById('acsH').textContent=`Of our ${f(N)} target accounts: how many did we reach, how many engaged, how many are in pipeline?`;
+   document.getElementById('acsH').textContent=`Of the ${f(N)} accounts digital works (out of ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')}): how many do we reach, how many engage, how many end up in pipeline?`;
    const blk=(cls,k,v,s,sub)=>`<div class="acb ${cls}"><span class="k">${k}</span><b>${v}</b><span class="s">${s}</span>${sub?`<span class="t">${sub}</span>`:''}</div>`;
    const arr=t=>`<div class="aca"><span>${t}</span><i></i></div>`;
    document.getElementById('acs').innerHTML=
-     blk('','Target accounts',f(N),'the named list',tl(t=>t.acc))+arr(`${n0(rp*100)}% ${pl('Assumed')}`)+
+     blk('','Accounts worked',f(N),'the named list',tl(t=>t.acc))+arr(`${n0(rp*100)}% ${pl('Assumed')}`)+
      blk('','Reached',f(rch),'see our ads')+arr(pct(eng,rch))+
      blk('eng','Engaged',f(eng),'2+ people engage','needs people, not just ads ↓')+arr(pct(opp,eng))+
      blk('won','In pipeline',f(opp+(g.lvIS?D2.fu.opp:0)),g.lvIS?`${f(opp)} from ads + ${f(D2.fu.opp)} from SDR follow-up`:'opportunities from digital',M((opp+(g.lvIS?D2.fu.opp:0))*D2.acv)+' pipeline');
@@ -2227,7 +2234,7 @@ function renderAnswer(R){
      ${fs('engaged, not yet in pipeline',f(FU.open),`${f(FU.eng)} engaged − ${f(FU.adsOpp)} already in pipeline`)}${fa('SDRs call')}
      ${fs('followed up',f(FU.acc),g.lvIS&&(+g.lvISfrom||1)>1?`from Q${g.lvISfrom}`:'')}${fa(`${n0(FU.meetR*100)}% ${pl('Assumed')}`)}
      ${fs('meetings',f(FU.meet))}${fa(`${n0(FU.oppR*100)}% ${pl('Assumed')}`)}
-     ${fs('opportunities',f(FU.opp),M(FU.opp*D2.acv)+' pipeline')}${fa(`${n0(D2.o2w*100)}%`)}
+     ${fs('opportunities',f(FU.opp),M(FU.opp*D2.pv)+' pipeline')}${fa(`${n0(D2.o2w*100)}%`)}
      ${fs('logos',f(FU.opp*D2.o2w),(()=>{const ov={lvCS:false,...PU,lvIS:true,lvISfrom:g.lvIS?g.lvISfrom:1},d=goalPlanV(R,sc,ov).closes-goalPlanV(R,sc,{...ov,sdMeet:0}).closes;return `${f(Math.max(0,d))} close in 2027; the rest in 2028 or wait for an AE`;})())}</div>`;
    const coldM=D2.unscreened/12,spare=D2.qualCap-D2.screens;
    const who=coldM>0.5?`<span class="bad">Nobody has time today.</span> AEs are full: ~${n0(coldM)} qualified leads a month already go cold. ${g.lvIS?'':'The 2 SDRs would own this.'}`
@@ -2345,7 +2352,7 @@ function update(){
   S.global.aes=num(S.global.aesEU)+num(S.global.aesUS);
   // one deal size everywhere: blended from the segment mix in Goal setting Step 1
   {const g=S.global,es=Math.min(100,Math.max(0,num(g.ovEntSh)))/100;if(num(g.ovEntAcv)>0&&num(g.ovMmAcv)>0)g.acv=Math.round((es*num(g.ovEntAcv)+(1-es)*num(g.ovMmAcv))*100)/100;
-   const we=num(g.ovWinE)/100,wm=num(g.ovWinM)/100;if(we>0&&wm>0)g.wbO2W=Math.round(100/(es/we+(1-es)/wm)*100)/100;if(num(g.ovQ2O)>0)g.wbL2O=num(g.ovQ2O);}
+   const we=num(g.ovWinE)/100,wm=num(g.ovWinM)/100;if(we>0&&wm>0){const w0=es/we,w1=(1-es)/wm;g.pvo=Math.round((w0*num(g.ovEntAcv)+w1*num(g.ovMmAcv))/(w0+w1)*100)/100;}if(we>0&&wm>0)g.wbO2W=Math.round(100/(es/we+(1-es)/wm)*100)/100;if(num(g.ovQ2O)>0)g.wbL2O=num(g.ovQ2O);}
   const R={};SC.forEach(s=>R[s]=run(s));
   {const sb=document.getElementById('salesBox');if(sb&&SC.includes(view))sb.innerHTML=salesBoxHTML(view);}
   renderAnswer(R);renderDiagnosis(R);renderPies(R);renderBudgetTotals();renderTiles(R);renderFlags(R);renderPtn();renderRegIn();renderWins(R);renderPipeByChannel(R);renderCompareTable(R);renderKnown();
