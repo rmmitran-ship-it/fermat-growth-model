@@ -1633,6 +1633,7 @@ function migrate(o){
   const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
   if(!o.channels.some(c=>c.id==='activations')){const i=o.channels.findIndex(c=>c.id==='partners');o.channels.splice(i<0?o.channels.length:i,0,clone(DEFAULTS.channels.find(c=>c.id==='activations')));}
   if(o.global.acReach==null)o.global.acReach=80;if(o.global.revGoal==null||+o.global.revGoal>100)o.global.revGoal=3.1;if(o.global.ovPerAcc==null)o.global.ovPerAcc=7;
+  if(!o.global.planA2&&o.scenarios&&o.scenarios.A){o.scenarios.A.budget={linkedin:95,google:45,chatgpt:10,reddit:5,events:80,partners:45,abm:25};o.scenarios.A.phasing=[25,25,25,25];o.scenarios.A.sdr=0;o.global.planA2=true;o.global.planA1=true;}
   if(!o.global.planA1&&o.scenarios&&o.scenarios.A&&!Object.values(o.scenarios.A.budget||{}).some(v=>+v>0)){o.scenarios.A.budget={linkedin:95,google:45,chatgpt:10,reddit:5,events:80,partners:45,abm:25};o.scenarios.A.phasing=[25,25,25,25];o.global.planA1=true;}
   if(!o.global.h2hire){o.global.lvAEfrom=2;o.global.lvISfrom=3;o.global.h2hire=true;}if(o.global.calcBudget==null)o.global.calcBudget=310;
   if(o.global.ovE2H==null)o.global.ovE2H=25;if(o.global.ovH2Q==null)o.global.ovH2Q=40;if(o.global.ovWinE==null)o.global.ovWinE=15;if(o.global.ovWinM==null)o.global.ovWinM=25;
