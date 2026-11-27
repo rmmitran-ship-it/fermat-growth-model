@@ -980,6 +980,8 @@ i.ent,i.mm{display:inline-block;width:10px;height:10px}i.ent{background:var(--in
 .flowb:not(.zoom) .rfb{padding-bottom:12px}
 .pv-s .zhint,.zhint{font-family:Inter,sans-serif;font-size:12px;font-weight:400;color:var(--muted);margin-left:6px;background:none;padding:0;border:0;text-transform:none;letter-spacing:0}
 .gsplit{display:flex;flex-direction:column;gap:2px;margin-top:6px}.gsplit b{color:var(--ink)}.gsplit .up{margin-top:4px;padding:3px 6px;background:var(--white);color:var(--ink);font-weight:600;align-self:flex-start}
+.lvc.calc .cbud{display:flex;align-items:center;gap:4px;font-size:14px;font-weight:600;color:var(--ink);margin-top:6px}.lvc.calc .cbud input{font-size:15px;font-weight:600}
+.lvc.calc .cpre{font-size:12px;color:var(--muted);margin:2px 0 6px}.lvc.calc .lvn small{font-size:13px;font-weight:600;letter-spacing:0;margin-left:4px;font-family:Inter,sans-serif}
 .rcsum{display:flex;flex-direction:column;gap:4px;margin:10px 0 0;font-size:14px;color:var(--ink);max-width:none}
 .lgp.src{background:var(--magenta)}
 .fstats.f3{grid-template-columns:repeat(3,minmax(0,1fr))}.fstats.f3 .fstat b{font-size:20px}
@@ -1438,7 +1440,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,aeRegion:'EU',lvWR:false,wrUp:2,m2s:60,acReach:80,ovEntSh:25,ovEntAcv:100,ovMmAcv:35,ovE2H:25,ovH2Q:40,ovE2Q:20,ovQ2O:40,ovWin:22,ovWinE:15,ovWinM:25,sdMeet:30,sdOpp:50,sdTouch:6,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:15,tc2:10,tc3:6,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
+  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,aeRegion:'EU',lvWR:false,wrUp:2,m2s:60,acReach:80,calcBudget:310,ovEntSh:25,ovEntAcv:100,ovMmAcv:35,ovE2H:25,ovH2Q:40,ovE2Q:20,ovQ2O:40,ovWin:22,ovWinE:15,ovWinM:25,sdMeet:30,sdOpp:50,sdTouch:6,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:15,tc2:10,tc3:6,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -1558,7 +1560,7 @@ function migrate(o){
   if(o.global.baseL2O===45&&!o.global.cal40){o.global.baseL2O=40;}o.global.cal40=true;
   const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
   if(!o.channels.some(c=>c.id==='activations')){const i=o.channels.findIndex(c=>c.id==='partners');o.channels.splice(i<0?o.channels.length:i,0,clone(DEFAULTS.channels.find(c=>c.id==='activations')));}
-  if(o.global.acReach==null)o.global.acReach=80;
+  if(o.global.acReach==null)o.global.acReach=80;if(o.global.calcBudget==null)o.global.calcBudget=310;
   if(o.global.ovE2H==null)o.global.ovE2H=25;if(o.global.ovH2Q==null)o.global.ovH2Q=40;if(o.global.ovWinE==null)o.global.ovWinE=15;if(o.global.ovWinM==null)o.global.ovWinM=25;
   if(!o.global.q2o40){o.global.ovQ2O=40;o.global.q2o40=true;}
   if(!o.global.ent25){if(o.global.ovEntSh==null||+o.global.ovEntSh===20)o.global.ovEntSh=25;o.global.ent25=true;}
@@ -1947,6 +1949,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-fliptog]')
 (()=>{const tog=r=>{const on=!r.classList.contains('zoom');r.classList.toggle('zoom',on);r.setAttribute('aria-expanded',on);const h=document.getElementById('zHint');if(h)h.textContent=on?'Double-click to hide the detail':'Double-click the boxes for detail';};
   document.addEventListener('dblclick',e=>{const r=e.target.closest('#rowB');if(!r||e.target.closest('input,select,button,summary'))return;window.getSelection&&window.getSelection().removeAllRanges();tog(r);});
   document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='rowB')tog(e.target);});})();
+document.addEventListener('click',e=>{const b=e.target.closest('[data-cb]');if(!b)return;S.global.calcBudget=+b.dataset.cb;save();update();});
 document.addEventListener('click',e=>{if(e.target.closest('[data-fixjump]'))setTimeout(()=>{const b=document.getElementById('fixBox');if(b)b.scrollIntoView({block:'start'});},60);});
 document.addEventListener('click',e=>{if(!e.target.closest('[data-pushreset]'))return;S.global.mktPush=0;save();update();});
 function runV(sc,v){const prev=HIRE;HIRE=v;try{return run(sc);}finally{HIRE=prev;}}
@@ -2064,11 +2067,14 @@ function renderAnswer(R){
     <div class="lvc"><span class="k" data-pv="tK"></span><b class="lvn" data-pv="t"></b><span class="lvs" data-pv="tS"></span></div>
     <div class="lvc"><span class="k">Today brings ${pl('Given')}</span><b class="lvn" data-pv="in"></b><span class="lvs" data-pv="inS"></span></div>
     <div class="lvc gap"><span class="k">Growth adds</span><b class="lvn" data-pv="need"></b><span class="lvs" data-pv="needS"></span></div>
-    <div class="lvc"><span class="k">Cost per new logo</span><b class="lvn" data-pv="cpl"></b><span class="lvs" data-pv="cplS"></span></div>`);
+    <div class="lvc calc"><span class="k">CAC calculator</span>
+      <label class="cbud">Budget $${inp('calcBudget',64,2000)}k</label>
+      <span class="cpre"><button type="button" class="linkbtn" data-cb="310">Plan B $310k</button> · <button type="button" class="linkbtn" data-cb="550">Plan C $550k</button></span>
+      <b class="lvn" data-pv="cpl"></b><span class="lvs" data-pv="cplS"></span></div>`);
   sv(s1,'tK',`${n0(S1.T)} logos need`);sv(s1,'t',`${f(S1.Q)}`);sv(s1,'tS','qualified leads a year');
   sv(s1,'in',f(b0*12));sv(s1,'inS',`${n0(b0)} a month, with no new spend. They win ${f(baseLogo)} logos.`);
   {const gq=D.newQL+lift*12;sv(s1,'need',f(gq));svh(s1,'needS',`${f(gq/12)} a month. They win ${f(newWork)} logos:<span class="gsplit"><span><b>${f(D.newQL)}</b> new leads → ${f(srcLogo)} logos</span><span><b>+${f(lift*12)}</b> more inbound from ads → ${fL} logos</span><span class="up">Inbound grows from ${n0(b0)} to ${f(b0+lift)} a month (+${n0(num(g.inboundLift))}%)</span></span>`);
-   const bud=totalBudget(sc)*1000,cpl=newWork>0?bud/newWork:0;sv(s1,'cpl',`${k$(cpl)}`);sv(s1,'cplS',`${k$(bud)} for ${f(newWork)} logos. Each is worth ~${k$(D.acv)} a year${cpl<D.acv*num(g.gm)/100?', so it pays back within a year':''}.`);}
+   const bud=Math.max(0,num(g.calcBudget))*1000,cpl=newWork>0?bud/newWork:0,gmM=D.acv*num(g.gm)/100/12,pb=gmM>0?cpl/gmM:0;svh(s1,'cpl',`${k$(cpl)}<small> per new logo</small>`);sv(s1,'cplS',`${k$(bud)} ÷ ${f(newWork)} new logos. ${k$(gq>0?bud/gq:0)} per qualified lead. Each logo is worth ~${k$(D.acv)} a year, so it pays back in ~${n0(pb)} months.`);}
   document.getElementById('s1line').textContent=`${f(b0*12)} today + ${f(lift*12+D.newQL)} from growth = ${f(S1.Q)} qualified leads → ${f(allOpp)} opportunities → ${M(pipeAll)} pipeline.`;
   document.getElementById('s1arr').textContent=`${f(baseLogo+newWork)} logos, ${M((baseLogo+newWork)*D.acv)} new ARR.`;
   // STEP 2 · Row A: today's motion (baseline only, no new spend)
