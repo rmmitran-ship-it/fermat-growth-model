@@ -1215,6 +1215,8 @@ b.asv{font-weight:700;color:var(--ink);font-size:13.5px}
 .narr-col.pl,.narr-col.fl{font-size:14px;font-weight:400;text-align:left;margin-top:0}
 
 .abcc.a{background:var(--magenta-light)}.abcc.a .abcm div{background:var(--white)}.abcc.a .abcseg div{background:var(--white);border-color:var(--white)}.abcc.a .abcr{border-color:rgba(0,0,0,.12)}
+
+.msr th span{display:block;font-weight:400;text-transform:none;letter-spacing:0;font-size:11px}.msr td:first-child{font-weight:700;white-space:nowrap}.msr td{vertical-align:top;font-size:13.5px}.msr td:last-child{background:var(--surface)}
 </style>
 </head>
 <body>
@@ -1406,14 +1408,15 @@ b.asv{font-weight:700;color:var(--ink);font-size:13.5px}
     </div>
   </div>
   <h3 class="mt2">How I measure them</h3>
-  <div class="tw mt"><table>
-    <thead><tr><th>Channel</th><th>What I measure</th><th>Keep or cut</th></tr></thead>
+  <p class="small muted">Same four stages for every channel, so they can be compared. Each channel defines them its own way. The early stages give a read in 30–60 days, before pipeline shows.</p>
+  <div class="tw mt"><table class="msr">
+    <thead><tr><th>Channel</th><th>Reached</th><th>Engaged</th><th>Hot <span>raised a hand</span></th><th>Pipeline</th><th>Keep or cut</th></tr></thead>
     <tbody>
-      <tr><td>Partners</td><td>Partner-sourced opportunities and win rate</td><td>By Q2, scale the partner types that bring opportunities, drop the rest</td></tr>
-      <tr><td>ABM</td><td>Opportunities from named accounts</td><td>Keep if engaged accounts convert at 2x non-engaged ones</td></tr>
-      <tr><td>Events</td><td>Opportunities within 60 days of the event</td><td>Cut events with no opportunity in 60 days</td></tr>
-      <tr><td>Paid enterprise</td><td>Cost per opportunity</td><td>Move budget from the highest cost per opportunity to the lowest</td></tr>
-      <tr><td>Organic</td><td>Share of AI answers, meetings from the podcast</td><td>Keep if ICP meetings come from it within 2 quarters</td></tr>
+      <tr><td>ABM</td><td>% of the ~467 target accounts seeing ads</td><td>Accounts with 2+ people engaging</td><td>Accounts with a demo request, form or reply</td><td>Opportunities from named accounts</td><td>Keep if engaged accounts convert at 2x non-engaged ones</td></tr>
+      <tr><td>Events</td><td>Target accounts invited or met</td><td>People who booked a meeting</td><td>Follow-up meeting within 48 hours</td><td>Opportunities within 60 days</td><td>Cut events with no opportunity in 60 days</td></tr>
+      <tr><td>Partners</td><td>Partners briefed with the kit</td><td>Intros made</td><td>Intros that take a meeting</td><td>Partner-sourced opportunities and win rate</td><td>By Q2, scale the partner types that bring opportunities, drop the rest</td></tr>
+      <tr><td>Paid enterprise</td><td>ICP people reached, searches on our terms</td><td>Visits and clicks from ICP accounts</td><td>Demo requests and lead-gen forms</td><td>Cost per opportunity</td><td>Move budget from the highest cost per opportunity to the lowest</td></tr>
+      <tr><td>Organic</td><td>Share of AI answers, podcast listens</td><td>ICP site visits, subscribers</td><td>Inbound that mentions the podcast or Pol</td><td>ICP meetings within 2 quarters</td><td>Keep if ICP meetings come from it within 2 quarters</td></tr>
     </tbody>
   </table></div>
   <p class="mt"><b style="color:var(--ink)">Review monthly.</b> Once a channel has 10+ qualified leads, move 10–20% of budget from the highest cost per opportunity to the lowest. Cut any channel with no opportunities after 2 quarters.</p>
