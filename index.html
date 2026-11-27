@@ -1425,7 +1425,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,aeRegion:'EU',lvWR:false,wrUp:2,m2s:60,acReach:80,ovEntSh:25,ovEntAcv:100,ovMmAcv:35,ovE2Q:20,ovQ2O:45,ovWin:22,sdMeet:30,sdOpp:50,sdTouch:6,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:15,tc2:10,tc3:6,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
+  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,aeRegion:'EU',lvWR:false,wrUp:2,m2s:60,acReach:80,ovEntSh:25,ovEntAcv:100,ovMmAcv:35,ovE2Q:20,ovQ2O:40,ovWin:22,ovWinE:15,ovWinM:25,sdMeet:30,sdOpp:50,sdTouch:6,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:15,tc2:10,tc3:6,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -1546,8 +1546,10 @@ function migrate(o){
   const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
   if(!o.channels.some(c=>c.id==='activations')){const i=o.channels.findIndex(c=>c.id==='partners');o.channels.splice(i<0?o.channels.length:i,0,clone(DEFAULTS.channels.find(c=>c.id==='activations')));}
   if(o.global.acReach==null)o.global.acReach=80;
+  if(o.global.ovWinE==null)o.global.ovWinE=15;if(o.global.ovWinM==null)o.global.ovWinM=25;
+  if(!o.global.q2o40){o.global.ovQ2O=40;o.global.q2o40=true;}
   if(!o.global.ent25){if(o.global.ovEntSh==null||+o.global.ovEntSh===20)o.global.ovEntSh=25;o.global.ent25=true;}
-  {const d={ovEntSh:25,ovEntAcv:100,ovMmAcv:35,ovE2Q:20,ovQ2O:45,ovWin:22};Object.keys(d).forEach(k=>{if(o.global[k]==null)o.global[k]=d[k];});}
+  {const d={ovEntSh:25,ovEntAcv:100,ovMmAcv:35,ovE2Q:20,ovQ2O:40,ovWin:22,ovWinE:15,ovWinM:25};Object.keys(d).forEach(k=>{if(o.global[k]==null)o.global[k]=d[k];});}
   if(o.global.sdMeet==null)o.global.sdMeet=30;if(o.global.sdTouch==null)o.global.sdTouch=6;if(o.global.sdOpp==null)o.global.sdOpp=50;
   if(!o.global.finalV){o.global.aeRegion='EU';o.global.lvWR=false;o.global.finalV=true;}
   if(!o.global.sdrV){o.global.isLeads=0;o.global.isCalls=50;o.global.lvCS=false;o.global.sdrV=true;}
@@ -2011,26 +2013,26 @@ function renderAnswer(R){
   (document.getElementById('recT')||{}).innerHTML=`I recommend plan B: fix the hand-off and add 2 SDRs in month 1, and hire an EMEA AE once each AE has ${n0(g.maxDeals)}+ open deals. That gets us <b>${f(landRec)} of ${n0(D.tg)} logos</b>.`;
   // OVERVIEW: what the target takes, in total, by segment
   {const T=num(g.targetLogos),es=Math.min(100,Math.max(0,num(g.ovEntSh)))/100,ea=num(g.ovEntAcv)*1000,ma=num(g.ovMmAcv)*1000;
-   const r1=Math.max(0.001,num(g.ovE2Q)/100),r2=Math.max(0.001,num(g.ovQ2O)/100),r3=Math.max(0.001,num(g.ovWin)/100);
-   const L=[T*es,T*(1-es)],O=L.map(x=>x/r3),Q=O.map(x=>x/r2),E=Q.map(x=>x/r1),P=[O[0]*ea,O[1]*ma],RV=[L[0]*ea,L[1]*ma],sm=a=>a[0]+a[1];
+   const r1=Math.max(0.001,num(g.ovE2Q)/100),r2=Math.max(0.001,num(g.ovQ2O)/100),r3e=Math.max(0.001,num(g.ovWinE)/100),r3m=Math.max(0.001,num(g.ovWinM)/100);
+   const L=[T*es,T*(1-es)],O=[L[0]/r3e,L[1]/r3m],Q=O.map(x=>x/r2),E=Q.map(x=>x/r1),P=[O[0]*ea,O[1]*ma],RV=[L[0]*ea,L[1]*ma],sm=a=>a[0]+a[1];
    const pS=(pipeToday+pipeNew+pipeLift)||1,SH=[pipeToday/pS,pipeNew/pS,pipeLift/pS],Pt=sm(P);
-   const oneIn=r=>`About 1 in ${Math.max(1,Math.round(1/r))}`;
+   const oneIn=r=>{const n=1/r;return Math.abs(n-Math.round(n))<0.2?`About 1 in ${Math.max(1,Math.round(n))}`:`About ${Math.round(r*10)} in 10`;};
    document.getElementById('ovK').textContent=`Step 1 · What ${n0(T)} logos take, in total`;
    const seg=k=>`<div class="ovs"><span><i class="ent"></i>Enterprise <b data-pv="${k}0"></b></span><span><i class="mm"></i>Mid-market <b data-pv="${k}1"></b></span></div>`;
    const card=(n,h,sub,k)=>`<div class="ovc"><span class="ovn">${n}</span><b class="ovh">${h}</b><span class="ovsub">${sub}</span><b class="ovbig" data-pv="${k}"></b>${seg(k)}</div>`;
-   const arr=(k,t)=>`<div class="ova"><b data-pv="a${k}"></b><span>${t}</span><span class="ovin">${inp(k,44,100)}% ${pl('Assumed')}</span><i></i></div>`;
+   const arr=(k,t,bd,nt)=>`<div class="ova"><b data-pv="a${k}"></b><span>${t}</span><span class="ovin">${inp(k,44,100)}% ${pl(bd||'Assumed')}</span>${nt?`<span class="ovsub">${nt}</span>`:''}<i></i></div>`;
    const ov=once('ov',()=>`
      <div class="ovtg"><div class="ovtl"><span class="ovn">01 · Target</span><b class="ovh">Logos to win in 2027</b><b class="ovbig" data-pv="L"></b></div>
        <div class="ovsg ent"><span class="ovsk"><i class="ent"></i>Enterprise</span><b data-pv="L0"></b><span class="ovin">${inp('ovEntSh',44,100)}% of logos · $${inp('ovEntAcv',50,500)}k a year ${pl('Assumed')}</span></div>
        <div class="ovsg mm"><span class="ovsk"><i class="mm"></i>Mid-market</span><b data-pv="L1"></b><span class="ovin"><span data-pv="mmSh"></span>% of logos · $${inp('ovMmAcv',50,500)}k a year ${pl('Assumed')}</span></div>
        <p class="ovnote">Segments and deal sizes from the ICPs Fermat shared. Every number below works back from here. Change any input.</p></div>
-     <div class="ovf">${card('02 · Engage','Engaged contacts','MQLs','E')}${arr('ovE2Q','become qualified leads')}${card('03 · Qualify','Qualified leads','SQLs','Q')}${arr('ovQ2O','become opportunities')}${card('04 · Create','Opportunities','','O')}${arr('ovWin','are won')}<div class="ovend"><b data-pv="Lend"></b><span>logos</span></div></div>
+     <div class="ovf">${card('02 · Engage','Engaged contacts','MQLs','E')}${arr('ovE2Q','become qualified leads')}${card('03 · Qualify','Qualified leads','SQLs','Q')}${arr('ovQ2O','become opportunities','Given','brief: 30–50%')}${card('04 · Create','Opportunities','','O')}<div class="ova"><b data-pv="aovWin"></b><span>are won</span><span class="ovin">Enterprise ${inp('ovWinE',40,100)}%</span><span class="ovin">Mid-market ${inp('ovWinM',40,100)}%</span><span class="ovin">${pl('Assumed')}</span><i></i></div><div class="ovend"><b data-pv="Lend"></b><span>logos</span></div></div>
      <div class="ovb"><div class="ovc"><span class="ovn">05 · Pipeline</span><b class="ovh">Pipeline needed</b><b class="ovbig" data-pv="P"></b>${seg('P')}
          <div class="ovbar" data-pv-html="Pbar"></div><div class="ovleg" data-pv-html="Pleg"></div></div>
        <div class="ovc rev"><span class="ovn">06 · Revenue</span><b class="ovh">New ARR from these logos</b><b class="ovbig" data-pv="R"></b>${seg('R')}<span class="ovsub" data-pv="Rs"></span></div></div>`);
    sv(ov,'L',n0(T));sv(ov,'L0',n0(L[0]));sv(ov,'L1',n0(L[1]));sv(ov,'mmSh',n0((1-es)*100));sv(ov,'Lend',n0(T));
    [['E',E],['Q',Q],['O',O]].forEach(([k,a])=>{sv(ov,k,f(sm(a)));sv(ov,k+'0',f(a[0]));sv(ov,k+'1',f(a[1]));});
-   sv(ov,'aovE2Q',oneIn(r1));sv(ov,'aovQ2O',oneIn(r2));sv(ov,'aovWin',oneIn(r3));
+   sv(ov,'aovE2Q',oneIn(r1));sv(ov,'aovQ2O',oneIn(r2));sv(ov,'aovWin',oneIn(T/(O[0]+O[1]||1)));
    sv(ov,'P',M(Pt));sv(ov,'P0',M(P[0]));sv(ov,'P1',M(P[1]));
    sv(ov,'R',M(sm(RV)));sv(ov,'R0',M(RV[0]));sv(ov,'R1',M(RV[1]));sv(ov,'Rs',`Enterprise is ${n0(es*100)}% of logos and ${n0(RV[0]/(sm(RV)||1)*100)}% of revenue.`);
    {const e=ov.querySelector('[data-pv-html="Pbar"]');if(e)e.innerHTML=[['t',SH[0]],['n',SH[1]],['h',SH[2]]].map(([c,v])=>`<i class="${c}" style="width:${v*100}%"></i>`).join('');}
