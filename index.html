@@ -1106,7 +1106,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
     <div class="lv-sec"><span class="lv-k">Step 2 · Where the 60 come from</span>
       <h5 class="pv-s">Fermat's motion today <span class="pill given">Given sources</span> <span class="pill assumed">Assumed split</span></h5>
       <div class="rflow flowa" id="rowA"></div>
-      <p class="s1muted"><span class="pill given">Given</span> Today, leads come from events, partners and brand. No paid ads or outbound yet. <span class="pill assumed">Assumed</span> An even split for now. I'll check the real split in month 1.</p>
+      <p class="s1muted"><span class="pill given">Given</span> Today, leads come from events, partners and brand. No paid ads or outbound yet. <span class="pill assumed">Assumed</span> A founder, an AE or the Chief of Staff qualifies them today. An even split for now. I'll check the real split in month 1.</p>
       <h5 class="pv-s">What new work adds <span class="pill assumed">Assumed</span></h5>
       <div class="rflow flowb" id="rowB"></div>
       <p class="s1muted" id="rowBcheck"></p>
@@ -1134,6 +1134,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
   <p class="dg-sub" id="dgSub"></p>
   <p class="dg-acc" id="dgAcc"></p>
   <div class="pp" id="pp"></div>
+  <p class="s1muted"><span class="pill assumed">Assumed</span> Someone qualifies these leads today: a founder, an AE or the Chief of Staff. From the first call: AEs only look at hot leads, so the rest wait and go cold.</p>
   <details class="more mt" id="pushBox"><summary>Try it: push marketing harder</summary><div class="ppush" id="ppush"></div></details>
   <h3 class="mt2">Fixes, in this order</h3>
   <p class="dg-land" id="dgLand"></p>
@@ -1456,7 +1457,7 @@ const GMETA=[
   {k:'isCalls',label:'Qualification calls per inside sales rep a month',unit:'calls',min:0,max:200,step:5,badge:'Assumed',note:'',grid:false},
   {k:'maxDeals',label:'Max active deals per AE',unit:'deals',min:5,max:60,step:1,badge:'Assumed',note:'',grid:false},
   {k:'csLift',label:'US partner co-selling: extra US closing capacity',unit:'%',min:0,max:50,step:1,badge:'Assumed',note:'Partners support the single US AE on late-stage deals.',grid:false},
-  {k:'m2s',label:'MQL → SQL (accepted by sales)',unit:'%',min:10,max:100,step:1,badge:'Assumed',note:'SQL → opp is derived so the product stays 46% today and 40% for new MQLs.',grid:false},
+  {k:'m2s',label:'Qualified lead → SQL (accepted by sales)',unit:'%',min:10,max:100,step:1,badge:'Assumed',note:'SQL → opp is derived so the product stays 46% today and 40% for new MQLs.',grid:false},
   {k:'wrUp',label:'Upside: extra win-rate points from moving open deals',unit:'pts',min:0,max:10,step:0.5,badge:'Assumed',note:'Not committed. Shown only when the upside toggle is on.',grid:false},
   {k:'tc1',label:'ABM 1:1: contacts per account',unit:'contacts',min:1,max:40,step:1,badge:'Assumed',note:'',grid:false},
   {k:'tc2',label:'ABM 1:few: contacts per account',unit:'contacts',min:1,max:40,step:1,badge:'Assumed',note:'',grid:false},
@@ -2103,7 +2104,7 @@ function renderAnswer(R){
    const tot=[0,1,2,3,4,5].map(i=>CH.reduce((a,c)=>a+c.st[i],0));
    const cold=D2.unscreened,slip=Math.min(D2.lagSlip,Math.max(0,D2.potWins-D2.closes)),lost2=Math.max(0,D2.potWins-D2.closes-slip),need2=D2.potWins-slip;
    const mqlM=(D2.inQL+D2.newQL)/12;
-   const coldM=cold/12,cold0=D0.unscreened/12;document.getElementById('dgSub').innerHTML=`Marketing can deliver <b>${f((D0.inQL+D0.newQL)/12)} leads to be qualified (MQLs) a month</b>. AEs only have time to hand off ${f(D0.qualCap)}${cold0>0.5?`, so ${f(cold0)} a month go cold`:''}. They can close ${f(D0.ceiling)} logos a year.`;
+   const coldM=cold/12,cold0=D0.unscreened/12;document.getElementById('dgSub').innerHTML=`Marketing can deliver <b>${f((D0.inQL+D0.newQL)/12)} qualified leads a month</b>. AEs only have time to call ${f(D0.qualCap)}${cold0>0.5?`, so ${f(cold0)} a month go cold`:''}. They can close ${f(D0.ceiling)} logos a year.`;
    {const recL=goalPlanV(R,sc,{...LV0,...PU,lvHO:true,lvIS:true,lvISfrom:1,lvAE:true}).closes;
     document.getElementById('dgLand').innerHTML=`<b>${f(D0.closes)}</b> logos if nothing changes → <b>${f(recL)}</b> with my recommendation (hand-off fix + 2 SDRs + EMEA AE).${anyOn0?` <span class="muted">With ${onNames0.join(', ')}: ${f(D2.closes)}.</span>`:''}`;
     document.getElementById('dgAcc').innerHTML=`Of our ${f(D0.N)} target accounts, ${f(D0.fu.eng)} engage. ${cold0>0.5?'Sales has no time to follow them all up.':''}`;}
@@ -2120,11 +2121,11 @@ function renderAnswer(R){
    const accNow=D2.N+D2.paths[0].top;
    const pp=document.getElementById('pp'),pu=document.getElementById('ppush');
    const sl=pu.querySelector('.pslider input[type=range]');const keepFocus=sl&&document.activeElement===sl;
-   const top=`<div class="pz-head"><div class="pslider"><label><b>Marketing push</b> · accounts engaged <span class="pval">${f(accNow)}</span></label><input type="range" min="200" max="800" step="10" value="${Math.round(accNow)}" data-p="global.mktPush" aria-label="Accounts engaged by new work">${num(g.mktPush)?`<button class="linkbtn" data-pushreset>Back to the plan (${f(autoAcc0)})</button>`:''}<span class="ps">Marketing can fill the top. Without hand-off and closing capacity, more MQLs just go cold.</span></div></div>`;
-   const html=`<div class="pzs"><div class="pz mk"><span class="pzl">Marketing</span><div class="pzc">${bar(0,'Contacts','reached')}${ar}${bar(1,'Contacts','engaged')}${ar}${bar(2,'MQLs','leads to be qualified')}</div></div>
+   const top=`<div class="pz-head"><div class="pslider"><label><b>Marketing push</b> · accounts engaged <span class="pval">${f(accNow)}</span></label><input type="range" min="200" max="800" step="10" value="${Math.round(accNow)}" data-p="global.mktPush" aria-label="Accounts engaged by new work">${num(g.mktPush)?`<button class="linkbtn" data-pushreset>Back to the plan (${f(autoAcc0)})</button>`:''}<span class="ps">Marketing can fill the top. Without hand-off and closing capacity, more leads just go cold.</span></div></div>`;
+   const html=`<div class="pzs"><div class="pz mk"><span class="pzl">Marketing</span><div class="pzc">${bar(0,'Contacts','reached')}${ar}${bar(1,'Contacts','engaged')}${ar}${bar(2,'Qualified leads','waiting for an AE call')}</div></div>
      ${neck}
      <div class="pz sl"><span class="pzl">Sales</span><div class="pzc">${bar(3,'SQL','accepted by sales')}${ar.replace('class="pa"',`class="pa b2 ${b2}"`)}${bar(4,'Opportunity')}${ar.replace('class="pa"',`class="pa b2 ${b2}"`)}<div class="pwon">${bar(5,'Won','in 2027')}${lost2>0.5?`<div class="pover">−${f(lost2)} wait for an AE</div>`:''}</div></div></div></div>
-     <div class="pbns"><div class="pbn ${b1}"><b>Break 1 · Hand-off:</b> ${f(D2.screens)} MQLs a month${g.lvHO?' after scoring':''}. ${g.lvIS?'AEs and SDRs have':'AEs have'} time for ${f(D2.qualCap)}. ${r1>1.0001?`~${n0(cold/12)} a month wait and go cold.`:'They keep up.'}</div>
+     <div class="pbns"><div class="pbn ${b1}"><b>Break 1 · Hand-off:</b> ${f(D2.screens)} qualified leads a month${g.lvHO?' after scoring':''}. ${g.lvIS?'AEs and SDRs have':'AEs have'} time for ${f(D2.qualCap)}. ${r1>1.0001?`~${n0(cold/12)} a month wait and go cold.`:'They keep up.'}</div>
        <div class="pbn ${b2}"><b>Break 2 · Closing:</b> each AE has ${f(D2.deals)} open deals (limit ${n0(g.maxDeals)}). ${f(need2)} logos to close, AEs can close ${f(D2.ceiling)}. ${b2==='idle'?'This breaks next, once the hand-off is fixed.':lost2>0.5?`Europe's ${n0(g.aesEU)} AEs are full: ${f(lost2)} deals wait.`:over2?'Too many deals each, so they slow down.':'They keep up.'}</div></div>
      <div class="legend">${CH.map(c=>`<span><span class="dot" style="background:${c.c}"></span>${c.n}</span>`).join('')}</div>`;
    pp.innerHTML=html;if(!keepFocus)pu.innerHTML=top;else{const v=pu.querySelector('.pval');if(v)v.textContent=f(accNow);}
@@ -2149,7 +2150,7 @@ function renderAnswer(R){
      ${fs('opportunities',f(FU.opp),M(FU.opp*D2.acv)+' pipeline')}${fa(`${n0(D2.o2w*100)}%`)}
      ${fs('logos',f(FU.opp*D2.o2w),(()=>{const ov={lvCS:false,...PU,lvIS:true,lvISfrom:g.lvIS?g.lvISfrom:1},d=goalPlanV(R,sc,ov).closes-goalPlanV(R,sc,{...ov,sdMeet:0}).closes;return `${f(Math.max(0,d))} close in 2027; the rest in 2028 or wait for an AE`;})())}</div>`;
    const coldM=D2.unscreened/12,spare=D2.qualCap-D2.screens;
-   const who=coldM>0.5?`<span class="bad">Nobody has time today.</span> AEs are full: ~${n0(coldM)} MQLs a month already go cold. ${g.lvIS?'':'The 2 SDRs would own this.'}`
+   const who=coldM>0.5?`<span class="bad">Nobody has time today.</span> AEs are full: ~${n0(coldM)} qualified leads a month already go cold. ${g.lvIS?'':'The 2 SDRs would own this.'}`
      :g.lvIS?'The 2 SDRs own it, alongside hand-off calls.'
      :`AEs, in the time the hand-off fix frees up (~${n0(Math.max(0,spare))} calls a month). That's not enough for this many accounts, so the 2 SDRs own it.`;
    document.getElementById('acsup').innerHTML=`<p><b>Ads get an account to notice us. A person turns that into a conversation.</b></p>
@@ -2178,7 +2179,7 @@ function renderAnswer(R){
     const row=(lab,ctl)=>`<label class="asr"><span>${lab}</span><span class="asc">${ctl} ${pl('Assumed')}</span></label>`;
     s4.innerHTML=
       row('Hand-off calls per AE a month',inp('qualCalls',52,80))+
-      row('MQL → SQL (%)',inp('m2s',52,100))+
+      row('Qualified lead → SQL, accepted by sales (%)',inp('m2s',52,100))+
       row('Target accounts that see our ads (%)',inp('acReach',52,100))+
       row('SDR follow-up: calls and emails per engaged account',inp('sdTouch',52,30))+
       row('SDR follow-up: engaged accounts that take a meeting (%)',inp('sdMeet',52,100))+
