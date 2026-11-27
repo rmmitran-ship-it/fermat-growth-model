@@ -1474,7 +1474,7 @@ const DEFAULTS={
     {id:'abm',name:'ABM tools',kind:'abm',color:'--ink'}
   ],
   scenarios:{
-    A:{budget:{},phasing:[null,null,null,null],sdr:0,sdrStart:2},
+    A:{budget:{linkedin:95,google:45,chatgpt:10,reddit:5,events:80,partners:45,abm:25},phasing:[25,25,25,25],sdr:0,sdrStart:2},
     B:{budget:{linkedin:130,google:30,chatgpt:10,reddit:10,events:60,partners:45,abm:25},phasing:[25,25,25,25],sdr:0,sdrStart:2},
     C:{budget:{linkedin:215,google:50,chatgpt:20,reddit:15,events:150,partners:60,abm:40},phasing:[25,25,25,25],sdr:2,sdrStart:2}
   }
@@ -1583,6 +1583,7 @@ function migrate(o){
   const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
   if(!o.channels.some(c=>c.id==='activations')){const i=o.channels.findIndex(c=>c.id==='partners');o.channels.splice(i<0?o.channels.length:i,0,clone(DEFAULTS.channels.find(c=>c.id==='activations')));}
   if(o.global.acReach==null)o.global.acReach=80;
+  if(!o.global.planA1&&o.scenarios&&o.scenarios.A&&!Object.values(o.scenarios.A.budget||{}).some(v=>+v>0)){o.scenarios.A.budget={linkedin:95,google:45,chatgpt:10,reddit:5,events:80,partners:45,abm:25};o.scenarios.A.phasing=[25,25,25,25];o.global.planA1=true;}
   if(!o.global.h2hire){o.global.lvAEfrom=2;o.global.lvISfrom=3;o.global.h2hire=true;}if(o.global.calcBudget==null)o.global.calcBudget=310;
   if(o.global.ovE2H==null)o.global.ovE2H=25;if(o.global.ovH2Q==null)o.global.ovH2Q=40;if(o.global.ovWinE==null)o.global.ovWinE=15;if(o.global.ovWinM==null)o.global.ovWinM=25;
   if(!o.global.q2o40){o.global.ovQ2O=40;o.global.q2o40=true;}
@@ -2205,25 +2206,26 @@ function renderAnswer(R){
   {const el=document.getElementById('abc');if(el&&R.B){const need=D.newQL,people=(2*num(g.isCost)+num(g.aeHireCost))*1000;
     const Bb=S.scenarios.B.budget,keep={...Bb},runAt=k=>{Object.keys(keep).forEach(id=>Bb[id]=keep[id]*k);try{return run('B');}finally{Object.keys(keep).forEach(id=>Bb[id]=keep[id]);}},leadsAt=k=>runAt(k).leads;
     let lo=0.2,hi=4;for(let i=0;i<30;i++){const m=(lo+hi)/2;if(leadsAt(m)>=need)hi=m;else lo=m;}
-    const aMk=Math.round(totalBudget('B')*hi/5)*5*1000,rB=R.B,rC=R.C||{},pct=x=>n0(x/need*100)+'%';
+    const rA=R.A&&R.A.has?R.A:runAt(hi),aMk=R.A&&R.A.has?totalBudget('A')*1000:Math.round(totalBudget('B')*hi/5)*5*1000,rB=R.B,rC=R.C||{},pct=x=>n0(x/need*100)+'%';
+    const gA=goalPlanV(R,sc,{...LV0,lvHO:true,lvIS:true,lvISfrom:3,lvAEfrom:2,lvAE:true,aeRegion:'EU',fixNewQL:Math.max(0.01,rA.leads)});
     const gB=goalPlanV(R,sc,{...LV0,fixNewQL:Math.max(0.01,rB.leads)}),gC=goalPlanV(R,sc,{...LV0,lvIS:true,lvISfrom:2,fixNewQL:Math.max(0.01,rC.leads||0.01)}),gBfix=goalPlanV(R,sc,{...LV0,lvHO:true,lvIS:true,lvISfrom:3,lvAEfrom:2,lvAE:true,aeRegion:'EU',fixNewQL:Math.max(0.01,rB.leads)});
     const slipB=Math.max(0,gB.potWins-gB.closes),cMk=(totalBudget('C')*1000)-people;
     document.getElementById('abcLede').textContent=`All three aim at ${n0(D.tg)} logos. The target needs ~${n0(need)} new qualified leads a year from growth (Goal setting, Step 2). Each plan below shows what its budget buys and where it breaks. CAC = everything spent (marketing + hires) ÷ new logos that close in 2027, above today's ~${n0(baseLogo)}.`;
     const gmM=D.acv*num(g.gm)/100/12,met=(spend,closes)=>{const nw=closes-baseLogo,cac=nw>0.5?spend/nw:0;return {cac,pb:cac&&gmM>0?cac/gmM:0,arr:closes*D.acv,nw};};
-    const mA=met(aMk+people,landRec),mB=met(totalBudget('B')*1000,gB.closes),mBf=met(totalBudget('B')*1000+people,gBfix.closes),mC=met(totalBudget('C')*1000,gC.closes),mCf=met(totalBudget('C')*1000,landRec);
+    const mA=met(aMk+people,gA.closes),mB=met(totalBudget('B')*1000,gB.closes),mBf=met(totalBudget('B')*1000+people,gBfix.closes),mC=met(totalBudget('C')*1000,gC.closes),mCf=met(totalBudget('C')*1000,landRec);
     const mHTML=m=>`<div class="abcm"><div><b>${m.cac?k$(m.cac):'n/a'}</b><span>CAC per 2027 logo</span></div><div><b>${m.pb?'~'+n0(m.pb)+' mo':'n/a'}</b><span>payback</span></div><div><b>${M(m.arr)}</b><span>2027 new ARR</span></div></div>`;
     const FL=window.__abcFlip||(window.__abcFlip={});
     const chT=(r,extra,note)=>{const rows=S.channels.filter(c=>(r.ch[c.id]||{}).spend>0).map(c=>{const x=r.ch[c.id];return `<tr><td>${esc(c.name)}</td><td class="num">${k$(x.spend)}</td><td class="num">${x.leads>0.5?n0(x.leads):'—'}</td><td class="num">${x.opps>0.5?n0(x.opps):'—'}</td></tr>`;}).join('');
       const tl=S.channels.reduce((a,c)=>a+((r.ch[c.id]||{}).leads||0),0),to=S.channels.reduce((a,c)=>a+((r.ch[c.id]||{}).opps||0),0),ts=S.channels.reduce((a,c)=>a+((r.ch[c.id]||{}).spend||0),0);
-      return `<table class="abct2"><thead><tr><th>Channel</th><th class="num">Budget</th><th class="num">Leads</th><th class="num">Opps</th></tr></thead><tbody>${rows}<tr class="tot"><td>Marketing</td><td class="num">${k$(ts)}</td><td class="num">${n0(tl)}</td><td class="num">${n0(to)}</td></tr>${extra.map(([n,c])=>`<tr class="ppl"><td>${n}</td><td class="num">${k$(c)}</td><td></td><td></td></tr>`).join('')}</tbody></table><p class="abcn">${note}</p>`;};
+      return `<table class="abct2"><thead><tr><th>Channel</th><th class="num">Budget</th><th class="num">Leads</th><th class="num">Opps</th></tr></thead><tbody>${rows}<tr class="tot"><td>Marketing</td><td class="num">${k$(ts)}</td><td class="num">${n0(tl)}</td><td class="num">${n0(to)}</td></tr>${extra.map(([n,c])=>`<tr class="ppl"><td>${n}</td><td class="num">${c?k$(c):'$0'}</td><td></td><td></td></tr>`).join('')}</tbody></table><p class="abcn">${note}</p>`;};
     const col=(cls,tag,title,big,rows,m,back)=>`<div class="abcc ${cls}${FL[cls]?' bk':''}"><div class="abcf"><span class="abct">${tag}</span><b class="abch">${title}</b><b class="abcb">${big}</b>${m?mHTML(m):''}${rows.map(([k,v])=>`<div class="abcr"><span>${k}</span><p>${v}</p></div>`).join('')}<button type="button" class="fbtn" data-abcflip="${cls}">See the channel split ↻</button></div>
       <div class="abck"><span class="abct">${tag} · channel by channel</span>${back}<button type="button" class="fbtn" data-abcflip="${cls}">↺ Back</button></div></div>`;
     const ppl=[['Hand-off fix (lead scoring)',0],['EMEA AE, hired Q2',num(g.aeHireCost)*1000],['2 SDRs, from Q3',2*num(g.isCost)*1000]];
     el.innerHTML=
-      col('a','A · My plan',`${k$(aMk)} for leads + ${k$(people)} for sales capacity`,`~${n0(landRec)} logos`,[
-        ['What it buys',`~${n0(need)} new qualified leads: what the target needs, with B's channel mix scaled to fit.`],
+      col('a','A · My plan',`${k$(aMk)} for leads + ${k$(people)} for sales capacity`,`~${n0(gA.closes)} logos`,[
+        ['What it buys',`~${n0(rA.leads)} new qualified leads, ${pct(rA.leads)} of what's needed, for less than B: more on events and search, LinkedIn kept for target accounts.`],
         ['What I add',`Month 1: fix the hand-off (free). Q2: hire an EMEA AE (${k$(num(g.aeHireCost)*1000)}), ready when AEs fill up in H2. Q3: 2 SDRs (${k$(2*num(g.isCost)*1000)}) to follow up engaged accounts.`],
-        ['Why',`Marketing money isn't the gap. Sales capacity is.`]],mA,chT(runAt(hi),ppl,`B's split, scaled to buy the ~${n0(need)} leads the target needs. Plus the sales capacity to close them.`))+
+        ['Why',`Marketing money isn't the gap. Sales capacity is.`]],mA,chT(rA,ppl,`My split: more on events and search, where opportunities cost least. LinkedIn stays on the target list. ChatGPT and Reddit stay as small tests. Plus the people to close.`))+
       col('b','B · $310k (the brief)',`${k$(totalBudget('B')*1000)} budget`,`~${n0(gB.closes)} logos`,[
         ['What it buys',`~${n0(rB.leads)} new qualified leads, ${pct(rB.leads)} of what's needed.`],
         ['Where it breaks',`AEs can't close them all: ~${n0(gB.closes)} land in 2027 and ~${n0(slipB)} slip to 2028 or wait for an AE.`],
