@@ -958,6 +958,7 @@ button.play[hidden]{display:none}
 .ovsg b{font-family:'Inter Tight';font-size:32px;font-weight:600;color:var(--ink)}
 .ovsk{font-size:13px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:6px}
 .ovin{font-size:12.5px;color:var(--ink);display:flex;flex-wrap:wrap;align-items:center;gap:4px}.ovin input{padding:2px 4px}
+.ovtl input{font-family:'Inter Tight';font-size:34px;font-weight:600;padding:2px 6px}
 .ovnote{grid-column:1/-1;margin:0;padding:8px 16px 12px;font-size:12.5px;color:var(--muted);max-width:none}
 i.ent,i.mm{display:inline-block;width:10px;height:10px}i.ent{background:var(--ink)}i.mm{background:#9a9a9a}
 .ovf{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) 72px;gap:14px;align-items:stretch}
@@ -1471,8 +1472,8 @@ const GMETA=[
   {k:'out2',label:'Share of qualified leads from new outbound, Q2',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:''},
   {k:'out3',label:'Share of qualified leads from new outbound, Q3',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:''},
   {k:'out4',label:'Share of qualified leads from new outbound, Q4',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:''},
-  {k:'wbO2W',label:'Work back: opp → won',unit:'%',min:5,max:50,step:1,badge:'Given',note:'Brief midpoint (15–25%).'},
-  {k:'wbL2O',label:'Work back: lead → opp',unit:'%',min:10,max:80,step:1,badge:'Given',note:'Brief midpoint (30–50%).'},
+  {k:'wbO2W',label:'New work: opp → won',unit:'%',min:5,max:50,step:1,badge:'Assumed',note:'Blended from the enterprise / mid-market win rates in Goal setting Step 1 (brief: 15–25%).'},
+  {k:'wbL2O',label:'New work: qualified lead → opp',unit:'%',min:10,max:80,step:1,badge:'Given',note:'Set in Goal setting Step 1 (brief: 30–50%).'},
   {k:'aeHireCost',label:'+1 AE, loaded cost a year',unit:'$k',min:40,max:250,step:5,badge:'Assumed',note:'Sales budget. Half capacity in the first quarter while ramping. Sits in the US, where cover is thinnest.'},
   {k:'isCost',label:'Inside sales rep, loaded cost a year',unit:'$k',min:20,max:150,step:5,badge:'Assumed',note:'Two reps, in the US.'},
   {k:'isLeads',label:'Qualified leads per inside sales rep a month',unit:'leads',min:0,max:40,step:1,badge:'Assumed',note:'After ramp; half in the first quarter.'},
@@ -2026,7 +2027,7 @@ function renderAnswer(R){
    const nx=(k,t,bd,nt)=>`<b data-pv="a${k}"></b> ${t}<span class="ovin">${inp(k,40,100)}% ${pl(bd||'Assumed')}${nt?`<span class="ovsub">${nt}</span>`:''}</span>`;
    const arr=(k,t,bd,nt)=>`<div class="ova"><b data-pv="a${k}"></b><span>${t}</span><span class="ovin">${inp(k,44,100)}% ${pl(bd||'Assumed')}</span>${nt?`<span class="ovsub">${nt}</span>`:''}<i></i></div>`;
    const ov=once('ov',()=>`
-     <div class="ovtg"><div class="ovtl"><span class="ovn">01 · Target</span><b class="ovh">Logos to win in 2027</b><b class="ovbig" data-pv="L"></b></div>
+     <div class="ovtg"><div class="ovtl"><span class="ovn">01 · Target</span><b class="ovh">Logos to win in 2027 ${pl('Given')}</b><b class="ovbig">${inp('targetLogos',96,200)}</b></div>
        <div class="ovsg ent"><span class="ovsk"><i class="ent"></i>Enterprise</span><b data-pv="L0"></b><span class="ovin">${inp('ovEntSh',44,100)}% of logos · $${inp('ovEntAcv',50,500)}k a year ${pl('Assumed')}</span></div>
        <div class="ovsg mm"><span class="ovsk"><i class="mm"></i>Mid-market</span><b data-pv="L1"></b><span class="ovin"><span data-pv="mmSh"></span>% of logos · $${inp('ovMmAcv',50,500)}k a year ${pl('Assumed')}</span></div>
        <p class="ovnote">Segments and deal sizes from the ICPs Fermat shared. Every number below works back from here. Change any input.</p></div>
@@ -2038,7 +2039,7 @@ function renderAnswer(R){
      <div class="ovb"><div class="ovc"><span class="ovn">06 · Pipeline</span><b class="ovh">Pipeline needed</b><b class="ovbig" data-pv="P"></b>${seg('P')}
          <div class="ovbar" data-pv-html="Pbar"></div><div class="ovleg" data-pv-html="Pleg"></div></div>
        <div class="ovc rev"><span class="ovn">07 · Revenue</span><b class="ovh">New ARR from these logos</b><b class="ovbig" data-pv="R"></b>${seg('R')}<span class="ovsub" data-pv="Rs"></span></div></div>`);
-   sv(ov,'L',n0(T));sv(ov,'L0',n0(L[0]));sv(ov,'L1',n0(L[1]));sv(ov,'mmSh',n0((1-es)*100));sv(ov,'Lend',n0(T));
+   sv(ov,'L0',n0(L[0]));sv(ov,'L1',n0(L[1]));sv(ov,'mmSh',n0((1-es)*100));sv(ov,'Lend',n0(T));
    [['E',E],['H',H],['Q',Q],['O',O]].forEach(([k,a])=>{sv(ov,k,f(sm(a)));sv(ov,k+'0',f(a[0]));sv(ov,k+'1',f(a[1]));});
    sv(ov,'aovE2H',oneIn(r0));sv(ov,'aovH2Q',oneIn(r1));sv(ov,'aovQ2O',oneIn(r2));sv(ov,'aovWin',oneIn(T/(O[0]+O[1]||1)));
    sv(ov,'P',M(Pt));sv(ov,'P0',M(P[0]));sv(ov,'P1',M(P[1]));
@@ -2046,16 +2047,18 @@ function renderAnswer(R){
    {const e=ov.querySelector('[data-pv-html="Pbar"]');if(e)e.innerHTML=[['t',SH[0]],['n',SH[1]],['h',SH[2]]].map(([c,v])=>`<i class="${c}" style="width:${v*100}%"></i>`).join('');}
    {const e=ov.querySelector('[data-pv-html="Pleg"]');if(e)e.innerHTML=`<span><i class="t"></i>Today's motion ${M(Pt*SH[0])}</span><span><i class="n"></i>Sourced (new leads) ${M(Pt*SH[1])}</span><span><i class="h"></i>Influenced (inbound lift) ${M(Pt*SH[2])}</span>`;}}
   // STEP 1
+  const S1={};{const T=num(g.targetLogos),es=Math.min(100,Math.max(0,num(g.ovEntSh)))/100,r2=Math.max(0.001,num(g.ovQ2O)/100),we=Math.max(0.001,num(g.ovWinE)/100),wm=Math.max(0.001,num(g.ovWinM)/100);S1.T=T;S1.Q=(T*es/we+T*(1-es)/wm)/r2;}
   const s1=once('s1',()=>`
-    <div class="lvc"><span class="k">Target logos ${pl('Given')}</span><b class="lvn">${inp('targetLogos',90,120)}</b></div>
-    <div class="lvc"><span class="k">Today's motion makes</span><b class="lvn" data-pv="in"></b><span class="lvs" data-pv="inS"></span></div>
-    <div class="lvc"><span class="k">Gap</span><b class="lvn" data-pv="gap"></b><span class="lvs" data-pv="gapS"></span></div>
-    <div class="lvc gap"><span class="k">So we need</span><b class="lvn" data-pv="need"></b><span class="lvs"><span data-pv="needS"></span>, at ${inp('wbL2O',44)}% → opp, ${inp('wbO2W',44)}% → won ${pl('Assumed')}</span></div>`);
-  sv(s1,'in',f(baseLogo));sv(s1,'inS',`${n0(b0)} qualified leads a month (Given) × ${n0(D.inL2O*100)}% → opp × ${n0(D.inO2W*100)}% → won (Assumed), no new spend`);
-  sv(s1,'gap',f(newWork));sv(s1,'gapS',`logos from new work: ${f(srcLogo)} sourced + ${fL} influenced (inbound lift)`);
-  sv(s1,'need',f(D.newQL/12)+' a month');sv(s1,'needS',`more qualified leads (SQLs), ${f(D.newQL)} a year`);
-  document.getElementById('s1line').textContent=`${f(b0*12+lift*12+D.newQL)} qualified leads a year: ${f(b0*12)} today, ${f(lift*12)} inbound lift, ${f(D.newQL)} new. ${f(allOpp)} opportunities, ${M(pipeAll)} pipeline.`;
-  document.getElementById('s1arr').textContent=`≈ ${M((baseLogo+newWork)*D.acv).replace('~','')} new ARR at ~${n0((baseLogo+newWork)/allOpp*100)}% blended win rate.`;
+    <div class="lvc"><span class="k">Step 1 needs</span><b class="lvn" data-pv="t"></b><span class="lvs" data-pv="tS"></span></div>
+    <div class="lvc"><span class="k">Today brings ${pl('Given')}</span><b class="lvn" data-pv="in"></b><span class="lvs" data-pv="inS"></span></div>
+    <div class="lvc"><span class="k">Inbound lift adds ${pl('Assumed')}</span><b class="lvn" data-pv="lf"></b><span class="lvs" data-pv="lfS"></span></div>
+    <div class="lvc gap"><span class="k">Gap for new work</span><b class="lvn" data-pv="need"></b><span class="lvs" data-pv="needS"></span></div>`);
+  sv(s1,'t',`${f(S1.Q)}`);sv(s1,'tS',`qualified leads a year for ${n0(S1.T)} logos`);
+  sv(s1,'in',f(b0*12));sv(s1,'inS',`qualified leads a year (${n0(b0)} a month) → ${f(baseLogo)} logos. They convert better than new leads: ${n0(D.inL2O*100)}% → opp, ${n0(D.inO2W*100)}% won.`);
+  sv(s1,'lf',f(lift*12));sv(s1,'lfS',`qualified leads a year from paid → ${fL} logos (influenced)`);
+  sv(s1,'need',f(D.newQL/12)+' a month');sv(s1,'needS',`new qualified leads (${f(D.newQL)} a year) → ${f(srcLogo)} logos, at ${n0(D.l2o*100)}% → opp and ${n0(D.o2w*100)}% won, from Step 1`);
+  document.getElementById('s1line').textContent=`${f(b0*12+lift*12+D.newQL)} qualified leads in total, fewer than Step 1's ${f(S1.Q)} because today's leads convert better than new ones. ${f(allOpp)} opportunities, ${M(pipeAll)} pipeline.`;
+  document.getElementById('s1arr').textContent=`≈ ${M((baseLogo+newWork)*D.acv).replace('~','')} new ARR from ${f(baseLogo+newWork)} logos.`;
   // STEP 2 · Row A: today's motion (baseline only, no new spend)
   const SRC=[['inEv','Events'],['inPt','Partners'],['inBr','Brand + inbound']];
   const srcM=SRC.map(([k])=>b0*num(g[k])/100),srcL=srcM.map(m=>m*12*rIn),tt=SRC.reduce((a,[k])=>a+num(g[k]),0);
@@ -2330,7 +2333,8 @@ function renderKnown(){
 function update(){
   S.global.aes=num(S.global.aesEU)+num(S.global.aesUS);
   // one deal size everywhere: blended from the segment mix in Goal setting Step 1
-  {const g=S.global,es=Math.min(100,Math.max(0,num(g.ovEntSh)))/100;if(num(g.ovEntAcv)>0&&num(g.ovMmAcv)>0)g.acv=Math.round((es*num(g.ovEntAcv)+(1-es)*num(g.ovMmAcv))*100)/100;}
+  {const g=S.global,es=Math.min(100,Math.max(0,num(g.ovEntSh)))/100;if(num(g.ovEntAcv)>0&&num(g.ovMmAcv)>0)g.acv=Math.round((es*num(g.ovEntAcv)+(1-es)*num(g.ovMmAcv))*100)/100;
+   const we=num(g.ovWinE)/100,wm=num(g.ovWinM)/100;if(we>0&&wm>0)g.wbO2W=Math.round(100/(es/we+(1-es)/wm)*100)/100;if(num(g.ovQ2O)>0)g.wbL2O=num(g.ovQ2O);}
   const R={};SC.forEach(s=>R[s]=run(s));
   {const sb=document.getElementById('salesBox');if(sb&&SC.includes(view))sb.innerHTML=salesBoxHTML(view);}
   renderAnswer(R);renderDiagnosis(R);renderPies(R);renderBudgetTotals();renderTiles(R);renderFlags(R);renderPtn();renderRegIn();renderWins(R);renderPipeByChannel(R);renderCompareTable(R);renderKnown();
