@@ -2249,6 +2249,7 @@ function renderAnswer(R){
      {n:'Partners',c:'var(--green)',st:[0,D2.paths[0].top,D2.paths[0].q],sf:sfN,r1:D2.l2o,r2:D2.o2w},
      {n:"Today's inbound",c:'#cfcfcf',st:[0,0,D2.inQL],sf:sfI,r1:D2.inL2O,r2:D2.inO2W}];
    CH.forEach(c=>{const handed=c.st[2]*c.sf,sql=handed*m2s,opp=sql*c.r1/m2s;c.st.push(sql,opp,opp*c.r2);});
+   if(g.lvIS&&(D2.fu.opp||0)>0.05)CH.push({n:'SDR follow-up',c:'#141414',st:[0,0,0,0,D2.fu.opp,D2.fu.opp*D2.o2w],sf:1,r1:D2.l2o,r2:D2.o2w});
    const pot=CH.reduce((a,c)=>a+c.st[5],0)||1;CH.forEach(c=>c.st[5]=c.st[5]*D2.closes/pot);
    {const e2h=Math.max(0.001,num(g.ovE2H)/100),h2q=Math.max(0.001,num(g.ovH2Q)/100);CH.forEach(c=>{c.st[1]=c.st[2]/h2q;c.st[0]=c.st[1]/e2h;});}
    const tot=[0,1,2,3,4,5].map(i=>CH.reduce((a,c)=>a+c.st[i],0));
@@ -2274,9 +2275,9 @@ function renderAnswer(R){
    const top=`<div class="pz-head"><div class="pslider"><label><b>Marketing push</b> · accounts engaged <span class="pval">${f(accNow)}</span></label><input type="range" min="200" max="800" step="10" value="${Math.round(accNow)}" data-p="global.mktPush" aria-label="Accounts engaged by new work">${num(g.mktPush)?`<button class="linkbtn" data-pushreset>Back to the plan (${f(autoAcc0)})</button>`:''}<span class="ps">More marketing fills the top. Without sales time, the extra leads go cold.</span></div></div>`;
    const html=`<div class="pzs"><div class="pz mk"><span class="pzl">Marketing</span><div class="pzc">${bar(0,'Engaged contacts','')}${ar}${bar(1,'Hot leads','MQLs')}${ar}${bar(2,'Qualified leads','SQLs')}</div></div>
      ${neck}
-     <div class="pz sl"><span class="pzl">Sales</span><div class="pzc">${bar(4,'Opportunities',`need ${f(allOpp)}`)}${ar.replace('class="pa"',`class="pa b2 ${b2}"`)}<div class="pwon">${bar(5,'Logos',`target ${n0(D.tg)}`)}${lost2>0.5?`<div class="pover">−${f(lost2)} wait for an AE</div>`:''}</div></div></div></div>
+     <div class="pz sl"><span class="pzl">Sales</span><div class="pzc">${bar(4,'Opportunities',`need ${f(allOpp)}`)}${ar.replace('class="pa"',`class="pa b2 ${b2}"`)}<div class="pwon">${bar(5,'Logos',`target ${n0(D.tg)}`)}${lost2>0.5?`<div class="pover">${f(lost2)} wait for an AE</div>`:''}</div></div></div></div>
      <div class="pbns"><div class="pbn ${b1}"><b>Break 1 · Hand-off:</b> ${f(D2.screens)} leads a month, time for ${f(D2.qualCap)}. ${r1>1.0001?`~${n0(cold/12)} go cold.`:'Covered.'}</div>
-       <div class="pbn ${b2}"><b>Break 2 · Closing:</b> ${f(D2.deals)} open deals per AE (limit ${n0(g.maxDeals)}). ${b2==='idle'?'Breaks next.':lost2>0.5?`${f(lost2)} deals wait for an AE.`:over2?'Deals slow down.':'Covered.'}</div></div>
+       <div class="pbn ${b2}"><b>Break 2 · Closing:</b> ${f(D2.deals)} open deals per AE (limit ${n0(g.maxDeals)}). ${b2==='idle'?'Breaks next.':lost2>0.5?`${f(lost2)} ${lost2<1.5?'deal waits':'deals wait'} for an AE.`:over2?'Deals slow down.':'Covered.'}</div></div>
      <div class="legend">${CH.map(c=>`<span><span class="dot" style="background:${c.c}"></span>${c.n}</span>`).join('')}</div>`;
    pp.innerHTML=html;if(!keepFocus)pu.innerHTML=top;else{const v=pu.querySelector('.pval');if(v)v.textContent=f(accNow);}
   }
