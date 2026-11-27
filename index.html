@@ -1017,6 +1017,7 @@ i.ent,i.mm{display:inline-block;width:10px;height:10px}i.ent{background:var(--in
 .whys{display:grid;grid-template-columns:36px 1fr;gap:12px;background:var(--surface);padding:14px 16px}.whyn{font-family:'Inter Tight';font-size:22px;font-weight:600;color:var(--ink)}
 .whys b{font-family:'Inter Tight';font-size:17px;font-weight:600;color:var(--ink)}.whys p{margin:4px 0 0;font-size:14px;color:var(--ink);max-width:none}
 .whynote{font-size:13px;color:var(--muted);margin:4px 0 0;max-width:none}
+.ctaline{font-size:14px;color:var(--ink);margin:10px 0 0;max-width:none}
 .rcsum{display:flex;flex-direction:column;gap:4px;margin:10px 0 0;font-size:14px;color:var(--ink);max-width:none}
 .lgp.src{background:var(--magenta)}
 .fstats.f3{grid-template-columns:repeat(3,minmax(0,1fr))}.fstats.f3 .fstat b{font-size:20px}
@@ -1181,6 +1182,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
   <h3 class="mt3" id="whyH">What I think it takes to get to 60 logos</h3>
   <div class="why" id="why"></div>
   <p class="mt"><button class="btn" data-go="diagnosis">Where it breaks →</button></p>
+  <p class="ctaline">How do today's leads and new work split the 60? <button class="linkbtn" data-go="appendix" data-scrollto="todayGrowth">See today vs. growth in the Appendix →</button></p>
 </div></section>
 
 <!-- DIAGNOSIS -->
@@ -1410,7 +1412,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 <!-- APPENDIX -->
 <section class="page" data-page="appendix"><div class="wrap">
   <h2>Appendix</h2>
-  <h3 class="mt2">Today vs. growth</h3>
+  <h3 class="mt2" id="todayGrowth">Today vs. growth</h3>
   <p class="small muted">How the plan splits the goal between today's motion and new work.</p>
   <div class="lv" id="goal">
     <div class="lv-sec"><span class="lv-k">1 · The gap growth needs to close</span>
@@ -2370,6 +2372,15 @@ function renderAnswer(R){
       <li>Ads lift inbound by ~${n0(g.inboundLift)}%. If inbound is flat after 2 quarters, I stop them.</li></ul></div>`+
       row('Hand-off calls per AE a month',inp('qualCalls',52,80))+
       row('Qualified lead (SQL) → accepted by sales (%)',inp('m2s',52,100))+
+      row('Workback: enterprise share of contracts (%)',inp('ovEntSh',52,100))+
+      row('Workback: enterprise deal size ($k a year)',inp('ovEntAcv',52,500))+
+      row('Workback: mid-market deal size ($k a year)',inp('ovMmAcv',52,500))+
+      row('Workback: people engaged per account',inp('ovPerAcc',52,50))+
+      row('Workback: engaged → hot lead (%)',inp('ovE2H',52,100))+
+      row('Workback: hot lead → qualified (%)',inp('ovH2Q',52,100))+
+      row('Workback: qualified → opportunity (%, brief 30–50%)',inp('ovQ2O',52,100))+
+      row('Workback: enterprise win rate (%)',inp('ovWinE',52,100))+
+      row('Workback: mid-market win rate (%)',inp('ovWinM',52,100))+
       row('Target accounts that see our ads (%)',inp('acReach',52,100))+
       row('SDR follow-up: calls and emails per engaged account',inp('sdTouch',52,30))+
       row('SDR follow-up: engaged accounts that take a meeting (%)',inp('sdMeet',52,100))+
@@ -2603,6 +2614,7 @@ function showPage(p){
   if(p==='model'||p==='answer')update();
 }
 document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)showPage(b.dataset.go);});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-scrollto]');if(!b)return;setTimeout(()=>{const t=document.getElementById(b.dataset.scrollto);if(t)t.scrollIntoView({block:'start'});},80);});
 window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(PAGES.includes(h)&&h!==page)showPage(h);});
 
 /* ---------- events ---------- */
