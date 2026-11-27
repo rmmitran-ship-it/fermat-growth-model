@@ -1131,24 +1131,23 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
   </header>
   <h3 class="mt2">What do we need to get to 60 logos?</h3>
   <div class="lv" id="goal">
-    <div class="lv-sec"><span class="lv-k" id="ovK">Step 1 · What the target takes, in total</span>
+    <div class="lv-sec"><span class="lv-k" id="ovK">Step 1 · What 60 logos mean in audience and pipeline</span>
       <div class="ov" id="ov"></div></div>
-    <div class="lv-sec"><span class="lv-k">Step 2 · How many more leads we need</span>
+    <div class="lv-sec"><span class="lv-k">Step 2 · The gap I commit to closing</span>
       <div class="lv4" id="s1"></div>
       <p class="s1line" id="s1line"></p>
-      <p class="s1muted" id="s1arr"></p></div>
-    <div class="lv-sec"><span class="lv-k">Step 3 · Where the 60 come from</span>
-      <h5 class="pv-s">Fermat's motion today <span class="pill given">Given sources</span> <span class="pill assumed">Assumed split</span></h5>
-      <div class="rflow flowa" id="rowA"></div>
-      <p class="s1muted"><span class="pill given">Given</span> Today, leads come from events, partners and brand. No paid ads or outbound yet. <span class="pill assumed">Assumed</span> A founder, an AE or the Chief of Staff qualifies them today. An even split for now. I'll check the real split in month 1.</p>
+      <p class="s1muted" id="s1arr"></p>
+      <details class="more mt" id="todayBox"><summary>Today's motion, by source</summary>
+        <div class="rflow flowa mt" id="rowA"></div>
+        <p class="s1muted"><span class="pill given">Given</span> Today, leads come from events, partners and brand. No paid ads or outbound yet. <span class="pill assumed">Assumed</span> A founder, an AE or the Chief of Staff qualifies them today. An even split for now. I'll check the real split in month 1.</p>
+      </details></div>
+    <div class="lv-sec"><span class="lv-k">Step 3 · How we close it</span>
       <h5 class="pv-s">What new work adds <span class="pill assumed">Assumed</span></h5>
       <div class="rflow flowb" id="rowB"></div>
       <p class="s1muted" id="rowBcheck"></p>
       <div class="rcbox"><div class="rowc" id="rowC"></div>
       <p class="rcsum" id="rcSum"></p></div>
-    </div>
-    <div class="lv-sec"><span class="lv-k">Step 4 · How to get there</span>
-      <details class="more" id="betBox"><summary>See my bets, channel by channel</summary>
+      <details class="more mt" id="betBox"><summary>See my bets, channel by channel</summary>
         <p class="jobs" id="jobs"></p>
         <div class="betc mt" id="rowD"></div>
         <p class="s1muted">Do more of what works. Test what's missing. Each month, money moves to the cheapest channel.</p>
@@ -2021,7 +2020,7 @@ function renderAnswer(R){
    const L=[T*es,T*(1-es)],O=[L[0]/r3e,L[1]/r3m],Q=O.map(x=>x/r2),H=Q.map(x=>x/r1),E=H.map(x=>x/r0),P=[O[0]*ea,O[1]*ma],RV=[L[0]*ea,L[1]*ma],sm=a=>a[0]+a[1];
    const pS=(pipeToday+pipeNew+pipeLift)||1,SH=[pipeToday/pS,pipeNew/pS,pipeLift/pS],Pt=sm(P);
    const oneIn=r=>{const n=1/r;return Math.abs(n-Math.round(n))<0.2?`About 1 in ${Math.max(1,Math.round(n))}`:`About ${Math.round(r*10)} in 10`;};
-   document.getElementById('ovK').textContent=`Step 1 · What ${n0(T)} logos take, in total`;
+   document.getElementById('ovK').textContent=`Step 1 · What ${n0(T)} logos mean in audience and pipeline`;
    const seg=k=>`<div class="ovs"><span><i class="ent"></i>Enterprise <b data-pv="${k}0"></b></span><span><i class="mm"></i>Mid-market <b data-pv="${k}1"></b></span></div>`;
    const card=(n,h,sub,k,nx)=>`<div class="ovc ovst"><span class="ovn">${n}</span><b class="ovh">${h}</b><span class="ovsub">${sub}</span><b class="ovbig" data-pv="${k}"></b>${seg(k)}${nx?`<div class="ovr">${nx}</div>`:''}</div>`;
    const nx=(k,t,bd,nt)=>`<b data-pv="a${k}"></b> ${t}<span class="ovin">${inp(k,40,100)}% ${pl(bd||'Assumed')}${nt?`<span class="ovsub">${nt}</span>`:''}</span>`;
