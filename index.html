@@ -2055,16 +2055,16 @@ function renderAnswer(R){
   // STEP 1
   const S1={};{const T=num(g.targetLogos),es=Math.min(100,Math.max(0,num(g.ovEntSh)))/100,r2=Math.max(0.001,num(g.ovQ2O)/100),we=Math.max(0.001,num(g.ovWinE)/100),wm=Math.max(0.001,num(g.ovWinM)/100);S1.T=T;S1.Q=(T*es/we+T*(1-es)/wm)/r2;}
   const s1=once('s1',()=>`
-    <div class="lvc"><span class="k">Step 1 needs</span><b class="lvn" data-pv="t"></b><span class="lvs" data-pv="tS"></span></div>
+    <div class="lvc"><span class="k" data-pv="tK"></span><b class="lvn" data-pv="t"></b><span class="lvs" data-pv="tS"></span></div>
     <div class="lvc"><span class="k">Today brings ${pl('Given')}</span><b class="lvn" data-pv="in"></b><span class="lvs" data-pv="inS"></span></div>
-    <div class="lvc gap"><span class="k">Gap growth closes</span><b class="lvn" data-pv="need"></b><span class="lvs" data-pv="needS"></span></div>
-    <div class="lvc"><span class="k">What the budget buys</span><b class="lvn" data-pv="cpl"></b><span class="lvs" data-pv="cplS"></span></div>`);
-  sv(s1,'t',`${f(S1.Q)}`);sv(s1,'tS',`qualified leads a year for ${n0(S1.T)} logos`);
-  sv(s1,'in',f(b0*12));sv(s1,'inS',`qualified leads a year (${n0(b0)} a month) → ${f(baseLogo)} logos. They convert better than new leads: ${n0(D.inL2O*100)}% → opp, ${n0(D.inO2W*100)}% won.`);
-  {const gq=D.newQL+lift*12;sv(s1,'need',f(gq));sv(s1,'needS',`qualified leads a year (${f(gq/12)} a month) → ${f(newWork)} logos: ${f(D.newQL)} new leads I commit to (${f(srcLogo)} logos) + ${f(lift*12)} from the inbound lift (${fL} logos, influenced)`);
-   const bud=totalBudget(sc)*1000,cpl=newWork>0?bud/newWork:0;sv(s1,'cpl',`${k$(cpl)}`);sv(s1,'cplS',`per new logo, for ${k$(bud)} (plan ${sc}). Each new logo is worth ~${k$(D.acv)} a year${cpl<D.acv*num(g.gm)/100?', so it pays back in under a year on gross margin':''}.`);}
-  document.getElementById('s1line').textContent=`${f(b0*12+lift*12+D.newQL)} qualified leads in total, fewer than Step 1's ${f(S1.Q)} because today's leads convert better than new ones. ${f(allOpp)} opportunities, ${M(pipeAll)} pipeline.`;
-  document.getElementById('s1arr').textContent=`≈ ${M((baseLogo+newWork)*D.acv).replace('~','')} new ARR from ${f(baseLogo+newWork)} logos.`;
+    <div class="lvc gap"><span class="k">Growth adds</span><b class="lvn" data-pv="need"></b><span class="lvs" data-pv="needS"></span></div>
+    <div class="lvc"><span class="k">Cost per new logo</span><b class="lvn" data-pv="cpl"></b><span class="lvs" data-pv="cplS"></span></div>`);
+  sv(s1,'tK',`${n0(S1.T)} logos need`);sv(s1,'t',`${f(S1.Q)}`);sv(s1,'tS','qualified leads a year');
+  sv(s1,'in',f(b0*12));sv(s1,'inS',`${n0(b0)} a month, with no new spend. They win ${f(baseLogo)} logos.`);
+  {const gq=D.newQL+lift*12;sv(s1,'need',f(gq));sv(s1,'needS',`${f(gq/12)} a month. They win ${f(newWork)} logos: ${f(D.newQL)} new leads (${f(srcLogo)} logos) + ${f(lift*12)} more inbound from ads (${fL} logos).`);
+   const bud=totalBudget(sc)*1000,cpl=newWork>0?bud/newWork:0;sv(s1,'cpl',`${k$(cpl)}`);sv(s1,'cplS',`${k$(bud)} for ${f(newWork)} logos. Each is worth ~${k$(D.acv)} a year${cpl<D.acv*num(g.gm)/100?', so it pays back within a year':''}.`);}
+  document.getElementById('s1line').textContent=`Why ${f(b0*12+lift*12+D.newQL)}, not ${f(S1.Q)}? Today's leads turn into deals more often than new ones, so we need fewer. That's ${f(allOpp)} opportunities and ${M(pipeAll)} pipeline.`;
+  document.getElementById('s1arr').textContent=`${f(baseLogo+newWork)} logos, ${M((baseLogo+newWork)*D.acv)} new ARR.`;
   // STEP 2 · Row A: today's motion (baseline only, no new spend)
   const SRC=[['inEv','Events'],['inPt','Partners'],['inBr','Brand + inbound']];
   const srcM=SRC.map(([k])=>b0*num(g[k])/100),srcL=srcM.map(m=>m*12*rIn),tt=SRC.reduce((a,[k])=>a+num(g[k]),0);
