@@ -1982,10 +1982,10 @@ function renderAnswer(R){
     <div class="lvc"><span class="k">Today's motion makes</span><b class="lvn" data-pv="in"></b><span class="lvs" data-pv="inS"></span></div>
     <div class="lvc"><span class="k">Gap</span><b class="lvn" data-pv="gap"></b><span class="lvs" data-pv="gapS"></span></div>
     <div class="lvc gap"><span class="k">So we need</span><b class="lvn" data-pv="need"></b><span class="lvs"><span data-pv="needS"></span>, at ${inp('wbL2O',44)}% → opp, ${inp('wbO2W',44)}% → won ${pl('Assumed')}</span></div>`);
-  sv(s1,'in',f(baseLogo));sv(s1,'inS',`${n0(b0)} MQLs a month (Given) × ${n0(D.inL2O*100)}% → opp × ${n0(D.inO2W*100)}% → won (Assumed), no new spend`);
+  sv(s1,'in',f(baseLogo));sv(s1,'inS',`${n0(b0)} qualified leads a month (Given) × ${n0(D.inL2O*100)}% → opp × ${n0(D.inO2W*100)}% → won (Assumed), no new spend`);
   sv(s1,'gap',f(newWork));sv(s1,'gapS',`logos from new work: ${f(srcLogo)} sourced + ${fL} influenced (inbound lift)`);
-  sv(s1,'need',f(D.newQL/12)+' a month');sv(s1,'needS',`more leads to be qualified (MQLs), ${f(D.newQL)} a year`);
-  document.getElementById('s1line').textContent=`${f(b0*12+lift*12+D.newQL)} MQLs a year: ${f(b0*12)} today, ${f(lift*12)} inbound lift, ${f(D.newQL)} new. ${f(allOpp)} opportunities, ${M(pipeAll)} pipeline.`;
+  sv(s1,'need',f(D.newQL/12)+' a month');sv(s1,'needS',`more qualified leads, ${f(D.newQL)} a year`);
+  document.getElementById('s1line').textContent=`${f(b0*12+lift*12+D.newQL)} qualified leads a year: ${f(b0*12)} today, ${f(lift*12)} inbound lift, ${f(D.newQL)} new. ${f(allOpp)} opportunities, ${M(pipeAll)} pipeline.`;
   document.getElementById('s1arr').textContent=`≈ ${M((baseLogo+newWork)*D.acv).replace('~','')} new ARR at ~${n0((baseLogo+newWork)/allOpp*100)}% blended win rate.`;
   // STEP 2 · Row A: today's motion (baseline only, no new spend)
   const SRC=[['inEv','Events'],['inPt','Partners'],['inBr','Brand + inbound']];
@@ -1995,12 +1995,12 @@ function renderAnswer(R){
   const stk=(vals,cols,lab)=>{const t=vals.reduce((a,b)=>a+b,0)||1;return `<div class="rstk">${vals.map((v,i)=>`<i style="width:${v/t*100}%;background:var(${cols[i]})">${v/t>0.14?lab(v,i):''}</i>`).join('')}</div>`;};
   const rA=once('rowA',()=>`
     <div class="rfb src"><span class="k">Sources ${pl('Given')} · split ${pl('Assumed')}</span>${SRC.map(([k,l],i)=>`<div class="srow"><span class="sl">${l}</span><span class="sbar"><i data-pv="sb${i}" style="background:var(${SC3[i]})"></i></span><span class="sv" data-pv="sm${i}"></span><span class="si">${inp(k,40)}%</span></div>`).join('')}<span class="s" data-pv="ssum"></span></div>${arw}
-    <div class="rfb"><span class="k">Leads to be qualified (MQLs)</span><b data-pv="aq"></b><span class="s" data-pv="aqy"></span><span class="s">${n0(g.baseLeads)} a month ${pl('Given')}</span></div>${arw}
+    <div class="rfb"><span class="k">Qualified leads</span><b data-pv="aq"></b><span class="s" data-pv="aqy"></span><span class="s">${n0(g.baseLeads)} a month ${pl('Given')}</span></div>${arw}
     <div class="rfb"><span class="k">Opportunities</span><b data-pv="ao"></b><span class="s"><span data-pv="aor"></span> ${pl('Assumed')}</span></div>${arw}
     <div class="rfb won"><span class="k">Logos</span><b data-pv="al"></b><span class="s" data-pv="alr"></span><div data-pv-html="als"></div></div>`);
   srcM.forEach((m,i)=>{sv(rA,'sm'+i,f(m)+'/mo');const b=rA.querySelector(`[data-pv="sb${i}"]`);if(b)b.style.width=Math.max(4,m/Math.max(...srcM)*100)+'%';});
   {const e=rA.querySelector('[data-pv="ssum"]');if(e){e.textContent=`Split adds up to ${n0(tt)}%`;e.className='s'+(Math.abs(tt-100)>0.5?' bad':'');}}
-  svh(rA,'aq',`${f(b0)}<small> a month</small>`);sv(rA,'aqy',f(b0*12)+' a year');svh(rA,'ao',`${f(b0*12*D.inL2O)}<small> a year</small>`);sv(rA,'aor',`at ${n0(D.inL2O*100)}% of MQLs`);
+  svh(rA,'aq',`${f(b0)}<small> a month</small>`);sv(rA,'aqy',f(b0*12)+' a year');svh(rA,'ao',`${f(b0*12*D.inL2O)}<small> a year</small>`);sv(rA,'aor',`at ${n0(D.inL2O*100)}% of qualified leads`);
   svh(rA,'al',`${f(baseLogo)}<small> a year</small>`);sv(rA,'alr',`at ${n0(D.inO2W*100)}%, no new spend · by source:`);
   {const e=rA.querySelector('[data-pv-html="als"]');if(e)e.innerHTML=stk(srcL,SC3,v=>f(v));}
   // Row B: new work (sourced + influenced lift)
@@ -2010,7 +2010,7 @@ function renderAnswer(R){
     <div class="rfb acc"><span class="k">Accounts</span><b data-pv="bn"></b><span class="s" data-pv="bp"></span>
       <div class="tmini">${['1:1','1:few','1:many','partners'].map((l,i)=>`<span><em>${l}</em><b data-pv="tm${i}"></b></span>`).join('')}</div></div>${arw}
     <div class="rfb"><span class="k">Contacts</span><b data-pv="bc"></b><span class="s">reached across buying groups</span></div>${arw}
-    <div class="rfb nql"><span class="k">New leads to be qualified (MQLs)</span><b data-pv="bq"></b><span class="s" data-pv="bqy"></span><div data-pv-html="bqs"></div>
+    <div class="rfb nql"><span class="k">New qualified leads</span><b data-pv="bq"></b><span class="s" data-pv="bqy"></span><div data-pv-html="bqs"></div>
       <details class="shz" ${window.__shOpen?'open':''} ontoggle="window.__shOpen=this.open"><summary aria-label="Show the split by path"><span class="shzb" aria-hidden="true"></span>By path</summary>
       <div class="shrows">${D.paths.map(({P},i)=>`<label class="shr"><i style="background:var(${['--green','--magenta','--blue'][i]})"></i><span class="shn">${['Partners','Experiential','Digital'][i]}</span><span class="shi">${inp(P.share,42)}%</span><b data-pv="sv${i}"></b></label>`).join('')}</div><span class="s" data-pv="blift"></span></details><span class="s" data-pv="bsum"></span></div>${arw}
     <div class="rfb"><span class="k">Opportunities</span><b data-pv="bo"></b><span class="s" data-pv="bor"></span></div>${arw}
@@ -2025,7 +2025,7 @@ function renderAnswer(R){
   sv(rB,'sv0',f(newM[0])+'/mo');sv(rB,'sv1',f(newM[1])+'/mo');svh(rB,'sv2',`${f(newM[2])}/mo<small>ABM ${f(tgtM)} · always-on ${f(aoM)}</small>`);
   {const e=rB.querySelector('[data-pv="bsum"]');const bad=Math.abs(D.shTot-100)>0.5;if(e){e.textContent=bad?`Shares add up to ${n0(D.shTot)}%, not 100%`:'';e.className='s'+(bad?' bad':'');}}
   sv(rB,'blift',`+ ${f(lift)} a month inbound lift from paid (influenced)`);
-  svh(rB,'bo',`${f(D.newOpp)}<small> a year</small>`);sv(rB,'bor',`at ${n0(D.l2o*100)}% of MQLs`);
+  svh(rB,'bo',`${f(D.newOpp)}<small> a year</small>`);sv(rB,'bor',`at ${n0(D.l2o*100)}% of qualified leads`);
   sv(rB,'bl',f(srcLogo));sv(rB,'blr',`at ${n0(D.o2w*100)}% of opportunities`);sv(rB,'bll',fL);{sv(rB,'blt',`${f(srcLogo)} sourced + ${fL} influenced = ${f(newWork)} logos from new work`);sv(rB,'blu',`${srcLogo.toFixed(1)} + ${liftLogo.toFixed(1)} = ${newWork.toFixed(1)}`);}
   {const e=rB.querySelector('[data-pv-html="bls"]');if(e)e.innerHTML=legend(D.paths.map((x,i)=>[PC3[i],['Partners','Exp.','Digital'][i],f(x.logos)]));}
   {const over=accT>num(g.abmAccounts);document.getElementById('rowBcheck').innerHTML=`<b style="color:var(--ink)">${f(accT)} of ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} planned accounts</b> ${pl('Assumed')} · ${over?'the list needs to grow, or conversion needs to rise':'room to spare'} · I'll check this in month 1`;}
@@ -2041,11 +2041,11 @@ function renderAnswer(R){
   const tAcc=D.tiers[0].acc+D.tiers[1].acc,aAcc=D.tiers[2].acc;
   const flipped=window.__flip||(window.__flip={});
   const card=(i,cls,name,share,chip,chipCls,front,back)=>`<div class="flip ${cls}${flipped[i]?' on':''}" data-flip="${i}"><div class="flip-in">
-    <div class="face front"><div class="fh"><b class="fname">${name}</b><span class="conf ${chipCls}">${chip}</span></div><b class="fshare">${share}</b><span class="fsub">of new MQLs</span>${front}<button type="button" class="fbtn" data-fliptog="${i}" aria-expanded="${!!flipped[i]}">See my bet ↻</button></div>
+    <div class="face front"><div class="fh"><b class="fname">${name}</b><span class="conf ${chipCls}">${chip}</span></div><b class="fshare">${share}</b><span class="fsub">of new qualified leads</span>${front}<button type="button" class="fbtn" data-fliptog="${i}" aria-expanded="${!!flipped[i]}">See my bet ↻</button></div>
     <div class="face back"><div class="fh"><b class="fname">${name}</b><span class="fshare-s">${share}</span></div>${back}<button type="button" class="fbtn" data-fliptog="${i}" aria-expanded="${!!flipped[i]}">↺ Back</button></div>
   </div></div>`;
   const stat=(v,l)=>`<div class="fstat"><b>${v}</b><span>${l}</span></div>`;
-  const pt=D.paths[0],ex=D.paths[1],dg=D.paths[2],st3=x=>`<div class="fstats f3">${stat(f(x.q/12),'MQLs a month')}${stat(M(x.pipe),'pipeline')}${stat(f(x.logos),'logos')}</div>`;
+  const pt=D.paths[0],ex=D.paths[1],dg=D.paths[2],st3=x=>`<div class="fstats f3">${stat(f(x.q/12),'qualified leads a month')}${stat(M(x.pipe),'pipeline')}${stat(f(x.logos),'logos')}</div>`;
   document.getElementById('rowD').innerHTML=
     card(0,'p0','Partners',n0(pt.sh*100)+'%','High','hi',st3(pt),
       `<div class="fsec"><span>My bet</span>A structured program (value map, 10–20% commission from revenue) gets more intros from the same partners, plus US co-sellers.</div><div class="fsec"><span>I'll know by day 90</span><ul><li>Intros a month from pilot partners</li><li>${n0(g.ptQual)}% qualify</li></ul></div>`)+
@@ -2057,18 +2057,18 @@ function renderAnswer(R){
       `<div class="fsec"><span>Targeted ABM · my bet</span>Personal outreach, account-based LinkedIn ads, signals (sign-ups by domain, job changes, hiring).</div>
        <div class="fsec"><span>Always-on · my bet</span>One LinkedIn always-on on the ICP list (story from the LinkedIn test, live in month 4), competitor search in the US. <button class="toA" data-toA>↑ inbound lift</button></div>
        <div class="fsec also"><span>Also moves open deals</span>Ads to everyone involved in each open deal, plus case studies and security answers.</div>
-       <div class="fsec"><span>I'll know by day 90</span><ul><li>% of ${f(tAcc).replace('~','')} accounts engaged, ${n0(g.ab2M)}–${n0(g.ab1M)}% qualify</li><li>Cost per MQL, inbound trend vs Q4; cut after 2 quarters if flat</li></ul></div>`);
+       <div class="fsec"><span>I'll know by day 90</span><ul><li>% of ${f(tAcc).replace('~','')} accounts engaged, ${n0(g.ab2M)}–${n0(g.ab1M)}% qualify</li><li>Cost per qualified lead, inbound trend vs Q4; cut after 2 quarters if flat</li></ul></div>`);
   // path cards
   const el=once('paths',()=>{const rate=r=>r?`<div class="path-ar"><span>${inp(r[0],46)}% ${r[1]}</span>${pl('Assumed')}</div>`:'<div class="path-ph"></div>';
     return D.paths.map(({P},i)=>`<div class="path p-${P.cls}">
       <div class="path-h"><b>${P.name}</b><span>${P.sub||'&nbsp;'}</span></div>
-      <label class="path-sh"><b data-pv="sh${i}"></b><span>of new MQLs</span></label>
+      <label class="path-sh"><b data-pv="sh${i}"></b><span>of new qualified leads</span></label>
       <div class="path-bar"><i data-pv="bar${i}"></i></div>
       <div class="path-st top"><b data-pv="top${i}"></b><span>${P.top}</span></div>
       ${rate(P.ra)}
       ${P.mid?`<div class="path-st"><b data-pv="mid${i}"></b><span>${P.mid}</span></div>`:'<div class="path-ph"></div>'}
       ${rate(P.rb)}
-      <div class="path-st"><b data-pv="q${i}"></b><span>MQLs</span></div>
+      <div class="path-st"><b data-pv="q${i}"></b><span>Qualified leads</span></div>
       <div class="path-ar"><span data-pv="r1${i}"></span>${pl('Assumed')}</div>
       <div class="path-st"><b data-pv="o${i}"></b><span>Opportunities</span></div>
       <div class="path-ar"><span data-pv="r2${i}"></span>${pl('Assumed')}</div>
@@ -2081,7 +2081,7 @@ function renderAnswer(R){
   const ab=once('abmFlow',()=>{const ti=(k,w)=>`<input type="number" data-p="global.${k}" value="${g[k]}" min="0" max="2000" step="${String(g[k]).includes('.')?0.5:1}" style="width:${w||46}px">`;
     const blk=(k,l)=>`<div class="abb"><b data-pv="${k}"></b><span>${l}</span></div>`,arw=h=>`<div class="aba">${h}<i></i></div>`;
     return D.tiers.map((t,i)=>`<div class="abr t${i+1}"><div class="abh"><b>${t.name}</b>${t.key?`<span>${ti(t.key,62)} accounts ${pl('Assumed')}</span>`:'<span>rest of the named accounts</span>'}<em>${t.how}</em></div>
-      ${blk('a'+i,'Accounts')}${arw(`× ${ti(t.tc)} contacts`)}${blk('c'+i,'Contacts')}${arw(`${ti(t.e)}% engage`)}${blk('e'+i,'Engaged')}${arw(`${ti(t.m)}% qualify`)}${blk('q'+i,'MQLs')}${arw(`<span data-pv="ar${i}"></span>`)}${blk('o'+i,'Opportunities')}
+      ${blk('a'+i,'Accounts')}${arw(`× ${ti(t.tc)} contacts`)}${blk('c'+i,'Contacts')}${arw(`${ti(t.e)}% engage`)}${blk('e'+i,'Engaged')}${arw(`${ti(t.m)}% qualify`)}${blk('q'+i,'Qualified leads')}${arw(`<span data-pv="ar${i}"></span>`)}${blk('o'+i,'Opportunities')}
       <div class="abp"><b data-pv="p${i}"></b><span>pipeline</span></div></div>`).join('');});
   D.tiers.forEach((t,i)=>{sv(ab,'a'+i,f(t.acc));sv(ab,'c'+i,f(t.con));sv(ab,'e'+i,f(t.eng));sv(ab,'q'+i,f(t.q));sv(ab,'o'+i,f(t.opp));sv(ab,'p'+i,K(t.pipe));sv(ab,'ar'+i,`${n0(D.l2o*100)}% → opp`);});
   const tOpp=D.tiers.reduce((a,t)=>a+t.opp,0),dOpp=D.paths[2].opp,ok=Math.abs(tOpp-dOpp)<=0.1*Math.max(dOpp,0.001);
