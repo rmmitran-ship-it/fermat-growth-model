@@ -1233,6 +1233,12 @@ b.asv{font-weight:700;color:var(--ink);font-size:13.5px}
 @media (max-width:900px){.tcard{grid-template-columns:1fr}.tc-l{grid-template-columns:1fr}}
 
 .tcard{grid-template-columns:minmax(160px,0.9fr) minmax(180px,1fr) minmax(240px,1.6fr) auto}.tc-l{grid-template-columns:1fr}.tc-l li{display:flex;justify-content:space-between;gap:12px}.tc-l b{float:none}
+
+.wbb{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.wbb .wbi b{font-size:22px}.wbb .wbi input{width:64px;font-size:18px;font-weight:700;height:34px;border:2px solid var(--white);background:var(--white);color:var(--ink)}
+.wbb .wbbr{background:var(--green)}.wbb .wbbr span,.wbb .wbbr em{color:var(--ink)}.wbb .wbbr b{color:var(--ink);font-size:30px}
+.wbnote{font-size:12px;color:#aaa;margin:8px 0 0;max-width:none}
+@media (max-width:860px){.wbb{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -1255,7 +1261,7 @@ b.asv{font-weight:700;color:var(--ink);font-size:13.5px}
   <header class="hero">
     <div class="topbar"><b>fermat</b></div>
     <h1>Growth plan <span class="hl hl-m">2027</span></h1>
-    <p class="sub">A short memo for Martí and Pol. Each section links to the full model.</p>
+    <p class="sub">A short memo for Fermat. Each section links to the full model.</p>
   </header>
   <div class="mm">
     <p class="mm-ask"><b>The ask:</b> to reach ~$3.1M of new ARR (60 logos) in 2027, I'd spend ~$350k on marketing and ~$125k on sales hires in 2027. Without changes, today's setup lands ~49 logos (~$2.5M).</p>
@@ -1619,7 +1625,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:35,shDg:40,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:2,lvIS:false,lvISfrom:3,aeRegion:'EU',lvWR:false,wrUp:2,m2s:60,acReach:80,revGoal:3.1,aBuffer:30,ovPerAcc:15,calcBudget:310,ovEntSh:25,ovEntAcv:100,ovMmAcv:35,ovE2H:25,ovH2Q:40,ovE2Q:20,ovQ2O:40,ovWin:22,ovWinE:15,ovWinM:25,sdMeet:30,sdOpp:50,sdTouch:6,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:30,tc2:20,tc3:12,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:245,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:500,cpaMid:12,cpaEnt:30,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
+  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:35,shDg:40,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:2,lvIS:false,lvISfrom:3,aeRegion:'EU',lvWR:false,wrUp:2,m2s:60,acReach:80,revGoal:3.1,aBuffer:30,cacE:45,cacM:25,ovPerAcc:15,calcBudget:310,ovEntSh:25,ovEntAcv:100,ovMmAcv:35,ovE2H:25,ovH2Q:40,ovE2Q:20,ovQ2O:40,ovWin:22,ovWinE:15,ovWinM:25,sdMeet:30,sdOpp:50,sdTouch:6,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:30,tc2:20,tc3:12,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:245,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:500,cpaMid:12,cpaEnt:30,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -1739,7 +1745,7 @@ function migrate(o){
   if(o.global.baseL2O===45&&!o.global.cal40){o.global.baseL2O=40;}o.global.cal40=true;
   const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
   if(!o.channels.some(c=>c.id==='activations')){const i=o.channels.findIndex(c=>c.id==='partners');o.channels.splice(i<0?o.channels.length:i,0,clone(DEFAULTS.channels.find(c=>c.id==='activations')));}
-  if(o.global.acReach==null)o.global.acReach=80;if(o.global.revGoal==null||+o.global.revGoal>100)o.global.revGoal=3.1;if(o.global.ovPerAcc==null)o.global.ovPerAcc=15;if(+o.global.lvISfrom<3)o.global.lvISfrom=3;
+  if(o.global.acReach==null)o.global.acReach=80;if(o.global.revGoal==null||+o.global.revGoal>100)o.global.revGoal=3.1;if(o.global.ovPerAcc==null)o.global.ovPerAcc=15;if(+o.global.lvISfrom<3)o.global.lvISfrom=3;if(o.global.cacE==null)o.global.cacE=45;if(o.global.cacM==null)o.global.cacM=25;
   if(!o.global.planA6&&o.scenarios&&o.scenarios.A){o.scenarios.A.budget.google=60;o.scenarios.A.budget.events=110;o.global.shEx=35;o.global.shDg=40;o.global.shPt=25;o.global.planA6=true;}
   if(!o.global.planA4&&o.scenarios&&o.scenarios.A){o.scenarios.A.budget.linkedin=65;o.global.aBuffer=30;o.global.planA4=true;}
   if(!o.global.tam1){Object.assign(o.global,{ovPerAcc:15,tc1:30,tc2:20,tc3:12,tier3:245,abmAccounts:500,cpaMid:12,cpaEnt:30});o.global.tam1=true;}
@@ -2242,12 +2248,21 @@ function renderAnswer(R){
        ${st('Opportunities','','O')}${ar(`ent ${pct('ovWinE')}`,`mm ${pct('ovWinM')}`,'won')}
        ${st('Contracts','','Lg')}
      </div>
-     <div class="wbo"><div><b data-pv="P"></b><span>pipeline to build</span></div><div><b data-pv="R"></b><span>new ARR</span></div><div><b data-pv="Pm"></b><span>new qualified leads a month</span></div></div>`);
+     <div class="wbo"><div><b data-pv="P"></b><span>pipeline to build</span></div><div><b data-pv="R"></b><span>new ARR</span></div><div><b data-pv="Pm"></b><span>new qualified leads a month</span></div></div>
+     <div class="wbb">
+       <div class="wbi"><span>Extra logos growth adds</span><b data-pv="bX"></b><em data-pv="bXs"></em></div>
+       <div class="wbi"><span>Cost per extra logo ${pl('Assumed')}</span><b>ent $${inp('cacE',64,300)}k</b><b>mm $${inp('cacM',64,300)}k</b><em>Try it: change these or the goal</em></div>
+       <div class="wbi wbbr"><span>Budget it takes in 2027</span><b data-pv="bB"></b><em data-pv="bBs"></em></div>
+     </div>
+     <p class="wbnote">Cost per extra logo counts all new spend (marketing + sales hires) against only the logos it adds on top of today's inbound, so it runs higher than the CAC on the plan cards. At $3.1M it lands on Plan A.</p>`);
    sv(ov,'A',f(A));sv(ov,'E',f(E));sv(ov,'H',f(H));sv(ov,'Q',f(Q));sv(ov,'O',f(Ot));sv(ov,'Lg',n0(T));
    sv(ov,'Tn',n0(T));sv(ov,'Tsub',`at ~${k$(rev/(T||1))} average deal (brief: 60)`);
    sv(ov,'entL',`${n0(L[0])} contracts`);sv(ov,'mmL',`${n0(L[1])} contracts`);
    ['ovEntSh','ovE2H','ovH2Q','ovQ2O','ovWinE','ovWinM','ovPerAcc'].forEach(k=>sv(ov,'v'+k,n0(g[k])));sv(ov,'eAcv',k$(ea));sv(ov,'mAcv',k$(ma));
-   sv(ov,'P',M(Pt));sv(ov,'R',M(rev));sv(ov,'Pm',f(Q/12));}
+   sv(ov,'P',M(Pt));sv(ov,'R',M(rev));sv(ov,'Pm',f(Q/12));
+   {const X=Math.max(0,T-baseLogo),xE=X*es,xM=X*(1-es),cE=num(g.cacE)*1000,cM=num(g.cacM)*1000,B=xE*cE+xM*cM,mkA=(totalBudget('A')+num(g.aBuffer))*1000,slA=num(g.aeHireCost)*1000*0.75+2*num(g.isCost)*1000*0.5,mr=mkA/Math.max(1,mkA+slA);
+    sv(ov,'bX',`~${n0(X)}`);sv(ov,'bXs',`~${n0(xE)} enterprise + ~${n0(xM)} mid-market, on top of ~${n0(baseLogo)} from today's inbound`);
+    sv(ov,'bB',k$(B));sv(ov,'bBs',`~${k$(B*mr)} marketing + ~${k$(B*(1-mr))} sales hires · enterprise ${k$(xE*cE)}, mid-market ${k$(xM*cM)}`);}}
   document.querySelectorAll('[data-acc]').forEach(e=>e.textContent='~'+Math.round(D.tAcc).toLocaleString('en-US'));
   // WHAT I THINK IT TAKES: the reasoning behind each number
   {const W=window.__wb,el=document.getElementById('why');if(el&&W){document.getElementById('whyH').textContent=`What I think it takes to get to ${n0(W.T)} logos`;
