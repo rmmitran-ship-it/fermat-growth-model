@@ -1180,6 +1180,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 .fname,.ovh{font-size:16px;font-weight:600}
 .lvc .k,.rfb .k,.ovn{font-weight:700}
 .pcold span,.pcold b,.pover{color:var(--white)!important}
+.abcm div span{display:block}
 </style>
 </head>
 <body>
@@ -1251,13 +1252,12 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
   <p class="small muted mt">Benchmark CAC for sales-led B2B, sales + marketing: mid-market (~$35k deals) $10–25k, payback 12–18 months; enterprise (~$100k deals) $30–70k, payback 18–24 months. Rule of thumb: 0.3–0.7× first-year ACV. Sources: SaaS benchmark summaries (widelly.com, digitalapplied.com).</p>
   <div class="abcd" id="abcd" style="display:none"></div>
       <details class="more mt2" id="betBox"><summary>My bets, channel by channel</summary>
-        <p class="jobs" id="jobs"></p>
+        <p class="jobs" id="jobs" hidden></p>
         <div class="betc mt" id="rowD"></div>
-        <p class="s1muted">Do more of what works. Test what's missing. Each month, money moves to the cheapest channel.</p>
-        <p class="s1muted">Once AEs have time, the next step is to win more of the deals we already have.</p>
-        <div class="measure"><b>How I'll track what ads do for inbound</b><ul><li>Inbound leads vs end of 2026</li><li>How many inbound leads come from our target accounts</li><li>"How did you hear about us?" on the demo form</li><li>People searching for "Fermat"</li></ul><p>If inbound doesn't grow in 6 months, I stop the ads.</p></div>
-        <div class="paths mt" id="paths"></div>
-        <details class="more mt" id="tierBox"><summary>Digital, by account group</summary><div class="abm mt" id="abmFlow"></div><p class="tiercheck" id="tierCheck"></p></details>
+        <p class="s1muted">Do more of what works, test what's missing, and move money each month to the channel with the cheapest opportunities. What each bet costs and earns is in Plan A's receipt.</p>
+        <div class="measure" hidden><b>How I'll track what ads do for inbound</b><ul><li>Inbound leads vs end of 2026</li><li>How many inbound leads come from our target accounts</li><li>"How did you hear about us?" on the demo form</li><li>People searching for "Fermat"</li></ul><p>If inbound doesn't grow in 6 months, I stop the ads.</p></div>
+        <div class="paths mt" id="paths" hidden></div>
+        <details class="more mt" id="tierBox" hidden><summary>Digital, by account group</summary><div class="abm mt" id="abmFlow"></div><p class="tiercheck" id="tierCheck"></p></details>
       </details>
 
   <details class="more mt" id="fullModel" hidden><summary>Edit the plans: full budget model</summary>
@@ -2237,7 +2237,7 @@ function renderAnswer(R){
       `<div class="fsec"><span>Targeted ABM · my bet</span>Reach named accounts directly: personal outreach, LinkedIn ads by account, and signals like sign-ups, job changes and hiring.</div>
        <div class="fsec"><span>Always-on · my bet</span>One LinkedIn campaign that always runs on our target list, live from month 4, plus competitor search in the US. <button class="toA" data-toA>↑ more inbound</button></div>
        <div class="fsec also"><span>Also moves open deals</span>Ads to everyone involved in each open deal, plus case studies and security answers.</div>
-       <div class="fsec"><span>I'll know by day 90</span><ul><li>How many of the ${f(tAcc).replace('~','')} named accounts engage</li><li>Cost per qualified lead, and inbound vs end of 2026. I stop it if inbound is flat after 2 quarters.</li></ul></div>`);
+       <div class="fsec"><span>I'll know by day 90</span><ul><li>How many of the ${f(tAcc).replace('~','')} named accounts engage</li><li>Inbound vs end of 2026, inbound from target accounts, "how did you hear about us?" and searches for "Fermat"</li><li>If inbound is flat after 2 quarters, I stop always-on</li></ul></div>`);
   // path cards
   const el=once('paths',()=>{const rate=r=>r?`<div class="path-ar"><span>${inp(r[0],46)}% ${r[1]}</span>${pl('Assumed')}</div>`:'<div class="path-ph"></div>';
     return D.paths.map(({P},i)=>`<div class="path p-${P.cls}">
