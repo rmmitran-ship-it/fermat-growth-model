@@ -1535,7 +1535,7 @@ const DEFAULTS={
     {id:'abm',name:'ABM tools',kind:'abm',color:'--ink'}
   ],
   scenarios:{
-    A:{budget:{linkedin:95,google:45,chatgpt:10,reddit:5,events:80,partners:45,abm:25},phasing:[25,25,25,25],sdr:0,sdrStart:2},
+    A:{budget:{linkedin:95,google:90,chatgpt:10,reddit:5,events:80,partners:45,abm:25},phasing:[25,25,25,25],sdr:0,sdrStart:2},
     B:{budget:{linkedin:130,google:30,chatgpt:10,reddit:10,events:60,partners:45,abm:25},phasing:[25,25,25,25],sdr:0,sdrStart:2},
     C:{budget:{linkedin:215,google:50,chatgpt:20,reddit:15,events:150,partners:60,abm:40},phasing:[25,25,25,25],sdr:2,sdrStart:2}
   }
@@ -1644,8 +1644,8 @@ function migrate(o){
   const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
   if(!o.channels.some(c=>c.id==='activations')){const i=o.channels.findIndex(c=>c.id==='partners');o.channels.splice(i<0?o.channels.length:i,0,clone(DEFAULTS.channels.find(c=>c.id==='activations')));}
   if(o.global.acReach==null)o.global.acReach=80;if(o.global.revGoal==null||+o.global.revGoal>100)o.global.revGoal=3.1;if(o.global.ovPerAcc==null)o.global.ovPerAcc=7;
-  if(!o.global.planA2&&o.scenarios&&o.scenarios.A){o.scenarios.A.budget={linkedin:95,google:45,chatgpt:10,reddit:5,events:80,partners:45,abm:25};o.scenarios.A.phasing=[25,25,25,25];o.scenarios.A.sdr=0;o.global.planA2=true;o.global.planA1=true;}
-  if(!o.global.planA1&&o.scenarios&&o.scenarios.A&&!Object.values(o.scenarios.A.budget||{}).some(v=>+v>0)){o.scenarios.A.budget={linkedin:95,google:45,chatgpt:10,reddit:5,events:80,partners:45,abm:25};o.scenarios.A.phasing=[25,25,25,25];o.global.planA1=true;}
+  if(!o.global.planA3&&o.scenarios&&o.scenarios.A){o.scenarios.A.budget={linkedin:95,google:90,chatgpt:10,reddit:5,events:80,partners:45,abm:25};o.scenarios.A.phasing=[25,25,25,25];o.scenarios.A.sdr=0;o.global.planA3=true;o.global.planA2=true;o.global.planA1=true;}
+  if(!o.global.planA1&&o.scenarios&&o.scenarios.A&&!Object.values(o.scenarios.A.budget||{}).some(v=>+v>0)){o.scenarios.A.budget={linkedin:95,google:90,chatgpt:10,reddit:5,events:80,partners:45,abm:25};o.scenarios.A.phasing=[25,25,25,25];o.global.planA1=true;}
   if(!o.global.h2hire){o.global.lvAEfrom=2;o.global.lvISfrom=3;o.global.h2hire=true;}if(o.global.calcBudget==null)o.global.calcBudget=310;
   if(o.global.ovE2H==null)o.global.ovE2H=25;if(o.global.ovH2Q==null)o.global.ovH2Q=40;if(o.global.ovWinE==null)o.global.ovWinE=15;if(o.global.ovWinM==null)o.global.ovWinM=25;
   if(!o.global.q2o40){o.global.ovQ2O=40;o.global.q2o40=true;}
@@ -2337,14 +2337,14 @@ function renderAnswer(R){
       return `<div class="skh"><b>${title}</b><span>What each line costs in 2027 and the contracts it wins this year. Tentative attribution.</span></div>
         <table class="rc"><thead><tr><th>Line</th><th class="num">2027 cost</th><th>Contracts won in 2027</th><th class="num">Cost per contract</th></tr></thead>
         <tbody>${L.map(row).join('')}<tr class="tot"><td><b>Total</b></td><td class="num">${k$(cost)}</td><td><b>${n0(won)} contracts</b> · ${eN} enterprise + ${n0(won)-eN} mid-market</td><td class="num">${M(arr)} new ARR</td></tr></tbody></table>`;};
-    const rcptA=(gx,title,hires,k,lr)=>{k=k||1;lr=lr||1;
+    const rcptA=(gx,title,hires,k,lr,fx)=>{k=k||1;lr=lr||1;fx=fx||{p:1,e:1,ao:1};
       const b=id=>budget('A',id)*1000*k,sh=window.__tqS||0.5,dg=D.paths[2],pt=D.paths[0],ex=D.paths[1];
       const inUp=gx.inSQL*num(g.hoLift)/100*gx.inO2W,inAll=gx.inSQL*gx.inL2O*gx.inO2W-inUp,liftSh=lift/((b0+lift)||1),inLift=inAll*liftSh,inBase=inAll-inLift;
       const MK=[
-        {n:'Partners',tag:'Works today',c:b('partners'),pw:pt.logos*lr,col:'--green'},
-        {n:'Experiential',tag:'Works today',c:b('events')+b('activations'),pw:ex.logos*lr,col:'--magenta'},
+        {n:'Partners',tag:'Works today',c:b('partners'),pw:pt.logos*lr*fx.p,col:'--green'},
+        {n:'Experiential',tag:'Works today',c:b('events')+b('activations'),pw:ex.logos*lr*fx.e,col:'--magenta'},
         {n:'Digital · Targeted ABM',tag:'New, to test',c:b('abm')+b('linkedin')*sh,pw:dg.logos*sh*lr,col:'--blue',note:'ABM tools + LinkedIn by account'},
-        {n:'Digital · Always-on',tag:'New, to test',c:b('linkedin')*(1-sh)+b('google')+b('chatgpt')+b('reddit'),pw:dg.logos*(1-sh)*lr+inLift,col:'--blue-light',note:'LinkedIn, search, small tests · incl. the inbound lift from ads'}];
+        {n:'Digital · Always-on',tag:'New, to test',c:b('linkedin')*(1-sh)+b('google')+b('chatgpt')+b('reddit'),pw:dg.logos*(1-sh)*lr*fx.ao+inLift,col:'--blue-light',note:'LinkedIn, search, small tests · incl. the inbound lift from ads'}];
       const SL=[{n:'Hand-off fix',c:0,pw:inUp,note:'more inbound converts'}];
       if(gx.fu&&gx.fu.opp>0.3)SL.push({n:'2 SDRs, from Q3',c:hires.sdr,pw:gx.fu.opp*gx.o2w,note:'more lands in 2028'});
       SL.push({n:'EMEA AE, from Q2',c:hires.ae,pw:0,note:`lets AEs close ~${n0(hires.aeAdds)} more deals`});
@@ -2387,7 +2387,10 @@ function renderAnswer(R){
     const aeAddsA=gA.closes-goalPlanV(R,sc,{...LV0,lvHO:true,lvIS:true,lvISfrom:3,lvAE:false,fixNewQL:Math.max(0.01,rA.leads)}).closes;
     const hiresA={sdr:2*num(g.isCost)*1000*sdF,ae:num(g.aeHireCost)*1000*aeF,aeAdds:Math.max(0,aeAddsA)},aBase=totalBudget('A')*1000;
     const atK=k=>{const r=runMix(k),gx=goalPlanV(R,sc,{...FX,...ALL,fixNewQL:Math.max(0.01,r.leads)});return {r,gx,k};};
-    window.__rcptA=k=>{const x=atK(k);return rcptA(x.gx,'A · My plan: the receipt',hiresA,k,x.r.leads/Math.max(1,rA.leads));};
+    const REF={linkedin:95,google:45,chatgpt:10,reddit:5,events:80,partners:45,abm:25},runBud=bud=>{const keep={...Ab};Object.keys(Ab).forEach(id=>delete Ab[id]);Object.assign(Ab,bud);try{return run('A');}finally{Object.keys(Ab).forEach(id=>delete Ab[id]);Object.assign(Ab,keep);}};
+    const rRef=runBud(REF),gl=(r,ids)=>ids.reduce((a,id)=>a+((r.ch[id]||{}).leads||0),0),DIG=['linkedin','google','chatgpt','reddit'],shA=window.__tqS||0.5;
+    const fxA=(()=>{const dR=gl(rRef,DIG)||1,dN=gl(rA,DIG);return {p:gl(rA,['partners'])/(gl(rRef,['partners'])||1),e:gl(rA,['events','activations'])/(gl(rRef,['events','activations'])||1),ao:Math.max(0,1+(dN-dR)/(dR*(1-shA)))};})();
+    window.__rcptA=k=>{const x=atK(k);return rcptA(x.gx,'A · My plan: the receipt',hiresA,k,x.r.leads/Math.max(1,rA.leads),fxA);};
     const curve=[0.5,0.75,1,1.5,2,2.5].map(k=>{const x=atK(k),gx=x.gx;return {k,sp:aBase*k,c:gx.closes,arr:gx.closes*D.acv,pipe:(gx.nwSQL*gx.l2o+(gx.fu?gx.fu.opp:0))*D.pv,carry:Math.max(0,gx.potWins-gx.closes)};});
     const kNow=window.__rk||1,curHTML=`<div class="rcv">${curve.map((p,i)=>{const prev=curve[i-1],d=prev?p.c-prev.c:null;return `<div class="${Math.abs(p.k-1)<0.01?'now':''}"><span>${k$(p.sp)}</span><b>~${n0(p.c)}</b><em>${M(p.arr)}</em><em class="pp">${M(p.pipe)} pipeline</em><em class="cy">~${n0(p.carry)} deals into 2028</em>${d!=null?`<i class="${d>=1?'up':'flat'}">${d>=0.5?'+'+n0(d):'+0'}</i>`:''}</div>`;}).join('')}</div>`;
     const sat=curve.find((p,i)=>i>2&&p.c-curve[i-1].c<1);
