@@ -2340,6 +2340,7 @@ function renderAnswer(R){
       SL.push({n:'EMEA AE, from Q2',c:hires.ae,pw:0,note:`lets AEs close ~${n0(hires.aeAdds)} more deals`});
       const pot=inBase+[...MK,...SL].reduce((a,x)=>a+x.pw,0)||1,land=Math.min(1,gx.closes/pot);
       [...MK,...SL].forEach(x=>{x.won=x.pw*land;x.rev=x.won*D.acv;});
+      {const ao=MK[3],inf=inLift*land*D.acv,src=Math.max(0,ao.rev-inf);ao.note=`LinkedIn, search, small tests · revenue is a blend: ${k$(src)} sourced + ${k$(inf)} influenced (inbound lift from ads)`;}
       const all=[...MK,...SL],mx=Math.max(...all.map(x=>x.rev),1),baseRev=inBase*land*D.acv,R$=v=>v>=995000?M(v):k$(v);
       const row=x=>`<tr><td>${x.col?`<i class="rcdot" style="background:var(${x.col})"></i>`:''}<b>${esc(x.n)}</b>${x.tag?` <em class="rctag">${x.tag}</em>`:''}${x.note?`<span>${x.note}</span>`:''}</td><td class="num">${x.c>500?k$(x.c):'$0'}</td><td class="rcw"><i class="rcbi" style="width:${x.rev>500?Math.max(1,x.rev/mx*70):0}%"></i><em>${x.rev>500?R$(x.rev):'—'}</em></td></tr>`;
       const sum=a=>a.reduce((s,x)=>s+x,0),mkC=sum(MK.map(x=>x.c)),mkR=sum(MK.map(x=>x.rev)),slC=sum(SL.map(x=>x.c)),slR=sum(SL.map(x=>x.rev));
