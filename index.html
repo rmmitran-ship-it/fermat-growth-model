@@ -1598,7 +1598,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:2,lvIS:false,lvISfrom:3,aeRegion:'EU',lvWR:false,wrUp:2,m2s:60,acReach:80,revGoal:3.1,aBuffer:30,ovPerAcc:15,calcBudget:310,ovEntSh:25,ovEntAcv:100,ovMmAcv:35,ovE2H:25,ovH2Q:40,ovE2Q:20,ovQ2O:40,ovWin:22,ovWinE:15,ovWinM:25,sdMeet:30,sdOpp:50,sdTouch:6,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:30,tc2:20,tc3:12,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:245,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:500,cpaMid:12,cpaEnt:30,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
+  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:35,shDg:40,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:2,lvIS:false,lvISfrom:3,aeRegion:'EU',lvWR:false,wrUp:2,m2s:60,acReach:80,revGoal:3.1,aBuffer:30,ovPerAcc:15,calcBudget:310,ovEntSh:25,ovEntAcv:100,ovMmAcv:35,ovE2H:25,ovH2Q:40,ovE2Q:20,ovQ2O:40,ovWin:22,ovWinE:15,ovWinM:25,sdMeet:30,sdOpp:50,sdTouch:6,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:30,tc2:20,tc3:12,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:245,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:500,cpaMid:12,cpaEnt:30,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -1610,7 +1610,7 @@ const DEFAULTS={
     {id:'abm',name:'ABM tools',kind:'abm',color:'--ink'}
   ],
   scenarios:{
-    A:{budget:{linkedin:65,google:90,chatgpt:10,reddit:5,events:80,partners:45,abm:25},phasing:[25,25,25,25],sdr:0,sdrStart:2},
+    A:{budget:{linkedin:65,google:60,chatgpt:10,reddit:5,events:110,partners:45,abm:25},phasing:[25,25,25,25],sdr:0,sdrStart:2},
     B:{budget:{linkedin:130,google:30,chatgpt:10,reddit:10,events:60,partners:45,abm:25},phasing:[25,25,25,25],sdr:0,sdrStart:2},
     C:{budget:{linkedin:215,google:50,chatgpt:20,reddit:15,events:150,partners:60,abm:40},phasing:[25,25,25,25],sdr:2,sdrStart:2}
   }
@@ -1719,10 +1719,11 @@ function migrate(o){
   const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
   if(!o.channels.some(c=>c.id==='activations')){const i=o.channels.findIndex(c=>c.id==='partners');o.channels.splice(i<0?o.channels.length:i,0,clone(DEFAULTS.channels.find(c=>c.id==='activations')));}
   if(o.global.acReach==null)o.global.acReach=80;if(o.global.revGoal==null||+o.global.revGoal>100)o.global.revGoal=3.1;if(o.global.ovPerAcc==null)o.global.ovPerAcc=15;
+  if(!o.global.planA6&&o.scenarios&&o.scenarios.A){o.scenarios.A.budget.google=60;o.scenarios.A.budget.events=110;o.global.shEx=35;o.global.shDg=40;o.global.shPt=25;o.global.planA6=true;}
   if(!o.global.planA4&&o.scenarios&&o.scenarios.A){o.scenarios.A.budget.linkedin=65;o.global.aBuffer=30;o.global.planA4=true;}
   if(!o.global.tam1){Object.assign(o.global,{ovPerAcc:15,tc1:30,tc2:20,tc3:12,tier3:245,abmAccounts:500,cpaMid:12,cpaEnt:30});o.global.tam1=true;}
-  if(!o.global.planA3&&o.scenarios&&o.scenarios.A){o.scenarios.A.budget={linkedin:65,google:90,chatgpt:10,reddit:5,events:80,partners:45,abm:25};o.scenarios.A.phasing=[25,25,25,25];o.scenarios.A.sdr=0;o.global.planA3=true;o.global.planA2=true;o.global.planA1=true;}
-  if(!o.global.planA1&&o.scenarios&&o.scenarios.A&&!Object.values(o.scenarios.A.budget||{}).some(v=>+v>0)){o.scenarios.A.budget={linkedin:65,google:90,chatgpt:10,reddit:5,events:80,partners:45,abm:25};o.scenarios.A.phasing=[25,25,25,25];o.global.planA1=true;}
+  if(!o.global.planA3&&o.scenarios&&o.scenarios.A){o.scenarios.A.budget={linkedin:65,google:60,chatgpt:10,reddit:5,events:110,partners:45,abm:25};o.scenarios.A.phasing=[25,25,25,25];o.scenarios.A.sdr=0;o.global.planA3=true;o.global.planA2=true;o.global.planA1=true;}
+  if(!o.global.planA1&&o.scenarios&&o.scenarios.A&&!Object.values(o.scenarios.A.budget||{}).some(v=>+v>0)){o.scenarios.A.budget={linkedin:65,google:60,chatgpt:10,reddit:5,events:110,partners:45,abm:25};o.scenarios.A.phasing=[25,25,25,25];o.global.planA1=true;}
   if(!o.global.h2hire){o.global.lvAEfrom=2;o.global.lvISfrom=3;o.global.h2hire=true;}if(o.global.calcBudget==null)o.global.calcBudget=310;
   if(o.global.ovE2H==null)o.global.ovE2H=25;if(o.global.ovH2Q==null)o.global.ovH2Q=40;if(o.global.ovWinE==null)o.global.ovWinE=15;if(o.global.ovWinM==null)o.global.ovWinM=25;
   if(!o.global.q2o40){o.global.ovQ2O=40;o.global.q2o40=true;}
