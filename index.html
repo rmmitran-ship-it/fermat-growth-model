@@ -1181,6 +1181,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 .lvc .k,.rfb .k,.ovn{font-weight:700}
 .pcold span,.pcold b,.pover{color:var(--white)!important}
 .abcm div span{display:block}
+[hidden]{display:none!important}
 </style>
 </head>
 <body>
@@ -1247,18 +1248,20 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 <!-- MODEL -->
 <section class="page" data-page="model"><div class="wrap">
   <h2>Three ways to <span class="hl hl-b">fund</span> the goal.</h2>
-  <p class="small muted" id="abcLede"></p>
-  <div class="abc mt" id="abc"></div>
-  <p class="small muted mt">Benchmark CAC for sales-led B2B, sales + marketing: mid-market (~$35k deals) $10–25k, payback 12–18 months; enterprise (~$100k deals) $30–70k, payback 18–24 months. Rule of thumb: 0.3–0.7× first-year ACV. Sources: SaaS benchmark summaries (widelly.com, digitalapplied.com).</p>
-  <div class="abcd" id="abcd" style="display:none"></div>
-      <details class="more mt2" id="betBox"><summary>My bets, channel by channel</summary>
+      <div id="betBox" class="mt2"><h3>My bets</h3><p class="small muted">Where new leads come from. The plans below fund these bets differently.</p>
         <p class="jobs" id="jobs" hidden></p>
         <div class="betc mt" id="rowD"></div>
         <p class="s1muted">Do more of what works, test what's missing, and move money each month to the channel with the cheapest opportunities. What each bet costs and earns is in Plan A's receipt.</p>
         <div class="measure" hidden><b>How I'll track what ads do for inbound</b><ul><li>Inbound leads vs end of 2026</li><li>How many inbound leads come from our target accounts</li><li>"How did you hear about us?" on the demo form</li><li>People searching for "Fermat"</li></ul><p>If inbound doesn't grow in 6 months, I stop the ads.</p></div>
         <div class="paths mt" id="paths" hidden></div>
         <details class="more mt" id="tierBox" hidden><summary>Digital, by account group</summary><div class="abm mt" id="abmFlow"></div><p class="tiercheck" id="tierCheck"></p></details>
-      </details>
+      </div>
+  <h3 class="mt2">Three plans</h3>
+  <p class="small muted" id="abcLede"></p>
+  <div class="abc mt" id="abc"></div>
+  <p class="small muted mt">Benchmark CAC for sales-led B2B, sales + marketing: mid-market (~$35k deals) $10–25k, payback 12–18 months; enterprise (~$100k deals) $30–70k, payback 18–24 months. Rule of thumb: 0.3–0.7× first-year ACV. Sources: SaaS benchmark summaries (widelly.com, digitalapplied.com).</p>
+  <div class="abcd" id="abcd" style="display:none"></div>
+
 
   <details class="more mt" id="fullModel" hidden><summary>Edit the plans: full budget model</summary>
   <div class="planswitch mt"><button class="tab tA" data-act="view" data-v="A">A · My plan</button><button class="tab tB" data-act="view" data-v="B">B · $310k</button><button class="tab tC" data-act="view" data-v="C">C · $550k</button><button class="tab tX" data-act="view" data-v="compare">Compare</button></div>
