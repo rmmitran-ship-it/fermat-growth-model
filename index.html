@@ -987,6 +987,7 @@ i.ent,i.mm{display:inline-block;width:10px;height:10px}i.ent{background:var(--in
 .abcc.a{border-top-color:var(--magenta)}.abcc.b{border-top-color:var(--blue)}.abcc.c{border-top-color:var(--green-bright)}
 .abct{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .abch{font-size:16px;font-weight:600;color:var(--ink)}.abcb{font-family:'Inter Tight';font-size:34px;font-weight:600;letter-spacing:-0.03em;color:var(--ink);margin:2px 0 4px}
+.abcm{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:0 0 6px}.abcm div{background:var(--surface);padding:6px 8px}.abcm b{display:block;font-family:'Inter Tight';font-size:17px;font-weight:600;color:var(--ink)}.abcm span{font-size:11px;color:var(--muted)}
 .abcr{border-top:1px solid var(--surface);padding-top:6px}.abcr span{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}.abcr p{margin:2px 0 0;font-size:13.5px;color:var(--ink);max-width:none}
 @media (max-width:860px){.abc{grid-template-columns:1fr}}
 .asmlist{background:var(--white);padding:12px 14px;margin-bottom:10px;font-size:13.5px;color:var(--ink)}.asmlist ul{margin:6px 0 0 18px;padding:0}.asmlist li{margin:3px 0}
@@ -2201,21 +2202,24 @@ function renderAnswer(R){
     const aMk=Math.ceil(totalBudget('B')*hi/5)*5*1000,rB=R.B,rC=R.C||{},pct=x=>n0(x/need*100)+'%';
     const gB=goalPlanV(R,sc,{...LV0,fixNewQL:Math.max(0.01,rB.leads)}),gC=goalPlanV(R,sc,{...LV0,lvIS:true,lvISfrom:2,fixNewQL:Math.max(0.01,rC.leads||0.01)}),gBfix=goalPlanV(R,sc,{...LV0,lvHO:true,lvIS:true,lvISfrom:3,lvAEfrom:2,lvAE:true,aeRegion:'EU',fixNewQL:Math.max(0.01,rB.leads)});
     const slipB=Math.max(0,gB.potWins-gB.closes),cMk=(totalBudget('C')*1000)-people;
-    document.getElementById('abcLede').textContent=`All three aim at ${n0(D.tg)} logos. The target needs ~${n0(need)} new qualified leads a year from growth (Goal setting, Step 2). Each plan below shows what its budget buys and where it breaks.`;
-    const col=(cls,tag,title,big,rows)=>`<div class="abcc ${cls}"><span class="abct">${tag}</span><b class="abch">${title}</b><b class="abcb">${big}</b>${rows.map(([k,v])=>`<div class="abcr"><span>${k}</span><p>${v}</p></div>`).join('')}</div>`;
+    document.getElementById('abcLede').textContent=`All three aim at ${n0(D.tg)} logos. The target needs ~${n0(need)} new qualified leads a year from growth (Goal setting, Step 2). Each plan below shows what its budget buys and where it breaks. CAC = everything spent (marketing + hires) ÷ new logos that close in 2027, above today's ~${n0(baseLogo)}.`;
+    const gmM=D.acv*num(g.gm)/100/12,met=(spend,closes)=>{const nw=closes-baseLogo,cac=nw>0.5?spend/nw:0;return {cac,pb:cac&&gmM>0?cac/gmM:0,arr:closes*D.acv,nw};};
+    const mA=met(aMk+people,landRec),mB=met(totalBudget('B')*1000,gB.closes),mBf=met(totalBudget('B')*1000+people,gBfix.closes),mC=met(totalBudget('C')*1000,gC.closes),mCf=met(totalBudget('C')*1000,landRec);
+    const mHTML=m=>`<div class="abcm"><div><b>${m.cac?k$(m.cac):'n/a'}</b><span>CAC per 2027 logo</span></div><div><b>${m.pb?'~'+n0(m.pb)+' mo':'n/a'}</b><span>payback</span></div><div><b>${M(m.arr)}</b><span>2027 new ARR</span></div></div>`;
+    const col=(cls,tag,title,big,rows,m)=>`<div class="abcc ${cls}"><span class="abct">${tag}</span><b class="abch">${title}</b><b class="abcb">${big}</b>${m?mHTML(m):''}${rows.map(([k,v])=>`<div class="abcr"><span>${k}</span><p>${v}</p></div>`).join('')}</div>`;
     el.innerHTML=
       col('a','A · My plan',`${k$(aMk)} for leads + ${k$(people)} for sales capacity`,`~${n0(landRec)} logos`,[
         ['What it buys',`~${n0(need)} new qualified leads: what the target needs, with B's channel mix scaled to fit.`],
         ['What I add',`Month 1: fix the hand-off (free). Q2: hire an EMEA AE (${k$(num(g.aeHireCost)*1000)}), ready when AEs fill up in H2. Q3: 2 SDRs (${k$(2*num(g.isCost)*1000)}) to follow up engaged accounts.`],
-        ['Why',`Marketing money isn't the gap. Sales capacity is.`]])+
+        ['Why',`Marketing money isn't the gap. Sales capacity is.`]],mA)+
       col('b','B · $310k (the brief)',`${k$(totalBudget('B')*1000)} budget`,`~${n0(gB.closes)} logos`,[
         ['What it buys',`~${n0(rB.leads)} new qualified leads, ${pct(rB.leads)} of what's needed.`],
         ['Where it breaks',`AEs can't close them all: ~${n0(gB.closes)} land in 2027 and ~${n0(slipB)} slip to 2028 or wait for an AE.`],
-        ["What I'd change",`Keep the ${k$(totalBudget('B')*1000)} for leads. Add the hand-off fix, 2 SDRs and an EMEA AE (${k$(people)}, outside this budget). That gets ~${n0(gBfix.closes)}.`]])+
+        ["What I'd change",`Keep the ${k$(totalBudget('B')*1000)} for leads. Add the hand-off fix, 2 SDRs and an EMEA AE (${k$(people)}, outside this budget). That gets ~${n0(gBfix.closes)}: CAC ${k$(mBf.cac)}, payback ~${n0(mBf.pb)} months.`]],mB)+
       col('c','C · $550k',`${k$(totalBudget('C')*1000)} budget`,`~${n0(gC.closes)} logos`,[
         ['What it buys',`~${n0(rC.leads||0)} new qualified leads, ${pct(rC.leads||0)} of what's needed.`],
         ['Where it breaks',`More leads, same AEs. ~${n0(gC.closes)} logos in 2027: AEs can't take more, and the extra leads crowd out the better inbound ones.`],
-        ["What I'd change",`Move ${k$(people)} from leads into the hand-off fix, 2 SDRs and an EMEA AE. The other ${k$(cMk)} still buys the leads we need (${k$(aMk)} is enough). That gets ~${n0(landRec)}${cMk>aMk?`, with ${k$(cMk-aMk)} to spare`:''}.`]]);}}
+        ["What I'd change",`Move ${k$(people)} from leads into the hand-off fix, 2 SDRs and an EMEA AE. The other ${k$(cMk)} still buys the leads we need (${k$(aMk)} is enough). That gets ~${n0(landRec)}${cMk>aMk?`, with ${k$(cMk-aMk)} to spare`:''}: CAC ${k$(mCf.cac)}, payback ~${n0(mCf.pb)} months.`]],mC);}}
   // DIAGNOSIS
   const B0=goalPlanV(R,sc,{...LV0}),autoAcc0=B0.autoAcc,fxA=num(g.tier1)+num(g.tier2)-(num(g.tier1)*num(g.tc1)+num(g.tier2)*num(g.tc2))/(num(g.tc3)||1);
   const pushAcc=num(g.mktPush)||autoAcc0,PU={mktPush:0,aeRegion:'EU',fixNewQL:Math.max(0.01,B0.newQL*(pushAcc-fxA)/Math.max(1,autoAcc0-fxA))},D2=goalPlanV(R,sc,{lvCS:false,...PU}),D0=goalPlanV(R,sc,{...LV0,...PU});
