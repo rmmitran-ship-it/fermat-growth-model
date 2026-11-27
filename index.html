@@ -2598,7 +2598,7 @@ function renderAnswer(R){
    const who=coldM>0.5?`<span class="bad">Nobody has time today.</span> AEs are full: ~${n0(coldM)} qualified leads a month already go cold. ${g.lvIS?'':'The 2 SDRs would own this.'}`
      :g.lvIS?'The 2 SDRs own it, alongside hand-off calls.'
      :`AEs, in the time the hand-off fix frees up (~${n0(Math.max(0,spare))} calls a month). That's not enough for this many accounts, so the 2 SDRs own it.`;
-   document.getElementById('acsup').innerHTML=`<p><b>Ads get an account to notice us. A person turns that into a conversation.</b></p>
+   document.getElementById('acsup').innerHTML=`<p><b>It's a finite market: 400–500 brands, so we can't just add more accounts. We grow by going deeper in each one, and that takes a person.</b> Ads get an account to notice us; a person turns that into a conversation across the buying committee.</p>
      <ul><li>Follow up within 48 hours when 2+ people from an account engage</li><li>Invite engaged accounts to a dinner or event nearby</li><li>Ask a partner who already works with them for an intro</li><li>A short note from Martí or Pol for the ${f(T[0].acc).replace('~','')} accounts in the 1:1 group</li></ul>
      <p class="who"><b>Who does it:</b> ${who}</p>
      <p class="who"><b>SDR time:</b> 2 × ${n0(g.isCalls)} calls a month. ~${n0(FU.open*FU.touch/12)} go to engaged accounts (${n0(FU.touch)} each ${pl('Assumed')}), the rest to hand-off calls.</p>${fuHTML}`;}
