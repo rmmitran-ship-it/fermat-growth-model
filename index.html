@@ -975,6 +975,10 @@ i.ent,i.mm{display:inline-block;width:10px;height:10px}i.ent{background:var(--in
 .ovbar{display:flex;height:14px;margin-top:12px;background:var(--surface);padding:0}.ovbar i{display:block;height:14px;flex:none;margin:0}.ovb>.ovc{margin:0}.ovbar i.t{background:var(--green)}.ovbar i.n{background:var(--magenta)}.ovbar i.h{background:var(--blue-light)}
 .ovleg{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:8px;font-size:12px;color:var(--ink)}.ovleg span{display:flex;align-items:center;gap:6px}.ovleg i{display:inline-block;width:12px;height:10px}.ovleg i.t{background:var(--green)}.ovleg i.n{background:var(--magenta)}.ovleg i.h{background:var(--blue-light)}
 @media (max-width:860px){.ovst::after{display:none}.ovtg,.ovb{grid-template-columns:1fr}.ovsg{border-left:0;border-top:1px solid var(--surface)}.ovf{grid-template-columns:1fr}.ova{padding:8px 0}.ova i{width:2px;height:16px}.ova i::after{display:none}.ovend{padding:10px}}
+.flowb{cursor:zoom-in}.flowb.zoom{cursor:zoom-out}.flowb:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.flowb:not(.zoom) .rfb .s,.flowb:not(.zoom) .tmini,.flowb:not(.zoom) .shz,.flowb:not(.zoom) .lgp em,.flowb:not(.zoom) .lgp [data-pv-html]{display:none}
+.flowb:not(.zoom) .rfb{padding-bottom:12px}
+.pv-s .zhint,.zhint{font-family:Inter,sans-serif;font-size:12px;font-weight:400;color:var(--muted);margin-left:6px;background:none;padding:0;border:0;text-transform:none;letter-spacing:0}
 .rcsum{display:flex;flex-direction:column;gap:4px;margin:10px 0 0;font-size:14px;color:var(--ink);max-width:none}
 .lgp.src{background:var(--magenta)}
 .fstats.f3{grid-template-columns:repeat(3,minmax(0,1fr))}.fstats.f3 .fstat b{font-size:20px}
@@ -1142,8 +1146,8 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
         <p class="s1muted"><span class="pill given">Given</span> Today, leads come from events, partners and brand. No paid ads or outbound yet. <span class="pill assumed">Assumed</span> A founder, an AE or the Chief of Staff qualifies them today. An even split for now. I'll check the real split in month 1.</p>
       </details></div>
     <div class="lv-sec"><span class="lv-k">Step 3 · How we close it</span>
-      <h5 class="pv-s">What new work adds <span class="pill assumed">Assumed</span></h5>
-      <div class="rflow flowb" id="rowB"></div>
+      <h5 class="pv-s">What new work adds <span class="pill assumed">Assumed</span> <span class="zhint" id="zHint">Double-click the boxes for detail</span></h5>
+      <div class="rflow flowb" id="rowB" tabindex="0" role="button" aria-expanded="false" title="Double-click for detail"></div>
       <p class="s1muted" id="rowBcheck"></p>
       <div class="rcbox"><div class="rowc" id="rowC"></div>
       <p class="rcsum" id="rcSum"></p></div>
@@ -1934,6 +1938,9 @@ const PATHS=[
   {k:'dg',name:'Marketing digital',sub:'ABM ads, webinars, lead magnets, search',cls:'b',share:'shDg',top:'Contacts reached',mid:'Engaged',ra:['dgEng','engage'],rb:['dgQual','qualify']}];
 document.addEventListener('click',e=>{if(!e.target.closest('[data-toA]'))return;const r=document.getElementById('liftSeg');if(!r)return;r.scrollIntoView({behavior:'smooth',block:'center'});r.classList.add('flash');setTimeout(()=>r.classList.remove('flash'),1600);});
 document.addEventListener('click',e=>{const t=e.target.closest('[data-fliptog]');let c=t?t.closest('[data-flip]'):null;if(!c){const f=e.target.closest('[data-flip]');if(!f||e.target.closest('button,a,input,select'))return;c=f;}const i=c.dataset.flip,st=window.__flip||(window.__flip={});st[i]=!st[i];c.classList.toggle('on',st[i]);c.querySelectorAll('[data-fliptog]').forEach(b=>b.setAttribute('aria-expanded',st[i]));const face=c.querySelector(st[i]?'.back .fbtn':'.front .fbtn');if(t&&face)setTimeout(()=>face.focus(),st.noAnim?0:350);});
+(()=>{const tog=r=>{const on=!r.classList.contains('zoom');r.classList.toggle('zoom',on);r.setAttribute('aria-expanded',on);const h=document.getElementById('zHint');if(h)h.textContent=on?'Double-click to hide the detail':'Double-click the boxes for detail';};
+  document.addEventListener('dblclick',e=>{const r=e.target.closest('#rowB');if(!r||e.target.closest('input,select,button,summary'))return;window.getSelection&&window.getSelection().removeAllRanges();tog(r);});
+  document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='rowB')tog(e.target);});})();
 document.addEventListener('click',e=>{if(e.target.closest('[data-fixjump]'))setTimeout(()=>{const b=document.getElementById('fixBox');if(b)b.scrollIntoView({block:'start'});},60);});
 document.addEventListener('click',e=>{if(!e.target.closest('[data-pushreset]'))return;S.global.mktPush=0;save();update();});
 function runV(sc,v){const prev=HIRE;HIRE=v;try{return run(sc);}finally{HIRE=prev;}}
