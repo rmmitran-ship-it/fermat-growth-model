@@ -1007,6 +1007,7 @@ i.ent,i.mm{display:inline-block;width:10px;height:10px}i.ent{background:var(--in
 .skp{font-size:13px;color:var(--ink);margin:8px 0 0;max-width:none}
 .abcseg{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:0 0 6px}.abcseg div{border:1px solid var(--surface);padding:6px 8px;display:flex;flex-direction:column}.abcseg span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:700}.abcseg b{font-family:'Inter Tight';font-size:17px;font-weight:600;color:var(--ink)}.abcseg em{font-style:normal;font-size:11.5px;color:var(--ink)}
 .abcseg em b{font-family:Inter,sans-serif;font-size:11.5px;font-weight:700}.bmo{color:#1a7f37}.bmh{color:var(--red)}.bml{color:var(--blue-mid)}
+.stp{display:grid;grid-template-columns:1fr auto 40px;gap:8px;align-items:baseline;font-size:13px;color:var(--ink);padding:2px 0}.stp b{font-family:'Inter Tight';font-size:16px}.stp em{font-style:normal;font-weight:700;font-size:12px;text-align:right}.stp em.up{color:#1a7f37}.stp em.flat{color:var(--muted)}.stp em.dn{color:var(--red)}
 .abcr{border-top:1px solid var(--surface);padding-top:6px}.abcr span{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}.abcr p{margin:2px 0 0;font-size:13.5px;color:var(--ink);max-width:none}
 @media (max-width:860px){.abc{grid-template-columns:1fr}}
 .asmlist{background:var(--white);padding:12px 14px;margin-bottom:10px;font-size:13.5px;color:var(--ink)}.asmlist ul{margin:6px 0 0 18px;padding:0}.asmlist li{margin:3px 0}
@@ -1259,7 +1260,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
         <details class="more mt" id="tierBox"><summary>Digital, by account group</summary><div class="abm mt" id="abmFlow"></div><p class="tiercheck" id="tierCheck"></p></details>
       </details>
 
-  <details class="more mt" id="fullModel"><summary>Edit the plans: full budget model</summary>
+  <details class="more mt" id="fullModel" hidden><summary>Edit the plans: full budget model</summary>
   <div class="planswitch mt"><button class="tab tA" data-act="view" data-v="A">A · My plan</button><button class="tab tB" data-act="view" data-v="B">B · $310k</button><button class="tab tC" data-act="view" data-v="C">C · $550k</button><button class="tab tX" data-act="view" data-v="compare">Compare</button></div>
   <div id="tiles"></div>
   <p class="small muted mt">New channels ramp up: most of their pipeline lands from Q2. <span class="pill assumed">Assumed</span> <span id="rampTxt"></span></p>
@@ -2276,7 +2277,7 @@ function renderAnswer(R){
     document.getElementById('abcLede').textContent=`Same goal, three budgets: ~${n0(need)} new leads needed. Open a plan to see where its money goes.`;
     const gmM=D.acv*num(g.gm)/100/12,made=leads=>leads*D.l2o*D.o2w+liftLogo,aeNow=(num(g.aesEU)+num(g.aesUS))*num(g.aeHireCost)*1000,sE=Math.min(0.99,Math.max(0.01,num(g.ovEntSh)/100)),oE=(sE/Math.max(0.001,num(g.ovWinE)/100))/((sE/Math.max(0.001,num(g.ovWinE)/100))+((1-sE)/Math.max(0.001,num(g.ovWinM)/100))),
     met=(mkt,hires,leads,closes,extra)=>{const nw=made(leads)+(extra||0),sales=hires+aeNow*nw/Math.max(1,baseLogo+nw),tot=mkt+sales,cac=nw>0.5?tot/nw:0,cE=cac*oE/sE,cM=cac*(1-oE)/(1-sE),gm=num(g.gm)/100;return {cac,cE,cM,pbE:cE/(num(g.ovEntAcv)*1000*gm/12),pbM:cM/(num(g.ovMmAcv)*1000*gm/12),pb:cac&&gmM>0?cac/gmM:0,arr:closes*D.acv,nw,mk:tot>0?mkt/tot:1,mkt,sales};};
-    const cSdr=rC.sdrCost||0,aeF=Math.max(0,(5-(+g.lvAEfrom||2))/4),sdF=Math.max(0,(5-(+g.lvISfrom||3))/4),ppl27=num(g.aeHireCost)*1000*aeF+2*num(g.isCost)*1000*sdF;
+    const cSdr=rC.sdrCost||0,aeF=0.75,sdF=0.5,ppl27=num(g.aeHireCost)*1000*aeF+2*num(g.isCost)*1000*sdF;
     const fixLogos=gx=>(gx.fu?gx.fu.opp*gx.o2w:0)+(b0+lift)*12*num(g.hoLift)/100*D.inO2W;
     const mA=met(aMk,ppl27,rA.leads,gA.closes,fixLogos(gA)),mB=met(totalBudget('B')*1000,0,rB.leads,gB.closes),mBf=met(totalBudget('B')*1000,ppl27,rB.leads,gBfix.closes,fixLogos(gBfix)),mC=met(totalBudget('C')*1000-cSdr,cSdr,rC.leads||0,gC.closes),mCf=met(totalBudget('C')*1000-people,ppl27,rA.leads,landRec,fixLogos(gA));
     const bm=(v,lo,hi)=>v>hi?'<b class="bmh">above</b>':v<lo?'<b class="bml">below</b>':'<b class="bmo">in range</b>';
@@ -2353,19 +2354,26 @@ function renderAnswer(R){
       <div class="abck"><span class="abct">${tag} · channel by channel</span>${back}<button type="button" class="fbtn" data-abcflip="${cls}">↺ Back</button></div></div>`;
     window.__abcPanels={};
     const ppl=[['Hand-off fix (lead scoring)',0],['EMEA AE, hired Q2',num(g.aeHireCost)*1000],['2 SDRs, from Q3',2*num(g.isCost)*1000]];
+    // A's mix, scaled to other budgets (for B and C "what if")
+    const Ab=S.scenarios.A.budget,keepA={...Ab},runMix=k=>{Object.keys(keepA).forEach(id=>Ab[id]=keepA[id]*k);try{return run('A');}finally{Object.keys(keepA).forEach(id=>Ab[id]=keepA[id]);}};
+    const FX={...LV0,aeRegion:'EU'},HO={lvHO:true},ALL={lvHO:true,lvIS:true,lvISfrom:3,lvAE:true,lvAEfrom:2};
+    const bMix=runMix(totalBudget('B')/Math.max(1,totalBudget('A'))),gBm=goalPlanV(R,sc,{...FX,fixNewQL:Math.max(0.01,bMix.leads)}),gBmh=goalPlanV(R,sc,{...FX,...HO,fixNewQL:Math.max(0.01,bMix.leads)}),gBall=goalPlanV(R,sc,{...FX,...ALL,fixNewQL:Math.max(0.01,bMix.leads)});
+    const cMkt=totalBudget('C')*1000-people,cMix=runMix(cMkt/Math.max(1,totalBudget('A')*1000)),gCm=goalPlanV(R,sc,{...FX,...ALL,fixNewQL:Math.max(0.01,cMix.leads)});
+    const bMk=b=>{const x=id=>budget('A',id)*1000;return [['Partners',x('partners')],['Experiential',x('events')+x('activations')],['Digital',x('linkedin')+x('google')+x('chatgpt')+x('reddit')+x('abm')]];};
+    const step=(lab,v,d)=>`<div class="stp"><span>${lab}</span><b>~${n0(v)}</b>${d!=null?`<em class="${Math.round(v)-Math.round(v-d)>0?'up':Math.round(v)-Math.round(v-d)<0?'dn':'flat'}">${(x=>x>0?'+'+x:x<0?'−'+(-x):'±0')(Math.round(v)-Math.round(v-d))}</em>`:''}</div>`;
+    const card=(cls,tag,verdict,vcls,spend,m,body,btn)=>`<div class="abcc ${cls}${window.__abcSel===cls?' sel':''}"><div class="abcf"><span class="abct">${tag}</span>
+      <b class="abcb">${verdict}</b><span class="vrd ${vcls}"></span><b class="abch">${spend}</b>${mHTML(m)}${body}${btn?`<button type="button" class="fbtn" data-abcflip="${cls}">${window.__abcSel===cls?'Hide the receipt ↑':'See the receipt ↓'}</button>`:''}</div></div>`;
     el.innerHTML=
-      col('a','A · My plan',`${k$(aMk)} for leads + ${k$(people)} for sales capacity`,`~${n0(gA.closes)} logos`,[
-        ['Buys',`~${n0(rA.leads)} new leads (${pct(rA.leads)} of need). More events and search.`],
-        ['Adds',`Hand-off fix now · EMEA AE in Q2 · 2 SDRs in Q3.`]],mA,chT(rA,ppl,`My split: more on events and search, where opportunities cost least. LinkedIn stays on the target list. ChatGPT and Reddit stay as small tests. Plus the people to close.`))+
-      col('b','B · $310k (the brief)',`${k$(totalBudget('B')*1000)} budget`,`~${n0(gB.closes)} logos`,[
-        ['Buys',`~${n0(rB.leads)} new leads (${pct(rB.leads)} of need).`],
-        ['Breaks',`AEs are full: ~${n0(slipB)} deals slip to 2028.`],
-        ['Fix',`Add the three fixes (${k$(people)}) → ~${n0(gBfix.closes)}.`]],mB,chT(rB,[],`The brief's split. Buys ${n0(rB.leads)} leads, but nobody is added to close them.`))+
-      col('c','C · $550k',`${k$(totalBudget('C')*1000)} budget`,`~${n0(gC.closes)} logos`,[
-        ['Buys',`~${n0(rC.leads||0)} new leads (${pct(rC.leads||0)} of need).`],
-        ['Breaks',`Same AEs: the extra leads go cold.`],
-        ['Fix',`Move ${k$(people)} into the three fixes → ~${n0(landRec)}${cMk>aMk?`, ${k$(cMk-aMk)} to spare`:''}.`]],mC,chT(rC,rC.sdrCost?[['SDR agency (in the budget)',rC.sdrCost]]:[],`The brief's split. Most of the extra money goes to LinkedIn and events, which buy leads AEs can't take.`));
-    const aeAddsA=gA.closes-goalPlanV(R,sc,{...LV0,lvHO:true,lvIS:true,lvISfrom:+g.lvISfrom||3,lvAE:false,fixNewQL:Math.max(0.01,rA.leads)}).closes;
+      card('a','A · My plan · works',`~${n0(gA.closes)} of ${n0(D.tg)}`,'ok',`2027: ${k$(aMk)} marketing + ${k$(ppl27)} sales`,mA,
+        `<div class="abcr"><span>Spend follows my bets</span><p>${bMk().map(([n,v])=>`${n} ${k$(v)}`).join(' · ')}</p></div>
+         <div class="abcr"><span>90-day plan</span><p>Month 1: hand-off fix, list to ~${Math.round(D.tAcc).toLocaleString('en-US')} · Q2: EMEA AE, always-on · Q3: 2 SDRs</p></div>`,true)+
+      card('b','B · $310k (the brief) · falls short',`~${n0(gB.closes)} of ${n0(D.tg)}`,'bad',`2027: ${k$(totalBudget('B')*1000)} marketing, no sales change`,mB,
+        `<div class="abcr"><span>Why it falls short</span><p>No hand-off planning: leads wait and go cold, and AEs fill up by H2.</p></div>
+         <div class="abcr"><span>How it gets better</span>${step('As given',gB.closes)}${step('Same $310k in my bets\' mix',gBm.closes,gBm.closes-gB.closes)}<p class="small">More leads alone don't help: without a hand-off plan they go cold.</p>${step('+ hand-off fix (free)',gBmh.closes,gBmh.closes-gBm.closes)}${step(`+ EMEA AE and SDRs (${k$(ppl27)} in 2027)`,gBall.closes,gBall.closes-gBmh.closes)}</div>`,false)+
+      card('c','C · $550k · works if money moves to sales',`~${n0(gC.closes)} of ${n0(D.tg)}`,'mid',`2027: ${k$(totalBudget('C')*1000)} budget`,mC,
+        `<div class="abcr"><span>Why it falls short as given</span><p>More leads than AEs can take: the extra ones go cold.</p></div>
+         <div class="abcr"><span>How it works</span>${step('As given',gC.closes)}${step(`Move ${k$(people)} to sales, ${k$(cMkt)} left in my bets' mix`,gCm.closes,gCm.closes-gC.closes)}<p class="small">Same total budget. ${cMkt>aMk?`${k$(cMkt-aMk)} more marketing than Plan A.`:''}</p></div>`,false);
+    const aeAddsA=gA.closes-goalPlanV(R,sc,{...LV0,lvHO:true,lvIS:true,lvISfrom:3,lvAE:false,fixNewQL:Math.max(0.01,rA.leads)}).closes;
     window.__abcPanels={a:rcptA(gA,'A · My plan: the receipt',{sdr:2*num(g.isCost)*1000*sdF,ae:num(g.aeHireCost)*1000*aeF,aeAdds:Math.max(0,aeAddsA)}),b:rcpt(rB,gB,'B · $310k: the receipt',{}),c:rcpt(rC,gC,'C · $550k: the receipt',{sdr:cSdr,sdrName:'SDR agency (in the budget)'})};
     {const pd=document.getElementById('abcd'),sel=window.__abcSel;if(pd){pd.innerHTML=sel&&window.__abcPanels[sel]?window.__abcPanels[sel]:'';pd.style.display=sel?'block':'none';}}
     window.__abcM={A:{spend:aMk,hires:people,hireTxt:'EMEA AE (Q2) + 2 SDRs (Q3)',g:gA,m:mA},B:{spend:totalBudget('B')*1000,hires:0,hireTxt:'None',g:gB,m:mB},C:{spend:totalBudget('C')*1000,hires:0,hireTxt:rC.sdrCost?'SDR agency, in the budget':'None',g:gC,m:mC}};
