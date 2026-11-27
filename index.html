@@ -1217,6 +1217,8 @@ b.asv{font-weight:700;color:var(--ink);font-size:13.5px}
 .abcc.a{background:var(--magenta-light)}.abcc.a .abcm div{background:var(--white)}.abcc.a .abcseg div{background:var(--white);border-color:var(--white)}.abcc.a .abcr{border-color:rgba(0,0,0,.12)}
 
 .msr th span{display:block;font-weight:400;text-transform:none;letter-spacing:0;font-size:11px}.msr td:first-child{font-weight:700;white-space:nowrap}.msr td{vertical-align:top;font-size:13.5px}.msr td:last-child{background:var(--surface)}
+
+@media (min-width:861px){.dash.d3{grid-template-columns:repeat(3,minmax(0,1fr))}}.dash.d3 ul{margin:0;padding:0}.dash.d3 li{margin:0 0 6px}
 </style>
 </head>
 <body>
@@ -1505,12 +1507,11 @@ b.asv{font-weight:700;color:var(--ink);font-size:13.5px}
   <div class="tl" id="tl"></div>
   <div class="tlpanel" id="tlPanel" aria-live="polite"></div>
   <div class="card mt2">
-    <h3>My first build: a marketing dashboard</h3>
-    <div class="dash">
-      <div><span class="k">What</span>One Claude-built dashboard, used for the first 6 months until a permanent setup is chosen</div>
-      <div><span class="k">Connected to</span>The CRM, LinkedIn, Google and ChatGPT ads</div>
-      <div><span class="k">Tracks</span>Spend → reach → engaged accounts → engaged leads, by channel and by segment</div>
-      <div><span class="k">Why</span>So every channel is measurable from day 30, before any budget moves</div>
+    <h3>What I build, phase by phase</h3>
+    <div class="dash d3">
+      <div><span class="k">Phase 1 · days 1–30</span><ul class="clean"><li><b>Marketing dashboard</b>, connected to Attio through an MCP: spend → reach → engaged accounts → hot leads, by channel and segment, so every channel is measurable from day 30</li><li><b>First value prop</b> for mid-market and for enterprise, as the narratives to test</li></ul></div>
+      <div><span class="k">Phase 2 · days 31–60</span><ul class="clean"><li><b>Partner value prop</b></li><li><b>Partner plan</b>: who, what each side gets, commission and exit criteria</li></ul></div>
+      <div><span class="k">Phase 3 · days 61–90</span><ul class="clean"><li><b>ABM pilot plan</b>: top 170 accounts, US contact-level and EU events, what we read in month 4</li></ul></div>
     </div>
   </div>
   <h3 class="mt2">What I run, what I buy</h3>
