@@ -1363,7 +1363,7 @@ b.asv{font-weight:700;color:var(--ink);font-size:13.5px}
   <p class="small muted mt">Benchmark CAC for sales-led B2B, sales + marketing: mid-market (~$35k deals) $10–25k, payback 12–18 months; enterprise (~$100k deals) $30–70k, payback 18–24 months. Rule of thumb: 0.3–0.7× first-year ACV. Sources: SaaS benchmark summaries (widelly.com, digitalapplied.com).</p>
   <div class="abcd" id="abcd" style="display:none"></div>
   <h3 class="mt3">The brief's budgets: as given vs. how I'd move the money</h3>
-  <p class="small muted">The brief's lines (paid enterprise, additional events, partner program, ABM tools) mapped to my bets. Tools &amp; external production covers Clay and intent tools, video shoots and editing, and event and media-kit production.</p>
+  <p class="small muted">The brief's lines (paid enterprise, additional events, partner program, ABM tools) mapped to my bets. Tools &amp; external production = ABM tools plus an open buffer for extra hands, production and outsourcing.</p>
   <div class="tw mt" id="realloc"></div>
 
 
@@ -2361,7 +2361,7 @@ function renderAnswer(R){
   const spl=v=>`<span class="fspend">Plan A spend <b>${k$(v)}</b> · ${n0(v/spA.mk*100)}% of budget</span>`;window.__SPL=[spl(spA.pt),spl(spA.ex),spl(spA.dg)];
   {const t=document.getElementById('rowT');if(t)t.innerHTML=`<div class="tc-h"><b>Tools &amp; external production</b><span>Supports the bets</span></div>
     <div class="tc-v"><b>${k$(spA.tp)}</b><span>${n0(spA.tp/spA.mk*100)}% of budget · no leads of its own, it makes the other three work</span></div>
-    <ul class="tc-l"><li>Clay, intent and ABM tools <b>${k$(spA.abm)}</b></li><li>Video shoots and editing <b>${k$(spA.v)}</b></li><li>Event and media-kit production <b>${k$(spA.e)}</b></li><li>Extra hands &amp; buffer <b>${k$(spA.buf)}</b></li></ul>
+    <ul class="tc-l"><li>ABM tools (Clay, intent) <b>${k$(spA.abm)}</b></li><li>Open buffer: extra hands, production, outsourcing, decided as signals come in <b>${k$(spA.tp-spA.abm)}</b></li></ul>
     <span class="tc-t">Plan A marketing: ${k$(spA.mk)}</span>`;}
   document.getElementById('rowD').innerHTML=
     card(0,'p0','Partners',n0(pt.sh*100)+'%','Works today','hi',st3(pt),
@@ -2474,7 +2474,7 @@ function renderAnswer(R){
         {n:'Experiential',tag:'Works today',c:b('events')+b('activations'),pw:ex.logos*lr,col:'--magenta'},
         {n:'Digital · Targeted ABM',tag:'New, to test',c:b('abm')+b('linkedin')*sh,pw:dg.logos*sh*lr,col:'--blue',note:'US: LinkedIn, Influ2, RB2B · EMEA: LinkedIn by company'},
         {n:'Digital · Always-on',tag:'New, to test',c:b('linkedin')*(1-sh)+b('google')+b('chatgpt')+b('reddit'),pw:dg.logos*(1-sh)*lr+inLift+aoX,col:'--blue-light',note:'LinkedIn, search, small tests · incl. the inbound lift from ads'}];
-      MK.push({n:'Extra hands & buffer',tag:'Reserve',c:num(g.aBuffer)*1000,pw:0,col:'--surface-2',note:'Freelance production or event help, or held back. Released only when a signal needs it'});
+      MK.push({n:'Held-back reserve',tag:'Reserve',c:num(g.aBuffer)*1000,pw:0,col:'--surface-2',note:'Part of the open buffer: released only when a signal needs it'});
       const SL=[{n:'Hand-off fix',c:0,pw:inUp,note:'more inbound converts'}];
       if(gx.fu&&gx.fu.opp>0.3)SL.push({n:'2 SDRs, from Q3',c:hires.sdr,pw:gx.fu.opp*gx.o2w,note:'mostly 2028 pipeline; a few warm accounts close in 2027'});
       SL.push({n:'EMEA AE, from Q2',c:hires.ae,pw:0,note:`lets AEs close ~${n0(hires.aeAdds)} more deals`});
@@ -2489,7 +2489,7 @@ function renderAnswer(R){
       return `<div class="skh"><b>${title}</b><span>What we spend in 2027, what closes this year, and the pipeline it leaves for 2028 (deals still open at year end; the sales cycle is ~${n0(num(g.cycle))} months). Tentative attribution.</span></div>
         <table class="rc rc2"><thead><tr><th>Marketing</th><th class="num">2027 spend</th><th>2027 closed ARR</th><th class="num">Pipeline for 2028</th></tr></thead>
         <tbody>${MK.map(row).join('')}<tr class="sub"><td><b>Marketing total</b></td><td class="num">${k$(mkC)}</td><td><b>${R$(mkR)}</b></td><td class="num"><b>${R$(mkP)}</b></td></tr>
-        <tr class="tpr"><td colspan="4"><b>Inside the marketing total: tools &amp; external production, ${k$(tp.t+bufC)}</b><span>Clay, intent and ABM tools ${k$(tp.abm)} · video shoots and editing ${k$(tp.v)} · event and media-kit production ${k$(tp.e)} · extra hands &amp; buffer ${k$(bufC)}. The other ${k$(mkC-tp.t-bufC)} is program and channel spend.</span></td></tr></tbody>
+        <tr class="tpr"><td colspan="4"><b>Inside the marketing total: tools &amp; external production, ${k$(tp.t+bufC)}</b><span>ABM tools ${k$(tp.abm)} · open buffer ${k$(tp.t+bufC-tp.abm)} for extra hands, production and outsourcing, decided as signals come in. The other ${k$(mkC-tp.t-bufC)} is program and channel spend.</span></td></tr></tbody>
         <thead><tr><th>Sales</th><th></th><th></th><th></th></tr></thead>
         <tbody>${SL.map(row).join('')}<tr class="sub"><td><b>Sales total</b></td><td class="num">${k$(slC)}</td><td><b>${R$(slR)}</b></td><td class="num"><b>${R$(slP)}</b></td></tr>
         <tr class="tot"><td><b>Total new spend</b></td><td class="num">${k$(mkC+slC)}</td><td><b>${R$(mkR+slR)}</b> new ARR</td><td class="num"><b>${R$(mkP+slP)}</b></td></tr></tbody></table>
