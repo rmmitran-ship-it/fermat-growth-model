@@ -2340,18 +2340,18 @@ function renderAnswer(R){
         <tbody>${L.map(row).join('')}<tr class="tot"><td><b>Total</b></td><td class="num">${k$(cost)}</td><td><b>${n0(won)} contracts</b> · ${eN} enterprise + ${n0(won)-eN} mid-market</td><td class="num">${M(arr)} new ARR</td></tr></tbody></table>`;};
     const rcptA=(gx,title,hires,k,lr,fx)=>{k=k||1;lr=lr||1;fx=fx||{p:1,e:1,ao:1};
       const b=id=>budget('A',id)*1000*k,sh=window.__tqS||0.5,dg=D.paths[2],pt=D.paths[0],ex=D.paths[1];
-      const inUp=gx.inSQL*num(g.hoLift)/100*gx.inO2W,inAll=gx.inSQL*gx.inL2O*gx.inO2W-inUp,liftSh=lift/((b0+lift)||1),inLift=inAll*liftSh,inBase=inAll-inLift;
+      const inUp=gx.inSQL*num(g.hoLift)/100*gx.inO2W,inAll=gx.inSQL*gx.inL2O*gx.inO2W-inUp,liftSh=lift/((b0+lift)||1),inLift=inAll*liftSh,inBase=inAll-inLift,aoX=dg.logos*(1-sh)*lr*Math.max(0,fx.ao-1);
       const MK=[
-        {n:'Partners',tag:'Works today',c:b('partners'),pw:pt.logos*lr*fx.p,col:'--green'},
-        {n:'Experiential',tag:'Works today',c:b('events')+b('activations'),pw:ex.logos*lr*fx.e,col:'--magenta'},
+        {n:'Partners',tag:'Works today',c:b('partners'),pw:pt.logos*lr,col:'--green'},
+        {n:'Experiential',tag:'Works today',c:b('events')+b('activations'),pw:ex.logos*lr,col:'--magenta'},
         {n:'Digital · Targeted ABM',tag:'New, to test',c:b('abm')+b('linkedin')*sh,pw:dg.logos*sh*lr,col:'--blue',note:'US: LinkedIn, Influ2, RB2B · EMEA: LinkedIn by company'},
-        {n:'Digital · Always-on',tag:'New, to test',c:b('linkedin')*(1-sh)+b('google')+b('chatgpt')+b('reddit'),pw:dg.logos*(1-sh)*lr*fx.ao+inLift,col:'--blue-light',note:'LinkedIn, search, small tests · incl. the inbound lift from ads'}];
+        {n:'Digital · Always-on',tag:'New, to test',c:b('linkedin')*(1-sh)+b('google')+b('chatgpt')+b('reddit'),pw:dg.logos*(1-sh)*lr+inLift+aoX,col:'--blue-light',note:'LinkedIn, search, small tests · incl. the inbound lift from ads'}];
       const SL=[{n:'Hand-off fix',c:0,pw:inUp,note:'more inbound converts'}];
       if(gx.fu&&gx.fu.opp>0.3)SL.push({n:'2 SDRs, from Q3',c:hires.sdr,pw:gx.fu.opp*gx.o2w,note:'more lands in 2028'});
       SL.push({n:'EMEA AE, from Q2',c:hires.ae,pw:0,note:`lets AEs close ~${n0(hires.aeAdds)} more deals`});
       const pot=inBase+[...MK,...SL].reduce((a,x)=>a+x.pw,0)||1,land=Math.min(1,gx.closes/pot);
       [...MK,...SL].forEach(x=>{x.won=x.pw*land;x.rev=x.won*D.acv;});
-      {const ao=MK[3],inf=inLift*land*D.acv,src=Math.max(0,ao.rev-inf);ao.note=`LinkedIn, search, small tests · revenue is a blend: ${k$(src)} sourced + ${k$(inf)} influenced (inbound lift from ads)`;}
+      {const ao=MK[3],inf=(inLift+aoX)*land*D.acv,src=Math.max(0,ao.rev-inf);ao.note=`LinkedIn, search, small tests · revenue is a blend: ${k$(src)} sourced + ${k$(inf)} influenced (inbound lift from ads)`;}
       const all=[...MK,...SL],mx=Math.max(...all.map(x=>x.rev),1),baseRev=inBase*land*D.acv,R$=v=>v>=995000?M(v):k$(v);
       const row=x=>`<tr><td>${x.col?`<i class="rcdot" style="background:var(${x.col})"></i>`:''}<b>${esc(x.n)}</b>${x.tag?` <em class="rctag">${x.tag}</em>`:''}${x.note?`<span>${x.note}</span>`:''}</td><td class="num">${x.c>500?k$(x.c):'$0'}</td><td class="rcw"><i class="rcbi" style="width:${x.rev>500?Math.max(1,x.rev/mx*70):0}%"></i><em>${x.rev>500?R$(x.rev):'—'}</em></td></tr>`;
       const sum=a=>a.reduce((s,x)=>s+x,0),mkC=sum(MK.map(x=>x.c)),mkR=sum(MK.map(x=>x.rev)),slC=sum(SL.map(x=>x.c)),slR=sum(SL.map(x=>x.rev));
