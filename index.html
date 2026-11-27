@@ -713,7 +713,7 @@ button.play[hidden]{display:none}
 .rowc{background:var(--white);padding:16px 18px 14px;margin-top:12px}
 .rcbar{position:relative;display:flex;height:40px;background:var(--surface);margin-top:18px}
 .rcbar i{display:flex;align-items:center;padding-left:8px;font-style:normal;font-family:'Inter Tight';font-size:15px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden}
-.rcbar i.t{background:var(--green)}.rcbar i.n{background:var(--green-bright)}
+.rcbar i.t{background:var(--green)}.rcbar i.n{background:var(--magenta)}
 .rcbar .mk{position:absolute;top:-6px;bottom:-6px;border-left:2px solid var(--ink)}.rcbar .mk.c{border-left-style:dashed}
 .rcbar .mk em{position:absolute;top:-18px;left:-1px;transform:translateX(-50%);font-style:normal;font-size:11px;font-weight:700;white-space:nowrap;color:var(--ink);background:var(--white);padding:0 3px}
 .rcbar .mk.c em{top:auto;bottom:-18px}
@@ -743,13 +743,13 @@ button.play[hidden]{display:none}
 .lgp b{font-family:'Inter Tight';font-size:24px;font-weight:700;letter-spacing:-0.03em;line-height:1.05}
 .lgp span{font-size:12.5px;font-weight:700}.lgp em{font-style:normal;font-size:11px;color:var(--text)}
 .lgp.base{background:var(--green)}
-.lgp.lift{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%23bdcfff'/%3E%3Cpath d='M-2 2l4-4M0 8l8-8M6 10l4-4' stroke='%2314141444' stroke-width='1.5'/%3E%3C/svg%3E");margin-top:3px}.lgp.lift em.lin{display:flex;align-items:center;gap:4px;margin-top:3px}
+.lgp.lift{background:var(--blue-light);margin-top:3px}.lgp.lift em.lin{display:flex;align-items:center;gap:4px;margin-top:3px}
 .lgp.lift .pill{font-size:9.5px;padding:1px 6px}
 .lgp.flash{outline:3px solid var(--magenta-deep);outline-offset:2px}
-.rcbar i.h{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%23bdcfff'/%3E%3Cpath d='M-2 2l4-4M0 8l8-8M6 10l4-4' stroke='%2314141444' stroke-width='1.5'/%3E%3C/svg%3E")}
+.rcbar i.h{background:var(--blue-light)}
 .rcleg{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:26px;font-size:12.5px;color:var(--ink)}
 .rcleg span{display:flex;align-items:center;gap:6px}.rcleg i{display:inline-block;width:16px;height:12px}
-.rcleg i.t{background:var(--green)}.rcleg i.h{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%23bdcfff'/%3E%3Cpath d='M-2 2l4-4M0 8l8-8M6 10l4-4' stroke='%2314141444' stroke-width='1.5'/%3E%3C/svg%3E")}.rcleg i.n{background:var(--green-bright)}
+.rcleg i.t{background:var(--green)}.rcleg i.h{background:var(--blue-light)}.rcleg i.n{background:var(--magenta)}
 .rcleg .rcsi{color:var(--muted)}
 .rowc .rctxt{margin-top:10px}
 .measure{margin-top:14px;background:var(--surface);padding:12px 14px;color:var(--ink)}
@@ -943,8 +943,36 @@ button.play[hidden]{display:none}
 .rec-t b{background:var(--green);color:var(--ink);padding:0 6px}
 .rec-s{color:#cfcfcf;font-size:14px;margin:8px 0 12px;max-width:none}
 .rec .tab{background:#2a2a2a;color:#eee}.rec .tab[aria-selected="true"].tB{background:var(--blue);color:var(--ink)}.rec .tab[aria-selected="true"].tA{background:var(--magenta);color:var(--ink)}.rec .tab[aria-selected="true"].tC{background:var(--green);color:var(--ink)}
+.rcbox{background:var(--ink);padding:18px 20px 16px;margin-top:12px}
+.rcbox .rowc{background:transparent;padding:0;margin:0}
+.rcbox .rcbar{background:#2a2a2a}.rcbox .rcbar .mk{border-left-color:var(--white)}.rcbox .rcbar .mk em{background:var(--ink);color:var(--white)}
+.rcbox .rcleg,.rcbox .rcleg .rcsi,.rcbox .rcleg b{color:#ddd}.rcbox .rctxt{color:var(--white)}
+.rcbox .rcsum,.rcbox .rcsum b{color:#ddd}.rcbox .rcsum b{color:var(--white)}
+.ov{display:flex;flex-direction:column;gap:12px}
+.ovn{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue-mid)}
+.ovh{display:block;font-family:'Inter Tight';font-size:16px;font-weight:600;color:var(--ink);margin-top:4px}
+.ovsub{font-size:12.5px;color:var(--muted)}
+.ovbig{display:block;font-family:'Inter Tight';font-size:40px;font-weight:600;letter-spacing:-0.03em;line-height:1.05;color:var(--ink);margin:10px 0 8px}
+.ovtg{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:0;background:var(--white);border-top:3px solid var(--ink)}
+.ovtl,.ovsg{padding:14px 16px}.ovsg{border-left:1px solid var(--surface);display:flex;flex-direction:column;gap:4px}
+.ovsg b{font-family:'Inter Tight';font-size:32px;font-weight:600;color:var(--ink)}
+.ovsk{font-size:13px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:6px}
+.ovin{font-size:12.5px;color:var(--ink);display:flex;flex-wrap:wrap;align-items:center;gap:4px}.ovin input{padding:2px 4px}
+.ovnote{grid-column:1/-1;margin:0;padding:8px 16px 12px;font-size:12.5px;color:var(--muted);max-width:none}
+i.ent,i.mm{display:inline-block;width:10px;height:10px}i.ent{background:var(--ink)}i.mm{background:#9a9a9a}
+.ovf{display:grid;grid-template-columns:1fr 104px 1fr 104px 1fr 104px 84px;align-items:stretch}
+.ovc{background:var(--white);padding:14px 16px;border-top:3px solid var(--ink);display:flex;flex-direction:column}
+.ovs{display:flex;flex-direction:column;gap:2px;font-size:12.5px;color:var(--ink);border-top:1px solid var(--surface);padding-top:8px;margin-top:auto}.ovs span{display:flex;align-items:center;gap:6px;white-space:nowrap}.ovs b{margin-left:auto}
+.ova{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:3px;padding:0 8px;font-size:12px;color:var(--ink)}
+.ova b{font-size:13px}.ova i{display:block;width:70px;height:2px;background:var(--ink);position:relative;margin-top:4px}.ova i::after{content:'';position:absolute;right:-1px;top:-4px;border:5px solid transparent;border-left:7px solid var(--ink);border-right:0}
+.ova .ovin{justify-content:center}
+.ovend{display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--green)}.ovend b{font-family:'Inter Tight';font-size:32px;font-weight:600;color:var(--ink)}.ovend span{font-size:12px;color:var(--ink)}
+.ovb{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;align-items:stretch;margin-bottom:0}.ovc.rev{background:var(--ink)}.ovc.rev .ovh,.ovc.rev .ovbig,.ovc.rev .ovs{color:var(--white)}.ovc.rev .ovsub{color:#bbb;margin-top:8px}.ovc.rev .ovs{border-top-color:#333}.ovc.rev i.ent{background:var(--white)}.ovc.rev .ovn{color:var(--green)}
+.ovbar{display:flex;height:14px;margin-top:12px;background:var(--surface)}.ovbar i{display:block;height:14px;flex:none;margin:0}.ovb>.ovc{margin:0}.ovbar i.t{background:var(--green)}.ovbar i.n{background:var(--magenta)}.ovbar i.h{background:var(--blue-light)}
+.ovleg{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:8px;font-size:12px;color:var(--ink)}.ovleg span{display:flex;align-items:center;gap:6px}.ovleg i{display:inline-block;width:12px;height:10px}.ovleg i.t{background:var(--green)}.ovleg i.n{background:var(--magenta)}.ovleg i.h{background:var(--blue-light)}
+@media (max-width:860px){.ovtg,.ovb{grid-template-columns:1fr}.ovsg{border-left:0;border-top:1px solid var(--surface)}.ovf{grid-template-columns:1fr}.ova{padding:8px 0}.ova i{width:2px;height:16px}.ova i::after{display:none}.ovend{padding:10px}}
 .rcsum{display:flex;flex-direction:column;gap:4px;margin:10px 0 0;font-size:14px;color:var(--ink);max-width:none}
-.lgp.src{background:var(--green-bright)}
+.lgp.src{background:var(--magenta)}
 .fstats.f3{grid-template-columns:repeat(3,minmax(0,1fr))}.fstats.f3 .fstat b{font-size:20px}
 .fuh{font-weight:600;color:var(--ink);margin:14px 0 8px;font-size:14px}
 .fuf{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}.fuf.off{opacity:.55}
@@ -1099,21 +1127,23 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
   </header>
   <h3 class="mt2">What do we need to get to 60 logos?</h3>
   <div class="lv" id="goal">
-    <div class="lv-sec"><span class="lv-k">Step 1 · How many more leads we need</span>
+    <div class="lv-sec"><span class="lv-k" id="ovK">Step 1 · What the target takes, in total</span>
+      <div class="ov" id="ov"></div></div>
+    <div class="lv-sec"><span class="lv-k">Step 2 · How many more leads we need</span>
       <div class="lv4" id="s1"></div>
       <p class="s1line" id="s1line"></p>
       <p class="s1muted" id="s1arr"></p></div>
-    <div class="lv-sec"><span class="lv-k">Step 2 · Where the 60 come from</span>
+    <div class="lv-sec"><span class="lv-k">Step 3 · Where the 60 come from</span>
       <h5 class="pv-s">Fermat's motion today <span class="pill given">Given sources</span> <span class="pill assumed">Assumed split</span></h5>
       <div class="rflow flowa" id="rowA"></div>
       <p class="s1muted"><span class="pill given">Given</span> Today, leads come from events, partners and brand. No paid ads or outbound yet. <span class="pill assumed">Assumed</span> A founder, an AE or the Chief of Staff qualifies them today. An even split for now. I'll check the real split in month 1.</p>
       <h5 class="pv-s">What new work adds <span class="pill assumed">Assumed</span></h5>
       <div class="rflow flowb" id="rowB"></div>
       <p class="s1muted" id="rowBcheck"></p>
-      <div class="rowc" id="rowC"></div>
-      <p class="rcsum" id="rcSum"></p>
+      <div class="rcbox"><div class="rowc" id="rowC"></div>
+      <p class="rcsum" id="rcSum"></p></div>
     </div>
-    <div class="lv-sec"><span class="lv-k">Step 3 · How to get there</span>
+    <div class="lv-sec"><span class="lv-k">Step 4 · How to get there</span>
       <details class="more" id="betBox"><summary>See my bets, channel by channel</summary>
         <p class="jobs" id="jobs"></p>
         <div class="betc mt" id="rowD"></div>
@@ -1395,7 +1425,7 @@ const CUSTOM_GREYS=['#7d7d7d','#a6a6a6','#575757','#bdbdbd','#929292'];
 const STORE='fermat-growth-model-v1';
 
 const DEFAULTS={
-  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,aeRegion:'EU',lvWR:false,wrUp:2,m2s:60,acReach:80,sdMeet:30,sdOpp:50,sdTouch:6,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:15,tc2:10,tc3:6,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
+  global:{base40:true,cal40:true,cSdr1:true,aMix1:true,v2:true,inboundLift:10,baseLeads:35,baseL2O:46,baseO2W:23,acv:50,cycle:4.5,gm:65,aes:3,aesEU:2,aesUS:1,usInbound:25,usQ1:50,usFrom2:50,leadCap:25,shPt:25,shEx:30,shDg:45,ptQual:60,exMeet:30,exQual:60,dgEng:10,dgQual:20,out1:5,out2:15,out3:25,out4:30,wbL2O:40,wbO2W:20,aeHireCost:90,isCost:55,isLeads:0,isLift:5,lvAE:false,lvAEfrom:1,lvIS:false,lvISfrom:1,aeRegion:'EU',lvWR:false,wrUp:2,m2s:60,acReach:80,ovEntSh:20,ovEntAcv:100,ovMmAcv:35,ovE2Q:20,ovQ2O:45,ovWin:22,sdMeet:30,sdOpp:50,sdTouch:6,lvHO:false,lvCS:false,hoLift:5,hoCut:25,inRaw:1.5,qualCalls:15,isCalls:50,maxDeals:25,csLift:10,inEv:33,inPt:33,inBr:34,tier1:20,tc1:15,tc2:10,tc3:6,ab1E:20,ab2E:11,ab3E:7.5,ab1M:30,ab2M:20,ab3M:15,tier2:150,tier3:600,ptnPer:3,ptnOpps:2.5,ptnWin:25,aeCap:4.5,paybackTarget:18,commission:15,targetLogos:60,targetArr:3,abmThreshold:25,abmUplift:10,entShare:20,entClients:10,smallAvg:32,entLogoShare:20,entAcv:100,abmAccounts:800,cpaMid:6,cpaEnt:15,contact2lead:10,lead2mql:50,mql2sql:40,sql2assign:90,isrCap:2,sdrInCost:55,sdrAgCost:45,sdrLift:5,sdrCapLift:0.5,sdrMin:500,midAcv:35,midOutShare:50,sdrMeetings:10,abmContactMin:50,abmContactUplift:15},
   channels:[
     {id:'linkedin',name:'LinkedIn',group:'paid',kind:'lead',cpl:1500,l2o:30,o2w:15,acv:100,entDeal:true,abmBoost:true,diag:true,color:'--blue'},
     {id:'google',name:'Google search',group:'paid',kind:'lead',cpl:1000,l2o:35,o2w:15,acv:50,abmBoost:true,color:'--blue-light'},
@@ -1516,6 +1546,7 @@ function migrate(o){
   const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
   if(!o.channels.some(c=>c.id==='activations')){const i=o.channels.findIndex(c=>c.id==='partners');o.channels.splice(i<0?o.channels.length:i,0,clone(DEFAULTS.channels.find(c=>c.id==='activations')));}
   if(o.global.acReach==null)o.global.acReach=80;
+  {const d={ovEntSh:20,ovEntAcv:100,ovMmAcv:35,ovE2Q:20,ovQ2O:45,ovWin:22};Object.keys(d).forEach(k=>{if(o.global[k]==null)o.global[k]=d[k];});}
   if(o.global.sdMeet==null)o.global.sdMeet=30;if(o.global.sdTouch==null)o.global.sdTouch=6;if(o.global.sdOpp==null)o.global.sdOpp=50;
   if(!o.global.finalV){o.global.aeRegion='EU';o.global.lvWR=false;o.global.finalV=true;}
   if(!o.global.sdrV){o.global.isLeads=0;o.global.isCalls=50;o.global.lvCS=false;o.global.sdrV=true;}
@@ -1977,6 +2008,32 @@ function renderAnswer(R){
   const pipeToday=b0*12*D.inL2O*D.acv,pipeLift=lift*12*D.inL2O*D.acv,pipeNew=D.newOpp*D.acv,pipeAll=pipeToday+pipeLift+pipeNew,allOpp=D.inOpp+D.newOpp;
   const land0=D.closes,REC={...LV0,lvHO:true,lvIS:true,lvISfrom:1,lvAE:true,aeRegion:'EU',fixNewQL:Math.max(0.01,D.newQL)},landRec=goalPlanV(R,sc,REC).closes;
   (document.getElementById('recT')||{}).innerHTML=`I recommend plan B: fix the hand-off and add 2 SDRs in month 1, and hire an EMEA AE once each AE has ${n0(g.maxDeals)}+ open deals. That gets us <b>${f(landRec)} of ${n0(D.tg)} logos</b>.`;
+  // OVERVIEW: what the target takes, in total, by segment
+  {const T=num(g.targetLogos),es=Math.min(100,Math.max(0,num(g.ovEntSh)))/100,ea=num(g.ovEntAcv)*1000,ma=num(g.ovMmAcv)*1000;
+   const r1=Math.max(0.001,num(g.ovE2Q)/100),r2=Math.max(0.001,num(g.ovQ2O)/100),r3=Math.max(0.001,num(g.ovWin)/100);
+   const L=[T*es,T*(1-es)],O=L.map(x=>x/r3),Q=O.map(x=>x/r2),E=Q.map(x=>x/r1),P=[O[0]*ea,O[1]*ma],RV=[L[0]*ea,L[1]*ma],sm=a=>a[0]+a[1];
+   const pS=(pipeToday+pipeNew+pipeLift)||1,SH=[pipeToday/pS,pipeNew/pS,pipeLift/pS],Pt=sm(P);
+   const oneIn=r=>`About 1 in ${Math.max(1,Math.round(1/r))}`;
+   document.getElementById('ovK').textContent=`Step 1 · What ${n0(T)} logos take, in total`;
+   const seg=k=>`<div class="ovs"><span><i class="ent"></i>Enterprise <b data-pv="${k}0"></b></span><span><i class="mm"></i>Mid-market <b data-pv="${k}1"></b></span></div>`;
+   const card=(n,h,sub,k)=>`<div class="ovc"><span class="ovn">${n}</span><b class="ovh">${h}</b><span class="ovsub">${sub}</span><b class="ovbig" data-pv="${k}"></b>${seg(k)}</div>`;
+   const arr=(k,t)=>`<div class="ova"><b data-pv="a${k}"></b><span>${t}</span><span class="ovin">${inp(k,44,100)}% ${pl('Assumed')}</span><i></i></div>`;
+   const ov=once('ov',()=>`
+     <div class="ovtg"><div class="ovtl"><span class="ovn">01 · Target</span><b class="ovh">Logos to win in 2027</b><b class="ovbig" data-pv="L"></b></div>
+       <div class="ovsg ent"><span class="ovsk"><i class="ent"></i>Enterprise</span><b data-pv="L0"></b><span class="ovin">${inp('ovEntSh',44,100)}% of logos · $${inp('ovEntAcv',50,500)}k a year ${pl('Assumed')}</span></div>
+       <div class="ovsg mm"><span class="ovsk"><i class="mm"></i>Mid-market</span><b data-pv="L1"></b><span class="ovin"><span data-pv="mmSh"></span>% of logos · $${inp('ovMmAcv',50,500)}k a year ${pl('Assumed')}</span></div>
+       <p class="ovnote">Segments and deal sizes from the ICPs Fermat shared. Every number below works back from here. Change any input.</p></div>
+     <div class="ovf">${card('02 · Engage','Engaged contacts','MQLs','E')}${arr('ovE2Q','become qualified leads')}${card('03 · Qualify','Qualified leads','SQLs','Q')}${arr('ovQ2O','become opportunities')}${card('04 · Create','Opportunities','','O')}${arr('ovWin','are won')}<div class="ovend"><b data-pv="Lend"></b><span>logos</span></div></div>
+     <div class="ovb"><div class="ovc"><span class="ovn">05 · Pipeline</span><b class="ovh">Pipeline needed</b><b class="ovbig" data-pv="P"></b>${seg('P')}
+         <div class="ovbar" data-pv-html="Pbar"></div><div class="ovleg" data-pv-html="Pleg"></div></div>
+       <div class="ovc rev"><span class="ovn">06 · Revenue</span><b class="ovh">New ARR from these logos</b><b class="ovbig" data-pv="R"></b>${seg('R')}<span class="ovsub" data-pv="Rs"></span></div></div>`);
+   sv(ov,'L',n0(T));sv(ov,'L0',n0(L[0]));sv(ov,'L1',n0(L[1]));sv(ov,'mmSh',n0((1-es)*100));sv(ov,'Lend',n0(T));
+   [['E',E],['Q',Q],['O',O]].forEach(([k,a])=>{sv(ov,k,f(sm(a)));sv(ov,k+'0',f(a[0]));sv(ov,k+'1',f(a[1]));});
+   sv(ov,'aovE2Q',oneIn(r1));sv(ov,'aovQ2O',oneIn(r2));sv(ov,'aovWin',oneIn(r3));
+   sv(ov,'P',M(Pt));sv(ov,'P0',M(P[0]));sv(ov,'P1',M(P[1]));
+   sv(ov,'R',M(sm(RV)));sv(ov,'R0',M(RV[0]));sv(ov,'R1',M(RV[1]));sv(ov,'Rs',`Enterprise is ${n0(es*100)}% of logos and ${n0(RV[0]/(sm(RV)||1)*100)}% of revenue.`);
+   {const e=ov.querySelector('[data-pv-html="Pbar"]');if(e)e.innerHTML=[['t',SH[0]],['n',SH[1]],['h',SH[2]]].map(([c,v])=>`<i class="${c}" style="width:${v*100}%"></i>`).join('');}
+   {const e=ov.querySelector('[data-pv-html="Pleg"]');if(e)e.innerHTML=`<span><i class="t"></i>Today's motion ${M(Pt*SH[0])}</span><span><i class="n"></i>Sourced (new leads) ${M(Pt*SH[1])}</span><span><i class="h"></i>Influenced (inbound lift) ${M(Pt*SH[2])}</span>`;}}
   // STEP 1
   const s1=once('s1',()=>`
     <div class="lvc"><span class="k">Target logos ${pl('Given')}</span><b class="lvn">${inp('targetLogos',90,120)}</b></div>
@@ -2032,7 +2089,7 @@ function renderAnswer(R){
   {const tot=baseLogo+newWork,mx=Math.max(D.tg,tot)*1.06,pc=v=>v/mx*100,lab=(v,t)=>v/mx>0.07?`${f(v)} ${t}`:'';
    document.getElementById('rowC').innerHTML=`<div class="rcbar"><i class="t" style="width:${pc(baseLogo)}%">${lab(baseLogo,'today')}</i><i class="h" style="width:${pc(liftLogo)}%" title="${fL} influenced">${liftLogo/mx>0.07?`${fL} lift`:''}</i><i class="n" style="width:${pc(srcLogo)}%">${lab(srcLogo,'sourced')}</i>
      <span class="mk" style="left:${pc(D.tg)}%"><em>${n0(D.tg)} target</em></span></div>
-     <div class="rcleg"><span><i class="t"></i>${f(baseLogo)} today</span><span><i class="h"></i>${fL} influenced (inbound lift)</span><span><i class="n"></i>${f(srcLogo)} sourced</span><span class="rcsi"><b>Sourced:</b> what I commit to · <b>Influenced:</b> measured as a trend, not by deal</span></div>
+     <div class="rcleg"><span><i class="t"></i>${f(baseLogo)} today</span><span><i class="h"></i>${fL} influenced (inbound lift)</span><span><i class="n"></i>${f(srcLogo)} sourced (new leads)</span><span class="rcsi"><b>Sourced:</b> what I commit to · <b>Influenced:</b> measured as a trend, not by deal</span></div>
      <p class="rctxt">${f(baseLogo)} today + ${f(newWork)} new work = <b>${f(tot)} logos</b> the pipeline supports.</p>`;
    document.getElementById('rcSum').innerHTML=`<span><b>New work:</b> ${M(pipeNew)} sourced pipeline · ${f(srcLogo)} logos · ${M(srcLogo*D.acv)} new ARR. Plus ${M(pipeLift)} influenced from the inbound lift.</span><span><b>All of 2027:</b> ${M(pipeAll)} pipeline · ${f(tot)} logos the pipeline supports · ${M(tot*D.acv)} new ARR.</span>`;}
   document.getElementById('jobs').innerHTML=`<span class="job j1"><b>Job 1 · Create:</b> ${M(pipeNew)} new pipeline (~${n0(D.newOpp/allOpp*100)}%)</span><span class="job j2"><b>Job 2 · Move:</b> help all ${M(pipeAll)} convert faster</span>`;
