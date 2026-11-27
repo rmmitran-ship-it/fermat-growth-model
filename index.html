@@ -998,7 +998,10 @@ i.ent,i.mm{display:inline-block;width:10px;height:10px}i.ent{background:var(--in
 .asmlist{background:var(--white);padding:12px 14px;margin-bottom:10px;font-size:13.5px;color:var(--ink)}.asmlist ul{margin:6px 0 0 18px;padding:0}.asmlist li{margin:3px 0}
 .wb{background:var(--ink);color:var(--white);padding:22px 24px 20px}
 .wbh{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}.wbtt{font-family:'Inter Tight';font-size:22px;font-weight:600;letter-spacing:-0.02em;color:var(--white)}.wbsub{font-size:13px;color:#bbb}
-.wbg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+.wbg{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:10px;margin:16px 0}
+.wbrev{background:var(--green)!important;color:var(--ink)}.wbrev span{color:var(--ink)!important}.wbask{font-family:'Inter Tight';font-size:16px!important;font-weight:600!important;letter-spacing:0!important;text-transform:none!important}
+.wbrev b{font-size:40px!important}.wb .wbrev input{font-size:36px;font-weight:700;height:52px;border:2px solid var(--ink)}
+.wbv{font:inherit}
 .wbi{background:#222;padding:10px 12px;display:flex;flex-direction:column;gap:4px}.wbi span{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#bbb;display:flex;align-items:center;gap:6px}
 .wbi b{font-family:'Inter Tight';font-size:20px;font-weight:600;display:flex;align-items:center;gap:4px;flex-wrap:wrap}.wbi em{font-style:normal;font-size:12px;color:#ccc}
 .wb input{background:var(--white);color:var(--ink);border:0;font-weight:600;padding:2px 4px;font-size:15px}
@@ -2080,18 +2083,18 @@ function renderAnswer(R){
    const r0=Math.max(0.001,num(g.ovE2H)/100),r1=Math.max(0.001,num(g.ovH2Q)/100),r2=Math.max(0.001,num(g.ovQ2O)/100),we=Math.max(0.001,num(g.ovWinE)/100),wm=Math.max(0.001,num(g.ovWinM)/100),pa=Math.max(0.1,num(g.ovPerAcc));
    const L=[T*es,T*(1-es)],O=[L[0]/we,L[1]/wm],Ot=O[0]+O[1],Q=Ot/r2,H=Q/r1,E=H/r0,A=E/pa,Pt=O[0]*ea+O[1]*ma,rev=L[0]*ea+L[1]*ma;
    window.__wb={T,L,O,Ot,Q,H,E,A,Pt,rev,es,ea,ma};
-   const pct=k=>`${inp(k,40,100)}%`;
+   const pct=k=>`<b class="wbv" data-pv="v${k}"></b>%`;
    const st=(lab,sub,k)=>`<div class="wbs"><span>${lab}</span><b data-pv="${k}"></b><em>${sub}</em></div>`,ar=(...ls)=>`<div class="wba">${ls.map(l=>`<span class="wbr">${l}</span>`).join('')}<i></i></div>`;
    const ov=once('ov',()=>`
-     <div class="wbh"><span class="wbtt">Workback plan</span><span class="wbsub">Set the revenue goal. Change any number.</span></div>
+     <div class="wbh"><span class="wbtt">Workback plan</span></div>
      <div class="wbg">
-       <label class="wbi"><span>Revenue goal</span><b>$${inp('revGoal',64,100)}M</b><em>new ARR in 2027</em></label>
-       <label class="wbi"><span>Enterprise ${pl('Assumed')}</span><b>${pct('ovEntSh')} at $${inp('ovEntAcv',48,500)}k</b><em data-pv="entL"></em></label>
-       <label class="wbi"><span>Mid-market ${pl('Assumed')}</span><b>at $${inp('ovMmAcv',48,500)}k</b><em data-pv="mmL"></em></label>
+       <label class="wbi wbrev"><span>Revenue goal · new ARR in 2027</span><span class="wbask">Insert your goal here →</span><b>$${inp('revGoal',120,100)}M</b></label>
+       <div class="wbi"><span>Enterprise</span><b><b class="wbv" data-pv="vovEntSh"></b>% at <b class="wbv" data-pv="eAcv"></b></b><em data-pv="entL"></em></div>
+       <div class="wbi"><span>Mid-market</span><b>at <b class="wbv" data-pv="mAcv"></b></b><em data-pv="mmL"></em></div>
        <div class="wbi"><span>Contracts to win</span><b data-pv="Tn"></b><em data-pv="Tsub"></em></div>
      </div>
      <div class="wbf">
-       ${st('Accounts to reach','','A')}${ar(`${inp('ovPerAcc',36,50)} people`,'engage in each')}
+       ${st('Accounts to reach','','A')}${ar(`<b class="wbv" data-pv="vovPerAcc"></b> people`,'engage in each')}
        ${st('People engaged','visited, viewed, clicked','E')}${ar(pct('ovE2H'),'get hot')}
        ${st('Hot leads','MQLs','H')}${ar(pct('ovH2Q'),'qualify')}
        ${st('Qualified leads','SQLs','Q')}${ar(pct('ovQ2O'),`→ opp ${pl('Given')}`)}
@@ -2102,6 +2105,7 @@ function renderAnswer(R){
    sv(ov,'A',f(A));sv(ov,'E',f(E));sv(ov,'H',f(H));sv(ov,'Q',f(Q));sv(ov,'O',f(Ot));sv(ov,'Lg',n0(T));
    sv(ov,'Tn',n0(T));sv(ov,'Tsub',`at ~${k$(rev/(T||1))} average deal (brief: 60)`);
    sv(ov,'entL',`${n0(L[0])} contracts`);sv(ov,'mmL',`${n0(L[1])} contracts`);
+   ['ovEntSh','ovE2H','ovH2Q','ovQ2O','ovWinE','ovWinM','ovPerAcc'].forEach(k=>sv(ov,'v'+k,n0(g[k])));sv(ov,'eAcv',k$(ea));sv(ov,'mAcv',k$(ma));
    sv(ov,'P',M(Pt));sv(ov,'R',M(rev));sv(ov,'Pm',f(Q/12));}
   // WHAT I THINK IT TAKES: the reasoning behind each number
   {const W=window.__wb,el=document.getElementById('why');if(el&&W){document.getElementById('whyH').textContent=`What I think it takes to get to ${n0(W.T)} logos`;
