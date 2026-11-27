@@ -1004,6 +1004,10 @@ i.ent,i.mm{display:inline-block;width:10px;height:10px}i.ent{background:var(--in
 .rc td.rcw{width:22%;white-space:nowrap}.rc td:first-child{width:36%}.rc i.rcbi{display:inline-block;height:12px;background:#1a7f37;vertical-align:middle;margin-right:6px}.rc td.rcw em{font-style:normal;font-weight:700}
 .rc tr.fx td:first-child b{color:var(--blue-mid)}.rcdot{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:middle}.rctag{font-style:normal;font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.rc2 td.rcw{width:42%}.rc tr.sub td{border-top:1px solid var(--ink);font-size:13.5px}.rc thead+tbody tr:first-child td{border-top:0}
 .rc tr.tot td{border-top:2px solid var(--ink);border-bottom:0;font-size:14px}
+.rsl{background:var(--surface);padding:12px 14px;margin:0 0 14px}.rslh{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:13.5px;color:var(--ink)}.rslh b{font-family:'Inter Tight'}
+.rsl input[type=range]{width:100%;margin:8px 0}
+.rcv{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin:4px 0 6px}.rcv div{background:var(--white);padding:6px 8px;display:flex;flex-direction:column;position:relative}.rcv div.now{outline:2px solid var(--ink)}
+.rcv span{font-size:11px;color:var(--muted)}.rcv b{font-family:'Inter Tight';font-size:18px;color:var(--ink)}.rcv em{font-style:normal;font-size:11.5px;color:var(--ink)}.rcv i{position:absolute;top:6px;right:8px;font-style:normal;font-size:11px;font-weight:700}.rcv i.up{color:#1a7f37}.rcv i.flat{color:var(--muted)}
 .skp{font-size:13px;color:var(--ink);margin:8px 0 0;max-width:none}
 .abcseg{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:0 0 6px}.abcseg div{border:1px solid var(--surface);padding:6px 8px;display:flex;flex-direction:column}.abcseg span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:700}.abcseg b{font-family:'Inter Tight';font-size:17px;font-weight:600;color:var(--ink)}.abcseg em{font-style:normal;font-size:11.5px;color:var(--ink)}
 .abcseg em b{font-family:Inter,sans-serif;font-size:11.5px;font-weight:700}.bmo{color:#1a7f37}.bmh{color:var(--red)}.bml{color:var(--blue-mid)}
@@ -2032,6 +2036,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-fliptog]')
   document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='rowB')tog(e.target);});})();
 document.addEventListener('click',e=>{const b=e.target.closest('[data-cb]');if(!b)return;S.global.calcBudget=+b.dataset.cb;save();update();});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-abcflip]');if(!b)return;const k=b.dataset.abcflip;window.__abcSel=window.__abcSel===k?null:k;document.querySelectorAll('.abcc').forEach(c=>c.classList.toggle('sel',c.classList.contains(window.__abcSel||'_')));document.querySelectorAll('.abcf [data-abcflip]').forEach(x=>x.textContent=x.dataset.abcflip===window.__abcSel?'Hide the receipt ↑':'See the receipt ↓');const pd=document.getElementById('abcd');if(pd){pd.innerHTML=window.__abcSel?(window.__abcPanels||{})[window.__abcSel]||'':'';pd.style.display=window.__abcSel?'block':'none';if(window.__abcSel)pd.scrollIntoView({block:'nearest'});}});
+document.addEventListener('input',e=>{if(e.target.id!=='rsl')return;const k=+e.target.value;window.__rk=k;const v=document.getElementById('rslv'),b=document.getElementById('rcptBody');if(window.__rcptA&&b)b.innerHTML=window.__rcptA(k);if(v){const t=b&&b.querySelector('tr.sub td.num');v.textContent=t?t.textContent:'';}});
 document.addEventListener('click',e=>{if(e.target.closest('[data-fixjump]'))setTimeout(()=>{const b=document.getElementById('abc');if(b)b.scrollIntoView({block:'start'});},60);});
 document.addEventListener('click',e=>{if(!e.target.closest('[data-pushreset]'))return;S.global.mktPush=0;save();update();});
 function runV(sc,v){const prev=HIRE;HIRE=v;try{return run(sc);}finally{HIRE=prev;}}
@@ -2331,14 +2336,14 @@ function renderAnswer(R){
       return `<div class="skh"><b>${title}</b><span>What each line costs in 2027 and the contracts it wins this year. Tentative attribution.</span></div>
         <table class="rc"><thead><tr><th>Line</th><th class="num">2027 cost</th><th>Contracts won in 2027</th><th class="num">Cost per contract</th></tr></thead>
         <tbody>${L.map(row).join('')}<tr class="tot"><td><b>Total</b></td><td class="num">${k$(cost)}</td><td><b>${n0(won)} contracts</b> · ${eN} enterprise + ${n0(won)-eN} mid-market</td><td class="num">${M(arr)} new ARR</td></tr></tbody></table>`;};
-    const rcptA=(gx,title,hires)=>{
-      const b=id=>budget('A',id)*1000,sh=window.__tqS||0.5,dg=D.paths[2],pt=D.paths[0],ex=D.paths[1];
+    const rcptA=(gx,title,hires,k,lr)=>{k=k||1;lr=lr||1;
+      const b=id=>budget('A',id)*1000*k,sh=window.__tqS||0.5,dg=D.paths[2],pt=D.paths[0],ex=D.paths[1];
       const inUp=gx.inSQL*num(g.hoLift)/100*gx.inO2W,inAll=gx.inSQL*gx.inL2O*gx.inO2W-inUp,liftSh=lift/((b0+lift)||1),inLift=inAll*liftSh,inBase=inAll-inLift;
       const MK=[
-        {n:'Partners',tag:'Works today',c:b('partners'),pw:pt.logos,col:'--green'},
-        {n:'Experiential',tag:'Works today',c:b('events')+b('activations'),pw:ex.logos,col:'--magenta'},
-        {n:'Digital · Targeted ABM',tag:'New, to test',c:b('abm')+b('linkedin')*sh,pw:dg.logos*sh,col:'--blue',note:'ABM tools + LinkedIn by account'},
-        {n:'Digital · Always-on',tag:'New, to test',c:b('linkedin')*(1-sh)+b('google')+b('chatgpt')+b('reddit'),pw:dg.logos*(1-sh)+inLift,col:'--blue-light',note:'LinkedIn, search, small tests · incl. the inbound lift from ads'}];
+        {n:'Partners',tag:'Works today',c:b('partners'),pw:pt.logos*lr,col:'--green'},
+        {n:'Experiential',tag:'Works today',c:b('events')+b('activations'),pw:ex.logos*lr,col:'--magenta'},
+        {n:'Digital · Targeted ABM',tag:'New, to test',c:b('abm')+b('linkedin')*sh,pw:dg.logos*sh*lr,col:'--blue',note:'ABM tools + LinkedIn by account'},
+        {n:'Digital · Always-on',tag:'New, to test',c:b('linkedin')*(1-sh)+b('google')+b('chatgpt')+b('reddit'),pw:dg.logos*(1-sh)*lr+inLift,col:'--blue-light',note:'LinkedIn, search, small tests · incl. the inbound lift from ads'}];
       const SL=[{n:'Hand-off fix',c:0,pw:inUp,note:'more inbound converts'}];
       if(gx.fu&&gx.fu.opp>0.3)SL.push({n:'2 SDRs, from Q3',c:hires.sdr,pw:gx.fu.opp*gx.o2w,note:'more lands in 2028'});
       SL.push({n:'EMEA AE, from Q2',c:hires.ae,pw:0,note:`lets AEs close ~${n0(hires.aeAdds)} more deals`});
@@ -2379,7 +2384,16 @@ function renderAnswer(R){
         `<div class="abcr"><span>Why it falls short as given</span><p>More leads than AEs can take: the extra ones go cold.</p></div>
          <div class="abcr"><span>How it works</span>${step('As given',gC.closes)}${step(`Move ${k$(people)} to sales, ${k$(cMkt)} left in my bets' mix`,gCm.closes,gCm.closes-gC.closes)}<p class="small">Same total budget. ${cMkt>aMk?`${k$(cMkt-aMk)} more marketing than Plan A.`:''}</p></div>`,false);
     const aeAddsA=gA.closes-goalPlanV(R,sc,{...LV0,lvHO:true,lvIS:true,lvISfrom:3,lvAE:false,fixNewQL:Math.max(0.01,rA.leads)}).closes;
-    window.__abcPanels={a:rcptA(gA,'A · My plan: the receipt',{sdr:2*num(g.isCost)*1000*sdF,ae:num(g.aeHireCost)*1000*aeF,aeAdds:Math.max(0,aeAddsA)}),b:rcpt(rB,gB,'B · $310k: the receipt',{}),c:rcpt(rC,gC,'C · $550k: the receipt',{sdr:cSdr,sdrName:'SDR agency (in the budget)'})};
+    const hiresA={sdr:2*num(g.isCost)*1000*sdF,ae:num(g.aeHireCost)*1000*aeF,aeAdds:Math.max(0,aeAddsA)},aBase=totalBudget('A')*1000;
+    const atK=k=>{const r=runMix(k),gx=goalPlanV(R,sc,{...FX,...ALL,fixNewQL:Math.max(0.01,r.leads)});return {r,gx,k};};
+    window.__rcptA=k=>{const x=atK(k);return rcptA(x.gx,'A · My plan: the receipt',hiresA,k,x.r.leads/Math.max(1,rA.leads));};
+    const curve=[0.5,0.75,1,1.5,2,2.5].map(k=>{const x=atK(k);return {k,sp:aBase*k,c:x.gx.closes,arr:x.gx.closes*D.acv};});
+    const kNow=window.__rk||1,curHTML=`<div class="rcv">${curve.map((p,i)=>{const prev=curve[i-1],d=prev?p.c-prev.c:null;return `<div class="${Math.abs(p.k-1)<0.01?'now':''}"><span>${k$(p.sp)}</span><b>~${n0(p.c)}</b><em>${M(p.arr)}</em>${d!=null?`<i class="${d>=1?'up':'flat'}">${d>=0.5?'+'+n0(d):'+0'}</i>`:''}</div>`;}).join('')}</div>`;
+    const sat=curve.find((p,i)=>i>2&&p.c-curve[i-1].c<1);
+    const sliderA=`<div class="rsl"><div class="rslh"><b>Try a bigger budget, same split</b><span>Marketing budget: <b id="rslv">${k$(aBase*kNow)}</b> · sales hires stay the same</span></div>
+      <input type="range" id="rsl" min="0.5" max="2.5" step="0.05" value="${kNow}" aria-label="Marketing budget">
+      ${curHTML}<p class="small">${sat?`Past ~${k$(curve[curve.indexOf(sat)-1].sp)}, more marketing adds little in 2027: the AEs are full. To grow further, add sales capacity first.`:'Each step still adds contracts at this level.'}</p></div>`;
+    window.__abcPanels={a:sliderA+`<div id="rcptBody">${window.__rcptA(kNow)}</div>`,b:rcpt(rB,gB,'B · $310k: the receipt',{}),c:rcpt(rC,gC,'C · $550k: the receipt',{sdr:cSdr,sdrName:'SDR agency (in the budget)'})};
     {const pd=document.getElementById('abcd'),sel=window.__abcSel;if(pd){pd.innerHTML=sel&&window.__abcPanels[sel]?window.__abcPanels[sel]:'';pd.style.display=sel?'block':'none';}}
     window.__abcM={A:{spend:aMk,hires:people,hireTxt:'EMEA AE (Q2) + 2 SDRs (Q3)',g:gA,m:mA},B:{spend:totalBudget('B')*1000,hires:0,hireTxt:'None',g:gB,m:mB},C:{spend:totalBudget('C')*1000,hires:0,hireTxt:rC.sdrCost?'SDR agency, in the budget':'None',g:gC,m:mC}};
     renderCompareTable(R);}}
