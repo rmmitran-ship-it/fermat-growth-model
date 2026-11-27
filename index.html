@@ -1728,7 +1728,7 @@ function migrate(o){
   if(o.global.baseL2O===45&&!o.global.cal40){o.global.baseL2O=40;}o.global.cal40=true;
   const li=o.channels.find(c=>c.id==='linkedin');if(li){li.entDeal=true;li.acv=100;}
   if(!o.channels.some(c=>c.id==='activations')){const i=o.channels.findIndex(c=>c.id==='partners');o.channels.splice(i<0?o.channels.length:i,0,clone(DEFAULTS.channels.find(c=>c.id==='activations')));}
-  if(o.global.acReach==null)o.global.acReach=80;if(o.global.revGoal==null||+o.global.revGoal>100)o.global.revGoal=3.1;if(o.global.ovPerAcc==null)o.global.ovPerAcc=15;
+  if(o.global.acReach==null)o.global.acReach=80;if(o.global.revGoal==null||+o.global.revGoal>100)o.global.revGoal=3.1;if(o.global.ovPerAcc==null)o.global.ovPerAcc=15;if(+o.global.lvISfrom<3)o.global.lvISfrom=3;
   if(!o.global.planA6&&o.scenarios&&o.scenarios.A){o.scenarios.A.budget.google=60;o.scenarios.A.budget.events=110;o.global.shEx=35;o.global.shDg=40;o.global.shPt=25;o.global.planA6=true;}
   if(!o.global.planA4&&o.scenarios&&o.scenarios.A){o.scenarios.A.budget.linkedin=65;o.global.aBuffer=30;o.global.planA4=true;}
   if(!o.global.tam1){Object.assign(o.global,{ovPerAcc:15,tc1:30,tc2:20,tc3:12,tier3:245,abmAccounts:500,cpaMid:12,cpaEnt:30});o.global.tam1=true;}
@@ -2617,12 +2617,13 @@ function renderAnswer(R){
      <p class="who"><b>SDR time:</b> 2 × ${n0(g.isCalls)} calls a month. ~${n0(FU.open*FU.touch/12)} go to engaged accounts (${n0(FU.touch)} each ${pl('Assumed')}), the rest to hand-off calls.</p>${fuHTML}`;}
   // fixes, in order
   {const base=D0.closes,one=o=>goalPlanV(R,sc,{...LV0,...PU,...o}).closes;
-   const qsel=k=>` · from <select data-p="global.${k}">${[1,2,3,4].map(q=>`<option value="${q}" ${+g[k]===q?'selected':''}>Q${q}</option>`).join('')}</select>`;
+   const qsel=k=>` · from <select data-p="global.${k}">${(k==='lvISfrom'?[3,4]:[1,2,3,4]).map(q=>`<option value="${q}" ${+g[k]===q?'selected':''}>Q${q}</option>`).join('')}</select>`;
    const M3=[['lvHO','Fix the hand-off',`Score leads so AEs call the best first ${pl('Assumed')}`,0,`${n0(g.hoCut)}% fewer calls. Shrinks break 1.`,''],
-     ['lvIS','+2 SDRs',`From H2, once ramp-up fills the pipeline`,2*num(g.isCost)*1000,`Follow up engaged accounts ${pl('Assumed')}. Builds the 2028 pipeline; little lands in 2027.`,'lvISfrom'],
-     ['lvAE','+1 EMEA AE',`Hire in Q2, ready when AEs pass ${n0(g.maxDeals)} open deals in H2`,num(g.aeHireCost)*1000,`~${n0(g.aeCap)} more closes a quarter ${pl('Assumed')}. Clears break 2.`,'lvAEfrom']];
+     ['lvAE','+1 EMEA AE',`Hire in Q2, ready when AEs pass ${n0(g.maxDeals)} open deals in H2`,num(g.aeHireCost)*1000,`~${n0(g.aeCap)} more closes a quarter ${pl('Assumed')}. Clears break 2.`,'lvAEfrom'],
+     ['lvIS','+2 SDRs',`H2 only, once the pipeline needs follow-up`,2*num(g.isCost)*1000,`Follow up engaged accounts ${pl('Assumed')}. Builds the 2028 pipeline; little lands in 2027.`,'lvISfrom']];
    const mi=document.getElementById('mits');
-   if(!mi.contains(document.activeElement))mi.innerHTML=M3.map(([k,n,fx,cost,why,qk])=>{const d=Math.round(one({[k]:true}))-Math.round(base);
+   const cum=M3.map((m,i)=>Math.round(one(Object.fromEntries(M3.slice(0,i+1).map(x=>[x[0],true]))))),dOf=i=>cum[i]-(i?cum[i-1]:Math.round(base));
+   if(!mi.contains(document.activeElement))mi.innerHTML=M3.map(([k,n,fx,cost,why,qk],i)=>{const d=dOf(i);
      return `<label class="mit${g[k]?' on':''}"><input type="checkbox" data-p="global.${k}" ${g[k]?'checked':''}><span class="mn"><b>${n}</b><em>${fx}${qk?qsel(qk):''}</em><span>${why}</span></span><span class="mv"><b>${Math.round(d)>=0?'+':'−'}${Math.abs(Math.round(d))}</b><span>logos</span></span><span class="mv"><b>${cost?k$(cost):'$0'}</b><span>a year</span></span></label>`;}).join('');}
   // Model tab: what the fixes cost
   {const ft=document.getElementById('fixTable');if(ft){const base=land0,gm=num(g.acv)*1000*num(g.gm)/100,one=o=>Math.round(goalPlanV(R,sc,{...LV0,aeRegion:'EU',fixNewQL:Math.max(0.01,D.newQL),...o}).closes)-Math.round(base);
