@@ -910,12 +910,12 @@ button.play[hidden]{display:none}
 .pa.b2.idle i{background:none;height:0;border-top:2px dashed #9a9a9a}.pa.b2.idle i::after{border-left-color:#9a9a9a}
 .pn{position:relative;display:flex;flex-direction:column;justify-content:flex-end;align-self:stretch;padding:0 2px 8px;background:var(--white)}
 .pn svg{width:100%;display:block}.pn path{fill:#cfcfcf}.pn.red path{fill:#f3a6a6}.pn.amb path{fill:#ffd88a}.pn.ok path{fill:#a8e6b0}
-.pcold{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%23ffd6d6'/%3E%3Cpath d='M-2 2l4-4M0 8l8-8M6 10l4-4' stroke='%23d23b3b' stroke-width='1.5'/%3E%3C/svg%3E");border:2px solid var(--red);display:flex;align-items:center;justify-content:center;margin:0 4px 2px;overflow:hidden}
+.pcold{background:var(--red);border:2px solid var(--red);display:flex;align-items:center;justify-content:center;margin:0 4px 2px;overflow:hidden}
 .pcold:empty,.pcold[style*="height:0px"]{border:0}
 .pcold span{font-size:10.5px;font-weight:700;color:#a32020;text-align:center;line-height:1.2;padding:2px}.pcold b{display:block;font-size:12px}
 .parr{position:absolute;left:50%;bottom:-18px;width:0;height:0;margin-left:-9px;border-left:9px solid transparent;border-right:9px solid transparent;border-bottom:14px solid #9a9a9a}
 .parr.red{border-bottom-color:var(--red)}.parr.amb{border-bottom-color:#f2b84b}.parr.ok{border-bottom-color:#5cc96b}
-.pover{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%23ffd6d6'/%3E%3Cpath d='M-2 2l4-4M0 8l8-8M6 10l4-4' stroke='%23d23b3b' stroke-width='1.5'/%3E%3C/svg%3E");border:2px solid var(--red);font-size:10.5px;font-weight:700;color:#a32020;text-align:center;padding:3px 2px;margin-top:2px}
+.pover{background:var(--red);border:2px solid var(--red);font-size:10.5px;font-weight:700;color:#a32020;text-align:center;padding:3px 2px;margin-top:2px}
 .pbns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:20px}
 .pbn{padding:10px 12px;font-size:13px;color:var(--ink);background:var(--surface);border-left:6px solid #9a9a9a}
 .pbn.red{border-color:var(--red)}.pbn.red b{color:var(--red)}.pbn.amb{border-color:#f2b84b}.pbn.ok{border-color:#5cc96b}.pbn.idle{border-left-style:dashed;color:var(--text)}
@@ -989,6 +989,7 @@ i.ent,i.mm{display:inline-block;width:10px;height:10px}i.ent{background:var(--in
 .abch{font-size:16px;font-weight:600;color:var(--ink)}.abcb{font-family:'Inter Tight';font-size:34px;font-weight:600;letter-spacing:-0.03em;color:var(--ink);margin:2px 0 4px}
 .abcr{border-top:1px solid var(--surface);padding-top:6px}.abcr span{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}.abcr p{margin:2px 0 0;font-size:13.5px;color:var(--ink);max-width:none}
 @media (max-width:860px){.abc{grid-template-columns:1fr}}
+.asmlist{background:var(--white);padding:12px 14px;margin-bottom:10px;font-size:13.5px;color:var(--ink)}.asmlist ul{margin:6px 0 0 18px;padding:0}.asmlist li{margin:3px 0}
 .rcsum{display:flex;flex-direction:column;gap:4px;margin:10px 0 0;font-size:14px;color:var(--ink);max-width:none}
 .lgp.src{background:var(--magenta)}
 .fstats.f3{grid-template-columns:repeat(3,minmax(0,1fr))}.fstats.f3 .fstat b{font-size:20px}
@@ -1125,6 +1126,7 @@ footer{padding:40px 0 64px;font-size:13px;color:var(--muted)}
 .phase h4,.kit-h,h5.pv-s,.acs-h{font-size:17px;font-weight:600;letter-spacing:-0.01em}
 .fname,.ovh{font-size:16px;font-weight:600}
 .lvc .k,.rfb .k,.ovn{font-weight:700}
+.pcold span,.pcold b,.pover{color:var(--white)!important}
 </style>
 </head>
 <body>
@@ -1492,7 +1494,7 @@ const GMETA=[
   {k:'exMeet',label:'Experiential: people met who book a meeting',unit:'%',min:1,max:100,step:1,badge:'Assumed',note:''},
   {k:'exQual',label:'Experiential: meetings that qualify',unit:'%',min:1,max:100,step:1,badge:'Assumed',note:''},
   {k:'dgEng',label:'Digital: contacts reached who engage',unit:'%',min:1,max:100,step:1,badge:'Assumed',note:''},
-  {k:'dgQual',label:'Digital: engaged contacts who qualify',unit:'%',min:1,max:100,step:1,badge:'Assumed',note:''},
+  {k:'dgQual',label:'Digital: engaged contacts who qualify',unit:'%',min:1,max:100,step:1,badge:'Assumed',note:'Set by Goal setting Step 1 (engaged → hot × hot → qualified).'},
   {k:'out1',label:'Share of qualified leads from new outbound, Q1',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:'The one ramp in the model: its shape sets how fast new channels ramp; the budget sets the volume.'},
   {k:'out2',label:'Share of qualified leads from new outbound, Q2',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:''},
   {k:'out3',label:'Share of qualified leads from new outbound, Q3',unit:'%',min:0,max:100,step:1,badge:'Assumed',note:''},
@@ -2068,7 +2070,7 @@ function renderAnswer(R){
      <div class="ovb"><div class="ovc"><span class="ovn">06 · Pipeline</span><b class="ovh">Pipeline needed</b><b class="ovbig" data-pv="P"></b>${seg('P')}
          <div class="ovbar" data-pv-html="Pbar"></div><div class="ovleg" data-pv-html="Pleg"></div></div>
        <div class="ovc rev"><span class="ovn">07 · Revenue</span><b class="ovh">New ARR from these logos</b><b class="ovbig" data-pv="R"></b>${seg('R')}<span class="ovsub" data-pv="Rs"></span></div></div>`);
-   sv(ov,'accL',`Across ${Math.round(num(g.abmAccounts)).toLocaleString('en-US')} target accounts.`);sv(ov,'L0',n0(L[0]));sv(ov,'L1',n0(L[1]));sv(ov,'mmSh',n0((1-es)*100));sv(ov,'Lend',n0(T));
+   {const need=D.N+D.paths[0].top,list=num(g.abmAccounts);sv(ov,'accL',need>list?`Across ~${n0(need)} target accounts: ${n0(need-list)} more than the ${Math.round(list).toLocaleString('en-US')} on the list today.`:`Across ${Math.round(list).toLocaleString('en-US')} target accounts.`);}sv(ov,'L0',n0(L[0]));sv(ov,'L1',n0(L[1]));sv(ov,'mmSh',n0((1-es)*100));sv(ov,'Lend',n0(T));
    [['E',E],['H',H],['Q',Q],['O',O]].forEach(([k,a])=>{sv(ov,k,f(sm(a)));sv(ov,k+'0',f(a[0]));sv(ov,k+'1',f(a[1]));});
    sv(ov,'aovE2H',oneIn(r0));sv(ov,'aovH2Q',oneIn(r1));sv(ov,'aovQ2O',oneIn(allOpp/(Qt||1)));sv(ov,'aovWin',oneIn(T/(O[0]+O[1]||1)));
    sv(ov,'P',M(Pt));sv(ov,'P0',M(P[0]));sv(ov,'P1',M(P[1]));
@@ -2196,7 +2198,8 @@ function renderAnswer(R){
     const Bb=S.scenarios.B.budget,keep={...Bb},leadsAt=k=>{Object.keys(keep).forEach(id=>Bb[id]=keep[id]*k);try{return run('B').leads;}finally{Object.keys(keep).forEach(id=>Bb[id]=keep[id]);}};
     let lo=0.2,hi=4;for(let i=0;i<30;i++){const m=(lo+hi)/2;if(leadsAt(m)>=need)hi=m;else lo=m;}
     const aMk=Math.ceil(totalBudget('B')*hi/5)*5*1000,rB=R.B,rC=R.C||{},pct=x=>n0(x/need*100)+'%';
-    const slipB=Math.max(0,rB.yearWins-rB.wins2027),cMk=(totalBudget('C')*1000)-people;
+    const gB=goalPlanV(R,sc,{...LV0,fixNewQL:Math.max(0.01,rB.leads)}),gC=goalPlanV(R,sc,{...LV0,lvIS:true,lvISfrom:2,fixNewQL:Math.max(0.01,rC.leads||0.01)}),gBfix=goalPlanV(R,sc,{...LV0,lvHO:true,lvIS:true,lvISfrom:1,lvAE:true,aeRegion:'EU',fixNewQL:Math.max(0.01,rB.leads)});
+    const slipB=Math.max(0,gB.potWins-gB.closes),cMk=(totalBudget('C')*1000)-people;
     document.getElementById('abcLede').textContent=`All three aim at ${n0(D.tg)} logos. The target needs ~${n0(need)} new qualified leads a year from growth (Goal setting, Step 2). Each plan below shows what its budget buys and where it breaks.`;
     const col=(cls,tag,title,big,rows)=>`<div class="abcc ${cls}"><span class="abct">${tag}</span><b class="abch">${title}</b><b class="abcb">${big}</b>${rows.map(([k,v])=>`<div class="abcr"><span>${k}</span><p>${v}</p></div>`).join('')}</div>`;
     el.innerHTML=
@@ -2204,13 +2207,13 @@ function renderAnswer(R){
         ['What it buys',`~${n0(need)} new qualified leads: what the target needs, with B's channel mix scaled to fit.`],
         ['What I add',`Fix the hand-off (free), 2 SDRs from day 1 (${k$(2*num(g.isCost)*1000)}), an EMEA AE once each AE has ${n0(g.maxDeals)}+ open deals (${k$(num(g.aeHireCost)*1000)}).`],
         ['Why',`Marketing money isn't the gap. Sales capacity is.`]])+
-      col('b','B · $310k (the brief)',`${k$(totalBudget('B')*1000)} budget`,`~${n0(rB.wins2027)} logos`,[
+      col('b','B · $310k (the brief)',`${k$(totalBudget('B')*1000)} budget`,`~${n0(gB.closes)} logos`,[
         ['What it buys',`~${n0(rB.leads)} new qualified leads, ${pct(rB.leads)} of what's needed.`],
-        ['Where it breaks',`AEs can't close them all: ~${n0(rB.wins2027)} land in 2027 and ~${n0(slipB)} slip to 2028 or wait for an AE.`],
-        ["What I'd change",`Keep the ${k$(totalBudget('B')*1000)} for leads. Add the hand-off fix, 2 SDRs and an EMEA AE (${k$(people)}, outside this budget). That gets ~${n0(landRec)}.`]])+
-      col('c','C · $550k',`${k$(totalBudget('C')*1000)} budget`,`~${n0(rC.wins2027||0)} logos`,[
+        ['Where it breaks',`AEs can't close them all: ~${n0(gB.closes)} land in 2027 and ~${n0(slipB)} slip to 2028 or wait for an AE.`],
+        ["What I'd change",`Keep the ${k$(totalBudget('B')*1000)} for leads. Add the hand-off fix, 2 SDRs and an EMEA AE (${k$(people)}, outside this budget). That gets ~${n0(gBfix.closes)}.`]])+
+      col('c','C · $550k',`${k$(totalBudget('C')*1000)} budget`,`~${n0(gC.closes)} logos`,[
         ['What it buys',`~${n0(rC.leads||0)} new qualified leads, ${pct(rC.leads||0)} of what's needed.`],
-        ['Where it breaks',`More leads, same AEs. Still ~${n0(rC.wins2027||0)} logos in 2027: the extra leads go cold.`],
+        ['Where it breaks',`More leads, same AEs. ~${n0(gC.closes)} logos in 2027: AEs can't take more, and the extra leads crowd out the better inbound ones.`],
         ["What I'd change",`Move ${k$(people)} from leads into the hand-off fix, 2 SDRs and an EMEA AE. The other ${k$(cMk)} still buys the leads we need (${k$(aMk)} is enough). That gets ~${n0(landRec)}${cMk>aMk?`, with ${k$(cMk-aMk)} to spare`:''}.`]]);}}
   // DIAGNOSIS
   const B0=goalPlanV(R,sc,{...LV0}),autoAcc0=B0.autoAcc,fxA=num(g.tier1)+num(g.tier2)-(num(g.tier1)*num(g.tc1)+num(g.tier2)*num(g.tc2))/(num(g.tc3)||1);
@@ -2303,7 +2306,13 @@ function renderAnswer(R){
   if(!s4.contains(document.activeElement)){
     const sel=k=>`<select data-p="global.${k}">${[1,2,3,4].map(q=>`<option value="${q}" ${+g[k]===q?'selected':''}>Q${q}</option>`).join('')}</select>`;
     const row=(lab,ctl)=>`<label class="asr"><span>${lab}</span><span class="asc">${ctl} ${pl('Assumed')}</span></label>`;
-    s4.innerHTML=
+    s4.innerHTML=`<div class="asmlist"><b>What this plan assumes</b><ul>
+      <li>A deal takes ~${n1(g.cycle)} months from opportunity to close, so deals opened late in the year close in 2028.</li>
+      <li>Lead scoring has to be built first: rules in the CRM, agreed with sales. The hand-off fix depends on it.</li>
+      <li>Tracking for hot leads (2+ actions or left details) is set up by month 1.</li>
+      <li>New hires need about a quarter to ramp. Each AE closes ~${n1(g.aeCap)} logos a quarter.</li>
+      <li>Win rates by segment (enterprise ${n0(g.ovWinE)}%, mid-market ${n0(g.ovWinM)}%) are placeholders until Fermat shares real ones.</li>
+      <li>Ads lift inbound by ~${n0(g.inboundLift)}%. If inbound is flat after 2 quarters, I stop them.</li></ul></div>`+
       row('Hand-off calls per AE a month',inp('qualCalls',52,80))+
       row('Qualified lead (SQL) → accepted by sales (%)',inp('m2s',52,100))+
       row('Target accounts that see our ads (%)',inp('acReach',52,100))+
@@ -2391,6 +2400,7 @@ function update(){
   S.global.aes=num(S.global.aesEU)+num(S.global.aesUS);
   // one deal size everywhere: blended from the segment mix in Goal setting Step 1
   {const g=S.global,es=Math.min(100,Math.max(0,num(g.ovEntSh)))/100;if(num(g.ovEntAcv)>0&&num(g.ovMmAcv)>0)g.acv=Math.round((es*num(g.ovEntAcv)+(1-es)*num(g.ovMmAcv))*100)/100;
+   if(num(g.ovE2H)>0&&num(g.ovH2Q)>0)g.dgQual=Math.round(num(g.ovE2H)*num(g.ovH2Q))/100;
    const we=num(g.ovWinE)/100,wm=num(g.ovWinM)/100;if(we>0&&wm>0){const w0=es/we,w1=(1-es)/wm;g.pvo=Math.round((w0*num(g.ovEntAcv)+w1*num(g.ovMmAcv))/(w0+w1)*100)/100;}if(we>0&&wm>0)g.wbO2W=Math.round(100/(es/we+(1-es)/wm)*100)/100;if(num(g.ovQ2O)>0)g.wbL2O=num(g.ovQ2O);}
   const R={};SC.forEach(s=>R[s]=run(s));
   {const sb=document.getElementById('salesBox');if(sb&&SC.includes(view))sb.innerHTML=salesBoxHTML(view);}
