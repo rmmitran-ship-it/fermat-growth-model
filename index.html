@@ -2057,12 +2057,12 @@ function renderAnswer(R){
   const s1=once('s1',()=>`
     <div class="lvc"><span class="k">Step 1 needs</span><b class="lvn" data-pv="t"></b><span class="lvs" data-pv="tS"></span></div>
     <div class="lvc"><span class="k">Today brings ${pl('Given')}</span><b class="lvn" data-pv="in"></b><span class="lvs" data-pv="inS"></span></div>
-    <div class="lvc"><span class="k">Inbound lift adds ${pl('Assumed')}</span><b class="lvn" data-pv="lf"></b><span class="lvs" data-pv="lfS"></span></div>
-    <div class="lvc gap"><span class="k">Gap for new work</span><b class="lvn" data-pv="need"></b><span class="lvs" data-pv="needS"></span></div>`);
+    <div class="lvc gap"><span class="k">Gap growth closes</span><b class="lvn" data-pv="need"></b><span class="lvs" data-pv="needS"></span></div>
+    <div class="lvc"><span class="k">What the budget buys</span><b class="lvn" data-pv="cpl"></b><span class="lvs" data-pv="cplS"></span></div>`);
   sv(s1,'t',`${f(S1.Q)}`);sv(s1,'tS',`qualified leads a year for ${n0(S1.T)} logos`);
   sv(s1,'in',f(b0*12));sv(s1,'inS',`qualified leads a year (${n0(b0)} a month) → ${f(baseLogo)} logos. They convert better than new leads: ${n0(D.inL2O*100)}% → opp, ${n0(D.inO2W*100)}% won.`);
-  sv(s1,'lf',f(lift*12));sv(s1,'lfS',`qualified leads a year from paid → ${fL} logos (influenced)`);
-  sv(s1,'need',f(D.newQL/12)+' a month');sv(s1,'needS',`new qualified leads (${f(D.newQL)} a year) → ${f(srcLogo)} logos, at ${n0(D.l2o*100)}% → opp and ${n0(D.o2w*100)}% won, from Step 1`);
+  {const gq=D.newQL+lift*12;sv(s1,'need',f(gq));sv(s1,'needS',`qualified leads a year (${f(gq/12)} a month) → ${f(newWork)} logos: ${f(D.newQL)} new leads I commit to (${f(srcLogo)} logos) + ${f(lift*12)} from the inbound lift (${fL} logos, influenced)`);
+   const bud=totalBudget(sc)*1000,cpl=newWork>0?bud/newWork:0;sv(s1,'cpl',`${k$(cpl)}`);sv(s1,'cplS',`per new logo, for ${k$(bud)} (plan ${sc}). Each new logo is worth ~${k$(D.acv)} a year${cpl<D.acv*num(g.gm)/100?', so it pays back in under a year on gross margin':''}.`);}
   document.getElementById('s1line').textContent=`${f(b0*12+lift*12+D.newQL)} qualified leads in total, fewer than Step 1's ${f(S1.Q)} because today's leads convert better than new ones. ${f(allOpp)} opportunities, ${M(pipeAll)} pipeline.`;
   document.getElementById('s1arr').textContent=`≈ ${M((baseLogo+newWork)*D.acv).replace('~','')} new ARR from ${f(baseLogo+newWork)} logos.`;
   // STEP 2 · Row A: today's motion (baseline only, no new spend)
