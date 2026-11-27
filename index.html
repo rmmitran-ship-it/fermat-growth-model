@@ -1002,7 +1002,8 @@ i.ent,i.mm{display:inline-block;width:10px;height:10px}i.ent{background:var(--in
 .rc{width:100%;border-collapse:collapse;font-size:13.5px}.rc th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--ink)}.rc th.num,.rc td.num{text-align:right;white-space:nowrap}
 .rc td{padding:7px 8px;border-bottom:1px solid var(--surface);color:var(--ink);vertical-align:middle}.rc td span{display:block;font-size:11.5px;color:var(--muted)}
 .rc td.rcw{width:22%;white-space:nowrap}.rc td:first-child{width:36%}.rc i.rcbi{display:inline-block;height:12px;background:#1a7f37;vertical-align:middle;margin-right:6px}.rc td.rcw em{font-style:normal;font-weight:700}
-.rc tr.fx td:first-child b{color:var(--blue-mid)}.rcdot{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:middle}.rctag{font-style:normal;font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.rc tr.tot td{border-top:2px solid var(--ink);border-bottom:0;font-size:14px}
+.rc tr.fx td:first-child b{color:var(--blue-mid)}.rcdot{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:middle}.rctag{font-style:normal;font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.rc2 td.rcw{width:42%}.rc tr.sub td{border-top:1px solid var(--ink);font-size:13.5px}.rc thead+tbody tr:first-child td{border-top:0}
+.rc tr.tot td{border-top:2px solid var(--ink);border-bottom:0;font-size:14px}
 .skp{font-size:13px;color:var(--ink);margin:8px 0 0;max-width:none}
 .abcseg{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:0 0 6px}.abcseg div{border:1px solid var(--surface);padding:6px 8px;display:flex;flex-direction:column}.abcseg span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:700}.abcseg b{font-family:'Inter Tight';font-size:17px;font-weight:600;color:var(--ink)}.abcseg em{font-style:normal;font-size:11.5px;color:var(--ink)}
 .abcseg em b{font-family:Inter,sans-serif;font-size:11.5px;font-weight:700}.bmo{color:#1a7f37}.bmh{color:var(--red)}.bml{color:var(--blue-mid)}
@@ -2326,24 +2327,28 @@ function renderAnswer(R){
         <table class="rc"><thead><tr><th>Line</th><th class="num">2027 cost</th><th>Contracts won in 2027</th><th class="num">Cost per contract</th></tr></thead>
         <tbody>${L.map(row).join('')}<tr class="tot"><td><b>Total</b></td><td class="num">${k$(cost)}</td><td><b>${n0(won)} contracts</b> · ${eN} enterprise + ${n0(won)-eN} mid-market</td><td class="num">${M(arr)} new ARR</td></tr></tbody></table>`;};
     const rcptA=(gx,title,hires)=>{
-      const es=Math.min(100,Math.max(0,num(g.ovEntSh)))/100,b=id=>budget('A',id)*1000,sh=window.__tqS||0.5;
-      const pt=D.paths[0],ex=D.paths[1],dg=D.paths[2],pv=x=>parseFloat(String(x).replace(/[~$M]/g,''))*1e6,pP=[pv(pR[0]),pv(pR[1]),pv(pR[2])];
-      const inUp=gx.inSQL*num(g.hoLift)/100*gx.inO2W,inBase=gx.inSQL*gx.inL2O*gx.inO2W-inUp;
-      const L=[{n:"Today's inbound",c:0,pw:inBase,note:'no new spend'},
-        {n:'Partners',tag:'Works today',c:b('partners'),q:pt.q/12,pipe:pP[0],pw:pt.logos,note:`${n0(pt.sh*100)}% of new qualified leads`,col:'--green'},
-        {n:'Experiential',tag:'Works today',c:b('events')+b('activations'),q:ex.q/12,pipe:pP[1],pw:ex.logos,note:`${n0(ex.sh*100)}% of new qualified leads`,col:'--magenta'},
-        {n:'Digital · Targeted ABM',tag:'New, to test',c:b('abm')+b('linkedin')*sh,q:dg.q/12*sh,pipe:pP[2]*sh,pw:dg.logos*sh,note:`${f(D.tiers[0].acc+D.tiers[1].acc)} named accounts · ABM tools + LinkedIn by account`,col:'--blue'},
-        {n:'Digital · Always-on',tag:'New, to test',c:b('linkedin')*(1-sh)+b('google')+b('chatgpt')+b('reddit'),q:dg.q/12*(1-sh),pipe:pP[2]*(1-sh),pw:dg.logos*(1-sh),note:`the rest of the target list · LinkedIn, search, small tests`,col:'--blue-light'},
-        {n:'Hand-off fix',c:0,pw:inUp,note:'more inbound converts',fix:true}];
-      if(gx.fu&&gx.fu.opp>0.3)L.push({n:'2 SDRs, from Q3',c:hires.sdr,pw:gx.fu.opp*gx.o2w,note:'follow up engaged accounts; more lands in 2028',fix:true});
-      L.push({n:'EMEA AE, from Q2',c:hires.ae,pw:0,note:`lets AEs close ~+${n0(hires.aeAdds)} more`,fix:true});
-      const pot=L.reduce((a,x)=>a+x.pw,0)||1,land=Math.min(1,gx.closes/pot);L.forEach(x=>x.won=x.pw*land);
-      const mx=Math.max(...L.map(x=>x.won),1),cost=L.reduce((a,x)=>a+x.c,0),won=gx.closes,eN=Math.round(won*es);
-      const row=x=>`<tr class="${x.fix?'fx':''}"><td>${x.col?`<i class="rcdot" style="background:var(${x.col})"></i>`:''}<b>${esc(x.n)}</b>${x.tag?` <em class="rctag">${x.tag}</em>`:''}${x.note?`<span>${x.note}</span>`:''}</td><td class="num">${x.c>500?k$(x.c):'$0'}</td><td class="num">${x.q?f(x.q)+'/mo':'—'}</td><td class="num">${x.pipe?M(x.pipe):'—'}</td><td class="rcw"><i class="rcbi" style="width:${x.won>0.05?Math.max(1,x.won/mx*70):0}%"></i><em>${x.won>=0.5?'~'+n0(x.won):x.pw>0?'<1':'—'}</em></td><td class="num">${x.c>500&&x.won>=0.5?k$(x.c/x.won):'—'}</td></tr>`;
-      const qT=L.reduce((a,x)=>a+(x.q||0),0),pT=L.reduce((a,x)=>a+(x.pipe||0),0);
-      return `<div class="skh"><b>${title}</b><span>My bets, with what each costs in 2027 and the contracts it wins this year. Tentative attribution.</span></div>
-        <table class="rc"><thead><tr><th>Line</th><th class="num">2027 cost</th><th class="num">New qualified leads</th><th class="num">Pipeline</th><th>Contracts won in 2027</th><th class="num">Cost per contract</th></tr></thead>
-        <tbody>${L.map(row).join('')}<tr class="tot"><td><b>Total</b></td><td class="num">${k$(cost)}</td><td class="num">${f(qT)}/mo</td><td class="num">${M(pT)} new</td><td><b>${n0(won)} contracts</b> · ${eN} ent + ${n0(won)-eN} mm</td><td class="num">${M(won*D.acv)} ARR</td></tr></tbody></table>`;};
+      const b=id=>budget('A',id)*1000,sh=window.__tqS||0.5,dg=D.paths[2],pt=D.paths[0],ex=D.paths[1];
+      const inUp=gx.inSQL*num(g.hoLift)/100*gx.inO2W,inAll=gx.inSQL*gx.inL2O*gx.inO2W-inUp,liftSh=lift/((b0+lift)||1),inLift=inAll*liftSh,inBase=inAll-inLift;
+      const MK=[
+        {n:'Partners',tag:'Works today',c:b('partners'),pw:pt.logos,col:'--green'},
+        {n:'Experiential',tag:'Works today',c:b('events')+b('activations'),pw:ex.logos,col:'--magenta'},
+        {n:'Digital · Targeted ABM',tag:'New, to test',c:b('abm')+b('linkedin')*sh,pw:dg.logos*sh,col:'--blue',note:'ABM tools + LinkedIn by account'},
+        {n:'Digital · Always-on',tag:'New, to test',c:b('linkedin')*(1-sh)+b('google')+b('chatgpt')+b('reddit'),pw:dg.logos*(1-sh)+inLift,col:'--blue-light',note:'LinkedIn, search, small tests · incl. the inbound lift from ads'}];
+      const SL=[{n:'Hand-off fix',c:0,pw:inUp,note:'more inbound converts'}];
+      if(gx.fu&&gx.fu.opp>0.3)SL.push({n:'2 SDRs, from Q3',c:hires.sdr,pw:gx.fu.opp*gx.o2w,note:'more lands in 2028'});
+      SL.push({n:'EMEA AE, from Q2',c:hires.ae,pw:0,note:`lets AEs close ~${n0(hires.aeAdds)} more deals`});
+      const pot=inBase+[...MK,...SL].reduce((a,x)=>a+x.pw,0)||1,land=Math.min(1,gx.closes/pot);
+      [...MK,...SL].forEach(x=>{x.won=x.pw*land;x.rev=x.won*D.acv;});
+      const all=[...MK,...SL],mx=Math.max(...all.map(x=>x.rev),1),baseRev=inBase*land*D.acv,R$=v=>v>=995000?M(v):k$(v);
+      const row=x=>`<tr><td>${x.col?`<i class="rcdot" style="background:var(${x.col})"></i>`:''}<b>${esc(x.n)}</b>${x.tag?` <em class="rctag">${x.tag}</em>`:''}${x.note?`<span>${x.note}</span>`:''}</td><td class="num">${x.c>500?k$(x.c):'$0'}</td><td class="rcw"><i class="rcbi" style="width:${x.rev>500?Math.max(1,x.rev/mx*70):0}%"></i><em>${x.rev>500?R$(x.rev):'—'}</em></td></tr>`;
+      const sum=a=>a.reduce((s,x)=>s+x,0),mkC=sum(MK.map(x=>x.c)),mkR=sum(MK.map(x=>x.rev)),slC=sum(SL.map(x=>x.c)),slR=sum(SL.map(x=>x.rev));
+      return `<div class="skh"><b>${title}</b><span>What we spend in 2027, and the new revenue it brings this year. Tentative attribution.</span></div>
+        <table class="rc rc2"><thead><tr><th>Marketing</th><th class="num">2027 spend</th><th>Projected new ARR, 2027</th></tr></thead>
+        <tbody>${MK.map(row).join('')}<tr class="sub"><td><b>Marketing total</b></td><td class="num">${k$(mkC)}</td><td><b>${R$(mkR)}</b></td></tr></tbody>
+        <thead><tr><th>Sales</th><th></th><th></th></tr></thead>
+        <tbody>${SL.map(row).join('')}<tr class="sub"><td><b>Sales total</b></td><td class="num">${k$(slC)}</td><td><b>${R$(slR)}</b></td></tr>
+        <tr class="tot"><td><b>Total new spend</b></td><td class="num">${k$(mkC+slC)}</td><td><b>${R$(mkR+slR)}</b> new ARR</td></tr></tbody></table>
+        <p class="skp">Plus ${M(baseRev)} from today's inbound, with no new spend: <b>${M(gx.closes*D.acv)}</b> in total for 2027.</p>`;};
     const col=(cls,tag,title,big,rows,m,back)=>`<div class="abcc ${cls}${window.__abcSel===cls?' sel':''}"><div class="abcf"><span class="abct">${tag}</span><b class="abch">${title}</b><b class="abcb">${big}</b>${m?mHTML(m):''}${rows.map(([k,v])=>`<div class="abcr"><span>${k}</span><p>${v}</p></div>`).join('')}<button type="button" class="fbtn" data-abcflip="${cls}">${window.__abcSel===cls?'Hide the receipt ↑':'See the receipt ↓'}</button></div>
       <div class="abck"><span class="abct">${tag} · channel by channel</span>${back}<button type="button" class="fbtn" data-abcflip="${cls}">↺ Back</button></div></div>`;
     window.__abcPanels={};
