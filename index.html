@@ -2244,11 +2244,9 @@ function renderAnswer(R){
     card(2,'p2','Digital',n0(dg.sh*100)+'%','New, to test','lo',
       `<div class="fmot"><div class="fmrow"><span class="fml">Targeted ABM</span><b>${f(tgtM)}/mo</b></div><span class="fms">${f(tAcc)} named accounts</span>
         <div class="fmrow"><span class="fml">Always-on</span><b>${f(aoM)}/mo</b></div><span class="fms">${f(aAcc)} accounts, plus ${f(lift)}/mo more inbound</span></div>${st3(dg)}`,
-      `<div class="fsec"><span>Targeted ABM · my bet</span>Reach named accounts directly: personal outreach, LinkedIn ads by account, and signals like sign-ups, job changes and hiring.</div>
-       <div class="fsec"><span>One choice by region</span><ul><li><b>US: full digital ABM.</b> LinkedIn by account, Influ2 ads to named people in the top accounts, RB2B to name website visitors.</li><li><b>EMEA: events and SDRs first.</b> GDPR limits ads to named people and visitor ID, so LinkedIn targets companies, and engaged accounts get events and SDR follow-up.</li></ul></div>
-       <div class="fsec"><span>Always-on · my bet</span>One LinkedIn campaign that always runs on our target list, live from month 4, plus competitor search in the US. <button class="toA" data-toA>↑ more inbound</button></div>
-       <div class="fsec also"><span>Also moves open deals</span>Ads to everyone involved in each open deal, plus case studies and security answers.</div>
-       <div class="fsec"><span>I'll know by day 90</span><ul><li>How many of the ${f(tAcc).replace('~','')} named accounts engage: ABM pilot, 90 days from month 2: ~2,800 of ~7,000 contacts matched (40%), 60–70% of the top 170 accounts reached in the pilot's first month, 25–30% with 2+ people engaging by its second</li><li>Inbound vs end of 2026, inbound from target accounts, "how did you hear about us?" and searches for "Fermat"</li><li>If inbound is flat after 2 quarters, I stop always-on</li></ul></div>`);
+      `<div class="fsec"><span>Targeted ABM · my bet</span><ul><li><b>US: full digital ABM.</b> LinkedIn by account, Influ2 on top contacts, RB2B for site visitors.</li><li><b>EMEA: events and SDRs.</b> GDPR limits person-level ads, so LinkedIn targets companies.</li></ul></div>
+       <div class="fsec"><span>Always-on · my bet</span>One LinkedIn campaign on our target list from month 4, plus US competitor search. <button class="toA" data-toA>↑ more inbound</button></div>
+       <div class="fsec"><span>I'll know by day 90</span><ul><li>ABM pilot, months 2–4: 60–70% of the top 170 accounts reached, 25–30% with 2+ people engaging</li><li>Inbound vs end of 2026. Flat after 2 quarters: I stop always-on</li></ul></div>`);
   // path cards
   const el=once('paths',()=>{const rate=r=>r?`<div class="path-ar"><span>${inp(r[0],46)}% ${r[1]}</span>${pl('Assumed')}</div>`:'<div class="path-ph"></div>';
     return D.paths.map(({P},i)=>`<div class="path p-${P.cls}">
